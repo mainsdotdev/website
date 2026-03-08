@@ -1,14 +1,8 @@
 import { motion } from "framer-motion";
 import { ChangelogCard } from "@/components/changelog-card";
-import { allPosts } from 'contentlayer/generated';
+import type { Post } from "@/lib/types";
 
-export function ChangelogSection() {
-  // Get changelog posts sorted by date
-  const changelogPosts = allPosts
-    .filter((post) => post.published && post.tags?.includes('changelog'))
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 4); // Show latest 4
-
+export function ChangelogSection({ posts }: { posts: Post[] }) {
   return (
     <section className="py-20 ">
       <motion.div
@@ -23,15 +17,15 @@ export function ChangelogSection() {
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {changelogPosts.map((post) => (
-            <ChangelogCard 
+          {posts.map((post) => (
+            <ChangelogCard
               description={post.description || ''}
               key={post.slug}
               version={post.version || '1.0'}
-              date={new Date(post.date).toLocaleDateString('en-US', { 
-                month: 'short', 
-                day: 'numeric', 
-                year: 'numeric' 
+              date={new Date(post.date).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
               })}
               title={post.title}
               url={post.url}
@@ -44,7 +38,7 @@ export function ChangelogSection() {
             href="/blog?filter=changelog"
             className="inline-flex items-center gap-2 text-primary-200 hover:text-primary-50 text-sm font-medium transition-colors"
           >
-            See what's new in Jinzo →
+            See what&apos;s new in Jinzo →
           </a>
         </div>
       </motion.div>

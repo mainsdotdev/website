@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { allPosts } from 'contentlayer/generated';
+import { getAllPosts, getPostBySlug } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 import { format } from 'date-fns';
 import { MDXContent } from '@/components/mdx-content';
@@ -11,14 +11,14 @@ type Props = {
 };
 
 export async function generateStaticParams() {
-  return allPosts.map((post) => ({
+  return getAllPosts().map((post) => ({
     slug: post.slug,
   }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = allPosts.find((post) => post.slug === slug);
+  const post = getPostBySlug(slug);
 
   if (!post) {
     return {
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogPost({ params }: Props) {
   const { slug } = await params;
-  const post = allPosts.find((post) => post.slug === slug);
+  const post = getPostBySlug(slug);
 
   if (!post) {
     notFound();
@@ -123,7 +123,7 @@ export default async function BlogPost({ params }: Props) {
 
         {/* Content */}
         <div className="prose prose-invert prose-primary max-w-none">
-          <MDXContent code={post.body.code} />
+          <MDXContent source={post.content} />
         </div>
 
       </article>
