@@ -1,0 +1,16 @@
+export { default as Github } from './github';
+export { default as Apple } from './apple';
+export { default as ArrowRight } from './arrow-right';
+export { default as Windows } from './windows';
+export { default as StatusBacklog } from "./status-backlog";
+export { default as StatusTodo } from "./status-todo";
+export { default as StatusInProgress } from "./status-in-progress";
+export { default as StatusInReview } from "./status-in-review";
+export { default as StatusDone } from "./status-done";
+export { default as StatusCanceled } from "./status-canceled";
+export { default as StatusDuplicate } from "./status-duplicate";
+export { default as Typescript } from "./typescript";
+export { default as React } from "./react";
+export { default as Markdown } from "./markdown";
+export { default as Json } from "./json";
+export { default as Postcss } from "./postcss";

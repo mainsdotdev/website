@@ -1,0 +1,323 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nabla&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
+
+@import "tailwindcss";
+
+@source "../../components/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../../app/**/*.{js,ts,jsx,tsx,mdx}";
+
+@theme {
+  --color-primary-DEFAULT: #fffcf0;
+  --color-primary-50: #f2f0e5;
+  --color-primary-100: #e6e4d9;
+  --color-primary-150: #dad8ce;
+  --color-primary-200: #cecdc3;
+  --color-primary-300: #b7b5ac;
+  --color-primary-400: #a09d95;
+  --color-primary-500: #878580;
+  --color-primary-600: #6f6e69;
+  --color-primary-700: #575653;
+  --color-primary-800: #403e3c;
+  --color-primary-850: #343331;
+  --color-primary-900: #282726;
+  --color-primary-950: #0c0c0c;
+
+  --font-sans: "Geist", sans-serif;
+  --font-serif: "Inter", serif;
+  --font-mono: "Space Mono", monospace;
+  --font-handwriting: "Nabla", cursive;
+
+  --background-image-shadergradient: url("/shadergradient.webp");
+  --background-image-footer-texture: url("/img/footer-texture.png");
+}
+
+/* Nabla Font Palettes - Based on Official Examples */
+@font-palette-values --nabla-main {
+  font-family: Nabla;
+  base-palette: 0;
+  override-colors:
+    0 #0d00ff,
+    1 #aa00af,
+    2 #ff00f1,
+    3 #ff00f1,
+    4 #1800ff,
+    5 #0803d8,
+    6 #0000c9,
+    7 #0031ff,
+    8 #c600c6,
+    9 #ff9cff;
+}
+
+/* Blinking cursor animation for typing effect */
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blob-float-1 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -20px) scale(1.05);
+  }
+  66% {
+    transform: translate(-20px, 15px) scale(0.95);
+  }
+}
+
+@keyframes blob-float-2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-25px, 20px) scale(0.97);
+  }
+  66% {
+    transform: translate(20px, -25px) scale(1.03);
+  }
+}
+
+@keyframes blob-float-3 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(15px, 25px) scale(1.04);
+  }
+}
+
+
+@font-palette-values --altfour {
+  font-family: Nabla;
+  base-palette: 0;
+  override-colors:
+    0 #fffcf0,
+    1 #e6e4d9,
+    2 #cecdc3,
+    3 #b7b5ac,
+    4 #a09d95,
+    5 #878580,
+    6 #6f6e69,
+    7 #575653,
+    8 #403e3c,
+    9 #100f0f;
+}
+
+@font-palette-values --primary {
+  font-family: Nabla;
+  base-palette: 0;
+  override-colors:
+    0 #fffcf0,
+    1 #e6e4d9,
+    2 #cecdc3,
+    3 #b7b5ac,
+    4 #a09d95,
+    5 #878580,
+    6 #6f6e69,
+    7 #575653,
+    8 #403e3c,
+    9 #100f0f;
+}
+
+html {
+}
+body {
+  max-width: 100%;
+  scroll-behavior: smooth;
+}
+
+/* Safari font-palette fallback */
+@supports not (font-palette: --nabla-alttwo) {
+  .font-handwriting {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+}
+
+a,
+button,
+canvas:hover {
+  cursor: pointer;
+}
+
+@layer utilities {
+  .bg-dotted {
+    background-image: radial-gradient(currentColor 1px, transparent 1px);
+    background-size: 4px 4px;
+  }
+
+  /* Nabla font renk paletleri */
+  .font-palette-main {
+    font-palette: --nabla-main;
+  }
+
+  .font-palette-altone {
+    font-palette: --altone;
+  }
+
+  .font-palette-alttwo {
+    font-palette: --alttwo;
+  }
+
+  .font-palette-altthree {
+    font-palette: --altthree;
+  }
+
+  .font-palette-altfour {
+    font-palette: --altfour;
+  }
+
+  .font-palette-primary {
+    font-palette: --primary-palette;
+  }
+
+  /* Infinite scroll animations */
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes scroll-right {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  .animate-scroll-left {
+    animation: scroll-left 30s linear infinite;
+  }
+
+  .animate-scroll-right {
+    animation: scroll-right 30s linear infinite;
+  }
+
+  /* Blog post prose styles */
+  .prose {
+    --tw-prose-body: theme("colors.primary.300");
+    --tw-prose-headings: theme("colors.white");
+    --tw-prose-links: theme("colors.primary.200");
+    --tw-prose-bold: theme("colors.white");
+    --tw-prose-code: theme("colors.primary.100");
+    --tw-prose-pre-bg: theme("colors.primary.900");
+    --tw-prose-quotes: theme("colors.primary.300");
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4 {
+    color: theme("colors.white");
+    font-weight: 700;
+    margin-top: 2em;
+    margin-bottom: 1em;
+  }
+
+  .prose h2 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .prose h3 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .prose p {
+    color: theme("colors.primary.300");
+    margin-bottom: 1.5em;
+    line-height: 1.75;
+  }
+
+  .prose a {
+    color: theme("colors.primary.200");
+    text-decoration: underline;
+    text-decoration-color: theme("colors.primary.700");
+    transition: color 0.2s;
+  }
+
+  .prose a:hover {
+    color: theme("colors.white");
+    text-decoration-color: theme("colors.primary.500");
+  }
+
+  .prose code {
+    color: theme("colors.primary.100");
+    background-color: theme("colors.primary.800");
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+    font-family: theme("fontFamily.mono");
+  }
+
+  .prose pre {
+    background-color: theme("colors.primary.900");
+    border: 1px solid theme("colors.primary.700");
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    overflow-x: auto;
+    margin: 2rem 0;
+  }
+
+  .prose pre code {
+    background-color: transparent;
+    padding: 0;
+    color: theme("colors.primary.100");
+  }
+
+  .prose ul,
+  .prose ol {
+    color: theme("colors.primary.300");
+    margin: 1.5em 0;
+    padding-left: 1.5em;
+  }
+
+  .prose li {
+    margin: 0.5em 0;
+  }
+
+  .prose blockquote {
+    border-left: 4px solid theme("colors.primary.700");
+    padding-left: 1.5rem;
+    font-style: italic;
+    color: theme("colors.primary.400");
+    margin: 2rem 0;
+  }
+
+  .prose hr {
+    border-color: theme("colors.primary.800");
+    margin: 3rem 0;
+  }
+
+  .prose strong {
+    color: theme("colors.white");
+    font-weight: 600;
+  }
+
+  .prose img {
+    border-radius: 0.5rem;
+    margin: 2rem 0;
+  }
+}

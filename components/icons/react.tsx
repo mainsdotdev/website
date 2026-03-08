@@ -1,0 +1,12 @@
+import { SVGProps } from "react"
+
+const ReactIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 24 24" fill="none" {...props}>
+    <circle cx={12} cy={12} r={2} fill="currentColor" />
+    <ellipse cx={12} cy={12} rx={10} ry={4} stroke="currentColor" strokeWidth={1.2} />
+    <ellipse cx={12} cy={12} rx={10} ry={4} stroke="currentColor" strokeWidth={1.2} transform="rotate(60 12 12)" />
+    <ellipse cx={12} cy={12} rx={10} ry={4} stroke="currentColor" strokeWidth={1.2} transform="rotate(120 12 12)" />
+  </svg>
+)
+
+export default ReactIcon
