@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react";
+import Link from "next/link";
 import Leaf from "./leaf";
 import Image from "next/image";
 import { useBrowserDetection } from "@/hooks/useBrowserDetection";
@@ -12,7 +13,7 @@ export default function Header() {
     <header className="mb-8 max-w-7xl mx-auto px-4">
       <nav className="flex items-center justify-between py-6 font-mono">
         {/* Logo and Brand */}
-        <a href="/" className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3">
           <div className="relative flex items-center justify-center">
             {isChrome ? (
               <>
@@ -31,16 +32,16 @@ export default function Header() {
               </>
             ) : (
               <Image
-                src="/logo.png"
+                src="/icon.png"
                 alt="Jinzo Logo"
                 width={120}
                 height={120}
-                className="object-contain h-12 w-auto"
+                className="object-contain h-16 w-auto"
               />
             )}
           </div>
 
-        </a>
+        </Link>
 
         {/* Navigation Links */}
         <div className="flex items-center gap-6">

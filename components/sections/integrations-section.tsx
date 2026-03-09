@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export function IntegrationsSection() {
   return (
-    <section className="py-20 max-w-6xl mx-auto px-4">
+    <section className="py-20 max-w-7xl mx-auto px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

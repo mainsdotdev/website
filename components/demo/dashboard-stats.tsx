@@ -100,7 +100,7 @@ function CostByModelCard() {
       <div ref={ref} className="space-y-3">
         {MODEL_DATA.map((m, i) => (
           <div key={m.name} className="flex items-center gap-3">
-            <span className="text-primary-300 text-xs w-36 shrink-0 truncate font-mono">{m.name}</span>
+            <span className="text-primary-300 text-xs w-36 shrink-0 truncate font-sans">{m.name}</span>
             <div className="flex-1 h-5 bg-primary-900/50 rounded overflow-hidden">
               <div
                 className="h-full rounded transition-all duration-700 ease-out"
@@ -111,7 +111,7 @@ function CostByModelCard() {
                 }}
               />
             </div>
-            <span className="text-primary-200 text-xs font-mono w-14 text-right">${m.cost.toFixed(2)}</span>
+            <span className="text-primary-200 text-xs font-sans w-14 text-right">${m.cost.toFixed(2)}</span>
           </div>
         ))}
       </div>
@@ -131,7 +131,7 @@ function TopToolsCard() {
       <div ref={ref} className="flex items-end gap-1.5 h-44 overflow-x-auto pb-1">
         {TOOL_DATA.map((t, i) => (
           <div key={`${t.name}-${i}`} className="flex flex-col items-center gap-1 min-w-0 flex-1">
-            <span className={`text-primary-400 text-[10px] font-mono transition-opacity duration-500 ${visible ? "opacity-100" : "opacity-0"}`} style={{ transitionDelay: `${i * 60 + 400}ms` }}>{t.count}</span>
+            <span className={`text-primary-400 text-[10px] font-sans transition-opacity duration-500 ${visible ? "opacity-100" : "opacity-0"}`} style={{ transitionDelay: `${i * 60 + 400}ms` }}>{t.count}</span>
             <div
               className="w-full min-w-6 rounded-t transition-all duration-700 ease-out"
               style={{
@@ -164,7 +164,7 @@ function SuccessRateCard() {
         title="Success Rate"
         trailing={`${total} runs this week`}
       />
-      <p className="text-white text-4xl font-bold mb-4">{rate}%</p>
+      <p className="text-white text-4xl font-medium mb-4">{rate}%</p>
       <div ref={ref} className="flex items-end gap-2 flex-1 min-h-24 mb-3">
         {DAILY_RUNS.map((d, i) => {
           const totalDay = d.succeeded + d.failed + d.cancelled;
@@ -216,8 +216,8 @@ function RecentSessionsCard() {
               <p className="text-primary-200 text-xs font-medium truncate">{s.title}</p>
               <p className="text-primary-500 text-[11px]">{s.workspace}&ensp;{s.model}</p>
             </div>
-            <span className="text-primary-400 text-xs font-mono shrink-0">{s.duration}</span>
-            <span className="text-primary-300 text-xs font-mono shrink-0 w-14 text-right">{s.cost}</span>
+            <span className="text-primary-400 text-xs font-sans shrink-0">{s.duration}</span>
+            <span className="text-primary-300 text-xs font-sans shrink-0 w-14 text-right">{s.cost}</span>
           </div>
         ))}
       </div>
@@ -232,7 +232,7 @@ function SummaryRow() {
     <div ref={ref} className="grid grid-cols-2 md:grid-cols-4 gap-3">
       {SUMMARY_DATA.map((s) => (
         <div key={s.label} className="bg-primary-950 border border-white/5 rounded-xl flex flex-col items-center justify-center py-5">
-          <p className="text-white text-2xl font-bold font-mono">
+          <p className="text-white text-2xl font-medium font-sans">
             <NumberFlow
               value={visible ? s.value : 0}
               prefix={s.prefix}

@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { MDXContent } from '@/components/mdx-content';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Header from '@/components/header';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -49,8 +50,10 @@ export default async function BlogPost({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-primary-950 pt-20">
-      <article className="max-w-4xl mx-auto px-4">
+    <div className="min-h-screen max-w-7xl mx-auto px-4 bg-primary-950 ">
+            <Header />
+      
+      <article className=" px-4">
         {/* Back Link */}
         <Link
           href="/blog"

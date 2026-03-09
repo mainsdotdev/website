@@ -5,7 +5,7 @@ import { DashboardStats } from "@/components/demo/dashboard-stats";
 
 export function DashboardSection() {
   return (
-    <section className="py-20 max-w-6xl mx-auto px-6">
+    <section className="py-20 max-w-7xl mx-auto px-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

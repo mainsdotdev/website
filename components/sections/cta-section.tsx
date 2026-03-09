@@ -23,8 +23,8 @@ export function CtaSection() {
         </p>
         <div className="flex items-center gap-3 mt-4">
           <Link
-            href="https://docs.usejinzo.com/install"
-            className="inline-flex items-center gap-2 bg-white text-black text-sm font-medium px-4 py-3 rounded-full hover:bg-neutral-200 transition-colors"
+            href=""
+            className="inline-flex items-center gap-2 md:px-6 px-3 md:py-3 py-3 text-xs md:text-sm font-medium text-black bg-white rounded-full hover:bg-neutral-200 transition-colors"
           >
             Download for macOS
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg>
@@ -33,7 +33,7 @@ export function CtaSection() {
             href="https://github.com/OkanBilal/jinzo"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-black text-white text-sm font-medium px-4 py-3 rounded-full hover:bg-black/50 transition-colors"
+            className="inline-flex items-center gap-2 md:px-6 px-3 md:py-3 py-3 text-xs md:text-sm font-medium text-white bg-black  rounded-full hover:bg-primary-950 transition-colors"
           >
             <svg
               width="16"
