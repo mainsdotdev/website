@@ -4,7 +4,7 @@ import { useState } from "react";
 import Typescript from "@/components/icons/typescript";
 import ReactFileIcon from "@/components/icons/react";
 import MarkdownIcon from "@/components/icons/markdown";
-import { Branch, Commit, Json, Node, Postcss } from "../icons";
+import { Branch, Json, Node, Postcss } from "../icons";
 import Javascript from "../icons/javascript";
 import Claude from "../icons/claude";
 
