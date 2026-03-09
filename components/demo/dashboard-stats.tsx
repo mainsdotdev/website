@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import NumberFlow from "@number-flow/react";
+import { Dollar, SettingsStar, CheckCircle, Clock } from "@/components/icons";
 
 const TOOL_DATA = [
   { name: "Read", count: 67, color: "#6384e6" },
@@ -97,7 +98,7 @@ function CostByModelCard() {
   return (
     <CardWrapper>
       <CardHeader
-        icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9.5c0-.83.67-1.5 1.5-1.5h1c.83 0 1.5.67 1.5 1.5S12.33 11 11.5 11h1c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-1c-.83 0-1.5-.67-1.5-1.5"/></svg>}
+        icon={<Dollar />}
         title="Cost by Model"
       />
       <div ref={ref} className="space-y-3">
@@ -128,7 +129,7 @@ function TopToolsCard() {
   return (
     <CardWrapper>
       <CardHeader
-        icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>}
+        icon={<SettingsStar />}
         title="Top Tools"
       />
       <div ref={ref} className="flex items-end gap-1.5 h-44 overflow-x-auto pb-1">
@@ -163,7 +164,7 @@ function SuccessRateCard() {
   return (
     <CardWrapper fill>
       <CardHeader
-        icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>}
+        icon={<CheckCircle />}
         title="Success Rate"
         trailing={`${total} runs this week`}
       />
@@ -208,7 +209,7 @@ function RecentSessionsCard() {
   return (
     <CardWrapper>
       <CardHeader
-        icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>}
+        icon={<Clock />}
         title="Recent Sessions"
       />
       <div className="space-y-0 -mx-1">

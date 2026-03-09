@@ -6,6 +6,7 @@ import { MDXContent } from '@/components/mdx-content';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Header from '@/components/header';
+import { ChevronLeft } from '@/components/icons';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -59,19 +60,7 @@ export default async function BlogPost({ params }: Props) {
           href="/blog"
           className="inline-flex items-center gap-2 text-primary-400 hover:text-primary-200 mb-8 transition-colors"
         >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
+          <ChevronLeft className="w-4 h-4" />
           Back to Blog
         </Link>
 

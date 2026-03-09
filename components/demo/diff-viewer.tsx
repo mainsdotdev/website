@@ -1,6 +1,7 @@
 "use client";
 
 import { PatchDiff, type DiffLineAnnotation } from "@pierre/diffs/react";
+import { Check, Close, CodeBrackets } from "@/components/icons";
 
 const DUMMY_PATCH = [
   "--- a/services/dispatcher/runDispatcher.ts",
@@ -147,16 +148,11 @@ function AnnotationContent({ annotation }: { annotation: DiffLineAnnotation<Anno
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
           <button className="flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-medium bg-green-500/15 text-green-400 hover:bg-green-500/25 transition-colors cursor-pointer">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
+            <Check />
             Approve
           </button>
           <button className="flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-medium bg-red-500/15 text-red-400 hover:bg-red-500/25 transition-colors cursor-pointer">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+            <Close />
             Discard
           </button>
         </div>
@@ -168,15 +164,6 @@ function AnnotationContent({ annotation }: { annotation: DiffLineAnnotation<Anno
         </p>
       )}
     </div>
-  );
-}
-
-function CodeIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="16 18 22 12 16 6" />
-      <polyline points="8 6 2 12 8 18" />
-    </svg>
   );
 }
 
@@ -192,7 +179,7 @@ export function DiffViewer() {
           }}
           className="flex items-center gap-2 px-3 py-2 text-sm text-primary-200 bg-primary-950 border-x border-t border-white/5 rounded-t-xl -mb-px relative"
         >
-          <CodeIcon className="text-primary-400" />
+          <CodeBrackets className="text-primary-400" />
           <span className="truncate max-w-48">runDispatcher.ts</span>
         </div>
         <button className="flex items-center justify-center w-8 h-8 text-primary-500 hover:text-primary-300 transition-colors ml-1" />

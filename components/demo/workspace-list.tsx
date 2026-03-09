@@ -5,6 +5,7 @@ import StatusInProgress from "@/components/icons/status-in-progress";
 import StatusCanceled from "@/components/icons/status-canceled";
 import StatusDone from "@/components/icons/status-done";
 import StatusTodo from "@/components/icons/status-todo";
+import { ChevronDown } from "@/components/icons";
 
 type StatusType = "warning" | "error" | "success" | "pending";
 
@@ -60,7 +61,7 @@ const WORKSPACES: Workspace[] = [
     branch: "add-agent-auth-docs",
     status: "pending",
     timeAgo: "7h ago",
-    
+
   },
   {
     owner: "OkanBilal",
@@ -124,10 +125,7 @@ export function WorkspaceList() {
       <div className="flex items-center justify-between px-2.5 py-2.5 -mb-2 shrink-0">
         <span className="text-primary-400 text-xs ">Workspaces</span>
         <div className="flex items-center gap-2 text-primary-500">
-
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-          </svg>
+          <ChevronDown width={14} height={14} fill="currentColor" />
         </div>
       </div>
 

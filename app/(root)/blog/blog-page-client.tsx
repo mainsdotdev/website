@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import type { Post } from "@/lib/types";
 import Header from "@/components/header";
+import { ArrowRight } from "@/components/icons";
 
 export function BlogPageClient({ posts }: { posts: Post[] }) {
   const [filter, setFilter] = useState<"all" | "changelog" | "posts">("all");
@@ -115,19 +116,7 @@ function BlogCard({ post }: { post: Post }) {
             <span>·</span>
             <span>{format(new Date(post.date), "MMM dd, yyyy")}</span>
           </div>
-          <svg
-            className="w-5 h-5 text-primary-600 group-hover:text-primary-400 group-hover:translate-x-1 transition-all"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
-            />
-          </svg>
+          <ArrowRight className="w-5 h-5 text-primary-600 group-hover:text-primary-400 group-hover:translate-x-1 transition-all" />
         </div>
 
         {/* Title */}

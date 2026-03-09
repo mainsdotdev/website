@@ -4,9 +4,9 @@ import { useState } from "react";
 import Typescript from "@/components/icons/typescript";
 import ReactFileIcon from "@/components/icons/react";
 import MarkdownIcon from "@/components/icons/markdown";
-import { Branch, Json, Node, Postcss } from "../icons";
-import Javascript from "../icons/javascript";
-import Claude from "../icons/claude";
+import { Branch, Json, Node, Postcss, Folder, ChevronRight, Sparkles, Finding, Description, CommitCircle } from "@/components/icons";
+import Javascript from "@/components/icons/javascript";
+import Claude from "@/components/icons/claude";
 
 type FileEntry = {
   name: string;
@@ -77,17 +77,6 @@ const ACTIVITY_ENTRIES: ActivityEntry[] = [
   { type: "commit", text: "3 files changed", timeAgo: "2d ago" },
 ];
 
-function FolderIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-      <path
-        d="M2 5a2 2 0 012-2h4l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V5z"
-        fill="#F6C547"
-      />
-    </svg>
-  );
-}
-
 function FileIcon({ icon }: { icon?: "md" | "ts" | "json" | "postcss" | "js" | "claude" | "node" }) {
   if (icon === "md") {
     return <MarkdownIcon className="w-4.5 h-4.5 text-primary-400" />;
@@ -113,52 +102,14 @@ function FileIcon({ icon }: { icon?: "md" | "ts" | "json" | "postcss" | "js" | "
   return null;
 }
 
-function ChevronRight({ className }: { className?: string }) {
-  return (
-    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className={className}>
-      <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-
-
-function SparklesIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} width="14" height="14" viewBox="0 0 16 16" fill="none">
-      <path d="M8 1l1.5 4.5L14 7l-4.5 1.5L8 13l-1.5-4.5L2 7l4.5-1.5L8 1z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-
-
-function FindingIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="12" cy="12" r="3" fill="currentColor" />
-    </svg>
-  );
-}
-
-function DescriptionIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <path d="M12 21a9 9 0 100-18 9 9 0 000 18z" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M8 12h8M8 9h5M8 15h6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-    </svg>
-  );
-}
-
 function ActivityIcon({ type, className }: { type: ActivityType; className?: string }) {
   switch (type) {
     case "commit":
       return <Branch className={className} />;
     case "finding":
-      return <FindingIcon className={className} />;
+      return <Finding className={className} />;
     case "description":
-      return <DescriptionIcon className={className} />;
+      return <Description className={className} />;
   }
 }
 
@@ -209,7 +160,7 @@ export function FileExplorer() {
               {entry.type === "folder" ? (
                 <>
                   <ChevronRight className="text-primary-600" />
-                  <FolderIcon />
+                  <Folder />
                 </>
               ) : (
                 <>
@@ -229,14 +180,11 @@ export function FileExplorer() {
           {/* Action buttons */}
           <div className="flex items-center gap-2 px-2 py-2 shrink-0">
             <button className="flex-1 flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg bg-primary-900/60 text-primary-300 text-[11px] font-medium hover:bg-primary-900 transition-colors cursor-pointer">
-              <SparklesIcon className="text-primary-400" />
+              <Sparkles className="text-primary-400" />
               Review Changes
             </button>
             <button className="flex-1 flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg bg-primary-900/60 text-primary-300 text-[11px] font-medium hover:bg-primary-900 transition-colors cursor-pointer">
-              <svg className="text-primary-400 rotate-90" width="14" height="14" viewBox="0 0 16 16" fill="none">
-                <circle cx="8" cy="8" r="3" stroke="currentColor" strokeWidth="1.2" />
-                <path d="M8 1v4M8 11v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-              </svg>
+              <CommitCircle className="text-primary-400 rotate-90" />
               Commit Changes
             </button>
           </div>
