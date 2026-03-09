@@ -22,32 +22,33 @@ type Workspace = {
 
 const WORKSPACES: Workspace[] = [
   {
-    owner: "OkanBilal",
-    repo: "true-laurel",
-    icon: "T",
+    owner: "laurelresearch",
+    repo: "jinzo",
+    icon: "J",
     iconColor: "border border-primary-700 text-primary-400",
-    branch: "cherry-n236",
+    branch: "update-dependencies",
     status: "warning",
     timeAgo: "6h ago",
     additions: 1222,
     deletions: 516,
   },
   {
-    owner: "OkanBilal",
-    repo: "jinzo",
-    icon: "J",
+    owner: "raycast",
+    repo: "extensions",
+    icon: "R",
     iconColor: "bg-indigo-900/60 text-indigo-400",
-    branch: "orange-21dz",
+    branch: "jinzo-extension",
     status: "warning",
     timeAgo: "6h ago",
-    additions: 3,
+    additions: 323,
+    deletions: 122,
   },
   {
     owner: "OkanBilal",
-    repo: "true-laurel",
-    icon: "T",
+    repo: "home",
+    icon: "H",
     iconColor: "border border-primary-700 text-primary-400",
-    branch: "avocado-jkpu",
+    branch: "local-llm-integration",
     status: "error",
     timeAgo: "6h ago",
   },
@@ -56,16 +57,17 @@ const WORKSPACES: Workspace[] = [
     repo: "jinzo-docs",
     icon: "J",
     iconColor: "bg-indigo-900/60 text-indigo-400",
-    branch: "banana-1o5n",
+    branch: "add-agent-auth-docs",
     status: "pending",
     timeAgo: "7h ago",
+    
   },
   {
     owner: "OkanBilal",
     repo: "true-laurel",
     icon: "T",
     iconColor: "border border-primary-700 text-primary-400",
-    branch: "mango-ze73",
+    branch: "add-caching-layer",
     status: "error",
     timeAgo: "20h ago",
   },
@@ -74,10 +76,19 @@ const WORKSPACES: Workspace[] = [
     repo: "true-laurel",
     icon: "T",
     iconColor: "border border-primary-700 text-primary-400",
-    branch: "papaya-vbpu",
+    branch: "keyboard-shortcuts",
     status: "success",
     timeAgo: "20h ago",
   },
+  {
+    owner: "laurelresearch",
+    repo: "jinzo",
+    icon: "J",
+    iconColor: "border border-primary-700 text-primary-400",
+    branch: "refactor-agent-architecture",
+    status: "pending",
+    timeAgo: "1d ago",
+  }
 ];
 
 const statusComponents: Record<StatusType, { color: string; Icon: React.FC<React.SVGProps<SVGSVGElement>> }> = {
@@ -146,12 +157,12 @@ export function WorkspaceList() {
                   {ws.owner}/{ws.repo}
                 </span>
                 {(ws.additions || ws.deletions) && (
-                  <div className="flex items-center gap-1 font-mono text-[11px] ml-2 shrink-0">
+                  <div className="flex items-center gap-1  text-[11px] ml-2 shrink-0">
                     {ws.additions && (
-                      <span className="text-green-500">+{ws.additions}</span>
+                      <span className="text-green-500 font-mono">+{ws.additions}</span>
                     )}
                     {ws.deletions && (
-                      <span className="text-red-500">-{ws.deletions}</span>
+                      <span className="text-red-500 font-mono">-{ws.deletions}</span>
                     )}
                   </div>
                 )}

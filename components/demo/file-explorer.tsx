@@ -4,29 +4,31 @@ import { useState } from "react";
 import Typescript from "@/components/icons/typescript";
 import ReactFileIcon from "@/components/icons/react";
 import MarkdownIcon from "@/components/icons/markdown";
-import { Json, Postcss } from "../icons";
+import { Branch, Commit, Json, Node, Postcss } from "../icons";
+import Javascript from "../icons/javascript";
+import Claude from "../icons/claude";
 
 type FileEntry = {
   name: string;
   type: "folder" | "file";
-  icon?: "md" | "ts" | "json" | "postcss";
+  icon?: "md" | "ts" | "json" | "postcss" | "js" | "claude" | "node";
 };
 
 const FILE_TREE: FileEntry[] = [
-  { name: "app", type: "folder" },
-  { name: "components", type: "folder" },
-  { name: "content", type: "folder" },
-  { name: "hooks", type: "folder" },
-  { name: "lib", type: "folder" },
+  { name: "src", type: "folder" },
   { name: "public", type: "folder" },
-  { name: "styles", type: "folder" },
-  { name: "BLOG_README.md", type: "file", icon: "md" },
-  { name: "contentlayer.config.ts", type: "file", icon: "ts" },
+  { name: "drizzle.config.runtime.ts", type: "file", icon: "ts" },
+  { name: "drizzle.config.ts", type: "file", icon: "ts" },
   { name: "global.d.ts", type: "file", icon: "ts" },
   { name: "next.config.ts", type: "file", icon: "ts" },
+  { name: "CLAUDE.md", type: "file", icon: "claude" },
   { name: "README.md", type: "file", icon: "md" },
-  { name: "package.json", type: "file", icon: "json" },
+  { name: "package.json", type: "file", icon: "node" },
   { name: "postcss.config.mjs", type: "file", icon: "postcss" },
+  { name: "tsconfig.preload.json", type: "file", icon: "json" },
+  { name: "tsconfig.renderer.json", type: "file", icon: "json" },
+  { name: "vite.preload.config.mjs", type: "file", icon: "js" },
+  { name: "vite.renderer.config.mjs", type: "file", icon: "js" },
 ];
 
 type Tab = "files" | "changes" | "activity";
@@ -39,14 +41,16 @@ type ChangedFile = {
 };
 
 const CHANGED_FILES: ChangedFile[] = [
-  { name: "page.tsx", dir: "app/(root)/blog/[slug]", additions: 2, deletions: 2 },
-  { name: "page.tsx", dir: "app/(root)/blog", additions: 2, deletions: 2 },
-  { name: "layout.tsx", dir: "app/(root)", additions: 1, deletions: 2 },
-  { name: "page.tsx", dir: "app/(root)", additions: 12, deletions: 7 },
-  { name: "changelog-card.tsx", dir: "components", additions: 8, deletions: 4 },
-  { name: "footer.tsx", dir: "components", additions: 35, deletions: 27 },
-  { name: "header.tsx", dir: "components", additions: 14, deletions: 9 },
-  { name: "form.tsx", dir: "components", additions: 6, deletions: 3 },
+  { name: "input-toolbar.tsx", dir: "src/renderer/feature/workspace/input", additions: 2, deletions: 2 },
+  { name: "workspace.tsx", dir: "src/renderer/feature/workspace", additions: 878, deletions: 123 },
+  { name: "agent.ts", dir: "src/agent", additions: 123, deletions: 122 },
+  { name: "workspace-fetch.tsx", dir: "src/renderer/feature/workspace-sync", additions: 12, deletions: 8 },
+  { name: "client.tsx", dir: "src/renderer/feature/client", additions: 66, deletions: 44 },
+  { name: "agent-executor.tsx", dir: "src/agent", additions: 43, deletions: 23 },
+  { name: "tool-agent.tsx", dir: "src/agent", additions: 55, deletions: 121 },
+  { name: "workspace-sync.tsx", dir: "src/renderer/feature/workspace-sync", additions: 5, deletions: 12 },
+  { name: "auth.tsx", dir: "src/renderer/feature/auth", additions: 11, deletions: 23 },
+
 ];
 
 type ActivityType = "commit" | "finding" | "description";
@@ -84,7 +88,7 @@ function FolderIcon() {
   );
 }
 
-function FileIcon({ icon }: { icon?: "md" | "ts" | "json" | "postcss" }) {
+function FileIcon({ icon }: { icon?: "md" | "ts" | "json" | "postcss" | "js" | "claude" | "node" }) {
   if (icon === "md") {
     return <MarkdownIcon className="w-4.5 h-4.5 text-primary-400" />;
   }
@@ -96,6 +100,15 @@ function FileIcon({ icon }: { icon?: "md" | "ts" | "json" | "postcss" }) {
   }
   if (icon === "postcss") {
     return <Postcss className="w-4.5 h-4.5 text-purple-400" />;
+  }
+  if (icon === "js") {
+    return <Javascript className="w-4.5 h-4.5 text-yellow-400" />;
+  }
+  if (icon === "claude") {
+    return <Claude className="w-4.5 h-4.5 text-primary-400" />;
+  }
+  if (icon === "node") {
+    return <Node className="w-4.5 h-4.5 text-green-400" />;
   }
   return null;
 }
@@ -118,16 +131,7 @@ function SparklesIcon({ className }: { className?: string }) {
   );
 }
 
-function GitBranchIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <circle cx="6" cy="6" r="2" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="6" cy="18" r="2" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="18" cy="12" r="2" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M6 8v8M8 6h4a4 4 0 014 4v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
+
 
 function FindingIcon({ className }: { className?: string }) {
   return (
@@ -150,7 +154,7 @@ function DescriptionIcon({ className }: { className?: string }) {
 function ActivityIcon({ type, className }: { type: ActivityType; className?: string }) {
   switch (type) {
     case "commit":
-      return <GitBranchIcon className={className} />;
+      return <Branch className={className} />;
     case "finding":
       return <FindingIcon className={className} />;
     case "description":
@@ -164,7 +168,7 @@ export function FileExplorer() {
 
   const tabs: { id: Tab; label: string; badge?: number }[] = [
     { id: "files", label: "Files" },
-    { id: "changes", label: "Changes", badge: 8 },
+    { id: "changes", label: "Changes", badge: 9 },
     { id: "activity", label: "Activity" },
   ];
 

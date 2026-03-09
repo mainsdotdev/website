@@ -2,28 +2,31 @@
 
 import { useState } from "react";
 
-type LabelType = "enhancement" | "bug" | "documentation";
+type LabelType = "feature" | "enhancement" | "bug" | "documentation";
+type SourceType = "github" | "linear" | "gitlab";
 
 type Issue = {
   title: string;
   labels: LabelType[];
+  source: SourceType;
 };
 
 const ISSUES: Issue[] = [
-  { title: "Landing Page", labels: ["enhancement"] },
-  { title: "Create Feed Page Integrating Data fro…", labels: ["enhancement"] },
-  { title: "[Epic] Functionality Enhancements and…", labels: ["enhancement"] },
-  { title: "Task Management System", labels: ["enhancement"] },
-  { title: "Workflow Automation Implementation", labels: ["enhancement"] },
-  { title: "Voice Assistant Support", labels: ["enhancement"] },
-  { title: "Performance Optimization Sprint", labels: ["enhancement"] },
-  { title: "API Rate Limiting & Caching", labels: ["bug"] },
-  { title: "User Onboarding Flow", labels: ["enhancement"] },
-  { title: "Dashboard Analytics Refactor", labels: ["enhancement"] },
+  { title: "Implement multi-file diff viewer component", labels: ["feature"], source: "github" },
+  { title: "Add WebSocket support for real-time updates", labels: ["feature"], source: "github" },
+  { title: "Refactor AST parser to support TypeScript", labels: ["enhancement"], source: "linear" },
+  { title: "Git merge conflict resolution UI", labels: ["feature"], source: "linear" },
+  { title: "Fix race condition in concurrent file access", labels: ["bug"], source: "gitlab" },
+  { title: "Add LSP integration for code intelligence", labels: ["feature"], source: "github" },
+  { title: "Optimize tree-sitter parsing for large files", labels: ["enhancement"], source: "linear" },
+  { title: "SSH tunnel drops connection after idle timeout", labels: ["bug"], source: "gitlab" },
+  { title: "Implement workspace snapshot & restore", labels: ["feature"], source: "linear" },
+  { title: "Add OpenAPI spec generation from routes", labels: ["enhancement"], source: "github" },
 ];
 
 const labelColors: Record<LabelType, string> = {
   enhancement: "bg-blue-900/60 text-blue-300",
+  feature: "bg-green-900/60 text-green-300",
   bug: "bg-red-900/60 text-red-300",
   documentation: "bg-purple-900/60 text-purple-300",
 };
@@ -41,6 +44,46 @@ function GitHubIcon({ className }: { className?: string }) {
     </svg>
   );
 }
+
+function LinearIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path d="M3.035 12.943a8.963 8.963 0 0 0 2.587 5.421 8.963 8.963 0 0 0 5.42 2.587l-8.007-8.008ZM3 11.494l9.492 9.492a9.016 9.016 0 0 0 2.378-.459L3.46 9.115A9.016 9.016 0 0 0 3 11.494ZM3.867 8.11l12.009 12.009a8.948 8.948 0 0 0 1.773-1.123L4.99 6.336A8.95 8.95 0 0 0 3.867 8.11ZM5.663 5.595a9 9 0 0 1 12.728 12.728L5.663 5.595Z" />
+    </svg>
+  );
+}
+
+function GitLabIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="24"
+      height="24"
+      viewBox="0 0 32 32"
+      fill="none"
+    >
+      <path d="m16 28.896 5.156-15.867H10.844L16 28.896z" fill="#e24329" />
+      <path d="m16 28.896-5.156-15.867H3.619L16 28.896z" fill="#fc6d26" />
+      <path d="m3.619 13.029-1.567 4.822a1.067 1.067 0 0 0 .388 1.193L16 28.9 3.619 13.029Z" fill="#fca326" />
+      <path d="M3.619 13.029h7.225L7.739 3.473a.534.534 0 0 0-1.015 0l-3.105 9.556Z" fill="#e24329" />
+      <path d="m16 28.896 5.156-15.867h7.225L16 28.896z" fill="#fc6d26" />
+      <path d="m28.381 13.029 1.567 4.822a1.067 1.067 0 0 1-.388 1.193L16 28.9l12.381-15.871Z" fill="#fca326" />
+      <path d="M28.381 13.029h-7.225l3.105-9.557a.534.534 0 0 1 1.015 0l3.105 9.557Z" fill="#e24329" />
+    </svg>
+  );
+}
+
+const sourceIcons: Record<SourceType, React.FC<{ className?: string }>> = {
+  github: GitHubIcon,
+  linear: LinearIcon,
+  gitlab: GitLabIcon,
+};
 
 export function IssuesList() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -86,7 +129,10 @@ export function IssuesList() {
               onMouseEnter={() => setHoveredIndex(i)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
-              <GitHubIcon className="w-5 h-5 text-primary-500 shrink-0 mt-0.5" />
+              {(() => {
+                const Icon = sourceIcons[issue.source];
+                return <Icon className="w-5 h-5 text-primary-500 shrink-0 mt-0.5" />;
+              })()}
 
               <div className="flex-1 min-w-0">
                 <span className="text-white text-xs font-medium truncate block">

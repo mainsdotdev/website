@@ -12,20 +12,19 @@ export const INTEGRATIONS = [
 ] as const;
 
 export const USE_CASES = [
-
   {
-    title: "Chat with your work context",
+    title: "Run agents in isolated workspaces",
     description:
-      'Ask questions across your tools in one chat. "Noisy issues?", "What changed since yesterday?", "What needs action?"',
+      "Spin up Git-backed workspaces linked to your repos. Run AI coding agents like Claude Code or Copilot in secure, sandboxed environments.",
   },
   {
-    title: "What should I focus on today?",
+    title: "Review every change before committing",
     description:
-      "Get a daily briefing from your own data. Prioritized tasks, context, and suggestions - generated locally.",
+      "Browse files, inspect diffs, and track changes across tabs. See exactly what the agent modified before you commit or open a pull request.",
   },
   {
-    title: "Track issues across your tools",
+    title: "Link tasks from your tools",
     description:
-      "Pull in issues from GitHub, Linear, and Jira into a single view. Stay on top of what matters without switching tabs.",
+      "Connect issues from GitHub, Gitlab, Linear, Jira, and Asana directly to a workspace. Give agents the right context to start working immediately.",
   },
 ] as const;
