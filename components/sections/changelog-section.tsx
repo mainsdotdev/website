@@ -1,16 +1,14 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ChangelogCard } from "@/components/changelog-card";
+import { FADE_IN_UP } from "@/lib/animations";
 import type { Post } from "@/lib/types";
 
 export function ChangelogSection({ posts }: { posts: Post[] }) {
   return (
     <section className="py-20 ">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
+        {...FADE_IN_UP}
         className="max-w-7xl mx-auto px-4"
       >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-white tracking-tight leading-snug font-sans mb-4">

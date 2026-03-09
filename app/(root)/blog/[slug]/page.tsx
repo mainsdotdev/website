@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
 import { notFound } from 'next/navigation';
-import { format } from 'date-fns';
 import { MDXContent } from '@/components/mdx-content';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Header from '@/components/header';
 import { ChevronLeft } from '@/components/icons';
+import { PostMeta } from '@/components/post-meta';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -86,17 +86,12 @@ export default async function BlogPost({ params }: Props) {
           </h1>
 
           {/* Meta */}
-          <div className="flex items-center gap-4 text-primary-400 text-sm">
-            <time dateTime={post.date}>
-              {format(new Date(post.date), 'MMMM dd, yyyy')}
-            </time>
-            {post.author && (
-              <>
-                <span>•</span>
-                <span>{post.author}</span>
-              </>
-            )}
-          </div>
+          <PostMeta
+            date={post.date}
+            author={post.author}
+            dateFormat="MMMM dd, yyyy"
+            className="flex items-center gap-4 text-primary-400 text-sm"
+          />
 
           {/* Description */}
           <p className="text-primary-300 text-lg mt-4">{post.description}</p>

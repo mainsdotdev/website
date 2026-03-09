@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
 import NumberFlow from "@number-flow/react";
 import { Dollar, SettingsStar, CheckCircle, Clock } from "@/components/icons";
+import { useInView } from "@/hooks/useInView";
 
 const TOOL_DATA = [
   { name: "Read", count: 67, color: "#6384e6" },
@@ -49,29 +49,6 @@ const SUMMARY_DATA = [
   { value: 32, label: "Total Sessions" },
   { value: 186.36, label: "Est. Cost", prefix: "$" },
 ];
-
-function useInView() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return { ref, visible };
-}
 
 function CardWrapper({ children, className = "", fill = false }: { children: React.ReactNode; className?: string; fill?: boolean }) {
   return (

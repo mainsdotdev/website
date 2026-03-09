@@ -2,6 +2,7 @@
 
 import { useState, useEffect, FormEvent } from "react";
 import { createPortal } from "react-dom";
+import { FormInput, FormTextarea } from "@/components/form-input";
 
 type WaitlistModalProps = {
   isOpen: boolean;
@@ -164,106 +165,44 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Email (required) */}
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-white mb-1.5"
-                >
-                  Email <span className="text-red-400">*</span>
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  className="w-full px-3 py-2 border border-primary-700 rounded-md bg-primary-800 text-white placeholder:text-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow"
-                  placeholder="you@example.com"
-                />
-              </div>
-
-              {/* Name (optional) */}
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-white mb-1.5"
-                >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  className="w-full px-3 py-2 border border-primary-700 rounded-md bg-primary-800 text-white placeholder:text-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow"
-                  placeholder="Your name"
-                />
-              </div>
-
-              {/* Company (optional) */}
-              <div>
-                <label
-                  htmlFor="company"
-                  className="block text-sm font-medium text-white mb-1.5"
-                >
-                  Company
-                </label>
-                <input
-                  type="text"
-                  id="company"
-                  value={formData.company}
-                  onChange={(e) =>
-                    setFormData({ ...formData, company: e.target.value })
-                  }
-                  className="w-full px-3 py-2 border border-primary-700 rounded-md bg-primary-800 text-white placeholder:text-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow"
-                  placeholder="Your company"
-                />
-              </div>
-
-              {/* Role (optional) */}
-              <div>
-                <label
-                  htmlFor="role"
-                  className="block text-sm font-medium text-white mb-1.5"
-                >
-                  Role
-                </label>
-                <input
-                  type="text"
-                  id="role"
-                  value={formData.role}
-                  onChange={(e) =>
-                    setFormData({ ...formData, role: e.target.value })
-                  }
-                  className="w-full px-3 py-2 border border-primary-700 rounded-md bg-primary-800 text-white placeholder:text-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow"
-                  placeholder="e.g. Developer, Designer"
-                />
-              </div>
-
-              {/* Use Case (optional) */}
-              <div>
-                <label
-                  htmlFor="useCase"
-                  className="block text-sm font-medium text-white mb-1.5"
-                >
-                  What do you want to use it for?
-                </label>
-                <textarea
-                  id="useCase"
-                  rows={3}
-                  value={formData.useCase}
-                  onChange={(e) =>
-                    setFormData({ ...formData, useCase: e.target.value })
-                  }
-                  className="w-full px-3 py-2 border border-primary-700 rounded-md bg-primary-800 text-white placeholder:text-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow resize-none"
-                  placeholder="Tell us about your use case..."
-                />
-              </div>
+              <FormInput
+                label="Email"
+                id="email"
+                type="email"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                placeholder="you@example.com"
+              />
+              <FormInput
+                label="Name"
+                id="name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                placeholder="Your name"
+              />
+              <FormInput
+                label="Company"
+                id="company"
+                value={formData.company}
+                onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                placeholder="Your company"
+              />
+              <FormInput
+                label="Role"
+                id="role"
+                value={formData.role}
+                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                placeholder="e.g. Developer, Designer"
+              />
+              <FormTextarea
+                label="What do you want to use it for?"
+                id="useCase"
+                rows={3}
+                value={formData.useCase}
+                onChange={(e) => setFormData({ ...formData, useCase: e.target.value })}
+                placeholder="Tell us about your use case..."
+              />
 
               {/* Error message */}
               {error && (

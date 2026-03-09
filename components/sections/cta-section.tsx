@@ -3,16 +3,14 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Download, Github } from "@/components/icons";
+import { FADE_IN_UP } from "@/lib/animations";
 
 export function CtaSection() {
   return (
     <div className="border-b border-primary-900 ">
     <section className="py-24 max-w-3xl mx-auto px-6 text-center ">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        {...FADE_IN_UP}
         className="flex flex-col items-center gap-6"
       >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-white tracking-tight leading-snug font-sans">

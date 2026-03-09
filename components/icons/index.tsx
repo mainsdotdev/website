@@ -38,3 +38,7 @@ export { default as SettingsStar } from "./settings-star";
 export { default as CheckCircle } from "./check-circle";
 export { default as Clock } from "./clock";
 export { default as GrainOverlay } from "./grain-overlay";
+export { default as ArrowRightLine } from "./arrow-right-line";
+export { default as Mail } from "./mail";
+export { default as CheckLine } from "./check-line";
+export { default as DownloadLine } from "./download-line";

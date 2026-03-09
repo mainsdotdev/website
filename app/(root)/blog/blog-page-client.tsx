@@ -1,12 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { format } from "date-fns";
 import Link from "next/link";
 import { useState } from "react";
 import type { Post } from "@/lib/types";
 import Header from "@/components/header";
 import { ArrowRight } from "@/components/icons";
+import { FilterPill } from "@/components/filter-pill";
+import { PostMeta } from "@/components/post-meta";
 
 export function BlogPageClient({ posts }: { posts: Post[] }) {
   const [filter, setFilter] = useState<"all" | "changelog" | "posts">("all");
@@ -31,36 +32,9 @@ export function BlogPageClient({ posts }: { posts: Post[] }) {
 
           {/* Filter Chips */}
           <div className="flex gap-3">
-            <button
-              onClick={() => setFilter("all")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                filter === "all"
-                  ? "bg-white text-black"
-                  : "bg-primary-800 text-primary-300 hover:bg-primary-700"
-              }`}
-            >
-              All
-            </button>
-            <button
-              onClick={() => setFilter("changelog")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                filter === "changelog"
-                  ? "bg-white text-black"
-                  : "bg-primary-800 text-primary-300 hover:bg-primary-700"
-              }`}
-            >
-              Changelog
-            </button>
-            <button
-              onClick={() => setFilter("posts")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                filter === "posts"
-                  ? "bg-white text-black"
-                  : "bg-primary-800 text-primary-300 hover:bg-primary-700"
-              }`}
-            >
-              Posts
-            </button>
+            <FilterPill label="All" isActive={filter === "all"} onClick={() => setFilter("all")} />
+            <FilterPill label="Changelog" isActive={filter === "changelog"} onClick={() => setFilter("changelog")} />
+            <FilterPill label="Posts" isActive={filter === "posts"} onClick={() => setFilter("posts")} />
           </div>
         </div>
 
@@ -111,11 +85,7 @@ function BlogCard({ post }: { post: Post }) {
       <div className="p-6">
         {/* Meta Info */}
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2 text-xs text-primary-400">
-            {post.author && <span>{post.author}</span>}
-            <span>·</span>
-            <span>{format(new Date(post.date), "MMM dd, yyyy")}</span>
-          </div>
+          <PostMeta date={post.date} author={post.author} />
           <ArrowRight className="w-5 h-5 text-primary-600 group-hover:text-primary-400 group-hover:translate-x-1 transition-all" />
         </div>
 

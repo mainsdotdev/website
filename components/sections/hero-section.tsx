@@ -5,6 +5,7 @@ import Link from "next/link";
 import Header from "@/components/header";
 import { ScrambleText } from "@/components/scramble-text";
 import { Download, Github, GrainOverlay } from "@/components/icons";
+import { FADE_IN_BLUR_DELAY, FADE_IN_BLUR_UP_DELAY } from "@/lib/animations";
 
 type HeroSectionProps = {
   platform: "macOS" | "Windows";
@@ -30,9 +31,7 @@ export function HeroSection({ platform }: HeroSectionProps) {
     <section className="pt-10 pb-20 max-w-7xl mx-auto px-6">
       {/* Title & Subtitle - Left aligned */}
       <motion.div
-        initial={{ opacity: 0, filter: "blur(10px)" }}
-        animate={{ opacity: 1, filter: "blur(0px)" }}
-        transition={{ duration: 0.8, delay: 0.2 }}
+        {...FADE_IN_BLUR_DELAY(0.2)}
         className="relative z-10 mb-4"
       >
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-medium text-white tracking-tight leading-snug font-sans">
@@ -53,9 +52,7 @@ export function HeroSection({ platform }: HeroSectionProps) {
 
       {/* CTA Button */}
       <motion.div
-        initial={{ opacity: 0, filter: "blur(10px)" }}
-        animate={{ opacity: 1, filter: "blur(0px)" }}
-        transition={{ duration: 0.8, delay: 0.6 }}
+        {...FADE_IN_BLUR_DELAY(0.6)}
         className="relative z-10 mb-16"
       >
         <div className="flex items-center gap-3">
@@ -77,9 +74,7 @@ export function HeroSection({ platform }: HeroSectionProps) {
 
       {/* Hero Video */}
       <motion.div
-        initial={{ opacity: 0, filter: "blur(10px)", y: 20 }}
-        animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-        transition={{ duration: 1, delay: 0.8 }}
+        {...FADE_IN_BLUR_UP_DELAY(0.8)}
         className="relative z-10 max-w-7xl mx-auto rounded-2xl overflow-hidden border border-white/5 "
       >
         <video
