@@ -6,18 +6,21 @@ import NumberFlow from "@number-flow/react";
 const TOOL_DATA = [
   { name: "Read", count: 67, color: "#6384e6" },
   { name: "Edit", count: 49, color: "#9b7ee8" },
+  { name: "Team", count: 21, color: "#7a8ae8" },
   { name: "ToolSearch", count: 12, color: "#c4955a" },
   { name: "Glob", count: 7, color: "#5aadad" },
   { name: "Write", count: 6, color: "#6abf6a" },
   { name: "Grep", count: 3, color: "#d4a054" },
-  { name: "mcp__jinz...", count: 2, color: "#e8a070" },
-  { name: "mcp__jinz...", count: 1, color: "#7a8ae8" },
-  { name: "mcp__jinz...", count: 1, color: "#7a8ae8" },
+  { name: "GitDiff", count: 2, color: "#e8a070" },
+  { name: "SaveReview", count: 1, color: "#7a8ae8" },
+  { name: "Commit", count: 1, color: "#7a8ae8" },
 ];
 
 const MODEL_DATA = [
-  { name: "claude-opus-4-6", cost: 10.08, pct: 82, color: "#c4734a" },
-  { name: "claude-sonnet-4-6", cost: 2.14, pct: 18, color: "#6384e6" },
+  { name: "claude-opus-4-6", cost: 140.08, pct: 65, color: "#c4734a" },
+  { name: "claude-sonnet-4-6", cost: 24.14, pct: 18, color: "#6384e6" },
+  { name: "claude-haiku-4-5", cost: 12.14, pct: 12, color: "#6384e6" },
+  { name: "gpt-5.4", cost: 8.14, pct: 5, color: "#e8a070" },
 ];
 
 const DAILY_RUNS = [
@@ -41,9 +44,9 @@ const SESSIONS = [
 
 const SUMMARY_DATA = [
   { value: 3, label: "Projects" },
-  { value: 0, label: "Runs Today" },
-  { value: 12, label: "Total Sessions" },
-  { value: 12.13, label: "Est. Cost", prefix: "$" },
+  { value: 12, label: "Runs Today" },
+  { value: 32, label: "Total Sessions" },
+  { value: 186.36, label: "Est. Cost", prefix: "$" },
 ];
 
 function useInView() {

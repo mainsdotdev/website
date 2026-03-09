@@ -7,7 +7,7 @@ export const INTEGRATIONS = [
   { name: "Trello", logo: "/trello.png" },
   { name: "Slack", logo: "/slack.png" },
   { name: "Figma", logo: "/figma.png" },
-  { name: "Todoist", logo: "/todoist.png" },
+  // { name: "Todoist", logo: "/todoist.png" },
   { name: "Asana", logo: "/asana.png" },
 ] as const;
 

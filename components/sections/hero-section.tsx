@@ -47,8 +47,11 @@ export function HeroSection({ platform }: HeroSectionProps) {
             className="text-primary"
           />
         </h1>
-        <p className="pb-4 pt-2 text-md text-primary-300 font-sans">
-          Run AI coding agents in secure workspaces. Review changes, track costs, and ship with confidence.
+        <p className="pb-2 pt-2 text-md text-primary-300 font-sans">
+          Run AI coding agents in secure workspaces. Inspect changes, collaborate with agents, and ship with confidence.
+        </p>
+        <p className="pb-4 text-xs text-primary-100 font-sans">
+          Works with Claude Code and GitHub Copilot. Codex, Gemini CLI and more coming soon.
         </p>
       </motion.div>
 
