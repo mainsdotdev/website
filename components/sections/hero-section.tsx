@@ -75,7 +75,7 @@ export function HeroSection({ platform }: HeroSectionProps) {
       {/* Hero Video */}
       <motion.div
         {...FADE_IN_BLUR_UP_DELAY(0.8)}
-        className="relative z-10 max-w-7xl mx-auto rounded-3xl overflow-hidden border border-white/5 "
+        className="relative z-10 max-w-7xl mx-auto sm:rounded-3xl rounded-lg overflow-hidden border border-white/5 "
       >
         <video
           autoPlay
