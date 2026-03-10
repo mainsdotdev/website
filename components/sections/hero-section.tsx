@@ -75,16 +75,17 @@ export function HeroSection({ platform }: HeroSectionProps) {
       {/* Hero Video */}
       <motion.div
         {...FADE_IN_BLUR_UP_DELAY(0.8)}
-        className="relative z-10 max-w-7xl mx-auto rounded-2xl overflow-hidden border border-white/5 "
+        className="relative z-10 max-w-7xl mx-auto rounded-3xl overflow-hidden border border-white/5 "
       >
         <video
           autoPlay
+          poster="/poster.png"
           loop
           muted
           playsInline
-          className="w-full h-auto"
+          className="w-full h-auto "
         >
-          <source src="/hero3.mp4" type="video/mp4" />
+          <source src="/hero-video.mp4" type="video/mp4" />
         </video>
       </motion.div>
 
