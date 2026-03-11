@@ -7,21 +7,20 @@
     "lang": "en-US",
     "orientation": "portrait-primary",
     "start_url": "/",
+    "theme_color": "#0c0c0c",
+    "background_color": "#0c0c0c",
     "icons": [
       {
-        "src": "/icons/icon-safari-pinned-tab.svg",
-        "type": "image/svg+xml",
-        "sizes": "512x512"
+        "src": "/icons/android-chrome-192x192.png",
+        "type": "image/png",
+        "sizes": "192x192",
+        "purpose": "any"
       },
       {
-        "src": "/icons/icon-android-chrome-192x192.png",
+        "src": "/icons/android-chrome-512x512.png",
         "type": "image/png",
-        "sizes": "192x192"
-      },
-      {
-        "src": "/icons/icon-android-chrome-512x512.png",
-        "type": "image/png",
-        "sizes": "512x512"
+        "sizes": "512x512",
+        "purpose": "any maskable"
       }
     ]
   }

@@ -16,7 +16,7 @@ export function HeroSection({ platform }: HeroSectionProps) {
   return (
     <div className="relative overflow-hidden">
       {/* Gradient Blur Background */}
-      <div className="absolute inset-0 z-0 bg-black">
+      <div className="absolute inset-0 z-0 bg-primary-950">
         <div className="absolute top-[-10%] left-[-5%] w-[50%] h-[60%] rounded-full bg-[#D97757] opacity-60 blur-[90px]" style={{ animation: 'blob-float-1 20s ease-in-out infinite' }} />
         <div className="absolute top-[10%] left-[20%] w-[60%] h-[70%] rounded-full bg-[#000000] opacity-70 blur-[90px]" style={{ animation: 'blob-float-2 25s ease-in-out infinite' }} />
         <div className="absolute top-[5%] right-[-5%] w-[40%] h-[50%] rounded-full bg-[#09111c] opacity-50 blur-[90px]" style={{ animation: 'blob-float-3 22s ease-in-out infinite' }} />
@@ -25,7 +25,7 @@ export function HeroSection({ platform }: HeroSectionProps) {
       </div>
       {/* Noise/Grain Overlay */}
       <GrainOverlay className="absolute inset-0 w-full h-full z-0 opacity-[0.05] pointer-events-none" />
-      <div className="absolute inset-0 bg-linear-to-b from-black/40 via-transparent to-black z-0" />
+      <div className="absolute inset-0 bg-linear-to-b from-black via-transparent to-primary-950 z-0" />
     <div className="relative z-10">
       <Header />
     <section className="pt-10 pb-20 max-w-7xl mx-auto px-6">

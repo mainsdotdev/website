@@ -54,7 +54,7 @@ const WORKSPACES: Workspace[] = [
     timeAgo: "6h ago",
   },
   {
-    owner: "OkanBilal",
+    owner: "laurelresearch",
     repo: "jinzo-docs",
     icon: "J",
     iconColor: "bg-indigo-900/60 text-indigo-400",
@@ -64,18 +64,18 @@ const WORKSPACES: Workspace[] = [
 
   },
   {
-    owner: "OkanBilal",
-    repo: "true-laurel",
-    icon: "T",
+    owner: "laurelresearch",
+    repo: "jinzo-landing",
+    icon: "J",
     iconColor: "border border-primary-700 text-primary-400",
     branch: "add-caching-layer",
     status: "error",
     timeAgo: "20h ago",
   },
   {
-    owner: "OkanBilal",
-    repo: "true-laurel",
-    icon: "T",
+    owner: "laurelresearch",
+    repo: "jinzo-landing",
+    icon: "J",
     iconColor: "border border-primary-700 text-primary-400",
     branch: "keyboard-shortcuts",
     status: "success",

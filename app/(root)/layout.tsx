@@ -25,8 +25,12 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: "/icons/icon-android-chrome-192x192.png",
-    apple: "/icons/icon-apple-touch-icon.png",
+    icon: [
+      { url: "/icons/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+      { url: "/icons/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: "/icons/apple-touch-icon.png",
   },
   manifest: `/manifest.json`,
 };
