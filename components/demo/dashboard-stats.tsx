@@ -22,6 +22,7 @@ const MODEL_DATA = [
   { name: "claude-sonnet-4-6", cost: 24.14, pct: 18, color: "#6384e6" },
   { name: "claude-haiku-4-5", cost: 12.14, pct: 12, color: "#6384e6" },
   { name: "gpt-5.4", cost: 8.14, pct: 5, color: "#e8a070" },
+  { name: "gemini-3-pro", cost: 2.14, pct: 2, color: "#5aadad" },
 ];
 
 const DAILY_RUNS = [
@@ -35,12 +36,12 @@ const DAILY_RUNS = [
 ];
 
 const SESSIONS = [
-  { title: "Add Visual Status Section", workspace: "true-laurel", model: "Opus 4.6", duration: "12m 27s", cost: "$8.481" },
-  { title: "Add new use case item", workspace: "true-laurel", model: "Opus 4.6", duration: "47s", cost: "$0.157" },
-  { title: "Create Review Section Component", workspace: "true-laurel", model: "Opus 4.6", duration: "50s", cost: "$0.166" },
-  { title: "Review Workspace Code Changes", workspace: "true-laurel", model: "Opus 4.6", duration: "1m 40s", cost: "$0.176" },
-  { title: "Refactor Tab Component Variants", workspace: "jinzo-app", model: "Sonnet 4.6", duration: "2m 12s", cost: "$0.342" },
-  { title: "Fix Auth Redirect Loop", workspace: "jinzo-app", model: "Opus 4.6", duration: "5m 03s", cost: "$2.891" },
+  { title: "Add Visual Status Section", workspace: "jinzo-docs", model: "Opus 4.6", duration: "12m 27s", cost: "$8.481" },
+  { title: "Add new use case item", workspace: "jinzo", model: "Opus 4.6", duration: "47s", cost: "$0.157" },
+  { title: "Create Review Section Component", workspace: "jinzo-landing", model: "Opus 4.6", duration: "50s", cost: "$0.166" },
+  { title: "Review Workspace Code Changes", workspace: "jinzo-docs", model: "Opus 4.6", duration: "1m 40s", cost: "$0.176" },
+  { title: "Refactor Tab Component Variants", workspace: "jinzo", model: "Sonnet 4.6", duration: "2m 12s", cost: "$0.342" },
+  { title: "Fix Auth Redirect Loop", workspace: "jinzo", model: "Opus 4.6", duration: "5m 03s", cost: "$2.891" },
 ];
 
 const SUMMARY_DATA = [

@@ -42,3 +42,4 @@ export { default as ArrowRightLine } from "./arrow-right-line";
 export { default as Mail } from "./mail";
 export { default as CheckLine } from "./check-line";
 export { default as DownloadLine } from "./download-line";
+export { default as Sentry } from "./sentry";

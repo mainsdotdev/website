@@ -1,0 +1,31 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { SentryIssues } from "@/components/demo/sentry-issues";
+import { SectionHeader } from "@/components/section-header";
+import { FADE_IN_UP, FADE_IN_UP_DELAY } from "@/lib/animations";
+
+export function SentrySection() {
+  return (
+    <section className="py-20 max-w-7xl mx-auto px-6">
+      <motion.div
+        {...FADE_IN_UP}
+        className="flex flex-col md:flex-row items-start gap-12"
+      >
+        <motion.div {...FADE_IN_UP_DELAY(0.2)} className="w-full md:w-5/8 min-w-0 order-2 md:order-1">
+          <SentryIssues />
+        </motion.div>
+
+        <div className="md:w-3/8 order-1 md:order-2">
+          <SectionHeader
+            title="Turn Sentry signals into pull requests"
+            description="Connect your Sentry project and let Jinzo prioritize unresolved issues, analyze stack traces, and generate fix PRs — automatically."
+            layout="column"
+            titleClassName="max-w-xl"
+            descriptionClassName="md:text-base"
+          />
+        </div>
+      </motion.div>
+    </section>
+  );
+}

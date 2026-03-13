@@ -180,7 +180,7 @@ export function DiffViewer() {
           className="flex items-center gap-2 px-3 py-2 text-sm text-primary-200 bg-primary-950 border-x border-t border-white/5 rounded-t-xl -mb-px relative"
         >
           <CodeBrackets className="text-primary-400" />
-          <span className="truncate max-w-48">runDispatcher.ts</span>
+          <span className="truncate text-[13px] max-w-48">runDispatcher.ts</span>
         </div>
         <button className="flex items-center justify-center w-8 h-8 text-primary-500 hover:text-primary-300 transition-colors ml-1" />
       </div>
