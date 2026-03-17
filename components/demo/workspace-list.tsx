@@ -23,7 +23,7 @@ type Workspace = {
 
 const WORKSPACES: Workspace[] = [
   {
-    owner: "laurelresearch",
+    owner: "OkanBilal",
     repo: "jinzo",
     icon: "J",
     iconColor: "border border-primary-700 text-primary-400",
@@ -54,7 +54,7 @@ const WORKSPACES: Workspace[] = [
     timeAgo: "6h ago",
   },
   {
-    owner: "laurelresearch",
+    owner: "OkanBilal",
     repo: "jinzo-docs",
     icon: "J",
     iconColor: "bg-indigo-900/60 text-indigo-400",
@@ -64,7 +64,7 @@ const WORKSPACES: Workspace[] = [
 
   },
   {
-    owner: "laurelresearch",
+    owner: "OkanBilal",
     repo: "jinzo-landing",
     icon: "J",
     iconColor: "border border-primary-700 text-primary-400",
@@ -73,7 +73,7 @@ const WORKSPACES: Workspace[] = [
     timeAgo: "20h ago",
   },
   {
-    owner: "laurelresearch",
+    owner: "OkanBilal",
     repo: "jinzo-landing",
     icon: "J",
     iconColor: "border border-primary-700 text-primary-400",
@@ -82,7 +82,7 @@ const WORKSPACES: Workspace[] = [
     timeAgo: "20h ago",
   },
   {
-    owner: "laurelresearch",
+    owner: "OkanBilal",
     repo: "jinzo",
     icon: "J",
     iconColor: "border border-primary-700 text-primary-400",

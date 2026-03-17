@@ -17,7 +17,7 @@ export default function Footer() {
           </h3>
           <div className="flex  gap-3 flex-row justify-between items-center ">
             <p className="text-left text-xs sm:text-sm text-primary-500 font-sans tracking-tight">
-              © 2026 True Laurel Labs
+              © 2026 Jinzo
             </p>
             <div className="flex items-center font-sans gap-4 sm:gap-5 tracking-tight">
               <Link
@@ -33,7 +33,7 @@ export default function Footer() {
                 Docs
               </Link>
               <Link
-                href="https://github.com/laurelresearch/jinzo"
+                href="https://github.com/OkanBilal/jinzo"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-neutral-400 hover:text-white transition-colors"
