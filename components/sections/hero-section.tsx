@@ -4,14 +4,12 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Header from "@/components/header";
 import { ScrambleText } from "@/components/scramble-text";
-import { Download, Github, GrainOverlay } from "@/components/icons";
+import { Download, Github, GrainOverlay, Windows } from "@/components/icons";
 import { FADE_IN_BLUR_DELAY, FADE_IN_BLUR_UP_DELAY } from "@/lib/animations";
+import { usePlatformDetection } from "@/hooks/usePlatformDetection";
 
-type HeroSectionProps = {
-  platform: "macOS" | "Windows";
-};
-
-export function HeroSection({ platform }: HeroSectionProps) {
+export function HeroSection() {
+  const { isMac } = usePlatformDetection();
 
   return (
     <div className="relative overflow-hidden">
@@ -56,10 +54,20 @@ export function HeroSection({ platform }: HeroSectionProps) {
         className="relative z-10 mb-16"
       >
         <div className="flex items-center gap-3">
-          <button className="inline-flex items-center gap-2 md:px-6 px-3 md:py-3 py-3 text-xs md:text-sm font-medium text-black bg-white rounded-full hover:bg-neutral-200 transition-colors">
-            Download for {platform}
-            <Download width={16} height={16} />
-          </button>
+          {isMac ? (
+            <a
+              href="https://github.com/OkanBilal/jinzo/releases/download/untagged-daf0e417a56af0482475/Jinzo-0.1.2-arm64.dmg"
+              className="inline-flex items-center gap-2 md:px-6 px-3 md:py-3 py-3 text-xs md:text-sm font-medium text-black bg-white rounded-full hover:bg-neutral-200 transition-colors"
+            >
+              Download for macOS
+              <Download width={16} height={16} />
+            </a>
+          ) : (
+            <span className="inline-flex items-center gap-2 md:px-6 px-3 md:py-3 py-3 text-xs md:text-sm font-medium text-primary-500 bg-primary-900/50 rounded-full cursor-default">
+              <Windows width={16} height={16} />
+              Windows — Coming Soon
+            </span>
+          )}
           <Link
             href="https://github.com/OkanBilal/jinzo"
             target="_blank"

@@ -1,6 +1,5 @@
 "use client";
 
-import { usePlatformDetection } from "@/hooks/usePlatformDetection";
 import { USE_CASES } from "@/lib/constants";
 import { HeroSection } from "@/components/sections/hero-section";
 import { UseCasesSection } from "@/components/sections/use-cases-section";
@@ -13,10 +12,9 @@ import { SentrySection } from "@/components/sections/sentry-section";
 import type { Post } from "@/lib/types";
 
 export function HomeClient({ changelogPosts }: { changelogPosts: Post[] }) {
-  const { isMac } = usePlatformDetection();
   return (
     <main className="min-h-screen ">
-      <HeroSection platform={isMac ? "macOS" : "Windows"} />
+      <HeroSection />
       <UseCasesSection useCases={USE_CASES} />
       <ReviewSection />
       <SentrySection />

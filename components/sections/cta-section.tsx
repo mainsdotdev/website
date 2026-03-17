@@ -21,13 +21,13 @@ export function CtaSection() {
           and move from task to reviewed pull request without leaving Jinzo.
         </p>
         <div className="flex items-center gap-3 mt-4">
-          <Link
-            href=""
+          <a
+            href="https://github.com/OkanBilal/jinzo/releases/download/untagged-daf0e417a56af0482475/Jinzo-0.1.2-arm64.dmg"
             className="inline-flex items-center gap-2 md:px-6 px-3 md:py-3 py-3 text-xs md:text-sm font-medium text-black bg-white rounded-full hover:bg-neutral-200 transition-colors"
           >
             Download for macOS
             <Download width={16} height={16} />
-          </Link>
+          </a>
           <Link
             href="https://github.com/OkanBilal/jinzo"
             target="_blank"
