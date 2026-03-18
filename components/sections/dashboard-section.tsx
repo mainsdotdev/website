@@ -13,6 +13,8 @@ export function DashboardSection() {
           title="Full observability for every agent run"
           description="Monitor agent sessions, model costs, and tool usage across all your workspaces — so you always know where time and money are going."
           className="mb-12"
+          titleClassName="max-w-xl"
+          descriptionClassName="md:text-base"
         />
 
         <motion.div {...FADE_IN_UP_DELAY(0.2)}>

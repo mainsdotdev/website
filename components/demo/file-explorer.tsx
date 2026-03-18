@@ -191,7 +191,7 @@ export function FileExplorer() {
 
           {/* Summary */}
           <div className="flex items-center justify-between px-4 py-2 text-[11px] text-primary-500 shrink-0">
-            <span className="text-primary-400">34 files changed</span>
+            <span className="text-primary-400">9 files changed</span>
             <div className="flex items-center gap-2">
               <span className="text-green-500">+1222</span>
               <span className="text-red-500">-516</span>
