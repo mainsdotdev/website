@@ -22,7 +22,7 @@ export function CtaSection() {
         </p>
         <div className="flex items-center gap-3 mt-4">
           <a
-            href="https://github.com/OkanBilal/jinzo/releases/download/v0.1.2/Jinzo-0.1.2-arm64.dmg"
+            href="https://github.com/OkanBilal/jinzo/releases/download/v0.1.6/Jinzo-0.1.6-arm64.dmg"
             className="inline-flex items-center gap-2 md:px-6 px-3 md:py-3 py-3 text-xs md:text-sm font-medium text-black bg-white rounded-full hover:bg-neutral-200 transition-colors"
           >
             Download for macOS
