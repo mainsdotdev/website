@@ -13,7 +13,7 @@ export default function Header() {
         <Link href="/" className="flex items-center gap-3">
           <div className="relative flex items-center justify-center">
                  <Image
-                src="/icon.png"
+                src="/header.png"
                 alt="Jinzo Logo"
                 width={64}
                 height={64}
