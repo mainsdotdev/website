@@ -15,9 +15,9 @@ export default function Header() {
                  <Image
                 src="/header.png"
                 alt="Jinzo Logo"
-                width={64}
-                height={64}
-                className="object-contain h-16 w-auto"
+                width={480}
+                height={480}
+                className="object-contain h-12 w-auto"
               />
           </div>
 
