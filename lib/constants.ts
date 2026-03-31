@@ -15,7 +15,7 @@ export const USE_CASES = [
   {
     title: "Run agents in isolated workspaces",
     description:
-      "Spin up Git-backed workspaces linked to your repos. Run AI coding agents like Claude Code or Copilot in secure, sandboxed environments.",
+      "Spin up Git-backed workspaces linked to your repos. Run AI coding agents like Claude Code, Copilot or Codex in secure, sandboxed environments.",
   },
   {
     title: "Review every change before committing",
