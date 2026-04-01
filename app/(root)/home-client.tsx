@@ -9,6 +9,7 @@ import { ChangelogSection } from "@/components/sections/changelog-section";
 import { CtaSection } from "@/components/sections/cta-section";
 import { DashboardSection } from "@/components/sections/dashboard-section";
 import { SentrySection } from "@/components/sections/sentry-section";
+import { SecuritySection } from "@/components/sections/security-section";
 import type { Post } from "@/lib/types";
 
 export function HomeClient({ changelogPosts }: { changelogPosts: Post[] }) {
@@ -18,6 +19,7 @@ export function HomeClient({ changelogPosts }: { changelogPosts: Post[] }) {
       <UseCasesSection useCases={USE_CASES} />
       <ReviewSection />
       <SentrySection />
+      <SecuritySection />
       <DashboardSection />
       <IntegrationsSection />
       <ChangelogSection posts={changelogPosts} />
