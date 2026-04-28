@@ -19,7 +19,7 @@ export function SentrySection() {
         <div className="md:w-3/8 order-1 md:order-2">
           <SectionHeader
             title="Turn Sentry signals into pull requests"
-            description="Connect your Sentry project and let Jinzo prioritize unresolved issues, analyze stack traces, and generate fix PRs — automatically."
+            description="Connect your Sentry project and let Mains prioritize unresolved issues, analyze stack traces, and generate fix PRs — automatically."
             layout="column"
             titleClassName="max-w-xl"
             descriptionClassName="md:text-base"

@@ -1,6 +1,6 @@
-# Jinzo Landing
+# Mains Landing
 
- Landing page for [Jinzo](https://usejinzo.com) — an AI coding agent desktop app.
+ Landing page for [Mains](https://mains.dev) — an AI coding agent desktop app.
 
 Built with Next.js 16, React 19, Tailwind CSS v4, and Framer Motion.
 

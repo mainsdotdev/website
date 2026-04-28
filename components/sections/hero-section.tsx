@@ -33,7 +33,7 @@ export function HeroSection() {
         className="relative z-10 mb-4"
       >
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-medium text-white tracking-tight leading-snug font-sans">
-          Jinzo for{" "}
+          Mains for{" "}
           <ScrambleText
             words={["all.", "agents.", "issues.", "bugs.", "PRs."]}
             interval={3000}
@@ -56,7 +56,7 @@ export function HeroSection() {
         <div className="flex items-center gap-3">
           {isMac ? (
             <a
-              href="https://github.com/OkanBilal/jinzo/releases/download/v0.1.13/Jinzo-0.1.13-arm64.dmg"
+                href="https://github.com/OkanBilal/mains/releases/download/v0.2.0/Mains-0.2.0-arm64.dmg"
               className="inline-flex items-center gap-2 md:px-6 px-3 md:py-3 py-3 text-xs md:text-sm font-medium text-black bg-white rounded-full hover:bg-neutral-200 transition-colors"
             >
               <Apple width={16} height={16} />
@@ -69,7 +69,7 @@ export function HeroSection() {
             </span>
           )}
           <Link
-            href="https://github.com/OkanBilal/jinzo"
+            href="https://github.com/OkanBilal/mains"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 md:px-6 px-3 md:py-3 py-3 text-xs md:text-sm font-medium text-white bg-black  rounded-full hover:bg-primary-950 transition-colors"

@@ -15,7 +15,7 @@ export function SecuritySection() {
         <div className="md:w-3/8">
           <SectionHeader
             title="Block risky dependencies before they land"
-            description="Jinzo checks every package install against Socket.dev before it executes — across npm, pip, cargo, go, and gems. Malware, typosquats, and vulnerable packages are denied automatically."
+            description="Mains checks every package install against Socket.dev before it executes — across npm, pip, cargo, go, and gems. Malware, typosquats, and vulnerable packages are denied automatically."
             layout="column"
             titleClassName="max-w-xl"
             descriptionClassName="md:text-base"

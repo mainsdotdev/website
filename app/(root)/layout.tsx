@@ -10,13 +10,13 @@ const inter = Inter({
   subsets: ["latin-ext"],
 });
 export const metadata: Metadata = {
-  metadataBase: new URL("https://usejinzo.com"),
-  title: "Jinzo",
-  description: "Jinzo is a powerful AI assistant that helps you write better code, faster. It provides intelligent code suggestions, error detection, and code optimization to enhance your coding experience.",
+  metadataBase: new URL("https://mains.dev"),
+  title: "Mains",
+  description: "Mains is a powerful AI assistant that helps you write better code, faster. It provides intelligent code suggestions, error detection, and code optimization to enhance your coding experience.",
   openGraph: {
-    title: "Jinzo",
-    siteName: "Jinzo",
-    url: "https://usejinzo.com",
+    title: "Mains",
+    siteName: "Mains",
+    url: "https://mains.dev",
     locale: "en-US",
     type: "website",
   },

@@ -18,7 +18,7 @@ type SentryIssue = {
 
 const ISSUES: SentryIssue[] = [
   {
-    id: "JINZO-1A",
+    id: "MAINS-1A",
     title: "TypeError: Cannot read properties of undefined (reading 'map')",
     culprit: "app/api/projects/[id]/route.ts",
     level: "fatal",
@@ -30,7 +30,7 @@ const ISSUES: SentryIssue[] = [
     prBranch: "fix/project-map-undefined",
   },
   {
-    id: "JINZO-1B",
+    id: "MAINS-1B",
     title: "RangeError: Maximum call stack size exceeded",
     culprit: "lib/parsers/recursive-resolve.ts",
     level: "error",
@@ -42,7 +42,7 @@ const ISSUES: SentryIssue[] = [
     prBranch: "fix/recursive-resolve-overflow",
   },
   {
-    id: "JINZO-1C",
+    id: "MAINS-1C",
     title: "UnhandledPromiseRejection: Connection timeout after 30000ms",
     culprit: "lib/db/connection-pool.ts",
     level: "error",
@@ -54,7 +54,7 @@ const ISSUES: SentryIssue[] = [
     prBranch: "fix/db-connection-timeout",
   },
   {
-    id: "JINZO-1D",
+    id: "MAINS-1D",
     title: "Warning: Each child in a list should have a unique 'key' prop",
     culprit: "components/workspace/file-tree.tsx",
     level: "warning",

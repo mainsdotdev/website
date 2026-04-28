@@ -1,7 +1,7 @@
 {
-    "name": "Jinzo",
-    "short_name": "Jinzo",
-    "description": "Jinzo is a powerful AI assistant that helps you write better code, faster. It provides intelligent code suggestions, error detection, and code optimization to enhance your coding experience.",
+    "name": "Mains",
+    "short_name": "Mains",
+    "description": "Mains is a powerful AI assistant that helps you write better code, faster. It provides intelligent code suggestions, error detection, and code optimization to enhance your coding experience.",
     "display": "standalone",
     "dir": "ltr",
     "lang": "en-US",

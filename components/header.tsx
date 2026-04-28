@@ -14,7 +14,7 @@ export default function Header() {
           <div className="relative flex items-center justify-center">
                  <Image
                 src="/header.png"
-                alt="Jinzo Logo"
+                alt="Mains Logo"
                 width={480}
                 height={480}
                 className="object-contain h-12 w-auto"

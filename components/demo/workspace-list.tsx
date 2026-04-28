@@ -24,7 +24,7 @@ type Workspace = {
 const WORKSPACES: Workspace[] = [
   {
     owner: "OkanBilal",
-    repo: "jinzo",
+    repo: "mains",
     icon: "J",
     iconColor: "border border-primary-700 text-primary-400",
     branch: "update-dependencies",
@@ -38,7 +38,7 @@ const WORKSPACES: Workspace[] = [
     repo: "extensions",
     icon: "R",
     iconColor: "bg-indigo-900/60 text-indigo-400",
-    branch: "jinzo-extension",
+    branch: "mains-extension",
     status: "warning",
     timeAgo: "6h ago",
     additions: 323,
@@ -55,7 +55,7 @@ const WORKSPACES: Workspace[] = [
   },
   {
     owner: "OkanBilal",
-    repo: "jinzo-docs",
+    repo: "mains-docs",
     icon: "J",
     iconColor: "bg-indigo-900/60 text-indigo-400",
     branch: "add-agent-auth-docs",
@@ -65,7 +65,7 @@ const WORKSPACES: Workspace[] = [
   },
   {
     owner: "OkanBilal",
-    repo: "jinzo-landing",
+    repo: "mains-landing",
     icon: "J",
     iconColor: "border border-primary-700 text-primary-400",
     branch: "add-caching-layer",
@@ -74,7 +74,7 @@ const WORKSPACES: Workspace[] = [
   },
   {
     owner: "OkanBilal",
-    repo: "jinzo-landing",
+    repo: "mains-landing",
     icon: "J",
     iconColor: "border border-primary-700 text-primary-400",
     branch: "keyboard-shortcuts",
@@ -83,7 +83,7 @@ const WORKSPACES: Workspace[] = [
   },
   {
     owner: "OkanBilal",
-    repo: "jinzo",
+    repo: "mains",
     icon: "J",
     iconColor: "border border-primary-700 text-primary-400",
     branch: "refactor-agent-architecture",

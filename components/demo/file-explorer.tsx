@@ -63,16 +63,16 @@ type ActivityEntry = {
 
 const ACTIVITY_ENTRIES: ActivityEntry[] = [
   { type: "commit", text: "5 files changed", timeAgo: "20h ago" },
-  { type: "finding", text: "Jinzo added 7 findings", timeAgo: "20h ago" },
+  { type: "finding", text: "Mains added 7 findings", timeAgo: "20h ago" },
   { type: "description", text: "Hero section redesign & use cases featured card…", timeAgo: "" },
   { type: "commit", text: "4 files changed", timeAgo: "21h ago" },
   { type: "commit", text: "2 files changed", timeAgo: "21h ago" },
   { type: "commit", text: "2 files changed", timeAgo: "21h ago" },
-  { type: "finding", text: "Jinzo added 3 findings", timeAgo: "22h ago" },
+  { type: "finding", text: "Mains added 3 findings", timeAgo: "22h ago" },
   { type: "description", text: "Add missing isSupportedWorkProvider check to …", timeAgo: "" },
   { type: "commit", text: "1 file changed", timeAgo: "23h ago" },
   { type: "commit", text: "8 files changed", timeAgo: "1d ago" },
-  { type: "finding", text: "Jinzo added 12 findings", timeAgo: "1d ago" },
+  { type: "finding", text: "Mains added 12 findings", timeAgo: "1d ago" },
   { type: "description", text: "Refactor auth flow and workspace sync logic…", timeAgo: "" },
   { type: "commit", text: "3 files changed", timeAgo: "2d ago" },
 ];

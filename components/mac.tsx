@@ -7,7 +7,7 @@ const MacComponent = () => (
     {...FADE_IN_BLUR_UP_DELAY(1)}
     className="max-w-6xl mx-auto"
   >
-    <WindowChrome title="Jinzo - Overview">
+    <WindowChrome title="Mains - Overview">
       <div className="p-8 min-h-100 flex items-center justify-center text-primary-500">
         <p className="text-lg">Demo interface</p>
       </div>

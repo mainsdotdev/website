@@ -15,7 +15,7 @@ export function StatusSection() {
         <div className="md:w-2/6">
           <SectionHeader
             title="Agents turn ideas into code"
-            description="Accelerate development by handing off tasks to Jinzo, while you focus on making decisions."
+            description="Accelerate development by handing off tasks to Mains, while you focus on making decisions."
             layout="column"
             descriptionClassName="md:text-base"
           />

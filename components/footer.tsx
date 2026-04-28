@@ -17,23 +17,23 @@ export default function Footer() {
           </h3>
           <div className="flex  gap-3 flex-row justify-between items-center ">
             <p className="text-left text-xs sm:text-sm text-primary-500 font-sans tracking-tight">
-              © 2026 Jinzo
+              © 2026 Mains
             </p>
             <div className="flex items-center font-sans gap-4 sm:gap-5 tracking-tight">
               <Link
-                href="mailto:team@usejinzo.com"
+                href="mailto:team@mains.dev"
                 className="text-xs sm:text-sm font-medium text-neutral-400 hover:text-white transition-colors"
               >
                 Contact
               </Link>
               <Link
-                href="https://docs.usejinzo.com"
+                href="https://docs.mains.dev"
                 className="text-xs sm:text-sm font-medium text-neutral-400 hover:text-white transition-colors"
               >
                 Docs
               </Link>
               <Link
-                href="https://github.com/OkanBilal/jinzo"
+                href="https://github.com/OkanBilal/mains"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-neutral-400 hover:text-white transition-colors"

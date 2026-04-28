@@ -12,7 +12,7 @@ export function IntegrationsSection() {
         </h2>
 
         <p className="text-primary-400 text-sm leading-relaxed max-w-lg mb-10">
-          Powered by MCP servers and APIs. Jinzo connects to your tools
+          Powered by MCP servers and APIs. Mains connects to your tools
           natively, so your agents can read, write, and act across services
           without leaving the app.
         </p>

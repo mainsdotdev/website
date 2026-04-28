@@ -5,7 +5,7 @@ export default function robots() {
           userAgent: '*',
         },
       ],
-      sitemap: 'https://usejinzo.com/sitemap.xml',
-      host: 'https://usejinzo.com',
+      sitemap: 'https://mains.dev/sitemap.xml',
+      host: 'https://mains.dev',
     };
   }

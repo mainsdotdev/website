@@ -79,7 +79,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
         setError("Error submitting form. Please try again.");
       }
     } catch (err) {
-      setError("An unexpected error occurred. Please try again.");
+      setError("An unexpected error occurred. Please try again. " + err);
     } finally {
       setIsSubmitting(false);
     }
@@ -136,7 +136,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
             Join Beta Waitlist
           </h2>
           <p className="text-primary-300 text-sm mb-6">
-            Be among the first to experience Jinzo.
+            Be among the first to experience Mains.
           </p>
 
           {success ? (
@@ -157,10 +157,10 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">
-                You're on the list!
+                You&apos;re on the list!
               </h3>
               <p className="text-primary-300 text-sm">
-                We'll notify you when beta access is available.
+                We&apos;ll notify you when beta access is available.
               </p>
             </div>
           ) : (

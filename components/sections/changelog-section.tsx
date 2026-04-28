@@ -37,7 +37,7 @@ export function ChangelogSection({ posts }: { posts: Post[] }) {
             href="/blog?filter=changelog"
             className="inline-flex items-center gap-2 text-primary-200 hover:text-primary-50 text-sm font-medium transition-colors"
           >
-            See what&apos;s new in Jinzo →
+            See what&apos;s new in Mains →
           </Link>
         </div>
       </motion.div>

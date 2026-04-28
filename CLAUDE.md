@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Jinzo landing page — a Next.js 16 marketing site for an AI coding agent desktop app. Dark-themed, animation-heavy, with an MDX-based blog.
+Mains landing page — a Next.js 16 marketing site for an AI coding agent desktop app. Dark-themed, animation-heavy, with an MDX-based blog.
 
 ## Commands
 
