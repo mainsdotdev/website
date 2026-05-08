@@ -28,3 +28,9 @@ export const USE_CASES = [
       "Connect issues from GitHub, Gitlab, Linear, Jira, and Asana directly to a workspace. Give agents the right context to start working immediately.",
   },
 ] as const;
+
+/** Latest macOS .dmg from GitHub releases (update when shipping a new version). */
+export const MAINS_DOWNLOAD_DMG_URL =
+  "https://github.com/OkanBilal/mains/releases/download/v0.2.0/Mains-0.2.0-arm64.dmg";
+
+export const MAINS_GITHUB_REPO_URL = "https://github.com/OkanBilal/mains";

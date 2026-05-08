@@ -85,11 +85,11 @@ function CostByModelCard() {
             <span className="text-primary-300 text-xs w-36 shrink-0 truncate font-sans">{m.name}</span>
             <div className="flex-1 h-5 bg-primary-900/50 rounded overflow-hidden">
               <div
-                className="h-full rounded transition-all duration-700 ease-out"
+                className="h-full rounded transition-all duration-420 ease-out"
                 style={{
                   width: visible ? `${m.pct}%` : "0%",
                   backgroundColor: m.color,
-                  transitionDelay: `${i * 150}ms`,
+                  transitionDelay: `${i * 80}ms`,
                 }}
               />
             </div>
@@ -113,13 +113,13 @@ function TopToolsCard() {
       <div ref={ref} className="flex items-end gap-1.5 h-44 overflow-x-auto pb-1">
         {TOOL_DATA.map((t, i) => (
           <div key={`${t.name}-${i}`} className="flex flex-col items-center gap-1 min-w-0 flex-1">
-            <span className={`text-primary-400 text-[10px] font-sans transition-opacity duration-500 ${visible ? "opacity-100" : "opacity-0"}`} style={{ transitionDelay: `${i * 60 + 400}ms` }}>{t.count}</span>
+            <span className={`text-primary-400 text-[10px] font-sans transition-opacity duration-300 ${visible ? "opacity-100" : "opacity-0"}`} style={{ transitionDelay: `${i * 35 + 200}ms` }}>{t.count}</span>
             <div
-              className="w-full min-w-6 rounded-t transition-all duration-700 ease-out"
+              className="w-full min-w-6 rounded-t transition-all duration-420 ease-out"
               style={{
                 height: visible ? `${(t.count / max) * 130}px` : "0px",
                 backgroundColor: t.color,
-                transitionDelay: `${i * 60}ms`,
+                transitionDelay: `${i * 35}ms`,
               }}
             />
             <span className="text-primary-500 text-[10px] truncate w-full text-center">{t.name}</span>
@@ -153,10 +153,10 @@ function SuccessRateCard() {
           return (
             <div key={d.day} className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
               <div
-                className="w-full flex flex-col-reverse rounded-md overflow-hidden transition-all duration-700 ease-out"
+                className="w-full flex flex-col-reverse rounded-md overflow-hidden transition-all duration-420 ease-out"
                 style={{
                   height: visible ? `${(totalDay / maxRuns) * 100}%` : "0%",
-                  transitionDelay: `${i * 80}ms`,
+                  transitionDelay: `${i * 45}ms`,
                 }}
               >
                 {d.succeeded > 0 && (
@@ -219,7 +219,7 @@ function SummaryRow() {
               value={visible ? s.value : 0}
               prefix={s.prefix}
               format={s.prefix === "$" ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } : undefined}
-              transformTiming={{ duration: 800, easing: "ease-out" }}
+              transformTiming={{ duration: 420, easing: "ease-out" }}
             />
           </p>
           <p className="text-primary-500 text-xs mt-1">{s.label}</p>

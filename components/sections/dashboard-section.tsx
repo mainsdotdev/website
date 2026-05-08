@@ -17,7 +17,7 @@ export function DashboardSection() {
           descriptionClassName="md:text-base"
         />
 
-        <motion.div {...FADE_IN_UP_DELAY(0.2)}>
+        <motion.div {...FADE_IN_UP_DELAY(0.1)}>
           <DashboardStats />
         </motion.div>
       </motion.div>

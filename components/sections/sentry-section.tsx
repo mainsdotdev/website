@@ -12,7 +12,7 @@ export function SentrySection() {
         {...FADE_IN_UP}
         className="flex flex-col md:flex-row items-start gap-12"
       >
-        <motion.div {...FADE_IN_UP_DELAY(0.2)} className="w-full md:w-5/8 min-w-0 order-2 md:order-1">
+        <motion.div {...FADE_IN_UP_DELAY(0.1)} className="w-full md:w-5/8 min-w-0 order-2 md:order-1">
           <SentryIssues />
         </motion.div>
 

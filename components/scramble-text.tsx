@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*";
 
@@ -21,8 +22,8 @@ export function ScrambleText({
   const animationTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const cycleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prefersReducedMotionRef = useRef(false);
-  const maxWordLength = useMemo(
-    () => words.reduce((max, word) => Math.max(max, word.length), 0),
+  const longestWord = useMemo(
+    () => words.reduce((a, b) => (a.length >= b.length ? a : b), ""),
     [words]
   );
 
@@ -159,14 +160,16 @@ export function ScrambleText({
 
   return (
     <span
-      className={className}
-      style={{
-        display: "inline-block",
-        minWidth: maxWordLength ? `${maxWordLength}ch` : undefined,
-      }}
+      className={cn("relative inline-block max-w-full align-baseline", className)}
       aria-live="polite"
     >
-      {display}
+      {/* Width + height from strut only; wide scramble glyphs must not expand layout */}
+      <span aria-hidden className="invisible select-none whitespace-pre">
+        {longestWord || "\u00a0"}
+      </span>
+      <span className="absolute inset-0 overflow-hidden text-left whitespace-nowrap">
+        {display}
+      </span>
     </span>
   );
 }

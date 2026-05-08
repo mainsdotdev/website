@@ -22,7 +22,7 @@ export function SecuritySection() {
           />
         </div>
 
-        <motion.div {...FADE_IN_UP_DELAY(0.2)} className="w-full md:w-5/8 min-w-0">
+        <motion.div {...FADE_IN_UP_DELAY(0.1)} className="w-full md:w-5/8 min-w-0">
           <PackageGuard />
         </motion.div>
       </motion.div>

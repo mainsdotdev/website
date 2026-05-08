@@ -17,7 +17,7 @@ export function ReviewSection() {
           descriptionClassName="md:text-base"
         />
 
-        <motion.div {...FADE_IN_UP_DELAY(0.2)}>
+        <motion.div {...FADE_IN_UP_DELAY(0.1)}>
           <DiffViewer />
         </motion.div>
       </motion.div>

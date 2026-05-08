@@ -1,6 +1,7 @@
 "use client";
 
 import { USE_CASES } from "@/lib/constants";
+import { GlobalDownloadGithubShortcuts } from "@/components/global-download-github-shortcuts";
 import { HeroSection } from "@/components/sections/hero-section";
 import { UseCasesSection } from "@/components/sections/use-cases-section";
 import { IntegrationsSection } from "@/components/sections/integrations-section";
@@ -15,6 +16,7 @@ import type { Post } from "@/lib/types";
 export function HomeClient({ changelogPosts }: { changelogPosts: Post[] }) {
   return (
     <main className="min-h-screen ">
+      <GlobalDownloadGithubShortcuts />
       <HeroSection />
       <UseCasesSection useCases={USE_CASES} />
       <ReviewSection />

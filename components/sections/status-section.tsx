@@ -22,7 +22,7 @@ export function StatusSection() {
         </div>
 
         <motion.div
-          {...FADE_IN_UP_DELAY(0.2)}
+          {...FADE_IN_UP_DELAY(0.1)}
           className="md:w-4/6 rounded-xl overflow-hidden border border-white/10 shadow-[0_0_80px_-20px_rgba(255,255,255,0.08)]"
         >
           <Image

@@ -25,11 +25,7 @@ const demoComponents: Record<number, ReactNode> = {
 export function UseCasesSection({ useCases }: UseCasesSectionProps) {
   return (
     <section className="py-20 max-w-7xl mx-auto px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...FADE_IN_UP.transition, delay: 1.2 }}
-      >
+      <motion.div {...FADE_IN_UP}>
         <h2 className="text-3xl md:text-5xl text-white mb-12 text-center tracking-tight">
           Built for agent workflows
         </h2>
