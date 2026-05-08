@@ -64,7 +64,7 @@ export function HeroSection() {
               {...FADE_IN_BLUR_DELAY(0.2)}
               className="relative z-10 w-full max-w-2xl text-center"
             >
-              <h1 className="font-hero-serif relative mx-auto inline-block w-max max-w-full text-[2rem] leading-[1.15] font-normal tracking-tight text-primary-50/95 sm:text-4xl md:text-5xl lg:text-[3.25rem]">
+              <h1 className="font-sans relative mx-auto inline-block w-max max-w-full text-[2rem] leading-[1.15] font-normal tracking-tight text-primary-50/95 sm:text-4xl md:text-5xl lg:text-[3.25rem]">
                 <span
                   aria-hidden
                   className="invisible flex flex-nowrap items-baseline justify-start gap-x-1.5"
