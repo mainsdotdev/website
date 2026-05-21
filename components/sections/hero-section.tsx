@@ -23,48 +23,34 @@ export function HeroSection() {
     "inline-flex max-w-full min-w-0 items-center gap-2 rounded-full md:px-6 md:py-3 md:text-sm px-3 py-3 text-xs font-medium transition-colors";
 
   return (
-    <div className="relative overflow-hidden">
-      {/* Gradient Blur Background */}
-      <div className="absolute inset-0 z-0 bg-[#0E1331]">
-        <div
-          className="absolute top-[-10%] left-[-5%] h-[60%] w-[50%] rounded-full bg-[#0e122c] opacity-60 blur-[90px]"
-          style={{ animation: "blob-float-1 20s ease-in-out infinite" }}
-        />
-        <div
-          className="absolute top-[10%] left-[20%] h-[70%] w-[60%] rounded-full bg-[#080C25] opacity-70 blur-[90px]"
-          style={{ animation: "blob-float-2 25s ease-in-out infinite" }}
-        />
-        <div
-          className="absolute top-[5%] right-[-5%] h-[50%] w-[40%] rounded-full bg-[#060534] opacity-50 blur-[90px]"
-          style={{ animation: "blob-float-3 22s ease-in-out infinite" }}
-        />
-        <div
-          className="absolute right-[-5%] bottom-[-10%] h-[60%] w-[55%] rounded-full bg-[#121735] opacity-65 blur-[90px]"
-          style={{ animation: "blob-float-1 28s ease-in-out infinite reverse" }}
-        />
-        <div
-          className="absolute top-[30%] left-[30%] h-[40%] w-[40%] rounded-full bg-[#06091E] opacity-80 blur-[90px]"
-          style={{ animation: "blob-float-2 24s ease-in-out infinite reverse" }}
-        />
+    <div className="relative overflow-hidden bg-primary-950">
+      {/* Vertical rail lines — outer edges + inner rails aligned to section content area */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0 mx-auto w-full max-w-7xl"
+      >
+        <div className="absolute inset-y-0 inset-x-6">
+          <div className="absolute inset-y-0 left-0 w-px bg-white/[0.07]" />
+          <div className="absolute inset-y-0 right-0 w-px bg-white/[0.07]" />
+          <div className="absolute inset-y-0 left-[12%] hidden w-px bg-white/[0.05] md:block" />
+          <div className="absolute inset-y-0 left-[88%] hidden w-px bg-white/[0.05] md:block" />
+        </div>
       </div>
-      {/* Noise/Grain Overlay */}
+
+      {/* Grain overlay */}
       <GrainOverlay className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.05]" />
-      <div className="absolute inset-0 z-0 bg-linear-to-b from-black via-transparent to-primary-950" />
+
       <div className="relative z-10">
         <Header />
         <section className="mx-auto max-w-7xl px-6 pt-10 pb-20">
           <div className="relative flex flex-col items-center text-center">
-            {/* Center glow behind headline */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute top-[-8%] left-1/2 h-[min(420px,55vw)] w-[min(720px,92vw)] -translate-x-1/2 rounded-full bg-sky-500/[0.07] blur-[100px]"
-            />
-
+            {/* Framed text content — horizontal rails close the box on md+ */}
+            <div className="relative z-10 w-full py-10 md:w-[76%] md:border-y md:border-white/[0.05] md:py-16">
             <motion.div
               {...FADE_IN_BLUR_DELAY(0.2)}
-              className="relative z-10 w-full max-w-2xl text-center"
+              className="relative z-10 mx-auto w-full max-w-2xl text-center"
             >
-              <h1 className="font-sans relative mx-auto inline-block w-max max-w-full text-[2rem] leading-[1.15] font-normal tracking-tight text-primary-50/95 sm:text-4xl md:text-5xl lg:text-[3.25rem]">
+              <h1 className="font-sans relative mx-auto inline-block w-max max-w-full text-[2rem] leading-[1.15] font-medium tracking-tight text-primary-50/95 sm:text-4xl md:text-5xl lg:text-[3.25rem]">
                 <span
                   aria-hidden
                   className="invisible flex flex-nowrap items-baseline justify-start gap-x-1.5"
@@ -94,8 +80,7 @@ export function HeroSection() {
               {isMac ? (
                 <ShortcutPillButton
                   href={MAINS_DOWNLOAD_DMG_URL}
-                  kbdShortcut="download"
-                  ariaLabel="Download Mains for macOS (shortcut D)"
+                  ariaLabel="Download Mains for macOS"
                   className={cn(
                     pill,
                     "text-black bg-white hover:bg-neutral-200",
@@ -109,7 +94,7 @@ export function HeroSection() {
                 </ShortcutPillButton>
               ) : (
                 <ShortcutPillButton
-                  ariaLabel="Windows version coming soon (shortcut D)"
+                  ariaLabel="Windows version coming soon"
                   className={cn(
                     pill,
                     "cursor-default text-primary-500 bg-primary-900/50"
@@ -130,7 +115,7 @@ export function HeroSection() {
                 ariaLabel="View source on GitHub (shortcut C)"
                 className={cn(
                   pill,
-                  "text-white bg-primary-950 hover:bg-primary-950",
+                  "text-white bg-primary-950 hover:bg-primary-900",
                   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/30"
                 )}
                 shortcut="C"
@@ -140,10 +125,11 @@ export function HeroSection() {
                 <span>View Source</span>
               </ShortcutPillButton>
             </motion.div>
+            </div>
 
             <motion.div
               {...FADE_IN_BLUR_UP_DELAY(0.75)}
-              className="relative z-10 mt-14 w-full max-w-7xl sm:rounded-xl sm:overflow-hidden"
+              className="relative z-10 mt-14 w-full md:w-[76%] sm:rounded-xl sm:overflow-hidden"
             >
               <Image
                 src="/hero3.png"
@@ -152,7 +138,7 @@ export function HeroSection() {
                 height={2068}
                 className="block h-auto w-full"
                 priority
-                sizes="(max-width: 1280px) 100vw, 1280px"
+                sizes="(min-width: 768px) 76vw, 100vw"
               />
             </motion.div>
           </div>

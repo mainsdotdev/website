@@ -4,6 +4,7 @@ import { USE_CASES } from "@/lib/constants";
 import { GlobalDownloadGithubShortcuts } from "@/components/global-download-github-shortcuts";
 import { HeroSection } from "@/components/sections/hero-section";
 import { UseCasesSection } from "@/components/sections/use-cases-section";
+import { WorkflowsSection } from "@/components/sections/workflows-section";
 import { IntegrationsSection } from "@/components/sections/integrations-section";
 import { ReviewSection } from "@/components/sections/review-section";
 import { ChangelogSection } from "@/components/sections/changelog-section";
@@ -19,6 +20,7 @@ export function HomeClient({ changelogPosts }: { changelogPosts: Post[] }) {
       <GlobalDownloadGithubShortcuts />
       <HeroSection />
       <UseCasesSection useCases={USE_CASES} />
+      <WorkflowsSection />
       <ReviewSection />
       <SentrySection />
       <SecuritySection />
