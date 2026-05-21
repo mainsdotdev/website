@@ -31,6 +31,6 @@ export const USE_CASES = [
 
 /** Latest macOS .dmg from GitHub releases (update when shipping a new version). */
 export const MAINS_DOWNLOAD_DMG_URL =
-  "https://github.com/OkanBilal/mains/releases/download/v0.2.0/Mains-0.2.0-arm64.dmg";
+  "https://github.com/OkanBilal/mains/releases/download/v0.2.2/Mains-0.2.2-arm64.dmg";
 
 export const MAINS_GITHUB_REPO_URL = "https://github.com/OkanBilal/mains";
