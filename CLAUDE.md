@@ -13,7 +13,6 @@ Mains landing page — a Next.js 16 marketing site for an AI coding agent deskto
 - `npm run lint` — run ESLint
 - `npm start` — serve production build
 
-## Architecture
 
 **Next.js 16 App Router** with a `(root)` route group. All pages live under `app/(root)/`.
 
