@@ -2,16 +2,6 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Overview
-
-Mains landing page — a Next.js 16 marketing site for an AI coding agent desktop app. Dark-themed, animation-heavy, with an MDX-based blog.
-
-
-- `npm run dev` — start dev server
-- `npm run build` — production build (uses Turbopack)
-- `npm run lint` — run ESLint
-
-## Architecture
 
 **Next.js 16 App Router** with a `(root)` route group. All pages live under `app/(root)/`.
 
