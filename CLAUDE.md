@@ -25,7 +25,6 @@ Mains landing page — a Next.js 16 marketing site for an AI coding agent deskto
 
 **Sections architecture:** The home page is composed of section components in `components/sections/` (hero, use-cases, dashboard, integrations, review, changelog, cta, status). Each section is self-contained with its own animations.
 
-**Demo components:** Interactive UI mockups in `components/demo/` (workspace-list, file-explorer, issues-list, dashboard-stats, diff-viewer) used inside section components to showcase the product.
 
 ## Reusable Components
 
