@@ -10,7 +10,6 @@ Mains landing page — a Next.js 16 marketing site for an AI coding agent deskto
 - `npm run dev` — start dev server
 - `npm run build` — production build (uses Turbopack)
 - `npm run lint` — run ESLint
-- `npm start` — serve production build
 
 ## Architecture
 
