@@ -49,5 +49,4 @@ Mains landing page — a Next.js 16 marketing site for an AI coding agent deskto
 - **Icons:** All icons live in `components/icons/` as individual files and are barrel-exported from `components/icons/index.tsx`. Add new icons as separate files and register them in the barrel export.
 - **Class merging:** Use `cn()` from `lib/utils.ts` (clsx + tailwind-merge).
 - **Constants:** Shared data (integrations, use cases) lives in `lib/constants.ts`.
-- **TypeScript strict mode** is enabled.
 - **React 19** with Next.js 16.
