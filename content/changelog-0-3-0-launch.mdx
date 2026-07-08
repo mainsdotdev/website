@@ -1,0 +1,63 @@
+---
+title: "Mains 0.3.0: our first public release"
+date: 2026-07-09
+description: "Mains 0.3.0 is the first public release of our open-source desktop app for running AI coding agents in managed, Git-backed workspaces."
+author: "Mains Team"
+tags: ["changelog", "announcement", "product"]
+published: true
+version: "0.3.0"
+---
+
+# Mains 0.3.0: our first public release
+
+Today marks a major milestone: **Mains 0.3.0 is our first public release** — and it is fully open source under the MIT license at [github.com/mainsdotdev/mains](https://github.com/mainsdotdev/mains).
+
+Mains is a desktop app for running AI coding agents in managed workspaces. It wraps the **GitHub Copilot**, **Claude Code**, and **Cursor** SDKs and the **OpenAI Codex** app server, tracks every run with full observability, and syncs issues from the tools you already use — all from one place.
+
+## What's in 0.3.0
+
+### Agents
+
+- **Multi-Agent** - Run GitHub Copilot, Claude Code, OpenAI Codex, and Cursor side by side
+- **Session Management** - Resume, continue, and fork agent sessions across runs
+- **Tool Approval** - Interactive approve/deny flow for agent tool calls with pre-approved tool lists
+- **MCP Support** - Extend agents with Model Context Protocol servers for APIs, databases, and internal systems
+
+### Workspaces & Projects
+
+- **Git-backed Workspaces** - Status tracking from backlog to done, worktree isolation, and per-run diffs
+- **Projects** - Group workspaces by remote origin with setup/run/archive scripts and shared commit/PR instructions
+- **Code Reviews** - Request structured reviews with severity-tagged findings, file locations, and suggestions
+- **Context Injection** - Attach files, diffs, selections, terminal output, linked issues, and Sentry errors as run context
+
+### Integrations
+
+- **Issue Sync** - Connect GitHub, GitLab, Linear, Jira, Asana, and Trello issues directly to a workspace
+- **Error Tracking** - Sentry issues synced as signals with stack traces, affected users, and regression info
+- **Dependency Guards** - Package security checks via Socket.dev before installs (npm, pip, cargo, go, gems)
+
+### Observability
+
+- **Stats Dashboard** - Daily runs, cost breakdown by model, tool usage analytics, and success rates per provider
+- **Run Artifacts** - Collected patches, files, logs, reports, and command results per session
+- **Cost Tracking** - Token usage and USD cost per run with cache metrics
+
+## Privacy First
+
+Mains runs agents inside isolated workspaces with full visibility into the exact actions they take. You stay in control of context, changes, and final commits.
+
+## Getting Started
+
+Mains 0.3.0 is available for macOS (Apple Silicon and Intel).
+
+1. Download Mains and configure a provider (Copilot, Claude, Codex, or Cursor)
+2. Link a repository and create a workspace
+3. Attach a task, run an agent, and review the diff before committing
+
+Since Mains is now open source, you can also clone the repo, star it, or contribute at [github.com/mainsdotdev/mains](https://github.com/mainsdotdev/mains).
+
+We cannot wait to see what you build with Mains.
+
+---
+
+*Questions or feedback? Reach out to [team@mains.dev](mailto:team@mains.dev)*

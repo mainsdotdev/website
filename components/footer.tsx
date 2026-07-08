@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { Github } from "@/components/icons";
+import { MAINS_GITHUB_REPO_URL } from "@/lib/constants";
 
 export default function Footer() {
   return (
@@ -33,7 +34,7 @@ export default function Footer() {
                 Docs
               </Link>
               <Link
-                href="https://github.com/OkanBilal/mains"
+                href={MAINS_GITHUB_REPO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-neutral-400 hover:text-white transition-colors"
