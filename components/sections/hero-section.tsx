@@ -4,10 +4,11 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Header from "@/components/header";
 import { ScrambleText } from "@/components/scramble-text";
-import { Apple, Github, GrainOverlay, Windows } from "@/components/icons";
+import { Github, GrainOverlay, Windows } from "@/components/icons";
+import { MacDownloadButton } from "@/components/mac-download-button";
 import { ShortcutPillButton } from "@/components/shortcut-pill-button";
 import { FADE_IN_BLUR_DELAY, FADE_IN_BLUR_UP_DELAY } from "@/lib/animations";
-import { MAINS_DOWNLOAD_DMG_URL, MAINS_GITHUB_REPO_URL } from "@/lib/constants";
+import { MAINS_GITHUB_REPO_URL } from "@/lib/constants";
 import { usePlatformDetection } from "@/hooks/usePlatformDetection";
 import { cn } from "@/lib/utils";
 
@@ -92,21 +93,10 @@ export function HeroSection() {
               className="relative z-10 mt-10 flex flex-wrap items-center justify-center gap-4"
             >
               {isMac ? (
-                <ShortcutPillButton
-                  href={MAINS_DOWNLOAD_DMG_URL}
-                  kbdShortcut="download"
-                  ariaLabel="Download Mains for macOS (shortcut D)"
-                  className={cn(
-                    pill,
-                    "text-black bg-white hover:bg-neutral-200",
-                    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/40"
-                  )}
-                  shortcut="D"
+                <MacDownloadButton
+                  pillClassName={pill}
                   shortcutClassName="bg-primary-100 text-primary-950"
-                >
-                  <Apple width={16} height={16} />
-                  <span>Download for macOS</span>
-                </ShortcutPillButton>
+                />
               ) : (
                 <ShortcutPillButton
                   ariaLabel="Windows version coming soon (shortcut D)"

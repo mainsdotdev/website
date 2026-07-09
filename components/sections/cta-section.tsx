@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Apple, Github, Windows } from "@/components/icons";
+import { Github, Windows } from "@/components/icons";
+import { MacDownloadButton } from "@/components/mac-download-button";
 import { ShortcutPillButton } from "@/components/shortcut-pill-button";
 import { FADE_IN_UP } from "@/lib/animations";
-import { MAINS_DOWNLOAD_DMG_URL, MAINS_GITHUB_REPO_URL } from "@/lib/constants";
+import { MAINS_GITHUB_REPO_URL } from "@/lib/constants";
 import { usePlatformDetection } from "@/hooks/usePlatformDetection";
 import { cn } from "@/lib/utils";
 
@@ -27,21 +28,10 @@ export function CtaSection() {
           </p>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
             {isMac ? (
-              <ShortcutPillButton
-                href={MAINS_DOWNLOAD_DMG_URL}
-                kbdShortcut="download"
-                ariaLabel="Download Mains for macOS (shortcut D)"
-                className={cn(
-                  pill,
-                  "text-black bg-white hover:bg-neutral-200",
-                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/40"
-                )}
-                shortcut="D"
+              <MacDownloadButton
+                pillClassName={pill}
                 shortcutClassName="bg-neutral-300 text-neutral-900"
-              >
-                <Apple width={16} height={16} />
-                <span>Download for macOS</span>
-              </ShortcutPillButton>
+              />
             ) : (
               <ShortcutPillButton
                 ariaLabel="Windows version coming soon"
