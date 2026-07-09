@@ -1,18 +1,9 @@
 # Mains Landing
 
- Landing page for [Mains](https://mains.dev) — an AI coding agent desktop app.
+Website for [Mains](https://mains.dev) — a macOS desktop app for running AI coding agents (Claude Code, Copilot, Codex, Cursor) in secure, Git-backed workspaces.
 
-Built with Next.js 16, React 19, Tailwind CSS v4, and Framer Motion.
+The site covers what Mains does, download links for the latest release, integrations, changelog, and the blog.
 
-## Development
+- **App repository:** [mainsdotdev/mains](https://github.com/mainsdotdev/mains)
+- **Live site:** [mains.dev](https://mains.dev)
 
-```bash
-npm install
-npm run dev
-```
-
-## Scripts
-
-- `npm run dev` — Start dev server
-- `npm run build` — Production build
-- `npm run lint` — Run ESLint
