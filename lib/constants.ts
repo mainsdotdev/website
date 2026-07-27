@@ -31,9 +31,9 @@ export const USE_CASES = [
 
 /** Latest macOS .dmg builds from GitHub releases (update both when shipping a new version). */
 export const MAINS_DOWNLOAD_DMG_URL =
-  "https://github.com/mainsdotdev/mains/releases/download/v0.3.1/Mains-0.3.1-arm64.dmg";
+  "https://github.com/mainsdotdev/mains/releases/download/v0.4.0/Mains-0.4.0-arm64.dmg";
 /** Intel (x64) build — offered as a secondary text link under the main download button. */
 export const MAINS_DOWNLOAD_DMG_X64_URL =
-  "https://github.com/mainsdotdev/mains/releases/download/v0.3.1/Mains-0.3.1-x64.dmg";
+  "https://github.com/mainsdotdev/mains/releases/download/v0.4.0/Mains-0.4.0-x64.dmg";
 
 export const MAINS_GITHUB_REPO_URL = "https://github.com/mainsdotdev/mains";
