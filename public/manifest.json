@@ -1,7 +1,7 @@
 {
     "name": "Mains",
     "short_name": "Mains",
-    "description": "Mains is a powerful AI assistant that helps you write better code, faster. It provides intelligent code suggestions, error detection, and code optimization to enhance your coding experience.",
+    "description": "Run Claude Code, OpenAI Codex, GitHub Copilot, and Cursor in isolated Git workspaces. Review changes, track costs, and ship safely with Mains.",
     "display": "standalone",
     "dir": "ltr",
     "lang": "en-US",

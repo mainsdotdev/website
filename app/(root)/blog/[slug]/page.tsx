@@ -2,6 +2,7 @@
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 import { MDXContent } from '@/components/mdx-content';
+import { StructuredData } from '@/components/structured-data';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Header from '@/components/header';
@@ -13,31 +14,56 @@ type Props = {
 };
 
 export async function generateStaticParams() {
-  return getAllPosts().map((post) => ({
-    slug: post.slug,
-  }));
+  return getAllPosts()
+    .filter((post) => post.published)
+    .map((post) => ({
+      slug: post.slug,
+    }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = getPostBySlug(slug);
 
-  if (!post) {
+  if (!post || !post.published) {
     return {
       title: 'Post Not Found',
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
 
+  const canonicalUrl = `/blog/${post.slug}`;
+  const socialImage = post.image || '/hero-new-image.png';
+
   return {
-    title: `${post.title} - Mains Blog`,
+    title: post.title,
     description: post.description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title: post.title,
       description: post.description,
+      url: canonicalUrl,
+      siteName: 'Mains',
       type: 'article',
       publishedTime: post.date,
       authors: post.author ? [post.author] : undefined,
-      images: post.image ? [post.image] : undefined,
+      images: [
+        {
+          url: socialImage,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description,
+      images: [socialImage],
     },
   };
 }
@@ -46,15 +72,50 @@ export default async function BlogPost({ params }: Props) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
 
-  if (!post) {
+  if (!post || !post.published) {
     notFound();
   }
 
+  const canonicalUrl = `https://mains.dev/blog/${post.slug}`;
+  const imageUrl = new URL(
+    post.image || '/hero-new-image.png',
+    'https://mains.dev'
+  ).toString();
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    image: imageUrl,
+    url: canonicalUrl,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': canonicalUrl,
+    },
+    author: {
+      '@type': 'Organization',
+      name: post.author || 'Mains Team',
+      url: 'https://mains.dev',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Mains',
+      url: 'https://mains.dev',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://mains.dev/logo.png',
+      },
+    },
+  };
+
   return (
-    <div className="min-h-screen max-w-7xl mx-auto px-4 bg-primary-950 ">
-            <Header />
+    <>
+      <StructuredData data={structuredData} />
+      <div className="min-h-screen max-w-7xl mx-auto px-4 bg-primary-950 ">
+        <Header />
       
-      <article className=" px-4">
+        <article className=" px-4">
         {/* Back Link */}
         <Link
           href="/blog"
@@ -113,9 +174,10 @@ export default async function BlogPost({ params }: Props) {
           <MDXContent source={post.content} />
         </div>
 
-      </article>
-            <hr className="border-primary-900  mt-12" />
-      <hr className="border-primary-900  mt-0.5" />
-    </div>
+        </article>
+        <hr className="border-primary-900  mt-12" />
+        <hr className="border-primary-900  mt-0.5" />
+      </div>
+    </>
   );
 }

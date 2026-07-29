@@ -34,7 +34,7 @@ export function ChangelogSection({ posts }: { posts: Post[] }) {
 
         <div className="mt-8 text-center">
           <Link
-            href="/blog?filter=changelog"
+            href="/blog"
             className="inline-flex items-center gap-2 text-primary-200 hover:text-primary-50 text-sm font-medium transition-colors"
           >
             See what&apos;s new in Mains →
