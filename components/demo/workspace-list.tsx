@@ -110,7 +110,7 @@ export function WorkspaceList() {
   return (
     <div className="w-full h-full flex flex-col overflow-hidden text-sm select-none">
       {/* Header */}
-      <div className="flex items-center justify-between px-2.5 py-2.5  mt-2 rounded-xl bg-primary-900/60 shrink-0">
+      <div className="flex items-center justify-between px-2.5 py-2.5  mt-2 glass-button rounded-2xl shrink-0">
         <div className="flex items-center gap-2 text-primary-300">
           <span className="text-sm">+</span>
           <span className=" text-white text-xs">Add Repository</span>

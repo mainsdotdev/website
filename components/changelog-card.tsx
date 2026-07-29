@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import Link from "next/link";
 
 type ChangelogCardProps = {
@@ -34,7 +33,7 @@ export function ChangelogCard({
   const content = (
     <>
       <div className="flex items-center gap-3 mb-4">
-        <span className="px-2 py-0 bg-primary-900/50 text-primary-200 text-[11px] rounded-full border border-white/5">
+        <span className="px-2 py-0 bg-primary-900/50 text-primary-200 text-[11px] rounded-full glass-card">
           {version}
         </span>
       </div>
@@ -49,7 +48,7 @@ export function ChangelogCard({
     return (
       <Link 
         href={url}
-        className="block bg-primary-900/10 border border-white/5 rounded-2xl px-4 py-4  transition-all duration-300"
+        className="block bg-primary-900/10 glass-outline rounded-2xl px-4 py-4  transition-all duration-300"
       >
         {content}
       </Link>
@@ -57,7 +56,7 @@ export function ChangelogCard({
   }
 
   return (
-    <div className="bg-primary-900/30 border border-primary-900 rounded-lg p-4 hover:bg-primary-900/50 transition-all duration-300">
+    <div className="bg-primary-900/30 glass-outline rounded-lg p-4 hover:bg-primary-900/50 transition-all duration-300">
       {content}
     </div>
   );

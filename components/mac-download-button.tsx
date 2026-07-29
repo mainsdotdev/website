@@ -25,8 +25,8 @@ export function MacDownloadButton({ pillClassName, shortcutClassName }: MacDownl
         ariaLabel="Download Mains for macOS (shortcut D)"
         className={cn(
           pillClassName,
-          "text-black bg-white hover:bg-neutral-200",
-          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/40"
+          "text-black glass-su bg-primary-50 hover:bg-primary-100"
+          
         )}
         shortcut="D"
         shortcutClassName={shortcutClassName}

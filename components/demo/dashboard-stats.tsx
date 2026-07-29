@@ -53,7 +53,7 @@ const SUMMARY_DATA = [
 
 function CardWrapper({ children, className = "", fill = false }: { children: React.ReactNode; className?: string; fill?: boolean }) {
   return (
-    <div className={`bg-primary-950 border border-white/5 rounded-xl p-5 ${fill ? "flex flex-col" : ""} ${className}`}>
+    <div className={`glass-outline rounded-2xl p-5 ${fill ? "flex flex-col" : ""} ${className}`}>
       {children}
     </div>
   );
@@ -213,7 +213,7 @@ function SummaryRow() {
   return (
     <div ref={ref} className="grid grid-cols-2 md:grid-cols-4 gap-3">
       {SUMMARY_DATA.map((s) => (
-        <div key={s.label} className="bg-primary-950 border border-white/5 rounded-xl flex flex-col items-center justify-center py-5">
+        <div key={s.label} className="glass-outline rounded-2xl flex flex-col items-center justify-center py-5">
           <p className="text-white text-2xl font-medium font-sans">
             <NumberFlow
               value={visible ? s.value : 0}

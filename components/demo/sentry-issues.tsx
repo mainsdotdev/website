@@ -101,7 +101,7 @@ export function SentryIssues() {
   const unresolvedCount = issues.filter((i) => i.status === "unresolved").length;
 
   return (
-    <div className="bg-primary-950 border border-white/5 rounded-xl overflow-hidden">
+    <div className="glass-outline rounded-2xl overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between px-3 sm:px-5 py-4 border-b border-white/5">
         <div className="flex items-center gap-2.5">

@@ -142,9 +142,9 @@ export function PackageGuard() {
   );
 
   return (
-    <div className="bg-primary-950 border border-white/5 rounded-xl overflow-hidden">
+    <div className="glass-outline rounded-2xl overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-3 sm:px-5 py-4 border-b border-white/5">
+      <div className="flex items-center justify-between px-3 sm:px-5 py-4 ">
         <div className="flex items-center gap-2.5">
           <Shield className="w-4 h-4 text-primary-400" />
           <span className="text-xs text-white font-medium">

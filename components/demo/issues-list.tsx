@@ -47,7 +47,7 @@ export function IssuesList() {
       {/* Header */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex items-center justify-between bg-primary-50/5 px-2 py-1.5 rounded-lg shrink-0 w-full text-left cursor-pointer hover:bg-primary-900/30 transition-colors"
+        className="flex items-center justify-between glass-button px-2 py-1.5 rounded-xl shrink-0 w-full text-left cursor-pointer hover:bg-primary-900/30 transition-colors"
       >
         <div className="flex items-center gap-2 ">
           <ChevronDown

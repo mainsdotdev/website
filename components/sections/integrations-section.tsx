@@ -41,7 +41,7 @@ export function IntegrationsSection() {
             {[...INTEGRATIONS, ...INTEGRATIONS].map((integration, i) => (
               <div
                 key={`${integration.name}-${i}`}
-                className="w-24 h-24 shrink-0 rounded-3xl border border-white/5 flex items-center justify-center"
+                className="w-24 h-24 shrink-0 rounded-3xl glass-card flex items-center justify-center"
               >
                 <Image
                   src={integration.logo}

@@ -169,7 +169,7 @@ function AnnotationContent({ annotation }: { annotation: DiffLineAnnotation<Anno
 
 export function DiffViewer() {
   return (
-    <div className="rounded-xl overflow-hidden border border-white/5">
+    <div className="glass-outline rounded-2xl overflow-hidden">
       {/* Tab bar */}
       <div className="flex items-center bg-primary-950 border-b border-white/5 px-2 pt-2">
         <div

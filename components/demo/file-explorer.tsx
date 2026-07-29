@@ -126,14 +126,14 @@ export function FileExplorer() {
   return (
     <div className="w-full h-full flex flex-col overflow-hidden text-sm select-none">
       {/* Tabs */}
-      <div className="flex items-center shrink-0 mx-2 mt-2 rounded-lg py-0.5 bg-primary-900/40 overflow-hidden">
+      <div className="flex items-center shrink-0 mx-2 mt-2 rounded-2xl py-0.5 glass-outline  overflow-hidden">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`flex-1 px-2 py-1.25 text-center text-[11px]  transition-colors cursor-pointer rounded-lg ${
+            className={`flex-1 px-2 py-1.25 text-center text-[11px] transition-colors cursor-pointer rounded-xl ${
               activeTab === tab.id
-                ? "text-white bg-primary-800/60"
+                ? "text-white glass-button mx-0.5"
                 : "text-primary-500 hover:text-primary-300"
             }`}
           >
