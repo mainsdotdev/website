@@ -22,6 +22,12 @@ export default function Footer() {
             </p>
             <div className="flex items-center font-sans gap-4 sm:gap-5 tracking-tight">
               <Link
+                href="/blog"
+                className="text-xs sm:text-sm font-medium text-neutral-400 hover:text-white transition-colors"
+              >
+                Blog
+              </Link>
+              <Link
                 href="mailto:team@mains.dev"
                 className="text-xs sm:text-sm font-medium text-neutral-400 hover:text-white transition-colors"
               >

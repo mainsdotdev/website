@@ -3,26 +3,59 @@ import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import Footer from "@/components/footer";
 
+const siteTitle = "Mains — Open-Source Desktop App for AI Coding Agents";
+const siteDescription =
+  "Run Claude Code, OpenAI Codex, GitHub Copilot, and Cursor in isolated Git workspaces. Review changes, track costs, and ship safely with Mains.";
+
 const inter = Inter({
   variable: "--font-inter",
   display: "swap",
   style: "normal",
   subsets: ["latin-ext"],
 });
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://mains.dev"),
-  title: "Mains",
-  description: "Mains is a powerful AI assistant that helps you write better code, faster. It provides intelligent code suggestions, error detection, and code optimization to enhance your coding experience.",
+  title: {
+    default: siteTitle,
+    template: "%s | Mains",
+  },
+  description: siteDescription,
+  applicationName: "Mains",
+  creator: "Mains",
+  publisher: "Mains",
   openGraph: {
-    title: "Mains",
+    title: siteTitle,
+    description: siteDescription,
     siteName: "Mains",
-    url: "https://mains.dev",
-    locale: "en-US",
+    url: "/",
+    locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/hero-new-image.png",
+        width: 4600,
+        height: 2490,
+        alt: "Mains desktop app for running AI coding agents",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteTitle,
+    description: siteDescription,
+    images: ["/hero-new-image.png"],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
   icons: {
     icon: [
@@ -32,7 +65,7 @@ export const metadata: Metadata = {
     ],
     apple: "/icons/apple-touch-icon.png",
   },
-  manifest: `/manifest.json`,
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
@@ -41,14 +74,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className="overflow-x-hidden 
-        "
-    >
-      <head></head>
+    <html lang="en" className="overflow-x-hidden">
       <body
-        className={`scroll-smooth antialiased mx-auto bg-primary-950 ${inter.className} `}
+        className={`mx-auto scroll-smooth bg-primary-950 antialiased ${inter.className}`}
       >
         {children}
         <Footer />
