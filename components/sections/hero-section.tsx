@@ -303,7 +303,7 @@ export function HeroSection() {
               className="relative z-10 mt-14 w-full max-w-7xl sm:rounded-xl sm:overflow-hidden"
             >
               <Image
-                src="/hero-new-image.png"
+                src="/mains-hero.png"
                 alt="Mains desktop app"
                 width={3600}
                 height={2068}
