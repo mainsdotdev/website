@@ -33,17 +33,17 @@ const BACKGROUND_BLOBS = [
   },
   {
     className:
-      "top-[5%] right-[-5%] hidden h-[50%] w-[40%] bg-[#3D170B] opacity-50 sm:block",
+      "top-[5%] right-[-5%] hidden h-[50%] w-[40%] bg-[#3D170B] opacity-50 lg:block",
     animation: "blob-float-3 22s ease-in-out infinite",
   },
   {
     className:
-      "right-[-5%] bottom-[-10%] hidden h-[60%] w-[55%] bg-[#4A2716] opacity-65 sm:block",
+      "right-[-5%] bottom-[-10%] hidden h-[60%] w-[55%] bg-[#4A2716] opacity-65 lg:block",
     animation: "blob-float-1 28s ease-in-out infinite reverse",
   },
   {
     className:
-      "top-[30%] left-[30%] hidden h-[40%] w-[40%] bg-[#311509] opacity-80 sm:block",
+      "top-[30%] left-[30%] hidden h-[40%] w-[40%] bg-[#311509] opacity-80 lg:block",
     animation: "blob-float-2 24s ease-in-out infinite reverse",
   },
 ] as const;
@@ -198,7 +198,7 @@ function HeroBackground({ isDesktop }: { isDesktop: boolean }) {
         {BACKGROUND_BLOBS.map(({ className, animation }) => (
           <div
             key={animation}
-            className={cn("absolute rounded-full blur-[60px] sm:blur-[90px]", className)}
+            className={cn("absolute rounded-full blur-[60px] lg:blur-[90px]", className)}
             style={animateBlobs ? { animation } : undefined}
           />
         ))}
@@ -287,7 +287,9 @@ function HeroActions({ isMac }: { isMac: boolean }) {
 
 export function HeroSection() {
   const { isMac } = usePlatformDetection();
-  const isDesktop = useMediaQuery("(min-width: 40rem)");
+  // `pointer: fine` keeps tablets out: an iPad is wide enough to pass a width
+  // query but rasterizes the blur/filter work on a phone-class GPU.
+  const isDesktop = useMediaQuery("(min-width: 64rem) and (pointer: fine)");
 
   return (
     <div className="relative overflow-hidden">
