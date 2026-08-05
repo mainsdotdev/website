@@ -34,12 +34,14 @@ Mains landing page — a Next.js 16 marketing site for an AI coding agent deskto
 - **`FormInput` / `FormTextarea`** (`components/form-input.tsx`) — Styled form inputs with label, consistent with the dark theme. Use in any form.
 - **`FilterPill`** (`components/filter-pill.tsx`) — Toggle pill button (active: white, inactive: primary-800). Use for filter/tab UIs.
 - **`PostMeta`** (`components/post-meta.tsx`) — Displays author + formatted date. Use in blog list and detail pages.
+- **`LazyMount`** (`components/lazy-mount.tsx`) — Defers mounting children until ~400px from the viewport, reserving space via `placeholderClassName`. Pair with `next/dynamic({ ssr: false })` to keep heavy below-the-fold demo widgets out of the initial JS payload.
 
 ## Hooks
 
 - **`usePlatformDetection`** (`hooks/usePlatformDetection.ts`) — Detects macOS vs Windows for OS-specific UI (keyboard shortcuts, download buttons).
 - **`useBrowserDetection`** (`hooks/useBrowserDetection.ts`) — Browser detection.
-- **`useInView`** (`hooks/useInView.ts`) — Intersection Observer hook, returns `{ ref, visible }`. Triggers once when element enters viewport. Use for scroll-triggered animations.
+- **`useInView`** (`hooks/useInView.ts`) — Intersection Observer hook, returns `{ ref, visible }`. Triggers once when element enters viewport. Takes `(threshold, rootMargin)`. Use for scroll-triggered animations.
+- **`useMediaQuery`** (`hooks/useMediaQuery.ts`) — `useSyncExternalStore`-based media query match. Returns `false` during SSR, so use it to *skip* rendering expensive desktop-only decoration rather than to switch layouts.
 
 ## Key Conventions
 

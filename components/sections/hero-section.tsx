@@ -10,6 +10,7 @@ import { ShortcutPillButton } from "@/components/shortcut-pill-button";
 import { FADE_IN_BLUR_DELAY, FADE_IN_BLUR_UP_DELAY } from "@/lib/animations";
 import { MAINS_GITHUB_REPO_URL } from "@/lib/constants";
 import { usePlatformDetection } from "@/hooks/usePlatformDetection";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 
 const HERO_SCRAMBLE_WORDS = ["all.", "agents.", "issues.", "bugs.", "PRs."] as const;
@@ -32,17 +33,17 @@ const BACKGROUND_BLOBS = [
   },
   {
     className:
-      "top-[5%] right-[-5%] h-[50%] w-[40%] bg-[#3D170B] opacity-50",
+      "top-[5%] right-[-5%] hidden h-[50%] w-[40%] bg-[#3D170B] opacity-50 sm:block",
     animation: "blob-float-3 22s ease-in-out infinite",
   },
   {
     className:
-      "right-[-5%] bottom-[-10%] h-[60%] w-[55%] bg-[#4A2716] opacity-65",
+      "right-[-5%] bottom-[-10%] hidden h-[60%] w-[55%] bg-[#4A2716] opacity-65 sm:block",
     animation: "blob-float-1 28s ease-in-out infinite reverse",
   },
   {
     className:
-      "top-[30%] left-[30%] h-[40%] w-[40%] bg-[#311509] opacity-80",
+      "top-[30%] left-[30%] hidden h-[40%] w-[40%] bg-[#311509] opacity-80 sm:block",
     animation: "blob-float-2 24s ease-in-out infinite reverse",
   },
 ] as const;
@@ -147,7 +148,7 @@ function HeroCodeTexture() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-0 hidden overflow-hidden sm:block"
+      className="pointer-events-none absolute inset-0 overflow-hidden"
     >
       <div className="absolute top-[4%] right-[2%] size-80 rounded-full bg-[#F98A3D]/10 blur-[90px]" />
       <div className="absolute bottom-[8%] left-[-4%] size-96 rounded-full bg-[#D96524]/10 blur-[110px]" />
@@ -185,21 +186,26 @@ function HeroCodeTexture() {
   );
 }
 
-function HeroBackground() {
+function HeroBackground({ isDesktop }: { isDesktop: boolean }) {
+  const shouldReduceMotion = useReducedMotion();
+  // Blurred blobs are pure compositor work — keep them still on phones, where
+  // the smaller viewport hides most of the movement anyway.
+  const animateBlobs = isDesktop && !shouldReduceMotion;
+
   return (
     <>
       <div aria-hidden className="absolute inset-0 z-0 bg-[#170B07]">
         {BACKGROUND_BLOBS.map(({ className, animation }) => (
           <div
             key={animation}
-            className={cn("absolute rounded-full blur-[90px]", className)}
-            style={{ animation }}
+            className={cn("absolute rounded-full blur-[60px] sm:blur-[90px]", className)}
+            style={animateBlobs ? { animation } : undefined}
           />
         ))}
       </div>
       <GrainOverlay className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.05]" />
       <div aria-hidden className="absolute inset-0 z-0 bg-linear-to-b from-black via-transparent to-primary-950" />
-      <HeroCodeTexture />
+      {isDesktop && <HeroCodeTexture />}
     </>
   );
 }
@@ -281,10 +287,11 @@ function HeroActions({ isMac }: { isMac: boolean }) {
 
 export function HeroSection() {
   const { isMac } = usePlatformDetection();
+  const isDesktop = useMediaQuery("(min-width: 40rem)");
 
   return (
     <div className="relative overflow-hidden">
-      <HeroBackground />
+      <HeroBackground isDesktop={isDesktop} />
       <div className="relative z-10">
         <Header />
         <section className="mx-auto max-w-7xl px-6 pt-10 pb-20">

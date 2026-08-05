@@ -1,9 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { DashboardStats } from "@/components/demo/dashboard-stats";
+import dynamic from "next/dynamic";
+import { LazyMount } from "@/components/lazy-mount";
 import { SectionHeader } from "@/components/section-header";
 import { FADE_IN_UP, FADE_IN_UP_DELAY } from "@/lib/animations";
+
+const DashboardStats = dynamic(
+  () => import("@/components/demo/dashboard-stats").then((m) => m.DashboardStats),
+  { ssr: false }
+);
 
 export function DashboardSection() {
   return (
@@ -18,7 +24,9 @@ export function DashboardSection() {
         />
 
         <motion.div {...FADE_IN_UP_DELAY(0.1)}>
-          <DashboardStats />
+          <LazyMount placeholderClassName="min-h-[1120px] md:min-h-[720px]">
+            <DashboardStats />
+          </LazyMount>
         </motion.div>
       </motion.div>
     </section>
