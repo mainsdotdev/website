@@ -318,9 +318,62 @@ canvas:hover {
     font-weight: 600;
   }
 
-  .prose img {
+  .prose img,
+  .prose video {
     border-radius: 0.5rem;
     margin: 2rem 0;
+    filter: brightness(2);   
+   }
+
+  .prose video {
+    width: 100%;
+    height: auto;
+    display: block;
+
+  }
+
+  /* Rounded bezel around a screenshot or clip: dark mat, lit rim, and the
+     media clipped to a slightly tighter radius inside it. */
+  .prose .media-frame {
+    margin: 2rem auto;
+    padding: 0.625rem;
+    border-radius: 1.5rem;
+  }
+
+  .prose .media-frame img,
+  .prose .media-frame video {
+    margin: 0;
+    border-radius: 1rem;
+  }
+
+  /* Half-width, centered — falls back to full width on small screens where
+     50% would be unreadable. */
+  .prose .media-frame.half {
+    width: 50%;
+  }
+
+  /* Two or more media side by side. Children keep their own styling, so a
+     child can be a bare <img> or a .media-frame; the row only owns layout. */
+  .prose .media-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .prose .media-row > * {
+    margin: 0;
+  }
+
+  @media (width < 40rem) {
+    .prose .media-frame.half {
+      width: 100%;
+    }
+
+    .prose .media-row {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 }
 

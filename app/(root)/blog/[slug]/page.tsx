@@ -112,7 +112,7 @@ export default async function BlogPost({ params }: Props) {
   return (
     <>
       <StructuredData data={structuredData} />
-      <div className="min-h-screen max-w-7xl mx-auto px-4 bg-primary-950 ">
+      <div className="min-h-screen max-w-5xl mx-auto px-4 bg-primary-950 ">
         <Header />
       
         <article className=" px-4">
