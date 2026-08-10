@@ -20,10 +20,10 @@ export function BlogPageClient({ posts }: { posts: Post[] }) {
   });
 
   return (
-    <div className="min-h-screen bg-primary-950 max-w-7xl mx-auto px-4 ">
+    <div className="min-h-screen bg-primary-950 max-w-7xl mx-auto  ">
                   <Header />
       
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-5xl mx-auto px-4">
         {/* Header */}
         <div className="mb-16">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">

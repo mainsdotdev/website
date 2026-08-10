@@ -30,7 +30,7 @@ export const USE_CASES = [
 ] as const;
 
 /** Latest macOS .dmg builds from GitHub releases (update both when shipping a new version). */
-export const MAINS_VERSION = "0.5.0";
+export const MAINS_VERSION = "0.6.0";
 
 export const MAINS_DOWNLOAD_DMG_URL =
   `https://github.com/mainsdotdev/mains/releases/download/v${MAINS_VERSION}/Mains-${MAINS_VERSION}-arm64.dmg`;
