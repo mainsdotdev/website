@@ -20,30 +20,39 @@ const HERO_SCRAMBLE_LONGEST = [...HERO_SCRAMBLE_WORDS].reduce((a, b) =>
 const PILL_CLASS_NAME =
   "inline-flex max-w-full min-w-0 items-center gap-2 rounded-full px-3 py-3 text-xs font-medium transition-colors md:px-6 md:py-3 md:text-sm";
 
+// Blues sampled from the hero screenshot's night-sky wallpaper (dominant hue
+// ~212°), so the page glow reads as an extension of the image behind it.
 const BACKGROUND_BLOBS = [
   {
     className:
-      "top-[-10%] left-[-5%] h-[60%] w-[50%] bg-[#4A210F] opacity-60",
+      "top-[-10%] left-[-5%] h-[60%] w-[50%] bg-[#0C1933] opacity-60",
     animation: "blob-float-1 20s ease-in-out infinite",
   },
   {
     className:
-      "top-[10%] left-[20%] h-[70%] w-[60%] bg-[#6B3216] opacity-70",
+      "top-[10%] left-[20%] h-[70%] w-[60%] bg-[#163E6B] opacity-70",
     animation: "blob-float-2 25s ease-in-out infinite",
   },
   {
     className:
-      "top-[5%] right-[-5%] hidden h-[50%] w-[40%] bg-[#3D170B] opacity-50 lg:block",
+      "top-[5%] right-[-5%] hidden h-[50%] w-[40%] bg-[#0C1933] opacity-50 lg:block",
     animation: "blob-float-3 22s ease-in-out infinite",
   },
+  // The warm pair at the bottom corners — mirrored so the amber cast is
+  // symmetric across the screenshot rather than weighted to one side.
   {
     className:
-      "right-[-5%] bottom-[-10%] hidden h-[60%] w-[55%] bg-[#4A2716] opacity-65 lg:block",
+      "right-[-5%] bottom-[-10%] hidden h-[60%] w-[55%] bg-[#163E6B] opacity-65 lg:block",
     animation: "blob-float-1 28s ease-in-out infinite reverse",
   },
   {
     className:
-      "top-[30%] left-[30%] hidden h-[40%] w-[40%] bg-[#311509] opacity-80 lg:block",
+      "left-[-5%] bottom-[-10%] hidden h-[60%] w-[55%] bg-[#48210B] opacity-65 lg:block",
+    animation: "blob-float-3 28s ease-in-out infinite reverse",
+  },
+  {
+    className:
+      "top-[30%] left-[30%] hidden h-[40%] w-[40%] bg-[#0C1933] opacity-80 lg:block",
     animation: "blob-float-2 24s ease-in-out infinite reverse",
   },
 ] as const;
@@ -51,7 +60,7 @@ const BACKGROUND_BLOBS = [
 const BACKGROUND_CODE_FRAGMENTS = [
   {
     className:
-      "top-[13%] -left-20 -rotate-3 text-[#FFD6AC]/25 sm:left-[2%] xl:left-[4%]",
+      "top-[13%] -left-20 -rotate-3 text-[#ACD3FF]/25 sm:left-[2%] xl:left-[4%]",
     lines: [
       "const workspace = await",
       "  mains.open({",
@@ -62,7 +71,7 @@ const BACKGROUND_CODE_FRAGMENTS = [
   },
   {
     className:
-      "top-[9%] -right-24 rotate-2 text-[#FFE2BD]/20 sm:right-[-4%] xl:right-[3%]",
+      "top-[9%] -right-24 rotate-2 text-[#BDDCFF]/20 sm:right-[-4%] xl:right-[3%]",
     lines: [
       "for (const task of plan) {",
       "  await agent.run(task);",
@@ -72,7 +81,7 @@ const BACKGROUND_CODE_FRAGMENTS = [
   },
   {
     className:
-      "top-[34%] left-1/2 w-[min(760px,74vw)] -translate-x-1/2 -rotate-1 text-center text-[#FFDCC0]/[0.10]",
+      "top-[34%] left-1/2 w-[min(760px,74vw)] -translate-x-1/2 -rotate-1 text-center text-[#C0DDFF]/[0.10]",
     lines: [
       "const release = await Promise.all(workspaces.map(run));",
       "plan  ·  inspect  ·  collaborate  ·  ship",
@@ -80,7 +89,7 @@ const BACKGROUND_CODE_FRAGMENTS = [
   },
   {
     className:
-      "top-[39%] left-1/2 w-[min(520px,58vw)] -translate-x-1/2 rotate-1 text-center text-[#F8B979]/[0.08]",
+      "top-[39%] left-1/2 w-[min(520px,58vw)] -translate-x-1/2 rotate-1 text-center text-[#79B4F8]/[0.08]",
     lines: [
       "agent.on(\"change\", ({ diff }) => review(diff));",
       "status: ready   checks: passed   branch: main",
@@ -88,7 +97,7 @@ const BACKGROUND_CODE_FRAGMENTS = [
   },
   {
     className:
-      "top-[44%] -left-28 rotate-1 text-[#F5B778]/20 sm:left-[-4%] xl:left-[1%]",
+      "top-[44%] -left-28 rotate-1 text-[#78B2F5]/20 sm:left-[-4%] xl:left-[1%]",
     lines: [
       "$ git diff --stat",
       "src/agent.ts   | +42 -7",
@@ -99,7 +108,7 @@ const BACKGROUND_CODE_FRAGMENTS = [
   },
   {
     className:
-      "top-[54%] -right-24 -rotate-2 text-[#FFD09B]/20 sm:right-[-5%] xl:right-[1%]",
+      "top-[54%] -right-24 -rotate-2 text-[#9BCAFF]/20 sm:right-[-5%] xl:right-[1%]",
     lines: [
       "type Change = {",
       "  path: string;",
@@ -111,7 +120,7 @@ const BACKGROUND_CODE_FRAGMENTS = [
   },
   {
     className:
-      "bottom-[3%] left-[4%] rotate-2 text-[#ED9E5A]/15 xl:left-[8%]",
+      "bottom-[3%] left-[4%] rotate-2 text-[#5A9FED]/15 xl:left-[8%]",
     lines: [
       "while (agent.active) {",
       "  const event = await next();",
@@ -150,8 +159,8 @@ function HeroCodeTexture() {
       aria-hidden
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
-      <div className="absolute top-[4%] right-[2%] size-80 rounded-full bg-[#F98A3D]/10 blur-[90px]" />
-      <div className="absolute bottom-[8%] left-[-4%] size-96 rounded-full bg-[#D96524]/10 blur-[110px]" />
+      <div className="absolute top-[4%] right-[2%] size-80 rounded-full bg-[#3D95F9]/10 blur-[90px]" />
+      <div className="absolute bottom-[8%] left-[-4%] size-96 rounded-full bg-[#2478D9]/10 blur-[110px]" />
 
       {BACKGROUND_CODE_FRAGMENTS.map(({ className, lines }, fragmentIndex) => (
         <motion.pre
@@ -163,7 +172,7 @@ function HeroCodeTexture() {
           className={cn(
             "absolute font-mono text-[10px] leading-[1.7] tracking-[0.14em] whitespace-pre select-none md:text-xs",
             "mask-[linear-gradient(to_bottom,transparent,black_14%,black_86%,transparent)]",
-            "[text-shadow:0_0_24px_rgba(255,142,62,0.26)]",
+            "[text-shadow:0_0_24px_rgba(62,152,255,0.26)]",
             className
           )}
         >
@@ -194,7 +203,7 @@ function HeroBackground({ isDesktop }: { isDesktop: boolean }) {
 
   return (
     <>
-      <div aria-hidden className="absolute inset-0 z-0 bg-[#170B07]">
+      <div aria-hidden className="absolute inset-0 z-0 bg-[#070E17]">
         {BACKGROUND_BLOBS.map(({ className, animation }) => (
           <div
             key={animation}
@@ -229,7 +238,7 @@ function HeroHeadline() {
           <ScrambleText
             words={[...HERO_SCRAMBLE_WORDS]}
             interval={3000}
-            className="text-orange-200"
+            className="text-blue-200"
           />
         </span>
       </h1>
@@ -301,7 +310,7 @@ export function HeroSection() {
             {/* Center glow behind headline */}
             <div
               aria-hidden
-              className="pointer-events-none absolute top-[-8%] left-1/2 h-[min(420px,55vw)] w-[min(720px,92vw)] -translate-x-1/2 rounded-full bg-orange-400/10 blur-[100px]"
+              className="pointer-events-none absolute top-[-8%] left-1/2 h-[min(420px,55vw)] w-[min(720px,92vw)] -translate-x-1/2 rounded-full bg-blue-400/10 blur-[100px]"
             />
 
             <HeroHeadline />
@@ -312,7 +321,7 @@ export function HeroSection() {
               className="relative z-10 mt-14 w-full max-w-7xl sm:rounded-xl sm:overflow-hidden"
             >
               <Image
-                src="/mains-hero.png"
+                src="/0-6-hero-image.png"
                 alt="Mains desktop app"
                 width={3600}
                 height={2068}
