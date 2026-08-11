@@ -12,10 +12,10 @@ export function FilterPill({ label, isActive, onClick, className }: FilterPillPr
     <button
       onClick={onClick}
       className={cn(
-        "px-4 py-2 rounded-full text-sm font-medium transition-all",
+        "px-3 py-1.5 rounded-2xl text-sm font-medium transition-all glass-outline",
         isActive
-          ? "bg-white text-black"
-          : "bg-primary-800 text-primary-300 hover:bg-primary-700",
+          ? "bg-primary-900/20 text-primary-50"
+          : "bg-primary-50/10 text-primary-50 hover:bg-primary-900/10",
         className
       )}
     >

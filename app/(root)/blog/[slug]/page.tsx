@@ -160,11 +160,11 @@ export default async function BlogPost({ params }: Props) {
 
         {/* Cover Image */}
         {post.image && (
-          <div className="mb-12 rounded-lg overflow-hidden">
+          <div className="mb-12 rounded-lg  overflow-hidden">
             <img
               src={post.image}
               alt={post.title}
-              className="w-full h-auto"
+              className="w-full h-auto  mx-auto"
             />
           </div>
         )}

@@ -64,7 +64,7 @@ function BlogCard({ post }: { post: Post }) {
   return (
     <Link
       href={post.url}
-      className="group block bg-primary-900/30 border border-primary-800 rounded-xl overflow-hidden hover:border-primary-600 transition-all duration-300"
+      className="group block bg-primary-900/10  rounded-2xl overflow-hidden glass-outline transition-all duration-300"
     >
       {/* Image/Visual */}
       {post.image ? (
