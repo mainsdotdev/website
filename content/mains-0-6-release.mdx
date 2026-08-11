@@ -1,0 +1,174 @@
+---
+title: "Mains 0.6: Edit, Commit, Ship"
+date: 2026-08-11
+description: "Commit and send PRs without leaving the workspace, edit files in place, watch every subagent work, and browse your repo like you would in an editor."
+author: "Mains Team"
+tags: ["changelog", "release", "product"]
+published: true
+version: "0.6"
+image: "/changelog/0-6-cover.jpeg"
+---
+
+
+
+0.5 was about watching an agent work. 0.6 is about working alongside it. You can now edit the files it touched, write the commit and the PR from the same panel you reviewed the diff in, and see exactly which agent is doing what while it happens.
+
+## Every subagent, visible
+
+<div className="media-frame half glass-outline brightness">
+  <video
+    src="/changelog/0-6-subagent-panel.mp4"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="The subagent panel, with several agents running inside one session"
+  />
+</div>
+
+Agents spawn other agents, and until now that showed up as a tool call and a guess. Subagents now run in their own panel docked to the corner of the workspace, each with a **glyph** — a small symmetric mark whose pattern and color are hashed from the agent's identity, so the same agent reads the same everywhere.
+
+- A running agent's glyph twinkles; a finished one carries a check, a cross, or a stop mark.
+- Click any row for that agent's full detail: its task, the tools it ran, and the report it returned — as text, not as raw JSON.
+- The panel collapses to a pill when you want the room back and expands over the chat when you want the detail.
+
+Both providers are wired end to end. Claude's foreground `Task` agents and its backgrounded `SendMessage` continuations are tracked as one identity, so a resumed agent stays the same agent. Codex's collab agents — spawn, send, wait, close, resume — map onto the same lifecycle.
+
+And subagents now finish. Interrupt a run and its active agents are interrupted with it; continue the session and their state is recovered from disk instead of restarting blind. When a run ends, any agent whose terminal event never arrived is settled from the run's own outcome — no more rows spinning forever after you hit stop.
+
+
+## A file explorer that behaves like your editor
+
+<div className="media-row">
+  <img
+    src="/changelog/0-6-diff-status.png"
+    alt="The workspace diff list with a status letter on every file row"
+  />
+  <img
+    src="/changelog/0-6-file-explorer.jpg"
+    alt="Searching files, expanding folders, and the new icon set"
+  />
+
+</div>
+
+
+The explorer gained the thing it was most obviously missing: **search**. Type to filter the whole workspace by name or path, arrow through matches, Enter to open. In a git repository the search asks git for the candidate set, so everything `.gitignore` ignores stays out of your results without you configuring anything.
+
+Around it, the rest of the editor experience filled in:
+
+- Dotfiles are visible by default and only VCS internals and OS metadata are hidden — VS Code's defaults, not our own invention.
+- Collapse-all and reload buttons in the toolbar; Escape clears the search.
+- The tree keeps its shape across tab switches and panel toggles, and opening a file from anywhere — search, the `@` menu, a diff link — reveals it in the tree.
+- About thirty new file-type icons: Rust, Docker, pnpm, Python, Ruby, Vue, Svelte, GraphQL, Tailwind, Vite, Vitest, Next.js, Drizzle, PHP, Java, C++ and more. Those same icons show up in agent output, where a reference like `src/runs.service.ts:114` is now a chip you can click to open the file at the line.
+
+
+## Commit and ship from the session panel
+
+<div className="media-frame half glass-outline brightness">
+  <video
+    src="/changelog/0-6-git-action.mp4"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="Generating a commit message and opening a PR from the session panel"
+  />
+</div>
+
+
+Git actions moved into the session panel as accordions that expand in place, so you never lose the diff you were reading. Commit and PR are mutually exclusive — opening one closes the other — and each row disables itself the moment it stops making sense: nothing to commit, nothing to push, no remote.
+
+- **Generate buttons** fill the commit message, and the PR title and body, from the actual changeset. They run on a fast one-shot model rather than your chat model, so generating a message costs neither your context nor your good tokens.
+- Generation reads the diff in **preview mode** — no staging as a side effect, so hitting Generate never changes what you're about to commit.
+- Long actions raise a **persistent toast** that survives closing the panel: push, commit, and PR creation keep reporting even after you move on.
+- Pushes are now logged as workspace activity, and PR rows in the Activity tab expand to show the body that was already being stored but never shown.
+
+## Edit files in place
+
+<div className="media-frame half glass-outline ">
+  <video
+    src="/changelog/0-6-edit-mode.mov"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="The subagent panel, with several agents running inside one session"
+  />
+</div>
+
+The code viewer is an editor now. Open any file from the tree and type — no round trip to your IDE for a one-line fix the agent got almost right.
+
+Saving is automatic and careful. Edits are debounced, then written through a conflict-guarded save: if the file changed on disk underneath you — an agent still running, a rebase, another editor — the save stops and offers **Reload**, **Overwrite**, or **Retry** instead of silently picking one. Undo history survives auto-saves, and every successful write resyncs the workspace diff so the review pane stays honest.
+
+## The plan, at a glance
+
+<div className="media-frame half glass-outline">
+  <video
+    src="/changelog/0-6-todo-bar.mov"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    aria-label="The task plan widget expanding from a pill into the full checklist"
+  />
+</div>
+
+
+The task summary is no longer a bar wedged above the input. It's a floating pill at the top of the transcript: a spinner, **Task 3 of 7**, and the step being worked on right now. Hover it and it expands downward into the full checklist; click to pin it open while you read. When a real toast arrives it slides out of the way instead of fighting for the same corner.
+
+## Screenshots, as a gallery
+
+![Consecutive image artifacts rendered as a compact tile gallery](/changelog/0-6-imagegallery.png)
+
+An agent that takes six screenshots in a row used to produce six full-width file rows. Consecutive image artifacts are now grouped into a single gallery with compact tiles, so a verification pass reads as one result instead of scrolling you off the page.
+
+## Reasoning effort, one hover away
+
+The effort submenu now lines its first entry up with the model you hovered, and survives the diagonal trip to get there — moving up and to the right no longer rebinds the menu to whatever row your pointer crossed on the way.
+
+Underneath it, model defaults were rebuilt. Mains used to ship a hardcoded default model id per provider, and those ids aged out of the CLIs' catalogs, which left the picker with no default marked at all. Each driver now resolves its default from the live catalog, and `defaultModel` goes back to meaning the model *you* pinned. Reasoning effort ships with a default too: medium for Claude and Codex, and none for Cursor and Copilot, whose auto models don't advertise effort levels.
+
+## Improvements
+
+- Untracked files are now part of the workspace diff, and every file row carries a status letter — **A**dded, **U**ntracked, **M**odified, **D**eleted, **R**enamed — in a column you can scan.
+- The diff sent to the model grew to 100k characters, and truncation is now flagged to the model instead of handing it a prefix it thinks is whole.
+- Remote images in agent output render as a click-to-load placeholder showing the host. Untrusted markdown can otherwise turn an image URL into a data-exfiltration beacon; nothing leaves your machine until you say so.
+- Added ⌘L to send a code selection from the viewer straight to the chat as a chip.
+- Added a provider CLI update notice with a one-click update when a version gate blocks a run.
+- Added a provider auth notice with one-click sign-in, plus a `claude auth status --json` fast path so signed-out state is detected without spawning a query.
+- Added Codex thread lifecycle operations — archive, unarchive, and delete — available in Settings → Archive alongside archived workspaces.
+- Claude rate-limit warnings now show how much of the window is used and when it resets.
+- The workspace tab strip shows every run instead of the first eight.
+- Plugin detail falls back to the marketplace manifest when the catalog cache misses, and gained Installs, Updated, and Source rows.
+- Upgraded `@pierre/diffs` to 1.3.5 and shiki to 4.4.2.
+
+## Fixes
+
+- Subagents no longer appear to run forever after their run is stopped or aborted.
+- A backgrounded agent's launch acknowledgement is no longer mistaken for its report, or for an early green check.
+- A resumed agent's detail view now shows the same state as its row in the list.
+- Claude runs no longer fail with `effort 'xhigh' is not supported when thinking is disabled` — the mismatched config is healed on upgrade.
+- Archiving, unarchiving, or deleting a run no longer fails when Codex has already dropped the thread on its side.
+- Switching providers now resets the active tab instead of leaving a stale one selected.
+- The packaged app adopts your login-shell PATH at startup, fixing `env: node: No such file or directory` from git hooks on commit.
+- A commit no longer leaves a stale generated message behind from the changeset it replaced.
+- Prompt suggestion chips wrap instead of truncating — a suggestion you can't read is one you can't judge.
+- Grep result stats no longer wrap onto a second line.
+- Long file paths in the diff list show in full on hover.
+
+## Misc
+
+- New "generate" spinner: a randomly twinkling square grid, used while a model writes your commit message.
+- Workspace surfaces widened slightly for a more consistent layout.
+- Improved contrast on tracker filters and buttons in dark mode.
+- Loading spinners inside buttons now inherit the surrounding text color.
+
+---
+
+Mains 0.6 is available for macOS (Apple Silicon and Intel), and open source under the MIT license at [github.com/mainsdotdev/mains](https://github.com/mainsdotdev/mains).
+
+*Questions or feedback? Reach out to [team@mains.dev](mailto:team@mains.dev)*

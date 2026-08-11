@@ -112,10 +112,10 @@ export default async function BlogPost({ params }: Props) {
   return (
     <>
       <StructuredData data={structuredData} />
-      <div className="min-h-screen max-w-7xl mx-auto px-4 bg-primary-950 ">
+      <div className="min-h-screen max-w-7xl mx-auto bg-primary-950 ">
         <Header />
       
-        <article className=" px-4">
+        <article className="max-w-5xl mx-auto px-4">
         {/* Back Link */}
         <Link
           href="/blog"
@@ -160,11 +160,11 @@ export default async function BlogPost({ params }: Props) {
 
         {/* Cover Image */}
         {post.image && (
-          <div className="mb-12 rounded-lg overflow-hidden">
+          <div className="mb-12 rounded-lg  overflow-hidden">
             <img
               src={post.image}
               alt={post.title}
-              className="w-full h-auto"
+              className="w-full h-auto  mx-auto"
             />
           </div>
         )}
