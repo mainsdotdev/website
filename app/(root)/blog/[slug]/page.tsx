@@ -1,5 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from 'next/image';
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
+import { getImageSize } from '@/lib/image-size';
 import { notFound } from 'next/navigation';
 import { MDXContent } from '@/components/mdx-content';
 import { StructuredData } from '@/components/structured-data';
@@ -76,6 +77,7 @@ export default async function BlogPost({ params }: Props) {
     notFound();
   }
 
+  const coverSize = post.image ? getImageSize(post.image) : null;
   const canonicalUrl = `https://mains.dev/blog/${post.slug}`;
   const imageUrl = new URL(
     post.image || '/hero-new-image.png',
@@ -158,12 +160,17 @@ export default async function BlogPost({ params }: Props) {
           <p className="text-primary-300 text-lg mt-4">{post.description}</p>
         </header>
 
-        {/* Cover Image */}
-        {post.image && (
+        {/* Cover Image — the LCP element, so it loads eagerly at high priority
+            while everything below the fold stays lazy. */}
+        {post.image && coverSize && (
           <div className="mb-12 rounded-lg  overflow-hidden">
-            <img
+            <Image
               src={post.image}
               alt={post.title}
+              width={coverSize.width}
+              height={coverSize.height}
+              sizes="(max-width: 40rem) 100vw, 1088px"
+              priority
               className="w-full h-auto  mx-auto"
             />
           </div>

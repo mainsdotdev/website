@@ -2,6 +2,8 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import { LazyVideo } from '@/components/lazy-video';
+import { ProseImage } from '@/components/prose-image';
 
 type MDXContentProps = {
   source: string;
@@ -27,10 +29,26 @@ const rehypeOptions = {
   },
 };
 
+/**
+ * MDX only routes *markdown-generated* elements through this map — a literal
+ * `<img>` written in a post compiles to a raw DOM tag and skips it entirely.
+ * So posts use the capitalized `<Figure>` / `<Video>`, which always resolve
+ * here, while `img` still covers `![alt](src)`.
+ *
+ * Note: next-mdx-remote v6 strips every `prop={expression}` from MDX, so these
+ * take their numbers as strings (`width="780"`) and coerce.
+ */
+const components = {
+  img: ProseImage,
+  Figure: ProseImage,
+  Video: LazyVideo,
+};
+
 export function MDXContent({ source }: MDXContentProps) {
   return (
     <MDXRemote
       source={source}
+      components={components}
       options={{
         mdxOptions: {
           rehypePlugins: [
