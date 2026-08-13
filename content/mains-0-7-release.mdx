@@ -1,0 +1,103 @@
+---
+title: "Mains 0.7: Triage, Review, Merge"
+date: 2026-08-13
+description: "Issues and pull requests now live on one screen. Read the diff, comment on a line, resolve the thread, and merge — without opening a browser tab."
+author: "Mains Team"
+tags: ["changelog", "release", "product"]
+published: true
+version: "0.7"
+image: "/changelog/0-7-cover.jpeg"
+---
+
+
+
+0.6 let you edit, commit, and ship the work an agent did. 0.7 covers what surrounds that work — the issue that started it and the pull request it turns into. Both now live on one screen, and the pull request isn't a link out: it's the diff, the review threads, the checks, and the merge button.
+
+## One inbox for issues and pull requests
+
+<div className="media-frame glass-outline w-3/4">
+  <Video
+    src="/changelog/0-7-tasks-inbox.mp4"
+    poster="/changelog/posters/0-7-tasks-inbox.jpg"
+    width="1600"
+    height="886"
+    aria-label="The Tasks screen, switching between the Issues and Pull requests tabs"
+  />
+</div>
+
+**Tasks** is a new screen in the sidebar: two tabs, a shared search and filter bar, and a detail pane that stays open beside the list.
+
+Issues used to be a section in the workspace sidebar, competing for room with the file tree and the run history. They've moved here, where a list can actually be a list. The workspace is for the run you're in; Tasks is for everything waiting on you.
+
+## Pull requests that are actually current
+
+<div className="media-row">
+  <Figure
+    src="/changelog/0-7-prlist.png"
+    alt="The pull request list with state icons, CI dots, and diff stats"
+    width="936"
+    height="755"
+    sizes="(max-width: 40rem) 100vw, 544px"
+  />
+  <Figure
+    src="/changelog/0-7-prfilters.png"
+    alt="The filter menu open, with State and Repository facets"
+    width="936"
+    height="755"
+    sizes="(max-width: 40rem) 100vw, 544px"
+  />
+</div>
+
+Every row carries what you triage on: state, a **CI dot**, the author, the branch, the diff stats, and when it last moved. Relationship — All, Review requested, Reviewed, Authored — stays visible as tabs; state and repository sit in a facet menu behind one button.
+
+Pull requests are **never stored**. CI status, mergeability, and review state go stale faster than any sync interval can chase, so the inbox asks GitHub each time and keeps nothing. The number you're looking at is the number GitHub has.
+
+## The whole pull request, in the drawer
+
+<div className="media-frame half glass-outline brightness">
+  <Video
+    src="/changelog/0-7-pr-detail.mp4"
+    poster="/changelog/posters/0-7-pr-detail.jpg"
+    width="1088"
+    height="1300"
+    aria-label="A pull request detail view: checks dropdown, reviewers, and the merge split button"
+  />
+</div>
+
+Branch, reviewers, comments, checks, and status read in one pass, with the description rendered as real markdown and every review thread listed under it. Checks summarize as *3 passing · 1 failing* and expand into the individual runs.
+
+**Merge is a split button** — the left half runs the method you picked, the chevron switches between merge, squash, and rebase. On a draft, that slot becomes **Ready for review**.
+
+## Comment on the line, not about it
+
+<div className="media-frame half glass-outline">
+  <Video
+    src="/changelog/0-7-inline-review.mp4"
+    poster="/changelog/posters/0-7-inline-review.jpg"
+    width="1088"
+    height="1012"
+    aria-label="Adding an inline review comment from the diff gutter, then replying and resolving the thread"
+  />
+</div>
+
+The **Code** tab is a full file-by-file diff. Hover a line, click the **+** in the gutter, and what you write becomes a review thread on GitHub — on that exact line. Threads already open are anchored to their lines, so you can reply and resolve without leaving the diff.
+
+## Sign in to GitHub without making a token
+
+<div className="media-frame half glass-outline">
+  <Video
+    src="/changelog/0-7-device-flow.mp4"
+    poster="/changelog/posters/0-7-device-flow.jpg"
+    width="1088"
+    height="914"
+    aria-label="GitHub device flow sign-in: a one-time code, the browser approval page, and the connected state"
+  />
+</div>
+
+Connecting GitHub no longer starts with minting a personal access token and guessing at scopes. The wizard now offers **Sign in with GitHub**: a one-time code, an approval in your browser, done. The token tab is still there, and both paths end in the same stored credential.
+
+---
+
+Mains 0.7 is available for macOS (Apple Silicon and Intel), and open source under the MIT license at [github.com/mainsdotdev/mains](https://github.com/mainsdotdev/mains).
+
+*Questions or feedback? Reach out to [team@mains.dev](mailto:team@mains.dev)*
