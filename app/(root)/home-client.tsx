@@ -13,11 +13,18 @@ import { SentrySection } from "@/components/sections/sentry-section";
 import { SecuritySection } from "@/components/sections/security-section";
 import type { Post } from "@/lib/types";
 
-export function HomeClient({ changelogPosts }: { changelogPosts: Post[] }) {
+export function HomeClient({
+  changelogPosts,
+  appWindow,
+}: {
+  changelogPosts: Post[];
+  /** Server-rendered hero mockup, passed through so it stays off the client. */
+  appWindow?: React.ReactNode;
+}) {
   return (
     <main className="min-h-screen ">
       <GlobalDownloadGithubShortcuts />
-      <HeroSection latestPost={changelogPosts[0]} />
+      <HeroSection latestPost={changelogPosts[0]} appWindow={appWindow} />
       <UseCasesSection useCases={USE_CASES} />
       <ReviewSection />
       <SentrySection />

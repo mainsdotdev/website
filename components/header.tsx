@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { Apple, ArrowRightLine, Close, Github, Menu } from "@/components/icons";
+import { Apple, ArrowRightLine, Close, Github, Hamburger } from "@/components/icons";
 import { MAINS_DOWNLOAD_DMG_URL, MAINS_GITHUB_REPO_URL } from "@/lib/constants";
 import { usePlatformDetection } from "@/hooks/usePlatformDetection";
 import { cn } from "@/lib/utils";
@@ -73,11 +73,14 @@ export default function Header() {
           {/* Logo + Menu */}
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center" aria-label="Mains — home">
+              {/* 64px = the 32px it renders at, doubled for retina. The
+                  source is 1024²; asking for 480 made next/image ship a 640w
+                  variant (~33KB) for a 32px mark. */}
               <Image
                 src="/logo.png"
                 alt="Mains — AI coding agent desktop app"
-                width={480}
-                height={480}
+                width={64}
+                height={64}
                 className="object-contain w-auto h-8"
                 priority
               />
@@ -118,7 +121,7 @@ export default function Header() {
               aria-expanded={menuOpen}
               className="flex size-9 items-center justify-center rounded-full text-primary-200 glass-outline transition-colors hover:bg-primary-50/5 hover:text-white md:hidden"
             >
-              <Menu width={16} height={16} />
+              <Hamburger width={16} height={16} />
             </button>
           </div>
         </nav>
@@ -187,8 +190,8 @@ function MobileMenu({
               <Image
                 src="/logo.png"
                 alt="Mains — AI coding agent desktop app"
-                width={480}
-                height={480}
+                width={64}
+                height={64}
                 className="h-8 w-auto object-contain"
               />
             </Link>

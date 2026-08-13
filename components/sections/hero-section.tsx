@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, steps, useReducedMotion, type Variants } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/header";
 import { ScrambleText } from "@/components/scramble-text";
@@ -276,7 +275,18 @@ function HeroActions({ isMac }: { isMac: boolean }) {
   );
 }
 
-export function HeroSection({ latestPost }: { latestPost?: Post }) {
+export function HeroSection({
+  latestPost,
+  appWindow,
+}: {
+  latestPost?: Post;
+  /**
+   * The desktop-window mockup, rendered on the server and handed down as a
+   * node — importing it here would drag its markdown renderer into this
+   * client component's bundle.
+   */
+  appWindow?: React.ReactNode;
+}) {
   const { isMac } = usePlatformDetection();
   // `pointer: fine` keeps tablets out: an iPad is wide enough to pass a width
   // query but rasterizes the blur/filter work on a phone-class GPU.
@@ -303,15 +313,7 @@ export function HeroSection({ latestPost }: { latestPost?: Post }) {
               {...FADE_IN_BLUR_UP_DELAY(0.75)}
               className="relative z-10 mt-14 w-full max-w-6xl sm:rounded-[10px] sm:overflow-hidden"
             >
-              <Image
-                src="/hero2.png"
-                alt="Mains desktop app"
-                width={4094}
-                height={2430}
-                className="block h-auto w-full"
-                priority
-                sizes="(max-width: 1280px) 100vw, 1280px"
-              />
+              {appWindow}
             </motion.div>
           </div>
         </section>

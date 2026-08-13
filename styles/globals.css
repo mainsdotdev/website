@@ -507,3 +507,46 @@ canvas:hover {
     mask-composite: exclude;
   }
 }
+
+/*
+ * Agent glyph — lifted from the desktop app (src/renderer/index.css) so the
+ * hero mockup's subagent marks render exactly as they do in the product.
+ * --agent-hue is hashed from the agent's name in agent-glyph.tsx; lightness
+ * and chroma are pinned here so hue is the only axis that varies and every
+ * agent reads at the same weight.
+ */
+@keyframes generateSquareTwinkle {
+  0%,
+  100% {
+    opacity: 0.08;
+    transform: scale(0.4);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.generate-square {
+  border-radius: 1px;
+  background: currentColor;
+  opacity: 0.08;
+  animation: generateSquareTwinkle var(--gsq-dur, 1400ms)
+    cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  animation-delay: var(--gsq-delay, 0ms);
+}
+
+/* The site is dark-only, so this is the app's `.dark .agent-glyph` value. */
+.agent-glyph {
+  color: oklch(0.78 0.16 var(--agent-hue, 0));
+}
+
+/* Scroll areas inside the app mockups, matching the desktop app's utility. */
+.noscrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

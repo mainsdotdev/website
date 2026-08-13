@@ -6,6 +6,7 @@ import {
   MAINS_VERSION,
 } from "@/lib/constants";
 import { getAllPosts } from "@/lib/posts";
+import { AppWindow } from "@/components/demo/app-window";
 import { HomeClient } from "./home-client";
 
 export const metadata: Metadata = {
@@ -68,7 +69,10 @@ export default function Home() {
   return (
     <>
       <StructuredData data={structuredData} />
-      <HomeClient changelogPosts={changelogPosts} />
+      <HomeClient
+        changelogPosts={changelogPosts}
+        appWindow={<AppWindow />}
+      />
     </>
   );
 }
