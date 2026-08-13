@@ -2,9 +2,11 @@
 
 import { motion, steps, useReducedMotion, type Variants } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import Header from "@/components/header";
 import { ScrambleText } from "@/components/scramble-text";
-import { Github, GrainOverlay, Windows } from "@/components/icons";
+import { ChevronRight, Github, Windows } from "@/components/icons";
+import type { Post } from "@/lib/types";
 import { MacDownloadButton } from "@/components/mac-download-button";
 import { ShortcutPillButton } from "@/components/shortcut-pill-button";
 import { FADE_IN_BLUR_DELAY, FADE_IN_BLUR_UP_DELAY } from "@/lib/animations";
@@ -22,40 +24,7 @@ const PILL_CLASS_NAME =
 
 // Blues sampled from the hero screenshot's night-sky wallpaper (dominant hue
 // ~212°), so the page glow reads as an extension of the image behind it.
-const BACKGROUND_BLOBS = [
-  {
-    className:
-      "top-[-10%] left-[-5%] h-[60%] w-[50%] bg-[#0C1933] opacity-60",
-    animation: "blob-float-1 20s ease-in-out infinite",
-  },
-  {
-    className:
-      "top-[10%] left-[20%] h-[70%] w-[60%] bg-[#163E6B] opacity-70",
-    animation: "blob-float-2 25s ease-in-out infinite",
-  },
-  {
-    className:
-      "top-[5%] right-[-5%] hidden h-[50%] w-[40%] bg-[#0C1933] opacity-50 lg:block",
-    animation: "blob-float-3 22s ease-in-out infinite",
-  },
-  // The warm pair at the bottom corners — mirrored so the amber cast is
-  // symmetric across the screenshot rather than weighted to one side.
-  {
-    className:
-      "right-[-5%] bottom-[-10%] hidden h-[60%] w-[55%] bg-[#163E6B] opacity-65 lg:block",
-    animation: "blob-float-1 28s ease-in-out infinite reverse",
-  },
-  {
-    className:
-      "left-[-5%] bottom-[-10%] hidden h-[60%] w-[55%] bg-[#48210B] opacity-65 lg:block",
-    animation: "blob-float-3 28s ease-in-out infinite reverse",
-  },
-  {
-    className:
-      "top-[30%] left-[30%] hidden h-[40%] w-[40%] bg-[#0C1933] opacity-80 lg:block",
-    animation: "blob-float-2 24s ease-in-out infinite reverse",
-  },
-] as const;
+
 
 const BACKGROUND_CODE_FRAGMENTS = [
   {
@@ -159,8 +128,8 @@ function HeroCodeTexture() {
       aria-hidden
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
-      <div className="absolute top-[4%] right-[2%] size-80 rounded-full bg-[#3D95F9]/10 blur-[90px]" />
-      <div className="absolute bottom-[8%] left-[-4%] size-96 rounded-full bg-[#2478D9]/10 blur-[110px]" />
+      <div className="absolute top-[4%] right-[2%] size-80 rounded-full bg-[#0C0C0C]/10 blur-[90px]" />
+      <div className="absolute bottom-[8%] left-[-4%] size-96 rounded-full bg-[#0C0C0C]/10 blur-[110px]" />
 
       {BACKGROUND_CODE_FRAGMENTS.map(({ className, lines }, fragmentIndex) => (
         <motion.pre
@@ -196,26 +165,39 @@ function HeroCodeTexture() {
 }
 
 function HeroBackground({ isDesktop }: { isDesktop: boolean }) {
-  const shouldReduceMotion = useReducedMotion();
   // Blurred blobs are pure compositor work — keep them still on phones, where
   // the smaller viewport hides most of the movement anyway.
-  const animateBlobs = isDesktop && !shouldReduceMotion;
 
   return (
     <>
-      <div aria-hidden className="absolute inset-0 z-0 bg-[#070E17]">
-        {BACKGROUND_BLOBS.map(({ className, animation }) => (
-          <div
-            key={animation}
-            className={cn("absolute rounded-full blur-[60px] lg:blur-[90px]", className)}
-            style={animateBlobs ? { animation } : undefined}
-          />
-        ))}
-      </div>
-      <GrainOverlay className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.05]" />
+
       <div aria-hidden className="absolute inset-0 z-0 bg-linear-to-b from-black via-transparent to-primary-950" />
-      {isDesktop && <HeroCodeTexture />}
+      {/* {isDesktop && <HeroCodeTexture />} */}
     </>
+  );
+}
+
+function HeroReleaseBadge({ post }: { post: Post }) {
+  return (
+    <motion.div {...FADE_IN_BLUR_DELAY(0.1)} className="relative z-10 mb-8">
+      <Link
+        href={post.url}
+        className="group flex items-center gap-1 rounded-full glass-outline  py-1.5 pr-1.5 pl-2 text-xs transition-colors hover:bg-primary-900/10 sm:gap-3 sm:text-sm"
+      >
+        <span className="rounded-full border border-gray-300/20 px-2 py-0.5 text-[10px] uppercase tracking-tight text-gray-300 ">
+          New
+        </span>
+        <span className="text-primary-50">
+          Mains {post.version} •
+        </span>
+        <span className="hidden -ml-2 text-primary-50 sm:inline">
+          {"Tasks"}
+        </span>
+        <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary-50/5 text-primary-100 transition-transform group-hover:translate-x-0.5">
+          <ChevronRight className="size-3.5" />
+        </span>
+      </Link>
+    </motion.div>
   );
 }
 
@@ -238,7 +220,7 @@ function HeroHeadline() {
           <ScrambleText
             words={[...HERO_SCRAMBLE_WORDS]}
             interval={3000}
-            className="text-blue-200"
+            className="text-gray-300"
           />
         </span>
       </h1>
@@ -294,7 +276,7 @@ function HeroActions({ isMac }: { isMac: boolean }) {
   );
 }
 
-export function HeroSection() {
+export function HeroSection({ latestPost }: { latestPost?: Post }) {
   const { isMac } = usePlatformDetection();
   // `pointer: fine` keeps tablets out: an iPad is wide enough to pass a width
   // query but rasterizes the blur/filter work on a phone-class GPU.
@@ -310,21 +292,22 @@ export function HeroSection() {
             {/* Center glow behind headline */}
             <div
               aria-hidden
-              className="pointer-events-none absolute top-[-8%] left-1/2 h-[min(420px,55vw)] w-[min(720px,92vw)] -translate-x-1/2 rounded-full bg-blue-400/10 blur-[100px]"
+              className="pointer-events-none absolute top-[-8%] left-1/2 h-[min(420px,55vw)] w-[min(720px,92vw)] -translate-x-1/2 rounded-full bg-gray-400/10 blur-[90px]"
             />
 
+            {latestPost && <HeroReleaseBadge post={latestPost} />}
             <HeroHeadline />
             <HeroActions isMac={isMac} />
 
             <motion.div
               {...FADE_IN_BLUR_UP_DELAY(0.75)}
-              className="relative z-10 mt-14 w-full max-w-7xl sm:rounded-xl sm:overflow-hidden"
+              className="relative z-10 mt-14 w-full max-w-6xl sm:rounded-[10px] sm:overflow-hidden"
             >
               <Image
-                src="/0-6-hero-image.png"
+                src="/hero2.png"
                 alt="Mains desktop app"
-                width={3600}
-                height={2068}
+                width={4094}
+                height={2430}
                 className="block h-auto w-full"
                 priority
                 sizes="(max-width: 1280px) 100vw, 1280px"

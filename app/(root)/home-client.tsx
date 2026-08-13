@@ -17,7 +17,7 @@ export function HomeClient({ changelogPosts }: { changelogPosts: Post[] }) {
   return (
     <main className="min-h-screen ">
       <GlobalDownloadGithubShortcuts />
-      <HeroSection />
+      <HeroSection latestPost={changelogPosts[0]} />
       <UseCasesSection useCases={USE_CASES} />
       <ReviewSection />
       <SentrySection />

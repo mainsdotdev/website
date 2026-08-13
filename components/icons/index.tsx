@@ -32,6 +32,8 @@ export { default as Description } from "./description";
 export { default as CommitCircle } from "./commit-circle";
 export { default as Check } from "./check";
 export { default as Close } from "./close";
+export { default as Menu } from "./menu";
+export { default as Link } from "./link";
 export { default as CodeBrackets } from "./code-brackets";
 export { default as Dollar } from "./dollar";
 export { default as SettingsStar } from "./settings-star";

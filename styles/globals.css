@@ -234,6 +234,8 @@ canvas:hover {
     font-weight: 700;
     margin-top: 2em;
     margin-bottom: 1em;
+    /* Clears the fixed header when a TOC link jumps to a section. */
+    scroll-margin-top: 6rem;
   }
 
   .prose h2 {
