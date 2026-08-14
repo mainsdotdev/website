@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 type Integration = {
@@ -26,9 +27,13 @@ export function IntegrationGrid({ integrations }: IntegrationGridProps) {
               transition={{ duration: 0.4, ease: "easeInOut" }}
               className="text-white text-sm font-semibold text-center absolute inset-0 flex items-center justify-center"
             >
-              <img
+              {/* The sources are 768² but never draw above 128px, so they go
+                  through the optimizer rather than shipping raw PNGs. */}
+              <Image
                 src={integration.logo}
                 alt={integration.name}
+                width={128}
+                height={128}
                 className="max-h-32 max-w-32 object-contain"
               />
             </motion.span>

@@ -52,7 +52,7 @@ export default function Home() {
         operatingSystem: "macOS",
         softwareVersion: MAINS_VERSION,
         downloadUrl: MAINS_DOWNLOAD_DMG_URL,
-        image: "https://mains.dev/hero-new-image.png",
+        image: "https://mains.dev/og-image.jpg",
         isAccessibleForFree: true,
         author: {
           "@id": "https://mains.dev/#organization",

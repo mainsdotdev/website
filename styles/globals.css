@@ -1,13 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nabla&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap");
 
 @import "tailwindcss";
 
 @source "../../components/**/*.{js,ts,jsx,tsx,mdx}";
 @source "../../app/**/*.{js,ts,jsx,tsx,mdx}";
+/* Posts write Tailwind classes inline (w-2/3, w-3/4). Without this they scan
+   as nothing and the class silently does nothing at all. */
+@source "../../content/**/*.mdx";
 
 @theme {
   --color-primary-DEFAULT: #fffcf0;
@@ -25,8 +26,7 @@
   --color-primary-900: #282726;
   --color-primary-950: #0c0c0c;
 
-  --font-sans: "Geist", sans-serif;
-  --font-serif: "Inter", serif;
+  --font-sans: var(--font-schibsted-grotesk), sans-serif;
   --font-hero-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
   --font-mono: "Space Mono", monospace;
   --font-handwriting: "Nabla", cursive;
@@ -371,6 +371,66 @@ canvas:hover {
 
   .prose .media-row > * {
     margin: 0;
+  }
+
+  /* Photo mat behind any media child. The image lives on a ::before so it can
+     carry its own scrim — darkening the photo without tinting the screenshots
+     sitting on it. Point --media-backdrop at the image; everything else is
+     shared. */
+  .prose .media-backdrop {
+    position: relative;
+    isolation: isolate;
+    margin: 2rem 0;
+    padding: clamp(1rem, 4.5%, 2.75rem);
+    border-radius: 1.5rem;
+    overflow: hidden;
+  }
+
+  .prose .media-backdrop::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(12, 12, 12, 0.3),
+        rgba(12, 12, 12, 0.55)
+      ),
+      var(--media-backdrop) var(--media-backdrop-pos, center) / cover no-repeat;
+  }
+
+  /* MDX can't set a custom property (next-mdx-remote strips prop={expression}
+     and React rejects a string `style`), so each backdrop image gets a named
+     modifier here. Adding one is one rule. */
+  .prose .media-backdrop.backdrop-ridge {
+    --media-backdrop: url("/changelog/backdrop.jpeg");
+  }
+
+  /* Mats sitting side by side pan across the photo instead of repeating one
+     crop, so the row reads as two windows onto the same landscape. */
+  .prose .media-row > .media-backdrop {
+    margin: 0;
+  }
+
+  .prose .media-row > .media-backdrop:first-child {
+    --media-backdrop-pos: left center;
+  }
+
+  .prose .media-row > .media-backdrop:last-child {
+    --media-backdrop-pos: right center;
+  }
+
+  /* A mat can also wrap a whole row or frame, which then owes it the margin. */
+  .prose .media-backdrop > .media-row,
+  .prose .media-backdrop > .media-frame {
+    margin: 0;
+  }
+
+  /* Screenshots need a cast shadow to sit on a photo instead of in it. */
+  .prose .media-backdrop img,
+  .prose .media-backdrop video {
+    box-shadow: 0 1.25rem 2.5rem -0.75rem rgba(0, 0, 0, 0.55);
   }
 
   @media (width < 40rem) {

@@ -36,8 +36,7 @@ export function BlogPageClient({ posts }: { posts: Post[] }) {
           </div>
         )}
       </div>
-      <hr className="border-primary-900  mt-12" />
-      <hr className="border-primary-900  mt-0.5" />
+
     </div>
   );
 }

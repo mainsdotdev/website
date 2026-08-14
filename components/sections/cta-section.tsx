@@ -16,7 +16,7 @@ export function CtaSection() {
     "inline-flex max-w-full min-w-0 items-center gap-2 rounded-full md:px-6 md:py-3 md:text-sm px-3 py-3 text-xs font-medium transition-colors";
 
   return (
-    <div className="border-b border-primary-900 ">
+    <div className=" ">
       <section className="py-24 max-w-3xl mx-auto px-6 text-center ">
         <motion.div {...FADE_IN_UP} className="flex flex-col items-center gap-6">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-white tracking-tight leading-snug font-sans">
@@ -55,7 +55,7 @@ export function CtaSection() {
               ariaLabel="View source on GitHub (shortcut C)"
               className={cn(
                 pill,
-                "text-white bg-black hover:bg-primary-950",
+                "text-white bg-black ",
                 "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/30"
               )}
               shortcut="C"

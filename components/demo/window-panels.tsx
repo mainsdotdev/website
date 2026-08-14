@@ -73,7 +73,7 @@ function PanelRow({
   return (
     <div
       className={cn(
-        "flex w-full items-center gap-2 px-3 py-1.5 text-left text-[11px] text-primary-200",
+        "flex w-full items-center gap-2 px-3 py-1 text-left text-[10px] text-primary-200",
         className
       )}
     >
@@ -105,9 +105,9 @@ function ChangesPanel() {
         }
       />
 
-      <div className="bg-primary-50/[0.04]">
+      <div className="bg-primary-50/4">
         <PanelRow
-          icon={<ReactFileIcon className="size-3.5" />}
+          icon={<ReactFileIcon className="size-3.5 text-blue-400" />}
           label="github-device-flow-panel.tsx"
           trailing={
             <DiffStat additions={1} deletions={11} className="text-[10px]" />
@@ -137,7 +137,7 @@ function ChangesPanel() {
 function SubagentsPanel({ onCollapse }: { onCollapse: () => void }) {
   return (
     <div className={PANEL_SURFACE}>
-      <div className="flex items-center justify-between gap-2 px-3 py-2">
+      <div className="flex items-center justify-between gap-2 px-3 py-1">
         <span className="text-[11px] font-medium text-primary-200">
           Subagents ({SUBAGENTS.length})
         </span>
@@ -170,7 +170,7 @@ function SubagentsPill({ onOpen }: { onOpen: () => void }) {
       type="button"
       onClick={onOpen}
       aria-label="Show subagents"
-      className="flex cursor-pointer items-center gap-2 rounded-2xl bg-[#0c0c0c]/95 px-2.5 py-2 shadow-2xl shadow-black/50 transition-colors glass-outline hover:bg-primary-50/5"
+      className="flex cursor-pointer items-center gap-2 rounded-2xl bg-primary-950/95 px-2.5 py-2 shadow-2xl shadow-black/50 transition-colors glass-outline hover:bg-primary-50/5"
     >
       {SUBAGENTS.slice(0, 3).map((name) => (
         <AgentGlyph key={name} seed={name} className="size-3.5" />

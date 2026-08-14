@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const canonicalUrl = `/blog/${post.slug}`;
-  const socialImage = post.image || '/hero-new-image.png';
+  const socialImage = post.image || '/og-image.jpg';
 
   return {
     title: post.title,
@@ -81,7 +81,7 @@ export default async function BlogPost({ params }: Props) {
   const toc = extractToc(post.content);
   const canonicalUrl = `https://mains.dev/blog/${post.slug}`;
   const imageUrl = new URL(
-    post.image || '/hero-new-image.png',
+    post.image || '/og-image.jpg',
     'https://mains.dev'
   ).toString();
   const structuredData = {
@@ -169,9 +169,6 @@ export default async function BlogPost({ params }: Props) {
             <div className="hidden lg:block" />
           </div>
         </article>
-
-        <hr className="border-primary-900  mt-12" />
-        <hr className="border-primary-900  mt-0.5" />
       </div>
     </>
   );

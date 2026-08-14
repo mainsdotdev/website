@@ -273,7 +273,7 @@ function SidebarPanel() {
         {/* The connected agents sit centered between settings and help. */}
         <span className="mx-auto flex items-center gap-3">
           <Claude className="size-3.5" />
-          <Codex className="size-3.5" />
+          <Codex className="size-3" />
         </span>
         <Question className="size-3.5" />
       </div>
@@ -367,7 +367,7 @@ export function AppWindow({ className }: { className?: string }) {
     >
       <div className="relative h-full w-full">
         <Image
-          src="/wall.jpg"
+          src="/hero.jpg"
           alt=""
           aria-hidden
           fill

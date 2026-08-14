@@ -19,9 +19,9 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/hero-new-image.png",
-        width: 4600,
-        height: 2490,
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
         alt: "Mains AI coding agent workspace",
       },
     ],
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${title} | Mains`,
     description,
-    images: ["/hero-new-image.png"],
+    images: ["/og-image.jpg"],
   },
 };
 

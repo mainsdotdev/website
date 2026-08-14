@@ -33,7 +33,6 @@ export function HomeClient({
       <IntegrationsSection />
       <ChangelogSection posts={changelogPosts} />
       <CtaSection />
-      <hr className="border-primary-900  mt-0.5" />
     </main>
   );
 }
