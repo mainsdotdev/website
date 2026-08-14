@@ -1,4 +1,5 @@
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
+import { getImageSize } from '@/lib/image-size';
 import { extractToc } from '@/lib/toc';
 import { notFound } from 'next/navigation';
 import { MDXContent } from '@/components/mdx-content';
@@ -39,6 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const canonicalUrl = `/blog/${post.slug}`;
   const socialImage = post.image || '/og-image.jpg';
+  const socialImageSize = getImageSize(socialImage);
 
   return {
     title: post.title,
@@ -58,6 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         {
           url: socialImage,
           alt: post.title,
+          ...socialImageSize,
         },
       ],
     },
