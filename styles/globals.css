@@ -427,6 +427,14 @@ canvas:hover {
     margin: 0;
   }
 
+  /* And the other way round — a mat inside a bezel. It fills the frame rather
+     than floating inside it, and takes the same inner radius the media does so
+     the two corners nest instead of crossing. */
+  .prose .media-frame > .media-backdrop {
+    margin: 0;
+    border-radius: 1rem;
+  }
+
   /* Screenshots need a cast shadow to sit on a photo instead of in it. */
   .prose .media-backdrop img,
   .prose .media-backdrop video {

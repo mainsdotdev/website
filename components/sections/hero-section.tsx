@@ -14,7 +14,7 @@ import { usePlatformDetection } from "@/hooks/usePlatformDetection";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 
-const HERO_SCRAMBLE_WORDS = ["all.", "agents.", "issues.", "bugs.", "PRs."] as const;
+const HERO_SCRAMBLE_WORDS = ["agents.", "issues.", "bugs.", "PRs.", "all."] as const;
 const HERO_SCRAMBLE_LONGEST = [...HERO_SCRAMBLE_WORDS].reduce((a, b) =>
   a.length >= b.length ? a : b
 );
@@ -56,7 +56,7 @@ function HeroReleaseBadge({ post }: { post: Post }) {
           Mains {post.version} •
         </span>
         <span className=" sm:-ml-2 text-primary-50 ">
-          {"Tasks"}
+          {"Background runs"}
         </span>
         <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary-50/5 text-primary-100 transition-transform group-hover:translate-x-0.5">
           <ChevronRight className="size-3.5" />
