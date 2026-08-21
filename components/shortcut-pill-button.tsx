@@ -7,8 +7,9 @@ export type KbdShortcutTarget = "download" | "github";
 
 type ShortcutPillButtonProps = {
   children: React.ReactNode;
-  shortcut: string;
-  shortcutClassName: string;
+  /** Keyboard chip shown on the right; omit for buttons with no shortcut. */
+  shortcut?: string;
+  shortcutClassName?: string;
   className?: string;
   href?: string;
   target?: React.HTMLAttributeAnchorTarget;
@@ -33,15 +34,17 @@ export function ShortcutPillButton({
   const inner = (
     <>
       <span className="flex min-w-0 items-center gap-2">{children}</span>
-      <kbd
-        className={cn(
-          "inline-flex size-6 shrink-0 items-center justify-center rounded-md text-[10px] font-medium font-mono leading-none md:text-xs",
-          shortcutClassName
-        )}
-        aria-hidden
-      >
-        {shortcut}
-      </kbd>
+      {shortcut && (
+        <kbd
+          className={cn(
+            "inline-flex size-6 shrink-0 items-center justify-center rounded-md text-[10px] font-medium font-mono leading-none md:text-xs",
+            shortcutClassName
+          )}
+          aria-hidden
+        >
+          {shortcut}
+        </kbd>
+      )}
     </>
   );
 

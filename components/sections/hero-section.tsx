@@ -110,10 +110,8 @@ function HeroActions({ isMac }: { isMac: boolean }) {
         />
       ) : (
         <ShortcutPillButton
-          ariaLabel="Windows version coming soon (shortcut D)"
+          ariaLabel="Windows version coming soon"
           className={cn(PILL_CLASS_NAME, "cursor-default bg-primary-900/50 text-primary-500")}
-          shortcut="D"
-          shortcutClassName="bg-primary-800 text-primary-300"
         >
           <Windows width={16} height={16} />
           <span>Windows — Coming Soon</span>

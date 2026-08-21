@@ -39,8 +39,6 @@ export function CtaSection() {
                   pill,
                   "cursor-default text-primary-500 bg-primary-900/50"
                 )}
-                shortcut="D"
-                shortcutClassName="bg-primary-800 text-primary-300"
               >
                 <Windows width={16} height={16} />
                 <span>Windows — Coming Soon</span>
