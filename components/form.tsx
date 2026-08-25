@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 
 export default function Form() {
   const [formData, setFormData] = useState({
@@ -8,16 +8,16 @@ export default function Form() {
   const [error, setError] = useState(""); // State for error message
   const [successMessage, setSuccessMessage] = useState(""); // State for success message
 
-  const handleChange = (e: { target: { name: any; value: any } }) => {
-    const { name, value } = e.target;
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.currentTarget;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setError(""); // Reset error message on new submission
     setSuccessMessage(""); // Reset success message on new submission
 
@@ -36,7 +36,7 @@ export default function Form() {
       } else {
         setError("Error submitting form. Please try again."); // Set error message
       }
-    } catch (err) {
+    } catch {
       setError("An unexpected error occurred. Please try again."); // Handle unexpected errors
     }
   };

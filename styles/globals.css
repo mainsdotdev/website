@@ -290,15 +290,33 @@ canvas:hover {
     color: theme("colors.primary.100");
   }
 
+  /* Tailwind's preflight strips list markers, so prose puts them back. */
   .prose ul,
   .prose ol {
     color: theme("colors.primary.300");
     margin: 1.5em 0;
     padding-left: 1.5em;
+    list-style-position: outside;
+  }
+
+  .prose ul {
+    list-style-type: disc;
+  }
+
+  .prose ol {
+    list-style-type: decimal;
+  }
+
+  .prose ul ul {
+    list-style-type: circle;
   }
 
   .prose li {
     margin: 0.5em 0;
+  }
+
+  .prose li::marker {
+    color: theme("colors.primary.500");
   }
 
   .prose blockquote {

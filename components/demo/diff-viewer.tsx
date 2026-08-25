@@ -1,33 +1,10 @@
-"use client";
-
-import { PatchDiff, type DiffLineAnnotation } from "@pierre/diffs/react";
+import { Fragment } from "react";
 import { Check, Close, CodeBrackets } from "@/components/icons";
 
 const DUMMY_PATCH = [
   "--- a/services/dispatcher/runDispatcher.ts",
   "+++ b/services/dispatcher/runDispatcher.ts",
-  "@@ -6,6 +6,7 @@",
-  " import {",
-  "   createWorkAdapter,",
-  "+  isSupportedWorkProvider,",
-  "   type WorkRunRequest,",
-  "   type WorkRunResult,",
-  "   type WorkRunContextItem,",
-  " } from \"../../modules/providers/adapters\";",
-  "+import { createRunWriteback } from \"../writeback/runWriteback\";",
-  " import type { RunStatus, StartRunContextItem } from \"../../modules/runs\";",
-  " ",
-  "@@ -18,7 +19,9 @@",
-  " export interface DispatchRunRequest {",
-  "   accountId: string;",
-  "   workspaceId: string;",
-  "+  providerId: string;",
-  "   goal: string;",
-  "+  model?: string;",
-  "   systemPrompt?: string;",
-  "   initialContext?: StartRunContextItem[];",
-  "   spaceId?: string;",
-  "@@ -53,10 +56,17 @@",
+  "@@ -53,9 +53,15 @@",
   " export async function dispatchRun(request: DispatchRunRequest): Promise<DispatchRunResult> {",
   "   const runId = generateRunId();",
   " ",
@@ -46,27 +23,7 @@ const DUMMY_PATCH = [
   "+    throw new Error(`Provider \"${provider.id}\" is not a supported work provider`);",
   "   }",
   " ",
-  "-  // Load workspace",
-  "+  // 2. Load workspace",
-  "   const workspace = await workspacesRepo.findById(request.workspaceId);",
-  "   if (!workspace) {",
-  "     throw new Error(`Workspace \"${request.workspaceId}\" not found`);",
-  "@@ -87,6 +97,13 @@",
-  "   const adapter = createWorkAdapter(provider);",
-  " ",
-  "-  // Execute run",
-  "+  // 6. Create writeback handler",
-  "+  const writeback = createRunWriteback({",
-  "+    accountId: request.accountId,",
-  "+    providerId: request.providerId,",
-  "+    runId,",
-  "+  });",
-  "+",
-  "+  // 7. Build adapter request",
-  "   const adapterRequest: WorkRunRequest = {",
-  "     runId,",
-  "     accountId: request.accountId,",
-  "@@ -98,14 +115,21 @@",
+  "@@ -98,10 +104,18 @@",
   "   let result: WorkRunResult;",
   "   try {",
   "-    result = await adapter.startRun(adapterRequest);",
@@ -96,10 +53,16 @@ type AnnotationData = {
   suggestion?: string;
 };
 
-const ANNOTATIONS: DiffLineAnnotation<AnnotationData>[] = [
+type DiffAnnotation = {
+  side: "additions";
+  lineNumber: number;
+  metadata: AnnotationData;
+};
+
+const ANNOTATIONS: DiffAnnotation[] = [
   {
     side: "additions",
-    lineNumber: 68,
+    lineNumber: 65,
     metadata: {
       severity: "warning",
       title: "Missing provider.kind check before adapter dispatch",
@@ -109,7 +72,7 @@ const ANNOTATIONS: DiffLineAnnotation<AnnotationData>[] = [
   },
   {
     side: "additions",
-    lineNumber: 117,
+    lineNumber: 107,
     metadata: {
       severity: "info",
       title: "Event streaming enables real-time persistence via writeback",
@@ -118,7 +81,7 @@ const ANNOTATIONS: DiffLineAnnotation<AnnotationData>[] = [
   },
   {
     side: "additions",
-    lineNumber: 125,
+    lineNumber: 114,
     metadata: {
       severity: "warning",
       title: "Canceled status may not propagate from all adapters",
@@ -128,7 +91,68 @@ const ANNOTATIONS: DiffLineAnnotation<AnnotationData>[] = [
   },
 ];
 
-function AnnotationContent({ annotation }: { annotation: DiffLineAnnotation<AnnotationData> }) {
+type DiffLine = {
+  kind: "addition" | "context" | "deletion" | "hunk";
+  content: string;
+  oldLine?: number;
+  newLine?: number;
+  annotation?: DiffAnnotation;
+};
+
+const HUNK_HEADER = /^@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@/;
+
+function parsePatch(patch: string): DiffLine[] {
+  let oldLine = 0;
+  let newLine = 0;
+
+  return patch.split("\n").flatMap((line): DiffLine[] => {
+    if (line.startsWith("---") || line.startsWith("+++")) return [];
+
+    const hunk = line.match(HUNK_HEADER);
+    if (hunk) {
+      oldLine = Number(hunk[1]);
+      newLine = Number(hunk[2]);
+      return [{ kind: "hunk", content: line }];
+    }
+
+    if (line.startsWith("+")) {
+      const currentLine = newLine++;
+      return [
+        {
+          kind: "addition",
+          content: line.slice(1),
+          newLine: currentLine,
+          annotation: ANNOTATIONS.find(
+            (annotation) => annotation.lineNumber === currentLine
+          ),
+        },
+      ];
+    }
+
+    if (line.startsWith("-")) {
+      return [
+        {
+          kind: "deletion",
+          content: line.slice(1),
+          oldLine: oldLine++,
+        },
+      ];
+    }
+
+    return [
+      {
+        kind: "context",
+        content: line.slice(1),
+        oldLine: oldLine++,
+        newLine: newLine++,
+      },
+    ];
+  });
+}
+
+const DIFF_LINES = parsePatch(DUMMY_PATCH);
+
+function AnnotationContent({ annotation }: { annotation: DiffAnnotation }) {
   const { severity, title, body, suggestion } = annotation.metadata;
 
   return (
@@ -147,11 +171,17 @@ function AnnotationContent({ annotation }: { annotation: DiffLineAnnotation<Anno
           <span className="text-primary-200 font-medium">{title}</span>
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
-          <button className="flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-medium bg-green-500/15 text-green-400 hover:bg-green-500/25 transition-colors cursor-pointer">
+          <button
+            type="button"
+            className="flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-medium bg-green-500/15 text-green-400 hover:bg-green-500/25 transition-colors cursor-pointer"
+          >
             <Check />
             Approve
           </button>
-          <button className="flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-medium bg-red-500/15 text-red-400 hover:bg-red-500/25 transition-colors cursor-pointer">
+          <button
+            type="button"
+            className="flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-medium bg-red-500/15 text-red-400 hover:bg-red-500/25 transition-colors cursor-pointer"
+          >
             <Close />
             Discard
           </button>
@@ -182,27 +212,74 @@ export function DiffViewer() {
           <CodeBrackets className="text-primary-400" />
           <span className="truncate text-[13px] max-w-48">runDispatcher.ts</span>
         </div>
-        <button className="flex items-center justify-center w-8 h-8 text-primary-500 hover:text-primary-300 transition-colors ml-1" />
+        <button
+          type="button"
+          aria-hidden="true"
+          tabIndex={-1}
+          className="flex items-center justify-center w-8 h-8 text-primary-500 hover:text-primary-300 transition-colors ml-1"
+        />
       </div>
 
       {/* Scrollable diff area */}
-      <div className="overflow-y-auto max-h-125">
-        <PatchDiff
-        style={{ "--diffs-font-size": "12px", "--diffs-font-family": "'Space Mono', monospace" } as React.CSSProperties}
-          patch={DUMMY_PATCH}
-          lineAnnotations={ANNOTATIONS}
-          renderAnnotation={(annotation) => (
-            <AnnotationContent annotation={annotation as DiffLineAnnotation<AnnotationData>} />
-          )}
-          options={{
-            theme: "pierre-dark",
-            themeType: "dark",
-            diffStyle: "unified",
-            overflow: "wrap",
-            disableFileHeader: true,
-            unsafeCSS: `:host, [data-diffs], [data-diffs-header], [data-error-wrapper], [data-line], [data-column-number], [data-code] { --diffs-bg: #0c0c0c; background-color: #0c0c0c; } [data-line-annotation] { --diffs-annotation-min-height: auto; }`,
-          }}
-        />
+      <div className="max-h-125 overflow-y-auto bg-[#0c0c0c] font-mono text-xs">
+        {DIFF_LINES.map((line, index) => (
+          <Fragment key={`${line.kind}-${line.oldLine}-${line.newLine}-${index}`}>
+            {line.kind === "hunk" ? (
+              <div
+                data-diff-line
+                className="border-y border-blue-400/10 bg-blue-400/5 px-3 py-1.5 text-blue-300/70"
+              >
+                {line.content}
+              </div>
+            ) : (
+              <div
+                data-diff-line
+                data-kind={line.kind}
+                className={`grid min-h-6 grid-cols-[2.75rem_2.75rem_minmax(0,1fr)] ${
+                  line.kind === "addition"
+                    ? "bg-emerald-500/8"
+                    : line.kind === "deletion"
+                      ? "bg-red-500/8"
+                      : "bg-[#0c0c0c]"
+                }`}
+              >
+                <span className="select-none border-r border-white/5 px-2 py-1 text-right text-primary-600">
+                  {line.oldLine}
+                </span>
+                <span className="select-none border-r border-white/5 px-2 py-1 text-right text-primary-600">
+                  {line.newLine}
+                </span>
+                <code className="min-w-0 whitespace-pre-wrap break-words px-3 py-1 text-primary-300">
+                  <span
+                    className={
+                      line.kind === "addition"
+                        ? "text-emerald-400"
+                        : line.kind === "deletion"
+                          ? "text-red-400"
+                          : "text-primary-600"
+                    }
+                  >
+                    {line.kind === "addition"
+                      ? "+"
+                      : line.kind === "deletion"
+                        ? "-"
+                        : " "}
+                  </span>
+                  {line.content}
+                </code>
+              </div>
+            )}
+
+            {line.annotation && (
+              <div
+                data-diff-annotation
+                className="border-y border-white/5 bg-primary-950"
+              >
+                <AnnotationContent annotation={line.annotation} />
+              </div>
+            )}
+          </Fragment>
+        ))}
       </div>
     </div>
   );

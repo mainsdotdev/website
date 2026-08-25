@@ -6,16 +6,49 @@ import { cn } from "@/lib/utils";
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*";
 
 type ScrambleTextProps = {
-  words: string[];
+  words: readonly string[];
   interval?: number;
   className?: string;
 };
+
+function randomChar() {
+  return CHARS[Math.floor(Math.random() * CHARS.length)];
+}
+
+function encryptedLike(target: string) {
+  return target
+    .split("")
+    .map((char) => (char === " " ? " " : randomChar()))
+    .join("");
+}
 
 export function ScrambleText({
   words,
   interval = 3000,
   className,
 }: ScrambleTextProps) {
+  const wordsKey = JSON.stringify(words);
+
+  return (
+    <ScrambleTextCycle
+      key={wordsKey}
+      wordsKey={wordsKey}
+      interval={interval}
+      className={className}
+    />
+  );
+}
+
+function ScrambleTextCycle({
+  wordsKey,
+  interval,
+  className,
+}: {
+  wordsKey: string;
+  interval: number;
+  className?: string;
+}) {
+  const words = useMemo(() => JSON.parse(wordsKey) as string[], [wordsKey]);
   const [display, setDisplay] = useState(words[0] ?? "");
   const indexRef = useRef(0);
   const displayRef = useRef(display);
@@ -45,38 +78,7 @@ export function ScrambleText({
   }, []);
 
   useEffect(() => {
-    // Keep display in sync only when words are replaced from outside.
-    if (!words.length) {
-      setDisplay("");
-      indexRef.current = 0;
-      return;
-    }
-
-    const currentIndex = words.indexOf(displayRef.current);
-    if (currentIndex === -1) {
-      setDisplay(words[0] ?? "");
-      indexRef.current = 0;
-    } else {
-      indexRef.current = currentIndex;
-    }
-  }, [words]);
-
-  const randomChar = () => CHARS[Math.floor(Math.random() * CHARS.length)];
-
-  const encryptedLike = (target: string) =>
-    target
-      .split("")
-      .map((char) => {
-        if (char === " ") return " ";
-        return randomChar();
-      })
-      .join("");
-
-  useEffect(() => {
-    if (!words.length) {
-      setDisplay("");
-      return;
-    }
+    if (!words.length) return;
 
     let cancelled = false;
 
