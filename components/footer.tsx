@@ -1,5 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 
+/** The small print, in one row above the wordmark. */
+const FOOTER_LINKS = [
+  { label: "Privacy", href: "/privacy" },
+  { label: "Terms", href: "/terms" },
+  { label: "License", href: "/license" },
+] as const;
 
 /**
  * The page ends in a photograph rather than a rule: the site's dark surface
@@ -21,7 +28,17 @@ export default function Footer() {
       </div>
 
       <div className="mx-auto max-w-7xl px-4 pt-24 sm:pt-32">
-
+        <nav aria-label="Legal and links" className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+          {FOOTER_LINKS.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="text-sm text-primary-400 transition-colors hover:text-white"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
 
         {/* Cropped at the baseline, like a mark stamped over the edge of the
             page. The gradient fill carries the fade down into the photo. */}

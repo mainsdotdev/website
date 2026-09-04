@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getAllLegalDocs } from "@/lib/legal";
 import { getAllPosts } from "@/lib/posts";
 
 const SITE_URL = "https://mains.dev";
@@ -9,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   const latestPostDate = posts[0]?.date;
+  const legal = getAllLegalDocs();
 
   return [
     {
@@ -22,6 +24,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...posts.map((post) => ({
       url: `${SITE_URL}${post.url}`,
       lastModified: post.date,
+    })),
+    {
+      url: `${SITE_URL}/legal`,
+      lastModified: legal[0]?.updated,
+    },
+    ...legal.map((doc) => ({
+      url: `${SITE_URL}/${doc.slug}`,
+      lastModified: doc.updated,
     })),
   ];
 }

@@ -1,0 +1,97 @@
+---
+title: "Privacy Policy"
+description: "How Mains handles your data: pairing, what stays on your phone and Mac, what reaches the AI provider you choose, and how to delete all of it."
+updated: "2026-08-27"
+---
+
+## In short
+
+- Mains has no accounts and no servers in the path of your data. The iPhone app talks to **your own Mac**, and your Mac talks to the **AI provider you choose**, under your own account with that provider.
+- Pairing puts exactly one credential on your phone — a device token for that Mac — and it lives in the iOS Keychain.
+- Everything the phone shows is a local copy of what your Mac holds. **Settings → Forget this Mac** deletes all of it.
+- Your prompts, the skills you attach and the files an agent works on go to the selected AI provider from your Mac, and on the phone only after you tap **Allow & Send** the first time.
+- Neither app contains analytics, crash-reporting or advertising SDKs. This website sets no analytics cookies.
+
+## Who this covers
+
+Mains is built by the Mains team ("we", "us"). This policy covers the website at mains.dev, **Mains for Mac** (the desktop app) and **Mains for iPhone** (the companion app on the App Store). It does not cover the AI providers, code hosts and other services you connect to Mains — they process what you send them under their own policies, linked below.
+
+## Pairing your phone with your Mac
+
+The iPhone app is a remote control for the Mac app, and the Mac is the only thing it ever connects to.
+
+1. On the Mac you turn on network access — on your local network, or over Tailscale with HTTPS. The Mac shows a **pairing code** as a QR code. The code is single-use and expires.
+2. The phone scans the code and presents it to the Mac directly. The Mac answers with a **device token** made for that phone alone, together with its own name and the addresses it can be reached at.
+3. From then on the phone opens a connection to the Mac with that token. The Mac keeps a list of paired devices and can **revoke** any of them; a revoked phone is refused at its next connection and shows "Refused" in Settings.
+
+No pairing code, token or address ever passes through Mains — there is nothing at Mains to pass it through.
+
+## What the phone stores, and where
+
+**In the Keychain.** The pairing record: the Mac's name and addresses, this phone's device id, the device token, the pairing date, and the Mac's app and protocol version. It is stored with the "accessible after first unlock" protection class, so the app can reconnect once the phone has been unlocked after a restart. It never leaves the Keychain except to open the connection.
+
+**In a local database.** A copy of what your Mac has shown the phone, kept in a SQLite database inside the app's sandbox: your spaces, projects and workspaces (names, branches, the size of the last diff), your runs and their transcripts — the prompts you wrote, the agent's messages, tool calls with their inputs and outputs, errors — pending approvals, provider settings and model lists, skills and commands, your model choice, and the AI data-sharing decisions you have made.
+
+**In memory and in the cache folder.** Images an agent produced are fetched from the Mac on demand, scaled down there, and held in memory for the session. Sharing an image writes a copy to the app's cache folder, which iOS may clear at any time.
+
+Nothing is stored anywhere else. There is no iCloud sync and no Mains cloud.
+
+## Between your phone and your Mac
+
+The phone and the Mac talk over a direct WebSocket connection; the device token is presented in the handshake. What travels:
+
+- **Mac → phone:** runs, transcripts, tool calls, approval requests, workspaces, projects, spaces, provider settings and model lists, skills and commands, and — on request — scaled-down copies of images the agent produced.
+- **Phone → Mac:** the prompts you write and the skills you attach, your answers to approval requests, model and run-setting changes, requests to stop or fork a run, and requests for images.
+
+On your local network the connection is a plain WebSocket: it is only as private as your Wi‑Fi. Over Tailscale the traffic is end-to-end encrypted between your devices, and Tailscale HTTPS adds TLS on top; we recommend it for anything beyond your home network.
+
+The "Relay" screen in the Mac app connects to **your own machines** — another Mac over a direct URL or an SSH tunnel — not to a service run by Mains. Mains operates no relay, proxy or cloud in the path of this data.
+
+## What reaches the AI provider
+
+Runs are executed on your Mac by the provider's own tooling, under your own account with that provider: **Claude Code** (Anthropic), **Codex** (OpenAI), **GitHub Copilot** (GitHub / Microsoft) or **Cursor** (Anysphere). To complete a request, your Mac sends the provider:
+
+- your message and the chat history of the run;
+- the skills and instructions you attach;
+- the files, workspace context and tool results the agent reads or produces while it works;
+- Mains' own instructions for the mode the run is in, and a short request to generate a title for the run.
+
+What a provider keeps, for how long, and whether it trains on it is governed by that provider's policy: [Anthropic](https://www.anthropic.com/legal/privacy), [OpenAI](https://openai.com/policies/privacy-policy/), [GitHub](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement), [Cursor](https://cursor.com/privacy).
+
+On the phone, the first time you send to a given provider from a given Mac, Mains shows an **AI data sharing** sheet listing exactly this. Nothing is sent until you tap **Allow & Send**. Your decision is stored on the phone, per Mac and provider, and can be reviewed or withdrawn in the app.
+
+## Other connections your Mac makes
+
+- **Code hosts and trackers you connect** — GitHub, GitLab, Linear, Jira, Asana, Notion, Slack and others. Their credentials are stored on the Mac and used only to fetch or link the items you ask for.
+- **Update checks.** The Mac app checks Mains' GitHub releases for new versions; that request carries your app version and platform.
+- **Tailscale**, if you turn it on, under [Tailscale's policy](https://tailscale.com/privacy-policy).
+
+## Deleting your data
+
+**On the phone.** Settings → **Forget this Mac** removes the Keychain record and the entire local database for that Mac — spaces, runs, transcripts, tool calls, approvals, settings and consents — in one step. Reconnecting requires a new pairing. Deleting the app removes everything, including the cache folder.
+
+**On the Mac.** Revoke a phone under Relay. Runs can be archived or deleted in the app; the Mac's own data lives in its Application Support folder and goes with the app. What you have already sent to an AI provider is held by that provider under its own policy.
+
+## Analytics, tracking and advertising
+
+**The apps:** none. No analytics SDK, no crash reporter, no advertising identifier, no fingerprinting. The apps never contact Mains, because there is no Mains service to contact.
+
+**The website:** no analytics or tracking cookies. Our hosting provider keeps ordinary server logs (IP address, user agent, requested page) for security and operations, as any host does. If we ever add analytics to the site it will be cookie-less and privacy-preserving, and this page will say so first.
+
+**When you write to us** — at team@mains.dev or through a form on this site — we receive what you send, such as your email address, and use it only to reply.
+
+## Security
+
+Every phone gets its own token; tokens live in the Keychain; the Mac can revoke any device at any time; pairing codes are single-use and expire; the Mac refuses to accept connections from outside the machine without a token. For access beyond your home network, use Tailscale HTTPS. If you find a vulnerability, write to team@mains.dev and we will respond as quickly as we can.
+
+## Children
+
+Mains is not directed to children under 13, or under the age of digital consent where you live, and we do not knowingly collect information from them.
+
+## Changes to this policy
+
+The date at the top is when this page last changed. Material changes are called out in the release notes of the version that makes them.
+
+## Contact
+
+Questions about this policy: [team@mains.dev](mailto:team@mains.dev).
