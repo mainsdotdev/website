@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Github, Windows } from "@/components/icons";
 import { MacDownloadButton } from "@/components/mac-download-button";
+import { AppStoreButton } from "@/components/app-store-button";
 import { ShortcutPillButton } from "@/components/shortcut-pill-button";
 import { FADE_IN_UP } from "@/lib/animations";
 import { MAINS_GITHUB_REPO_URL } from "@/lib/constants";
@@ -10,7 +11,7 @@ import { usePlatformDetection } from "@/hooks/usePlatformDetection";
 import { cn } from "@/lib/utils";
 
 export function CtaSection() {
-  const { isMac } = usePlatformDetection();
+  const { platform } = usePlatformDetection();
 
   const pill =
     "inline-flex max-w-full min-w-0 items-center gap-2 rounded-full md:px-6 md:py-3 md:text-sm px-3 py-3 text-xs font-medium transition-colors";
@@ -27,11 +28,13 @@ export function CtaSection() {
             from task to reviewed pull request without leaving Mains.
           </p>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-            {isMac ? (
+            {platform === "mac" ? (
               <MacDownloadButton
                 pillClassName={pill}
                 shortcutClassName="bg-neutral-300 text-neutral-900"
               />
+            ) : platform === "ios" ? (
+              <AppStoreButton />
             ) : (
               <ShortcutPillButton
                 ariaLabel="Windows version coming soon"

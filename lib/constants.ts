@@ -38,4 +38,12 @@ export const MAINS_DOWNLOAD_DMG_URL =
 export const MAINS_DOWNLOAD_DMG_X64_URL =
   `https://github.com/mainsdotdev/mains/releases/download/v${MAINS_VERSION}/Mains-${MAINS_VERSION}-x64.dmg`;
 
+/**
+ * App Store listing for the iPhone companion app.
+ *
+ * TODO: placeholder id — swap for the real listing when the app clears review.
+ * Everything that links to the App Store reads this one constant.
+ */
+export const MAINS_APP_STORE_URL = "https://apps.apple.com/app/id0000000000";
+
 export const MAINS_GITHUB_REPO_URL = "https://github.com/mainsdotdev/mains";

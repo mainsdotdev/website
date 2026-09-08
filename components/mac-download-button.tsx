@@ -49,9 +49,10 @@ export function MacDownloadButton({ pillClassName, shortcutClassName }: MacDownl
           aria-label="Download Mains for Intel Mac (x64)"
           className={cn(
             "flex items-center justify-center gap-2 rounded-full",
-            " bg-primary-950/80 ",
+            // Opaque, not a tint: it opens over the copy below the button row.
+            "bg-primary-950 glass-outline",
             "px-4 py-3 text-xs font-medium text-primary-200",
-            "transition-colors hover:bg-primary-950 hover:text-white"
+            "transition-colors hover:bg-primary-900 hover:text-white"
           )}
         >
           <DownloadLine className="h-3.5 w-3.5 shrink-0" />
