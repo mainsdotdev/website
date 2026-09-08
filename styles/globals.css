@@ -425,6 +425,10 @@ canvas:hover {
     --media-backdrop: url("/changelog/backdrop.jpeg");
   }
 
+  .prose .media-backdrop.backdrop-dune {
+    --media-backdrop: url("/changelog/backdrop2.webp");
+  }
+
   /* Mats sitting side by side pan across the photo instead of repeating one
      crop, so the row reads as two windows onto the same landscape. */
   .prose .media-row > .media-backdrop {

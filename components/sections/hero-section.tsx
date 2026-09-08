@@ -56,7 +56,7 @@ function HeroReleaseBadge({ post }: { post: Post }) {
           Mains {post.version} •
         </span>
         <span className=" sm:-ml-2 text-primary-50 ">
-          {"Harness"}
+          {"Mobile"}
         </span>
         <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary-50/5 text-primary-100 transition-transform group-hover:translate-x-0.5">
           <ChevronRight className="size-3.5" />
