@@ -7,10 +7,11 @@ import { ScrambleText } from "@/components/scramble-text";
 import { ChevronRight, Github, Windows } from "@/components/icons";
 import type { Post } from "@/lib/types";
 import { MacDownloadButton } from "@/components/mac-download-button";
+import { AppStoreButton } from "@/components/app-store-button";
 import { ShortcutPillButton } from "@/components/shortcut-pill-button";
 import { FADE_IN_BLUR_DELAY, FADE_IN_BLUR_UP_DELAY } from "@/lib/animations";
-import { MAINS_GITHUB_REPO_URL } from "@/lib/constants";
-import { usePlatformDetection } from "@/hooks/usePlatformDetection";
+import { MAINS_APP_STORE_URL, MAINS_GITHUB_REPO_URL } from "@/lib/constants";
+import { usePlatformDetection, type Platform } from "@/hooks/usePlatformDetection";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 
@@ -97,45 +98,87 @@ function HeroHeadline() {
   );
 }
 
-function HeroActions({ isMac }: { isMac: boolean }) {
-  return (
-    <motion.div
-      {...FADE_IN_BLUR_DELAY(0.45)}
-      className="relative z-10 mt-10 flex flex-wrap items-center justify-center gap-4"
-    >
-      {isMac ? (
-        <MacDownloadButton
-          pillClassName={PILL_CLASS_NAME}
-          shortcutClassName="bg-primary-100 text-primary-950"
-        />
-      ) : (
-        <ShortcutPillButton
-          ariaLabel="Windows version coming soon"
-          className={cn(PILL_CLASS_NAME, "cursor-default bg-primary-900/50 text-primary-500")}
-        >
-          <Windows width={16} height={16} />
-          <span>Windows — Coming Soon</span>
-        </ShortcutPillButton>
-      )}
+/**
+ * A line under the buttons rather than a third pill: the phone app only does
+ * anything once a Mac is running Mains, so pairing it with the .dmg at equal
+ * weight would promise a product the App Store alone can't deliver.
+ */
+function CompanionNote({ platform }: { platform: Platform }) {
+  if (platform === "other") return null;
 
-      <ShortcutPillButton
-        href={MAINS_GITHUB_REPO_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        kbdShortcut="github"
-        ariaLabel="View source on GitHub (shortcut C)"
-        className={cn(
-          PILL_CLASS_NAME,
-          "bg-primary-950 text-white hover:bg-primary-950",
-          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/30"
-        )}
-        shortcut="C"
-        shortcutClassName="bg-primary-800/20 text-primary"
+  const text =
+    platform === "ios"
+      ? "Mains runs on your Mac — the iPhone app pairs with it over your network."
+      : "Also on iPhone: drive your runs from the couch.";
+
+  return (
+    <motion.p
+      {...FADE_IN_BLUR_DELAY(0.6)}
+      className="relative z-10 mt-5 text-xs text-primary-400 md:text-sm"
+    >
+      {text}{" "}
+      {platform === "mac" && (
+        <Link
+          href={MAINS_APP_STORE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary-200 underline underline-offset-4 transition-colors hover:text-white"
+        >
+          Get it on the App Store
+        </Link>
+      )}
+    </motion.p>
+  );
+}
+
+function HeroActions({ platform }: { platform: Platform }) {
+  return (
+    <>
+      <motion.div
+        {...FADE_IN_BLUR_DELAY(0.45)}
+        // Above the note: the Intel dropdown opens across it, and z-20 inside
+        // this row can't outrank a later sibling that shares its z-index.
+        className="relative z-20 mt-10 flex flex-wrap items-center justify-center gap-4"
       >
-        <Github width={16} height={16} />
-        <span>View Source</span>
-      </ShortcutPillButton>
-    </motion.div>
+        {platform === "mac" ? (
+          <MacDownloadButton
+            pillClassName={PILL_CLASS_NAME}
+            shortcutClassName="bg-primary-100 text-primary-950"
+          />
+        ) : platform === "ios" ? (
+          // A .dmg is useless on a phone, so the App Store takes the primary slot.
+          <AppStoreButton />
+        ) : (
+          <ShortcutPillButton
+            ariaLabel="Windows version coming soon"
+            className={cn(PILL_CLASS_NAME, "cursor-default bg-primary-900/50 text-primary-500")}
+          >
+            <Windows width={16} height={16} />
+            <span>Windows — Coming Soon</span>
+          </ShortcutPillButton>
+        )}
+
+        <ShortcutPillButton
+          href={MAINS_GITHUB_REPO_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          kbdShortcut="github"
+          ariaLabel="View source on GitHub (shortcut C)"
+          className={cn(
+            PILL_CLASS_NAME,
+            "bg-primary-950 text-white hover:bg-primary-950",
+            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/30"
+          )}
+          shortcut="C"
+          shortcutClassName="bg-primary-800/20 text-primary"
+        >
+          <Github width={16} height={16} />
+          <span>View Source</span>
+        </ShortcutPillButton>
+      </motion.div>
+
+      <CompanionNote platform={platform} />
+    </>
   );
 }
 
@@ -151,7 +194,7 @@ export function HeroSection({
    */
   appWindow?: React.ReactNode;
 }) {
-  const { isMac } = usePlatformDetection();
+  const { platform } = usePlatformDetection();
   // `pointer: fine` keeps tablets out: an iPad is wide enough to pass a width
   // query but rasterizes the blur/filter work on a phone-class GPU.
   const isDesktop = useMediaQuery("(min-width: 64rem) and (pointer: fine)");
@@ -171,7 +214,7 @@ export function HeroSection({
 
             {latestPost && <HeroReleaseBadge post={latestPost} />}
             <HeroHeadline />
-            <HeroActions isMac={isMac} />
+            <HeroActions platform={platform} />
 
             <motion.div
               {...FADE_IN_BLUR_UP_DELAY(0.75)}

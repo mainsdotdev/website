@@ -5,8 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { Apple, ArrowRightLine, Close, Github, Hamburger } from "@/components/icons";
-import { MAINS_DOWNLOAD_DMG_URL, MAINS_GITHUB_REPO_URL } from "@/lib/constants";
-import { usePlatformDetection } from "@/hooks/usePlatformDetection";
+import { MAINS_APP_STORE_URL, MAINS_DOWNLOAD_DMG_URL, MAINS_GITHUB_REPO_URL } from "@/lib/constants";
+import { usePlatformDetection, type Platform } from "@/hooks/usePlatformDetection";
 import { cn } from "@/lib/utils";
 
 type NavLink = {
@@ -27,7 +27,7 @@ const externalProps = (link: NavLink) =>
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { isMac } = usePlatformDetection();
+  const { platform } = usePlatformDetection();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -112,7 +112,7 @@ export default function Header() {
               <Github width={16} height={16} />
             </Link>
 
-            <DownloadPill isMac={isMac} />
+            <DownloadPill platform={platform} />
 
             <button
               type="button"
@@ -126,7 +126,7 @@ export default function Header() {
           </div>
         </nav>
 
-        <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} isMac={isMac} />
+        <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} platform={platform} />
       </header>
 
       {/* Reserves the fixed bar's height (py-2 + the 36px action row). */}
@@ -135,19 +135,27 @@ export default function Header() {
   );
 }
 
-function DownloadPill({ isMac, className }: { isMac: boolean; className?: string }) {
-  if (!isMac) {
+function DownloadPill({ platform, className }: { platform: Platform; className?: string }) {
+  if (platform === "ios") {
     return (
-      <span
-        aria-disabled
+      <Link
+        href={MAINS_APP_STORE_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Download Mains for iPhone on the App Store"
         className={cn(
-          "flex h-8 cursor-default items-center rounded-full px-4 text-xs font-medium text-primary-500 glass-outline sm:text-sm",
+          "flex h-9 items-center gap-2 rounded-full bg-primary-50 px-4 text-xs font-medium text-black transition-colors hover:bg-primary-100 sm:text-sm",
           className
         )}
       >
-        Coming Soon
-      </span>
+        <Apple width={14} height={14} />
+        App Store
+      </Link>
     );
+  }
+
+  if (platform === "other") {
+    return <ComingSoonPill className={className} />;
   }
 
   return (
@@ -165,14 +173,28 @@ function DownloadPill({ isMac, className }: { isMac: boolean; className?: string
   );
 }
 
+function ComingSoonPill({ className }: { className?: string }) {
+  return (
+    <span
+      aria-disabled
+      className={cn(
+        "flex h-8 cursor-default items-center rounded-full px-4 text-xs font-medium text-primary-500 glass-outline sm:text-sm",
+        className
+      )}
+    >
+      Coming Soon
+    </span>
+  );
+}
+
 function MobileMenu({
   open,
   onClose,
-  isMac,
+  platform,
 }: {
   open: boolean;
   onClose: () => void;
-  isMac: boolean;
+  platform: Platform;
 }) {
   return (
     <AnimatePresence>
@@ -233,13 +255,23 @@ function MobileMenu({
             <hr className="my-8 border-primary-900" />
 
             <div className="flex flex-col gap-6">
-              {isMac ? (
+              {platform === "mac" ? (
                 <Link
                   href={MAINS_DOWNLOAD_DMG_URL}
                   onClick={onClose}
                   className="text-3xl font-medium tracking-tight text-white"
                 >
                   Download
+                </Link>
+              ) : platform === "ios" ? (
+                <Link
+                  href={MAINS_APP_STORE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={onClose}
+                  className="text-3xl font-medium tracking-tight text-white"
+                >
+                  App Store
                 </Link>
               ) : (
                 <span className="text-3xl font-medium tracking-tight text-primary-500">
