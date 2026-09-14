@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, Windows } from "@/components/icons";
+import { Apple, Github, Windows } from "@/components/icons";
 import { MacDownloadButton } from "@/components/mac-download-button";
 import { AppStoreButton } from "@/components/app-store-button";
 import { ShortcutPillButton } from "@/components/shortcut-pill-button";
 import { FADE_IN_UP } from "@/lib/animations";
-import { MAINS_GITHUB_REPO_URL } from "@/lib/constants";
+import { MAINS_APP_STORE_URL, MAINS_GITHUB_REPO_URL } from "@/lib/constants";
 import { usePlatformDetection } from "@/hooks/usePlatformDetection";
 import { cn } from "@/lib/utils";
 
@@ -34,7 +34,17 @@ export function CtaSection() {
                 shortcutClassName="bg-neutral-300 text-neutral-900"
               />
             ) : platform === "ios" ? (
-              <AppStoreButton />
+              MAINS_APP_STORE_URL ? (
+                <AppStoreButton />
+              ) : (
+                <ShortcutPillButton
+                  ariaLabel="iPhone app coming soon"
+                  className={cn(pill, "cursor-default text-primary-500 bg-primary-900/50")}
+                >
+                  <Apple width={16} height={16} />
+                  <span>iPhone — Coming Soon</span>
+                </ShortcutPillButton>
+              )
             ) : (
               <ShortcutPillButton
                 ariaLabel="Windows version coming soon"

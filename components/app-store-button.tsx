@@ -18,6 +18,9 @@ type AppStoreButtonProps = {
  * and clears Apple's 40px minimum at both breakpoints.
  */
 export function AppStoreButton({ className }: AppStoreButtonProps) {
+  // No listing yet — render nothing rather than a badge that leads nowhere.
+  if (!MAINS_APP_STORE_URL) return null;
+
   return (
     <Link
       href={MAINS_APP_STORE_URL}

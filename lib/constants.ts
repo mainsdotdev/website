@@ -41,9 +41,10 @@ export const MAINS_DOWNLOAD_DMG_X64_URL =
 /**
  * App Store listing for the iPhone companion app.
  *
- * TODO: placeholder id — swap for the real listing when the app clears review.
- * Everything that links to the App Store reads this one constant.
+ * `null` until the app is released: every App Store link and badge on the site
+ * hides itself (or shows "Coming Soon") while this is unset. On release, set it
+ * to the real listing, e.g. "https://apps.apple.com/app/id0000000000".
  */
-export const MAINS_APP_STORE_URL = "https://apps.apple.com/app/id0000000000";
+export const MAINS_APP_STORE_URL: string | null = null;
 
 export const MAINS_GITHUB_REPO_URL = "https://github.com/mainsdotdev/mains";

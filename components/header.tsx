@@ -137,6 +137,8 @@ export default function Header() {
 
 function DownloadPill({ platform, className }: { platform: Platform; className?: string }) {
   if (platform === "ios") {
+    // Nothing to link to until the iPhone app is live.
+    if (!MAINS_APP_STORE_URL) return <ComingSoonPill className={className} />;
     return (
       <Link
         href={MAINS_APP_STORE_URL}
@@ -263,7 +265,7 @@ function MobileMenu({
                 >
                   Download
                 </Link>
-              ) : platform === "ios" ? (
+              ) : platform === "ios" && MAINS_APP_STORE_URL ? (
                 <Link
                   href={MAINS_APP_STORE_URL}
                   target="_blank"

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Header from "@/components/header";
 import { ScrambleText } from "@/components/scramble-text";
-import { ChevronRight, Github, Windows } from "@/components/icons";
+import { Apple, ChevronRight, Github, Windows } from "@/components/icons";
 import type { Post } from "@/lib/types";
 import { MacDownloadButton } from "@/components/mac-download-button";
 import { AppStoreButton } from "@/components/app-store-button";
@@ -106,10 +106,15 @@ function HeroHeadline() {
 function CompanionNote({ platform }: { platform: Platform }) {
   if (platform === "other") return null;
 
+  const released = MAINS_APP_STORE_URL !== null;
   const text =
     platform === "ios"
-      ? "Mains runs on your Mac — the iPhone app pairs with it over your network."
-      : "Also on iPhone: drive your runs from the couch.";
+      ? released
+        ? "Mains runs on your Mac — the iPhone app pairs with it over your network."
+        : "Mains runs on your Mac — an iPhone app to pair with it is coming soon."
+      : released
+        ? "Also on iPhone: drive your runs from the couch."
+        : "Coming soon to iPhone: drive your runs from the couch.";
 
   return (
     <motion.p
@@ -117,7 +122,7 @@ function CompanionNote({ platform }: { platform: Platform }) {
       className="relative z-10 mt-5 text-xs text-primary-400 md:text-sm"
     >
       {text}{" "}
-      {platform === "mac" && (
+      {platform === "mac" && MAINS_APP_STORE_URL && (
         <Link
           href={MAINS_APP_STORE_URL}
           target="_blank"
@@ -147,7 +152,17 @@ function HeroActions({ platform }: { platform: Platform }) {
           />
         ) : platform === "ios" ? (
           // A .dmg is useless on a phone, so the App Store takes the primary slot.
-          <AppStoreButton />
+          MAINS_APP_STORE_URL ? (
+            <AppStoreButton />
+          ) : (
+            <ShortcutPillButton
+              ariaLabel="iPhone app coming soon"
+              className={cn(PILL_CLASS_NAME, "cursor-default bg-primary-900/50 text-primary-500")}
+            >
+              <Apple width={16} height={16}  />
+              <span>iPhone — Coming Soon</span>
+            </ShortcutPillButton>
+          )
         ) : (
           <ShortcutPillButton
             ariaLabel="Windows version coming soon"
