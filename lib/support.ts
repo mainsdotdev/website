@@ -12,9 +12,12 @@ export interface SupportDoc {
   content: string;
 }
 
-/** The support page's FAQ from `content/support.mdx`, frontmatter parsed. */
+/**
+ * The support page's FAQ from `content/pages/support.mdx`, frontmatter parsed.
+ * Kept out of the top level of `content/`, which `getAllPosts()` reads as blog posts.
+ */
 export function getSupportDoc(): SupportDoc {
-  const raw = fs.readFileSync(path.join(process.cwd(), "content", "support.mdx"), "utf8");
+  const raw = fs.readFileSync(path.join(process.cwd(), "content", "pages", "support.mdx"), "utf8");
   const { data, content } = matter(raw);
   return {
     title: String(data.title ?? "Support"),
