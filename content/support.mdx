@@ -1,0 +1,65 @@
+---
+title: "Support"
+description: "Help with Mains for iPhone and Mains for Mac — pairing, connection problems, your data, and how to reach us."
+updated: "2026-09-14"
+---
+
+## Getting started
+
+**What do I need to use Mains for iPhone?**
+
+The iPhone app is a companion to **Mains for Mac**. You need Mains running on a Mac, with the AI provider you want to use (Claude Code, Codex, GitHub Copilot or Cursor) installed and signed in on that Mac. The phone doesn't run agents itself; it shows the Mac's runs and lets you drive them.
+
+**Is Mains free?**
+
+Yes. Both apps are free and open source under the [MIT License](/license). Your AI provider may charge you for what the agents use, under your own account with them.
+
+## Pairing your iPhone with your Mac
+
+1. On the Mac, open **Relay → This machine** and turn on **Network access (LAN)** or **Tailscale HTTPS**. Pairing appears once the phone has a route to the Mac.
+2. Under **Pair a phone**, the Mac shows a QR code.
+3. On the iPhone, tap **Scan pairing code** and point the camera at it.
+
+A pairing code works once and expires after five minutes. If it expires, the Mac shows a new one. If you can't use the camera, copy the pairing link on the Mac and choose **No camera? Paste a link** in the app.
+
+## Connection problems
+
+**The app says "Unreachable".**
+
+Make sure Mains is open on the Mac and the Mac is awake. The phone and the Mac must be able to reach each other: on the same Wi‑Fi network, or both signed in to the same Tailscale network. If you're on Wi‑Fi, check that **Local Network** access is turned on for Mains in the iPhone's **Settings → Privacy & Security → Local Network**.
+
+**The app says "Refused".**
+
+The Mac no longer accepts this phone's pairing, usually because the phone was revoked under **Paired phones** on the Mac. Pair again by scanning a new code.
+
+**The app says one side is on an older Mains.**
+
+The phone and the Mac speak different protocol versions. Update Mains for iPhone from the App Store and Mains for Mac from our [releases](https://github.com/mainsdotdev/mains/releases), then try again.
+
+**I'm away from home. Can I still connect?**
+
+Yes, with [Tailscale](https://tailscale.com). Install it on both devices, sign in to the same account, and turn on **Tailscale HTTPS** on the Mac. Traffic is then encrypted end to end between your devices.
+
+**I don't see new runs or messages.**
+
+The phone shows a copy of what the Mac last sent it. When the connection drops, that copy stays readable and catches up once the phone reconnects. There are no push notifications yet, so open the app to check on a run.
+
+## Your data and privacy
+
+**Where is my data stored?**
+
+On your Mac, and a copy on your phone. Mains has no accounts and no servers in the path of your data. The full details are in our [Privacy Policy](/privacy).
+
+**How do I delete my data from the phone?**
+
+In the app, go to **Settings → Forget this Mac**. This removes the pairing and everything cached from that Mac. Deleting the app removes everything too.
+
+**My phone was lost or stolen.**
+
+On the Mac, open **Relay → This machine** and tap **Revoke** next to the phone under **Paired phones**. It will be refused the next time it tries to connect.
+
+## Reporting a problem
+
+Email [team@mains.dev](mailto:team@mains.dev) or open an issue on [GitHub](https://github.com/mainsdotdev/mains/issues). To help us find the cause quickly, include the diagnostics from the app: **Settings → Copy diagnostics**, then paste them into your message. They list the app and Mac versions and the connection state, and contain no prompts or code.
+
+Found a security issue? Please email [team@mains.dev](mailto:team@mains.dev) rather than opening a public issue.

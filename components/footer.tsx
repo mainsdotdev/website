@@ -6,6 +6,7 @@ const FOOTER_LINKS = [
   { label: "Privacy", href: "/privacy" },
   { label: "Terms", href: "/terms" },
   { label: "License", href: "/license" },
+  { label: "Support", href: "/support" },
 ] as const;
 
 /**

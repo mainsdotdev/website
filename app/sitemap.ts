@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllLegalDocs } from "@/lib/legal";
 import { getAllPosts } from "@/lib/posts";
+import { getSupportDoc } from "@/lib/support";
 
 const SITE_URL = "https://mains.dev";
 
@@ -25,6 +26,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${SITE_URL}${post.url}`,
       lastModified: post.date,
     })),
+    {
+      url: `${SITE_URL}/support`,
+      lastModified: getSupportDoc().updated,
+    },
     {
       url: `${SITE_URL}/legal`,
       lastModified: legal[0]?.updated,
