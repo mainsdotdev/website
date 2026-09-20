@@ -430,9 +430,30 @@ canvas:hover {
   }
 
   /* Mats sitting side by side pan across the photo instead of repeating one
-     crop, so the row reads as two windows onto the same landscape. */
+     crop, so the row reads as two windows onto the same landscape.
+
+     They also match heights rather than ending wherever their screenshot
+     happens to stop: the row aligns its children to `start`, so each mat
+     overrides that to stretch, and centres its media in the space it gets.
+     Two shots of different shapes — a wide menu and a tall one — then read
+     as one band instead of two ragged blocks. */
   .prose .media-row > .media-backdrop {
     margin: 0;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Equal columns suit a pair of matching shots. A wide one beside a tall one
+     is the case they don't: at the same width the tall one draws half again as
+     high, and the row reads as one big picture and one small. This splits the
+     row in proportion to the two shapes instead, so both still fill their
+     column and land at the same height — nothing cropped, nothing letterboxed.
+     The fraction is the ratio between their aspect ratios, so it holds at every
+     width: here 1.54 wide against 0.96 tall. */
+  .prose .media-row.even-heights {
+    grid-template-columns: 1.6fr 1fr;
   }
 
   .prose .media-row > .media-backdrop:first-child {
@@ -468,7 +489,10 @@ canvas:hover {
       width: 100%;
     }
 
-    .prose .media-row {
+    /* One column, so a shaped split has nothing left to balance. Named
+       explicitly because `.even-heights` would otherwise outrank this. */
+    .prose .media-row,
+    .prose .media-row.even-heights {
       grid-template-columns: minmax(0, 1fr);
     }
   }

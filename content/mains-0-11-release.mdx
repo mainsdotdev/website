@@ -1,0 +1,225 @@
+---
+title: "Mains 0.11: Visualize, Capture, Search"
+date: 2026-09-22
+description: "Codex draws its answers instead of describing them, MCP Apps render inside the transcript, the in-app browser grew tabs and a device frame, ⌘⇧Space sends any window to the agent, and a request waiting on you now reaches the menu bar and your notifications."
+author: "Mains Team"
+tags: ["changelog", "release", "product"]
+published: true
+version: "0.11"
+image: "/changelog/0-11/cover.jpg"
+---
+
+
+
+0.10 took Mains off the Mac: a paired phone became another window onto the same runs. 0.11 goes the other way. The agent's answers stop being text — Codex draws charts and tables that you can click, and an MCP server can ship a whole interface into the transcript. The browser it works in became a real browser. And Mains stops needing its window to be open: `⌘⇧Space` sends it whatever you're looking at, and anything waiting on you shows up in the menu bar and in your notifications.
+
+## Codex draws its own answers
+
+<div className="media-frame glass-outline sm:w-3/4">
+  <Video
+    src="/changelog/0-11/visualization.mp4"
+    poster="/changelog/0-11/visualization-poster.webp"
+    width="1920"
+    height="1238"
+    aria-label="A Codex run rendering an adjustable 3D gyroscope simulation inline in the transcript, its wheel spin, tilt and gravity sliders changing the model as they move"
+  />
+</div>
+
+Ask Codex to explain something and you used to get a paragraph, or a file on disk you had to go open. Now it can draw the answer instead — a chart, a sortable table, or a running simulation with sliders on it — inline in the transcript, where the answer belongs. The clip above is one prompt: *show how a spinning gyroscope works in an adjustable 3D simulation*, and what came back spins, labels its own force vectors, and re-solves as you drag wheel spin, tilt and gravity.
+
+It runs in an iframe served from a signed local URL, under a content policy that gives it **no network at all** — `connect-src 'none'`, scripts and styles from four allowlisted CDNs plus Google Fonts, no frames, no forms, no base URI. Mains supplies the base stylesheet, so a visualization inherits the app's light and dark theme instead of shipping its own colours, and everything Codex writes sits on the same typography, cards and controls as the rest of the app. The frame measures its own content and resizes to fit; wide ones get more room than the transcript column.
+
+Two things make it feel less like a picture. Its **state is kept per artifact**, so the tab you left a table sorted on, or the gravity you left that gyroscope at, is what you come back to after a reload. And it can **talk back**: a control inside the visualization can hand a prompt to the composer — *"now break the third quarter down by region"* — as a button in the drawing itself. That's the entire channel, a prompt and a title; nothing inside a visualization can start a run on its own.
+
+This one is Codex-only today. It arrives on Codex's own event stream, and the other three providers don't emit it.
+
+## MCP Apps render in the transcript
+
+<div className="media-frame glass-outline sm:w-3/4">
+  <Video
+    src="/changelog/0-11/mcp-app.mp4"
+    poster="/changelog/0-11/mcp-app-poster.webp"
+    width="1920"
+    height="1238"
+    aria-label="Skyscanner's MCP App rendering a row of flight cards inside the tool row that called it, then one of them opening in the in-app browser beside the transcript"
+  />
+</div>
+
+An MCP server can ship an interface, not just tools — and Mains now renders it, inside the tool row that called it. It goes through the Model Context Protocol's own app bridge, so an app written for another host works here without a Mains-specific build. Above, a question about flights comes back as Skyscanner's own cards, scrolled and priced the way Skyscanner draws them, and picking one opens it in the browser panel beside the transcript.
+
+The document is served in-memory from a `mains-mcp-app://` URL that expires with the tool call that produced it. Each resource declares its own connect, resource, frame and base-URI domains, and its own permissions — camera, microphone, geolocation, clipboard — and those become the frame's **actual** policy rather than a promise: Mains sanitizes what the server asked for and hands it to Electron as the response's CSP and permissions policy. Anything the app then asks its server for is proxied back through the run's own adapter, with the same ceilings throughout: 4MB per resource, 1MB per tool payload, 32,000 characters per message.
+
+### Connectors, and logging into them
+
+The settings around it grew up to match. **Settings → Codex → Plugins** lists apps grouped by their marketplace category with their real names and brand icons instead of a hash, shows each MCP server's connection and auth state, and starts an **OAuth login** from inside Mains for a server that needs one. The catalog pushes its own updates, so authorizing in one place doesn't leave the other stale.
+
+Like visualizations, MCP Apps and connectors come through Codex today. The plumbing is provider-agnostic — the adapter methods are optional and any driver can implement them — but Codex is the one that does.
+
+## The browser grew up
+
+<div className="media-row">
+  <div className="media-backdrop backdrop-dune">
+    <Figure
+      src="/changelog/0-11/browser-tabs.webp"
+      alt="The in-app browser with four tabs and their favicons, on the page the agent was pointed at"
+      width="1644"
+      height="2056"
+      sizes="(max-width: 40rem) 100vw, 480px"
+    />
+  </div>
+  <div className="media-backdrop backdrop-dune">
+    <Figure
+      src="/changelog/0-11/browser-device.webp"
+      alt="The same browser in device mode: a Dimensions toolbar reading 437 × 852 at 84%, and the page on a stage with drag handles on both edges"
+      width="1646"
+      height="2040"
+      sizes="(max-width: 40rem) 100vw, 480px"
+    />
+  </div>
+</div>
+
+The panel that was one page is a browser now. **Tabs** with favicons, an address bar that suggests from your own history, **find on page**, zoom, print, and the navigation shortcuts you'd expect — all of them rebindable.
+
+### A phone frame you can drag
+
+Nine device presets from iPhone SE to Nest Hub, plus a free responsive mode, on a stage you can drag by its edges, rotate, and set the device pixel ratio and scale on. Emulation is applied to the real web contents, not faked with CSS, and the frame waits for the page to actually repaint before it settles — so *"check this on a phone"* is now something you can ask the agent for and watch happen beside it.
+
+### History, downloads, and clearing them
+
+**Downloads** land in Downloads with Chrome's collision naming (`report (1).pdf`) and a filename that's been stripped back to its last path segment, because Chromium hands over a proposed name, not a trusted path. The panel opens one, reveals it in Finder, or cancels it mid-flight. **History** is its own panel with per-entry removal, capped at a thousand entries and only ever recording `http` and `https`. And **Clear browsing data** takes a time range — last hour, day, week, four weeks, or all of it — across history, downloads and the session's own storage.
+
+## Search Mains
+
+<div className="media-frame glass-outline sm:w-3/4">
+  <Video
+    src="/changelog/0-11/search.mp4"
+    poster="/changelog/0-11/search-poster.webp"
+    width="1864"
+    height="1080"
+    aria-label="The command menu open on Command Option K: one query returning a chat matched on what was said inside it, two projects, and the command that switches the theme"
+  />
+</div>
+
+`⌘⌥K` opens one field over the app. It answers two different kinds of question and doesn't make you pick which you're asking.
+
+**Commands** are local and instant: every settings page, your projects and collections, a new chat in the current mode, toggle the terminal, switch mode, flip the theme, quit. They never touch the database, and `fuzzysort` ranks them, so a two-letter prefix usually lands.
+
+**Your work** is a real index. Workspaces, runs and generated documents come back by name — and runs also come back by *something said inside them*, through an FTS5 projection over the conversation text: your prompts, the agent's reports, its results. Tool logs, file contents and the model's thinking are deliberately not in it. The tokenizer is `unicode61` with 2- and 3-character prefix indexes, so partial words work and accented and non-Latin queries land where they should. Each hit carries its provider, mode, space, workspace and collection, so opening one restores that run's experience rather than dropping you somewhere generic.
+
+## Lens
+
+<div className="media-frame glass-outline sm:w-3/4">
+  <Video
+    src="/changelog/0-11/lens.mp4"
+    poster="/changelog/0-11/lens-poster.webp"
+    width="1920"
+    height="1106"
+    aria-label="Pressing the Lens shortcut over another app's window, then Mains coming forward and confirming the window was captured"
+  />
+</div>
+
+`⌘⇧Space` over any app captures its frontmost window and attaches it to your next message. Mains comes forward with the capture already in the composer, and nothing else happens — the shortcut attaches context, it never starts or continues a run.
+
+What travels is the window's image and, when you've granted Accessibility, a bounded text snapshot of the same window: the labels, values and structure a screen reader would read. The screenshot tells the agent what it looks like; the accessibility pass tells it what it says. Both are read at the moment you press the shortcut, and not before.
+
+**Settings → Lens** owns the switch, three shortcut choices (`⌘⇧Space`, `⌘⇧A`, `⌘⌥Space`), a live status for each of the two macOS permissions with a button through to the right System Settings pane, and a *Capture now* for doing one without the keyboard. Captures share the app-owned directory the browser's inspector screenshots use, are deleted when you drop them from the composer, and survive a route change while workspace-scoped context is cleared — a Lens capture came from outside the workspace, so it isn't the workspace's to discard.
+
+Lens is macOS-only, and it stays off until you turn it on.
+
+## Notifications you can answer
+
+<div className="media-row">
+    <Figure
+      src="/changelog/0-11/notification-approve.webp"
+      alt="A macOS notification reading Allow Bash? over the run's name, its Options menu open on Allow and Deny"
+      width="748"
+      height="386"
+      sizes="(max-width: 40rem) 100vw, 480px"
+    />
+    <Figure
+      src="/changelog/0-11/notification-choose.webp"
+      alt="A notification for a single-choice question, its Options menu open with one item per answer"
+      width="756"
+      height="402"
+      sizes="(max-width: 40rem) 100vw, 480px"
+    />
+</div>
+
+A request the agent is blocked on now leaves the app. How much the banner may settle on its own depends on what's being asked, and there are exactly four answers to that:
+
+**Allow / Deny** for a plain tool permission. **One button per option** for a single-choice question, up to four — past that it doesn't fit a notification. **The macOS inline reply field** for an open question. And **open the app** for everything else: the plan review, MCP forms, multi-select, secrets, long option lists.
+
+The plan review stays in the app on purpose. Approving it also moves the provider's composer out of plan mode, which a notification can't do — and a plan should be read before it's approved.
+
+A tool permission banner is headings only: the tool, and the run as its subtitle. A whole shell command or a diff is noise in a banner; whoever wants it clicks through, and the click opens that exact run. Questions keep their text, because that's what their buttons answer. Finished runs get a notification too, and **Settings → Notifications** turns either kind off.
+
+## Your own keyboard shortcuts
+
+**Settings → Keyboard Shortcuts** lists everything the app binds, under General, Navigation, Projects, Browser and Editor — the command menu, new item, settings, focus composer, sidebar, terminal, browser, the three mode switches, the three project actions, the browser's whole set, save file, add selection to chat. Click a row, press the combination you want, and it's yours; reset one, or reset all of them.
+
+Each shortcut declares a **scope** — app, browser, editor or settings — which is how a rebound `⌘L` can mean the address bar inside the browser and *add selection to chat* inside the code viewer without the two fighting. Bindings are normalized on the way in, modifier order and key aliases both, so `⌘⇧Space` and `⌘Space` can't end up stored as the same thing.
+
+## The menu bar and the Dock
+
+<div className="media-row even-heights">
+    <Figure
+      src="/changelog/0-11/menu-bar.webp"
+      alt="The Mains menu bar item open, with New Chat, Capture Window, Prevent Sleep During Runs and Check for Updates"
+      width="857"
+      height="558"
+      sizes="(max-width: 40rem) 100vw, 500px"
+    />
+    <Figure
+      src="/changelog/0-11/dock-menu.webp"
+      alt="The Dock menu carrying recent workspaces, New Chat, Options, and the window actions"
+      width="858"
+      height="894"
+      sizes="(max-width: 40rem) 100vw, 320px"
+    />
+</div>
+
+Mains keeps a menu bar item. It wears the number of runs going next to its icon, a badge when something is waiting on you, and a tooltip that reads *2 running · 1 waiting for you*.
+
+Open it and the whole machine is one list. **Requests waiting on you** sit at the top, answerable right there — a tool permission gets Allow and Deny, a single-choice question gets an item per option. **Running runs** show their elapsed time with Stop beside them; **finished runs** carry `✓`, `✕` or `■`. Below that: recent workspaces, the next Pulse and when it fires, how many phones are paired, the Lens shortcut, a toggle for keeping the Mac awake during runs, and — once one is downloaded — the update waiting for a restart.
+
+The Dock menu carries the same actions in the shape Dock menus have. Both are pure functions of one snapshot, which is the boring reason they never drift from what the window is showing.
+
+## Elsewhere in the app
+
+### What the turn changed, and taking it back
+
+Every finished turn now carries a card: **Edited N files**, `+`/`−` counts, the files themselves, a per-file diff behind *Review*, and **Undo**.
+
+It's built from git, but not from the repo's history. When a turn starts and when it closes, Mains writes the working tree into a git tree object through a throwaway index — tracked and untracked, `.gitignore` honoured, and HEAD, your index and your files untouched. Diffing the two trees is exactly what changed between those moments, whoever changed it: an edit tool, a shell command, a codegen step, a formatter that ran on save. No provider's own diff events are involved, which is why the card is identical across all four.
+
+The patch is stored in SQLite rather than kept as git refs, so a turn full of binary files or a 20,000-line rename stays undoable and the record outlives the worktree, the branch and git's garbage collector. **Undo** reverse-applies it through `git apply`, which is atomic — it either all comes back or nothing is written. It refuses while the run is live, and refuses when a file has moved on since rather than guessing. Continue and fork take a fresh baseline, so edits *you* made between runs are never attributed to the agent. Two runs sharing one worktree can't be told apart, and a working tree past the guard (5,000 untracked files, or 100MB) gets no card rather than hashing someone's `node_modules` into the object database.
+
+### Sources and Deliverables
+
+The session panel grows a shelf: what went into this run, and what came out of it. **Sources** come from the run's context, the prompt's own metadata, links in the conversation, and what the web tools were pointed at. **Deliverables** are the output artifacts plus the files actually visible in a Work or Chat run's directory — which is how a document written by a shell command or a provider's native export shows up even with no artifact behind it.
+
+It stores nothing new. Repeated sources collapse on canonical path or URL, and a document's drafts, renders and final version collapse into one row with the newest winning — no more four rows for one report because it passed through `.docx`, `.html` and `.pdf` on the way. Plugins appear only if they were actually called, with a count. Code shows Sources beside the workspace Environment; Chat doesn't get the panel at all.
+
+### PDFs in the document viewer
+
+The document viewer reads PDFs, rendered page by page with `pdf.js`. The library and its worker load with the first one you open and not before, and each page's canvas is capped so a zoomed page on a retina screen doesn't allocate hundreds of megabytes. Word, Excel and PowerPoint files get their own icons wherever files are listed.
+
+## Smaller things
+
+- **The Mac's own chrome follows your theme.** Mains painted its content light or dark, but everything AppKit draws — the vibrancy behind transparent surfaces, context menus, message boxes, file pickers — followed the system, so a light Mains on a dark Mac sat on dark glass. The renderer hands its preference over now, and it's saved beside the window state, so the splash screen opens in it too.
+- **A crashed UI reloads itself.** The renderer runs in its own process; when it went out of memory on a huge transcript, the window stayed up with nothing in it and quitting was the only way out. Everything that matters lives in main and the database, so a reload costs nothing but an unsent draft: a crash reloads on its own, three crashes in a minute ask first, and a hang asks — it may still come back.
+- **Mains offers to move itself to /Applications.** Run from inside the DMG, or from a zip unpacked in Downloads, the app can't replace itself and auto-update quietly fails. It now offers to move on first launch, before anything else starts, with a *don't ask again*.
+- **Keep this Mac awake for remote access** is a setting now, and it only holds while remote access or Tailscale is actually on and you're on AC power.
+- **Collections reorder by dragging** in the sidebar, and the order sticks.
+- **Pulse** templates are grouped by category with their own icons and tints, the list has a search field that matches titles and prompts, and a row says what it is — a failed last run outranks paused, which outranks when it fires next.
+- **Plan mode on Claude** runs in a session of its own, and `EnterPlanMode` renders as its own transcript row instead of a bare tool call. Claude Agent SDK is on `0.3.272`.
+- **Codex usage buckets have real names** — *Advanced usage*, a model's *Reserve* — and a rate-limit reset credit can be spent straight from the usage panel.
+- **A burst of database writes is one refresh on the phone.** The iOS app's live queries collapse row-level change events with a 32ms settle and a 250ms ceiling, so a run syncing hundreds of rows repaints its list once instead of forty times a second.
+- **Settings is regrouped.** Providers sit under their own heading; Notifications, Lens and Keyboard Shortcuts are pages of their own rather than rows on General.
+- Turn rail markers only appear where there's something to jump to, and a live run's transcript follows the newest event without fighting you when you scroll up.
+
+---
+
+Mains 0.11 is available for macOS (Apple Silicon and Intel), and open source under the MIT license at [github.com/mainsdotdev/mains](https://github.com/mainsdotdev/mains).
+
+*Questions or feedback? Reach out to [team@mains.dev](mailto:team@mains.dev)*
