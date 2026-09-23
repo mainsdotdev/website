@@ -1,0 +1,159 @@
+---
+title: "Mains 0.12: Serve, Theme, Browse"
+date: 2026-09-24
+description: "Mains runs without the Mac app now: one npm install puts the same backend and web UI on any macOS or Linux machine, and keeps it up as a service. Settings → Appearance ships thirty-one themes you can set per provider, a browser signs in with a one-use link instead of the owner token, and the in-app browser keeps its tabs with the chat that opened them."
+author: "Mains Team"
+tags: ["changelog", "release", "product"]
+published: true
+version: "0.12"
+image: "/changelog/0-12/cover.jpg"
+---
+
+0.10 put a phone in front of the Mac's runs. 0.11 made the Mac send you what was waiting on you. What was left was the Mac itself: until now the backend came inside the desktop app, and if the app was closed, so was everything else.
+
+0.12 takes it out. The backend that runs your agents is a command now, `mains`, and it runs on any macOS or Linux machine with Node — a Mac mini in a cupboard, a Linux box under a desk, the laptop you're on. Your phone pairs with it, a browser signs in to it, and the desktop app drives it over SSH.
+
+The rest of the release is about the window you look at all day: thirty-one themes, one per provider if you like, and an in-app browser that keeps its tabs with the chat that opened them.
+
+## Mains without the app
+
+{/* TODO(visual): serve-terminal.mp4 — screen recording. `npm install --global …mains-server.tgz`, then `mains serve --lan`: the startup lines (owner token file, data directory, browser login), then the pairing QR drawn in the terminal and a phone scanning it. ~1920×1200 terminal window, dark theme, large font.
+<div className="media-frame glass-outline sm:w-3/4">
+  <Video
+    src="/changelog/0-12/serve-terminal.mp4"
+    poster="/changelog/0-12/serve-terminal-poster.webp"
+    width="1920"
+    height="1200"
+    aria-label="A terminal installing the Mains server package, then mains serve --lan printing its owner token file, data directory, a one-use browser login, and a pairing QR code that a phone scans"
+  />
+</div>
+*/}
+
+```bash
+npm install --global https://github.com/mainsdotdev/mains/releases/latest/download/mains-server.tgz
+mains serve
+```
+
+That's the whole install. It needs Node.js 22.12 or later, and it ships the web UI inside the package — it never serves one from whatever directory you happened to run it in.
+
+**It's the same Mains, not a second one.** By default the server opens the desktop app's own data directory: the same database, workspaces, collections and run history, with nothing to import. Because both would be writing to one SQLite file, an ownership lock lets exactly one backend hold it at a time — quit the desktop app before `mains serve`, stop the server before reopening the app, and the second one is refused before it opens the database rather than after. `--data-dir` gives a server data of its own when that's what you want.
+
+It binds `127.0.0.1:8787` unless told otherwise. `--lan` listens on your private interfaces and advertises their addresses, `--tailscale-serve` publishes it on your tailnet over HTTPS, and a public address is something you put behind your own TLS proxy and advertise explicitly with `--public-url`.
+
+### The commands
+
+- `mains serve` — run the backend and web UI.
+- `mains pair` — print a new pairing QR for the running server.
+- `mains web` — print a one-use browser login.
+- `mains auth list` and `mains auth revoke <device-id>` — see what's paired and cut one off, without a restart.
+- `mains service install` — keep it running with no terminal open.
+
+### Running it as a service
+
+`mains service install --tailscale-serve` writes a macOS LaunchAgent or a Linux systemd user service and starts it; `status`, `restart`, `stop` and `uninstall` do what they say. It restarts on failure, logs to the data directory, and uninstalling keeps the database, the token and the logs. Nothing else has to stay open — not Electron, not a terminal, not an SSH session.
+
+## Themes
+
+{/* TODO(visual): themes.mp4 — Settings → Appearance. Scroll the preset strip, click through 4–5 themes (Flexoki, Kanagawa, Catppuccin, Tokyo Night, Absolutely) with the app behind it changing live; then set "Customize for" to Codex and pick a different theme so the Codex space looks different from Claude's. ~1920×1238.
+<div className="media-frame glass-outline sm:w-3/4">
+  <Video
+    src="/changelog/0-12/themes.mp4"
+    poster="/changelog/0-12/themes-poster.webp"
+    width="1920"
+    height="1238"
+    aria-label="Settings → Appearance: stepping through theme presets as the whole app recolors behind them, then giving Codex a theme of its own"
+  />
+</div>
+*/}
+
+**Settings → Appearance** is its own page, and it opens on a strip of thirty-one themes beside the stock one: Absolutely, Ayu, Catppuccin, Codex, Dracula, Everforest, Flexoki, GitHub, Gruvbox, Kanagawa, Linear, Lobster, Material, Matrix, Monokai, Night Owl, Nightfox, Nord, Notion, One, Oscurange, Proof, Raycast, Rose Pine, Sentry, Solarized, Temple, Tokyo Night, Vercel, VS Code Plus and Xcode. Most come in light and dark; the ones that only exist one way — Tokyo Night, Dracula, Nord — only show up for that appearance.
+
+A theme restyles nothing directly. Every surface, border, hover fill and line of text in Mains was already a step on one neutral scale, so a theme re-derives the scale from a background, a foreground and an accent, and the whole app follows — hover states included, with no reload. The stock *Mains* theme has no palette at all, which is why it looks exactly the way it did before themes existed.
+
+### Yours to edit
+
+{/* TODO(visual): two stills side by side in a media-row — appearance-light.webp (Flexoki light, the Colors card open: Accent, Background, Foreground, Contrast) and appearance-dark.webp (Kanagawa dark, the same card with a custom accent). Portrait-ish, ~1600×2000 each.
+<div className="media-row">
+  <div className="media-backdrop backdrop-dune">
+    <Figure
+      src="/changelog/0-12/appearance-light.webp"
+      alt="The Colors card on a light theme: accent, background, foreground and contrast, each with a reset to the preset"
+      width="1600"
+      height="2000"
+      sizes="(max-width: 40rem) 100vw, 480px"
+    />
+  </div>
+  <div className="media-backdrop backdrop-dune">
+    <Figure
+      src="/changelog/0-12/appearance-dark.webp"
+      alt="The same card on a dark theme with a custom accent picked"
+      width="1600"
+      height="2000"
+      sizes="(max-width: 40rem) 100vw, 480px"
+    />
+  </div>
+</div>
+*/}
+
+A preset is where you start. Light and dark are edited separately, and each has its own **accent** (the theme's, or your own), **background**, **foreground**, a **contrast** slider that pulls secondary text toward the foreground while leaving surfaces where they are, and whether the sidebar is **translucent**. Every change has a reset back to the preset.
+
+Every preset is held to WCAG AA for secondary text, and a theme's accent that would sit under AA on its background is moved in lightness until it doesn't — hue and chroma kept, so Solarized's yellow stays yellow. An accent you pick yourself is painted exactly as you picked it.
+
+### A theme per provider
+
+*Customize for* sets a default for everything, and any provider can override it — Claude in cream and clay, Codex in something darker, so the space tells you which agent you're talking to before you read a word. It takes over from the per-space tint colours, which only ever changed the backdrop.
+
+### Fonts
+
+The same page picks the **UI font** and the **code font**. SF Pro, Helvetica Neue and Avenir Next are offered up front; the rest of what's installed on your Mac is listed through the browser's Local Font Access API once you open the menu. A font that goes missing falls back to the rest of the stack, never to the browser's default. The interface and code sizes moved here too.
+
+## Elsewhere in the app
+
+### Signing in from a browser
+
+Any Mains backend — the server, or the desktop app with remote access on — serves its own UI to a browser. What changed is how the browser gets in.
+
+The browser link used to carry the owner token in its query string: the credential that can do anything, in your history, in a proxy's access log, in whatever you pasted it into. Now the owner token **never enters a browser at all**. A login link carries a separate one-use code, in the fragment (`#login=…`) where it isn't sent to the server as part of the request line, and bound to the one origin it was made for. It expires after five minutes, and it's spent before anything is minted from it, so two tabs racing the same link can't both get in.
+
+What the browser gets in exchange are two random cookies, `HttpOnly` and `SameSite`, good for eight hours: one for the WebSocket, one for the image proxy. They live only in the server's memory — restarting it, or rotating the owner token, signs out every browser at once. Their names are random per server, so two Mains on one hostname don't overwrite each other's sessions.
+
+In the desktop app, every address under **Settings → Mains Connect → This machine** has a *Copy one-use browser login* button that mints a link only when you click it. On the server, `mains serve` prints one at startup — but only to a person at a terminal. Run as a service or with its output redirected, it prints none, so a login never ends up in a log; `mains web` makes one on demand.
+
+### Browser tabs belong to the chat
+
+The in-app browser's tabs now belong to the conversation they were opened in. Switch chats and you get that chat's tabs back, not whichever you had open last. Tabs opened while you were still writing the first prompt follow it into the run when you send, and deleting a chat discards its tabs with it. **Clear browsing data** now also clears each open tab's back and forward history, so a page you cleared doesn't come back with the Back button.
+
+### A right-click menu in the browser
+
+{/* TODO(visual): browser-context-menu.webp — right-click on an image inside a link in the in-app browser, showing both the link and image groups. Crop tight, ~900×1000. Optional; skip if short on time.
+<div className="media-frame sm:w-1/2">
+  <Figure
+    src="/changelog/0-12/browser-context-menu.webp"
+    alt="The in-app browser's context menu over a linked image: open link in new tab, copy link address, download image, copy image, back, forward, reload, inspect"
+    width="900"
+    height="1000"
+    sizes="(max-width: 40rem) 100vw, 360px"
+  />
+</div>
+*/}
+
+It has one now, and it's built for what's under the pointer: a link opens in a new tab or your external browser, downloads, or copies its address; an image opens, downloads, or copies itself or its address; a text field gets undo, redo, cut, copy, paste and select all. Back, Forward, Reload and **Inspect** are always there.
+
+### Images open as images
+
+PNG, JPEG, GIF, SVG and WebP files open in the editor as a picture instead of a wall of bytes, and editor tabs carry an icon for what kind of file they are.
+
+## Smaller things
+
+- **One image, not two.** When Codex generates an image and then saves it into the project, the transcript shows the saved deliverable instead of the same picture twice.
+- **A file chip stays a chip.** Moving the caret next to one read its absolute path as a fresh `@` query and reopened the file search; chips are a boundary for suggestions now.
+- **A pull request too big for GitHub's preview says so.** Tasks used to report *No changes in this pull request*; it now says the diff couldn't be previewed and offers *Open on GitHub*.
+- **Claude's output styles explain themselves.** Their descriptions were cut off in the dropdown; hovering one now shows all of it.
+- **Cursor models read like names** — *Composer 2.5 (Fast)* rather than `composer-2.5`.
+- **Horizontal lists scroll like they should.** Rows that run off the edge — the theme strip, the Codex plugin categories — fade at the edges and show arrows on hover.
+
+---
+
+Mains 0.12 is available for macOS (Apple Silicon and Intel). The server runs on macOS and Linux with Node.js 22.12+, and everything is open source under the MIT license at [github.com/mainsdotdev/mains](https://github.com/mainsdotdev/mains).
+
+*Questions or feedback? Reach out to [team@mains.dev](mailto:team@mains.dev)*

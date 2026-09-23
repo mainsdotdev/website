@@ -275,19 +275,37 @@ canvas:hover {
     font-family: theme("fontFamily.mono");
   }
 
+  /* Code blocks sit on the same lifted neutral and faint white rim as the
+     site's glass cards, with the media frames' inner radius. */
+  .prose figure[data-rehype-pretty-code-figure] {
+    margin: 2rem 0;
+  }
+
   .prose pre {
-    background-color: theme("colors.primary.900");
-    border: 1px solid theme("colors.primary.700");
-    border-radius: 0.5rem;
-    padding: 1.5rem;
+    background-color: color-mix(
+      in oklab,
+      theme("colors.primary.900") 55%,
+      theme("colors.primary.950")
+    );
+    border: 1px solid var(--glass-outline-rim);
+    border-radius: 1rem;
+    padding: 1.25rem 1.5rem;
     overflow-x: auto;
     margin: 2rem 0;
+    font-size: 0.875rem;
+    line-height: 1.75;
+  }
+
+  .prose figure[data-rehype-pretty-code-figure] pre {
+    margin: 0;
   }
 
   .prose pre code {
     background-color: transparent;
     padding: 0;
-    color: theme("colors.primary.100");
+    border-radius: 0;
+    font-size: inherit;
+    color: theme("colors.primary.200");
   }
 
   /* Tailwind's preflight strips list markers, so prose puts them back. */
