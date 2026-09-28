@@ -4,7 +4,7 @@ import { useState, type PointerEvent } from "react";
 import { motion, useReducedMotion, useSpring } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Attach } from "@/components/icons";
+import { ArrowRight, Attach } from "@/components/icons";
 
 // Short excerpts from content/mains-0-13-release.mdx.
 const RELEASE_NOTE = {
@@ -88,7 +88,7 @@ export function HeroPaperNote({
               style={backfaceStyle}
               className="absolute inset-0 flex flex-col overflow-hidden rounded-lg border border-primary-700/50 bg-primary-900 p-2 pb-0 shadow-[0_24px_50px_-18px_var(--demo-shadow)]"
             >
-              <span className="block font-mono text-[8px] leading-tight  text-primary-400">
+              <span className="block text-[8px]   text-primary-400">
                 MAINS {RELEASE_NOTE.version} <span aria-hidden="true" className="mx-1 text-primary-500">·</span> NO. 013
               </span>
               <span className="mt-3.5 block  text-lg leading-[1.02] font-medium text-primary-50 xl:text-xl">
@@ -109,20 +109,20 @@ export function HeroPaperNote({
               style={{ ...backfaceStyle, transform: "rotateY(180deg)" }}
               className="absolute inset-0 flex flex-col rounded-lg border border-primary-700/50 bg-primary-900 p-3 text-primary-50 shadow-[0_24px_50px_-18px_var(--demo-shadow)]"
             >
-              <span className="font-mono text-[9px] tracking-widest text-primary-400 uppercase">
+              <span className=" text-[9px]  text-primary-400 uppercase">
                 Mains {RELEASE_NOTE.version} / release letter
               </span>
               <span className="mt-2 text-xl leading-none">
                 Make Mains yours.
               </span>
-              <span className="mt-2 flex flex-col gap-2 border-t border-primary-700/50 pt-2">
+              <span className="mt-2 flex flex-col gap-2  pt-2">
                 {RELEASE_NOTE.paragraphs.map((paragraph) => (
                   <span key={paragraph} className="block text-[12px] italic leading-normal text-primary-200">
                     {paragraph}
                   </span>
                 ))}
               </span>
-              <span className="mt-auto pt-2 font-mono text-[9px] text-primary-400">
+              <span className="mt-auto pt-2 text-[9px] text-primary-400">
                 Click to turn back ↶
               </span>
             </span>
@@ -135,13 +135,13 @@ export function HeroPaperNote({
         </motion.button>
       </div>
 
-      <div className="hero-note-caption mt-3 text-center font-mono text-[10px] text-primary-400">
+      <div className="hero-note-caption mt-3 text-center font-medium text-[12px] text-primary-400">
         {flipped ? (
           <Link
             href={RELEASE_NOTE.href}
             className="pointer-events-auto underline underline-offset-4 hover:text-primary-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-50"
           >
-            Read all 0.13 notes ↗
+            Read all 0.13 notes {">"}
           </Link>
         ) : (
           <span>0.13 / turn over to read</span>

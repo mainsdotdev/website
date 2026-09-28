@@ -21,11 +21,12 @@ export function CtaSection() {
       <section className="py-24 max-w-3xl mx-auto px-6 text-center ">
         <motion.div {...FADE_IN_UP} className="flex flex-col items-center gap-6">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-white tracking-tight leading-snug font-sans">
-            Mains for AI coding agents
+            Mains for what&apos;s next.
           </h2>
           <p className="text-sm md:text-base text-primary-400 leading-relaxed max-w-xl">
-            Run autonomous agents in secure workspaces, connect your repositories, and move
-            from task to reviewed pull request without leaving Mains.
+            Ask a question, plan a trip, create something new, or move a project
+            forward. Mains brings your chats and tools together so you can go
+            from idea to result.
           </p>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
             {platform === "mac" ? (

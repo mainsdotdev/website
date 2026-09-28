@@ -34,7 +34,7 @@ export function HeroSearchTile({
           aria-expanded={open}
           className="group relative block w-full cursor-pointer rounded-sm text-left outline-none transition-transform duration-600 ease-spring hover:-translate-y-1 focus-visible:-translate-y-1 focus-visible:ring-2 focus-visible:ring-primary-50 focus-visible:ring-offset-4 focus-visible:ring-offset-primary-950 motion-reduce:transition-none"
         >
-          <span className="relative block aspect-[4/3] overflow-hidden rounded-sm shadow-[0_12px_28px_-16px_var(--demo-shadow)]">
+          <span className="relative block aspect-4/3 overflow-hidden rounded-sm shadow-[0_12px_28px_-16px_var(--demo-shadow)]">
             <Image
               src="/changelog/0-11/search-poster.webp"
               alt="Searching across Mains conversations"
@@ -43,7 +43,7 @@ export function HeroSearchTile({
               className="object-cover transition-transform duration-600 ease-spring group-hover:scale-105"
             />
           </span>
-          <span className="mt-2 block text-center font-mono text-[10px] text-primary-400">
+          <span className="mt-2 block text-center text-[10px] text-primary-400">
             0.11 / Search
           </span>
           <span

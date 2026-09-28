@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Apple, Mains } from "@/components/icons";
 import {
@@ -30,13 +31,32 @@ const NAV_LINKS = [
 /** A compact navigation bar shaped like the top edge of a MacBook display. */
 export default function Header() {
   const { platform } = usePlatformDetection();
+  const [isDetached, setIsDetached] = useState(false);
+
+  useEffect(() => {
+    const updatePosition = () => setIsDetached(window.scrollY > 80);
+
+    updatePosition();
+    window.addEventListener("scroll", updatePosition, { passive: true });
+    return () => window.removeEventListener("scroll", updatePosition);
+  }, []);
 
   return (
     <>
-      <header className="pointer-events-none fixed inset-x-0 top-0 z-50">
+      <header
+        className={cn(
+          "pointer-events-none fixed inset-x-0 z-50 transition-[top] duration-500 ease-[var(--ease-spring-critical)] motion-reduce:transition-none",
+          isDetached ? "top-5" : "top-0",
+        )}
+      >
         <nav
           aria-label="Primary navigation"
-          className="pointer-events-auto mx-auto flex justify-between h-16 w-fit max-w-[calc(100%-16px)]  items-center gap-4 rounded-b-[28px] bg-primary-900/40 backdrop-blur-3xl px-4 text-primary-50 shadow-primary-500/10 sm:h-18 sm:gap-8 sm:rounded-b-4xl sm:px-6"
+          className={cn(
+            "pointer-events-auto mx-auto flex h-16 w-fit max-w-[calc(100%-16px)] items-center justify-between gap-4 bg-primary-900/40 px-4 text-primary-50 shadow-primary-500/10 backdrop-blur-3xl transition-[border-radius] duration-500 ease-[var(--ease-spring-critical)] motion-reduce:transition-none sm:h-18 sm:gap-8 sm:px-6",
+            isDetached
+              ? "rounded-[28px] sm:rounded-4xl"
+              : "rounded-b-[28px] sm:rounded-b-4xl",
+          )}
         >
           <Link
             href="/"

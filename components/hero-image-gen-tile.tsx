@@ -84,7 +84,7 @@ export function HeroImageGenTile({
 
             <span
               id="hero-image-gen-description"
-              className="hero-tile-caption mt-2 block text-[10px] leading-snug text-primary-300"
+              className="hero-tile-caption mt-2 block font-medium text-[12px] leading-snug text-primary-300"
             >
               Generate an image in Mains.
             </span>

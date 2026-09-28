@@ -1,6 +1,5 @@
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
 import { getImageSize } from '@/lib/image-size';
-import { extractToc } from '@/lib/toc';
 import { notFound } from 'next/navigation';
 import { MDXContent } from '@/components/mdx-content';
 import { StructuredData } from '@/components/structured-data';
@@ -10,7 +9,6 @@ import Header from '@/components/header';
 import { ChevronLeft } from '@/components/icons';
 import { PostMeta } from '@/components/post-meta';
 import { ShareButton } from '@/components/share-button';
-import { TableOfContents } from '@/components/table-of-contents';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -81,7 +79,6 @@ export default async function BlogPost({ params }: Props) {
     notFound();
   }
 
-  const toc = extractToc(post.content);
   const canonicalUrl = `https://mains.dev/blog/${post.slug}`;
   const imageUrl = new URL(
     post.image || '/og-image.jpg',
@@ -118,58 +115,23 @@ export default async function BlogPost({ params }: Props) {
   return (
     <>
       <StructuredData data={structuredData} />
-      <div className="min-h-screen max-w-7xl mx-auto bg-primary-950 ">
+      <div className="min-h-screen max-w-8xl mx-auto bg-primary-950 ">
         <Header />
 
         <article className="px-4">
-          {/* Title block — centered above the two-column body */}
           <header className="mx-auto max-w-4xl pt-6 text-center">
-            <div className="flex items-center justify-center gap-4 text-sm text-primary-400">
-              <PostMeta
-                date={post.date}
-                dateFormat="MMMM dd, yyyy"
-                className="text-sm text-primary-400"
-              />
-              {post.tags?.[0] && (
-                <span className="text-primary-500">{post.tags[0]}</span>
-              )}
-            </div>
 
-            <h1 className="mt-6 text-4xl leading-[1.08] font-semibold tracking-tight text-white md:text-6xl">
+            <h1 className="mt-6 text-4xl font-serif leading-[1.08] font-semibold tracking-tight text-white md:text-6xl">
               {post.title}
             </h1>
 
-            <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-primary-300">
-              {post.description}
-            </p>
 
-            <div className="mt-12 flex items-center justify-between  pt-5">
-              <Link
-                href="/blog"
-                className="inline-flex items-center gap-2 text-sm text-primary-400 transition-colors hover:text-white"
-              >
-                <ChevronLeft className="size-4" />
-                Back to Blog
-              </Link>
 
-              <ShareButton title={post.title} url={post.url} />
-            </div>
+
           </header>
 
-          {/* Body — outline sits in the left gutter so the prose stays centered */}
-          <div className="mt-16 grid grid-cols-1 gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,50rem)_minmax(0,1fr)]">
-            <aside className="hidden lg:block">
-              {/* Narrower than its column, so widening the prose never crowds it. */}
-              <div className="sticky top-24 max-w-44">
-                <TableOfContents items={toc} />
-              </div>
-            </aside>
-
-            <div className="prose prose-invert prose-primary mx-auto max-w-3xl lg:mx-0 lg:max-w-none">
-              <MDXContent source={post.content} />
-            </div>
-
-            <div className="hidden lg:block" />
+          <div className="prose prose-invert prose-primary mx-auto mt-16 w-full max-w-200">
+            <MDXContent source={post.content} />
           </div>
         </article>
       </div>

@@ -250,7 +250,7 @@ export function HeroFlightsTile({ position, hoverClass }: { position: string; ho
               className="object-cover transition-transform duration-600 ease-spring group-hover:scale-105"
             />
           </span>
-          <span className="hero-tile-caption mt-2 block text-[10px] leading-snug text-primary-300">
+          <span className="hero-tile-caption  mt-2 block text-[12px] font-medium leading-snug text-primary-300">
             Explore flights in a Mains chat.
           </span>
         </button>
@@ -277,7 +277,7 @@ export function HeroFlightsTile({ position, hoverClass }: { position: string; ho
             <span aria-hidden="true" className="flex size-5 items-center justify-center rounded bg-primary-100 text-xs text-primary-950">✺</span>
             <span>Skyscanner · flights-live-prices-create-search</span>
             <span aria-hidden="true">›</span>
-            <span className="ml-auto font-mono text-[10px] tracking-wide uppercase">Demo fares</span>
+            <span className="ml-auto text-[10px] tracking-wide uppercase">Demo fares</span>
           </div>
           <FlightResultsCarousel />
           <p className="mt-3 text-xs text-primary-400">Illustrative results for this interactive preview.</p>

@@ -103,7 +103,7 @@ export function UseCasesSection({ useCases }: UseCasesSectionProps) {
       aria-labelledby="use-cases-title"
       className="px-5 py-24 sm:px-8 lg:py-32"
     >
-      <div className="mx-auto max-w-390">
+      <div className="mx-auto max-w-360">
         <div className="mx-auto mb-10 max-w-3xl text-center lg:mb-20">
 
           <h2
@@ -125,9 +125,6 @@ export function UseCasesSection({ useCases }: UseCasesSectionProps) {
               >
                 <PreviewFrame index={index} />
                 <div className="mt-6 lg:hidden">
-                  <span className="font-mono text-xs text-primary-500">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
                   <h3 className="mt-2 text-2xl tracking-tight text-primary-50">
                     {useCase.title}
                   </h3>
@@ -160,9 +157,7 @@ export function UseCasesSection({ useCases }: UseCasesSectionProps) {
                           transition={prefersReducedMotion ? { duration: 0 } : { type: "spring", stiffness: 340, damping: 34 }}
                         />
                       )}
-                      <span className={`font-mono text-xs transition-colors duration-300 ${active ? "text-primary-200" : "text-primary-500"}`}>
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
+
                       <span className={`mt-2 block text-2xl leading-tight tracking-tight transition-colors duration-300 xl:text-[1.75rem] ${active ? "text-primary-50" : "text-primary-500"}`}>
                         {useCase.title}
                       </span>

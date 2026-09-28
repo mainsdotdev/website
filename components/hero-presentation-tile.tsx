@@ -116,7 +116,7 @@ export function HeroPresentationTile({
           aria-expanded={open}
           className="group relative block w-full cursor-pointer rounded-lg text-left outline-none focus-visible:ring-2 focus-visible:ring-primary-50 focus-visible:ring-offset-4 focus-visible:ring-offset-primary-950"
         >
-          <span className="relative block aspect-1672/941 w-full overflow-hidden rounded-lg bg-primary-900 shadow-[0_18px_40px_-15px_var(--demo-shadow)]">
+          <span className="relative block aspect-1672/941 w-full overflow-hidden rounded-2xl bg-primary-900 shadow-[0_18px_40px_-15px_var(--demo-shadow)]">
             <Image
               src={COVER_IMAGE}
               alt="Inside Ruby on Rails presentation cover"
@@ -125,12 +125,12 @@ export function HeroPresentationTile({
               className="object-cover transition-transform duration-600 ease-spring group-hover:scale-105 motion-reduce:transition-none"
             />
           </span>
-          <span className="mt-2 block text-center font-mono text-[10px] text-primary-400">
+          <span className="mt-2 block text-center font-medium text-[12px] text-primary-400">
             Presentation
           </span>
           <span
             id="hero-presentation-description"
-            className="hero-tile-caption mt-1 block text-center text-[10px] leading-snug text-primary-300"
+            className="hero-tile-caption mt-1 block text-center text-[11px] leading-snug text-primary-300"
           >
             Create a presentation in Mains.
           </span>

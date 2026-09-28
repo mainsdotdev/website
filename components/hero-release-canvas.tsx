@@ -19,7 +19,7 @@ export function HeroReleaseCanvas() {
           The hero clips the sides; the bottom stops at the hero's edge. */}
       <div
         aria-hidden
-        className="hero-release-backdrop pointer-events-none absolute -inset-x-40 -top-54 bottom-0 z-10 hidden bg-primary-950/40 opacity-0 backdrop-blur-[2px] transition-opacity duration-400 ease-out lg:block motion-reduce:transition-none"
+        className="hero-release-backdrop pointer-events-none absolute -inset-x-40 -top-54 bottom-0 z-10 hidden bg-primary-950/40 opacity-0 backdrop-blur-[12px] transition-opacity duration-400 ease-out lg:block motion-reduce:transition-none"
       />
 
       <HeroVoiceWave />

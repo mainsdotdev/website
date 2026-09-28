@@ -7,7 +7,7 @@ export function LocalFirstSection() {
       aria-labelledby="local-first-title"
       className="px-5 pt-20 pb-6 sm:px-8 lg:pt-28 lg:pb-10"
     >
-      <div className="mx-auto max-w-390 py-16 text-center sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-360 py-16 text-center sm:py-20 lg:py-24">
         <h2
           id="local-first-title"
           className="text-[3.5rem] leading-[0.95] tracking-tight text-primary-50 sm:text-[4.2rem] lg:text-[5.5rem]"

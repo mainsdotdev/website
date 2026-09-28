@@ -28,7 +28,7 @@ export function HeroVoiceWave() {
       aria-label="Voice dictation coming soon"
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
-      className="hero-voice-wave pointer-events-auto absolute top-25.5 left-[29%] z-0 hidden h-14 w-40 cursor-default select-none items-center justify-center xl:top-20.5 xl:left-[21%] 2xl:left-[38%] lg:flex"
+      className="hero-voice-wave pointer-events-auto absolute top-25.5 left-[29%] z-0 hidden h-14 w-40 cursor-default hover:scale-120 transform transition-all duration-200 select-none items-center justify-center xl:top-20.5 xl:left-[21%] 2xl:left-[38%] lg:flex"
     >
       <VoiceBeam
         type="pill"
