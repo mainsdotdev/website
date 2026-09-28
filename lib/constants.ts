@@ -18,14 +18,14 @@ export const USE_CASES = [
       "Spin up Git-backed workspaces linked to your repos. Run AI coding agents like Claude Code, Copilot or Codex in secure, sandboxed environments.",
   },
   {
-    title: "Review every change before committing",
+    title: "Write commits and open PRs faster",
     description:
-      "Browse files, inspect diffs, and track changes across tabs. See exactly what the agent modified before you commit or open a pull request.",
+      "Generate a commit message and a clear PR description from your changes, then commit and open the pull request without leaving Mains.",
   },
   {
-    title: "Link tasks from your tools",
+    title: "Preview your site as you build",
     description:
-      "Connect issues from GitHub, Gitlab, Linear, Jira, and Asana directly to a workspace. Give agents the right context to start working immediately.",
+      "Open your local website in Mains’ built-in browser to check layouts and interactions as you work. Spot issues quickly and keep building in one place.",
   },
 ] as const;
 
@@ -48,3 +48,6 @@ export const MAINS_DOWNLOAD_DMG_X64_URL =
 export const MAINS_APP_STORE_URL: string | null = null;
 
 export const MAINS_GITHUB_REPO_URL = "https://github.com/mainsdotdev/mains";
+
+/** The docs are their own site, not a route on this one. */
+export const MAINS_DOCS_URL = "https://docs.mains.dev";

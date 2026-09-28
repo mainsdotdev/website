@@ -23,9 +23,9 @@ Mains landing page — a Next.js 16 marketing site for an AI coding agent deskto
 
 **Blog/Content system:** File-based MDX in `content/` directory. `lib/posts.ts` reads files with `gray-matter` for frontmatter and `next-mdx-remote/rsc` renders them server-side. Blog posts use `generateStaticParams` for static generation. The `Post` type is in `lib/types.ts` (separate from `lib/posts.ts` to avoid pulling `fs` into client bundles).
 
-**Sections architecture:** The home page is composed of section components in `components/sections/` (hero, use-cases, dashboard, integrations, review, changelog, cta, status). Each section is self-contained with its own animations.
+**Sections architecture:** The home page is composed of section components in `components/sections/` (hero, use-cases, integrations, local-first, changelog, cta, status). Each section is self-contained with its own animations.
 
-**Demo components:** Interactive UI mockups in `components/demo/` (workspace-list, file-explorer, issues-list, dashboard-stats, diff-viewer) used inside section components to showcase the product.
+**Demo components:** Interactive UI mockups in `components/demo/` (app-window, workspace-list, file-explorer, issues-list) used inside section components to showcase the product.
 
 ## Reusable Components
 

@@ -74,7 +74,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="overflow-x-hidden">
+    <html lang="en" data-theme="light" className="overflow-x-hidden">
+      <head>
+        <meta name="theme-color" content="#fffcf0" />
+      </head>
       <body
         className={`mx-auto scroll-smooth bg-primary-950 antialiased ${schibstedGrotesk.variable} ${schibstedGrotesk.className}`}
       >

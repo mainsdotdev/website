@@ -15,7 +15,7 @@ export function KeyboardKey({
     <div
       className={cn(
         "relative flex items-center justify-center rounded-md transition-all duration-75",
-        "bg-white/90 text-gray-800 font-mono text-sm font-medium",
+        "bg-primary-100 text-primary-950 font-mono text-sm font-medium",
         "shadow-[0_2px_0_0_rgba(0,0,0,0.1)]",
         isPressed
           ? "scale-95 shadow-[0_0_0_0_rgba(0,0,0,0.1)] translate-y-0.5"

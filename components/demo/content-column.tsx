@@ -18,8 +18,11 @@ export function ContentColumn({ children }: { children: React.ReactNode }) {
     <div
       className={cn(
         // Opaque: the content surface is what the vibrant sidebar and title
-        // bar are translucent *against*.
-        "flex min-w-0 flex-1 flex-col overflow-hidden bg-[#0d0d0d] pl-11 transition-[padding] duration-300 ease-out",
+        // bar are translucent *against*. Like the app's `main-content`, it
+        // floats a hair inside the frame so the chrome wraps its right and
+        // bottom edges, and rounds every corner but the top-left, which
+        // joins the active tab above it.
+        "mr-1 mb-1 flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl rounded-tl-none bg-(--demo-content) pl-11 transition-[padding] duration-300 ease-out",
         laneOccupied ? "pr-67" : "pr-11"
       )}
     >

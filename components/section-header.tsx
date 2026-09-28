@@ -37,7 +37,7 @@ export function SectionHeader({
       {description && (
         <p
           className={cn(
-            "text-sm text-neutral-400 leading-relaxed max-w-sm",
+            "text-sm text-primary-400 leading-relaxed max-w-sm",
             layout === "row" && "md:pt-2",
             descriptionClassName
           )}

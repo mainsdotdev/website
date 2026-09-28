@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 /**
  * Renders a fixed-size design at whatever width it is given.
  *
- * The window mockup is laid out at one size — 190px sidebar, 10px labels, a
+ * The window mockup is laid out at one size — 208px sidebar, 10px labels, a
  * 230px panel — and those numbers are the design, not a starting point for
  * reflow. So instead of rewriting the layout per breakpoint, the whole thing
  * is drawn at its design size and scaled, the way a screenshot would be.

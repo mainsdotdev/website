@@ -89,7 +89,7 @@ function PanelRow({
 }
 
 const PANEL_SURFACE =
-  "w-[230px] overflow-hidden rounded-2xl bg-[#0c0c0c]/95 shadow-2xl shadow-black/50 glass-outline";
+  "w-[230px] overflow-hidden rounded-2xl bg-primary-950/95 shadow-2xl shadow-[var(--demo-shadow)] glass-outline";
 
 function ChangesPanel() {
   return (

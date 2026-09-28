@@ -4,68 +4,31 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Header from "@/components/header";
 import { ScrambleText } from "@/components/scramble-text";
-import { Apple, ChevronRight, Github, Windows } from "@/components/icons";
-import type { Post } from "@/lib/types";
+import { Apple, Github, Windows } from "@/components/icons";
 import { MacDownloadButton } from "@/components/mac-download-button";
 import { AppStoreButton } from "@/components/app-store-button";
 import { ShortcutPillButton } from "@/components/shortcut-pill-button";
 import { FADE_IN_BLUR_DELAY, FADE_IN_BLUR_UP_DELAY } from "@/lib/animations";
 import { MAINS_APP_STORE_URL, MAINS_GITHUB_REPO_URL } from "@/lib/constants";
 import { usePlatformDetection, type Platform } from "@/hooks/usePlatformDetection";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 
-const HERO_SCRAMBLE_WORDS = ["agents.", "issues.", "bugs.", "PRs.", "all."] as const;
+const HERO_SCRAMBLE_WORDS = [
+  "agents.",
+  "chats.",
+  "issues.",
+  "plans.",
+  "PRs.",
+  "ideas.",
+  "bugs.",
+  "you.",
+  "all.",
+] as const;
 const HERO_SCRAMBLE_LONGEST = [...HERO_SCRAMBLE_WORDS].reduce((a, b) =>
   a.length >= b.length ? a : b
 );
 const PILL_CLASS_NAME =
   "inline-flex max-w-full min-w-0 items-center gap-2 rounded-full px-3 py-3 text-xs font-medium transition-colors md:px-6 md:py-3 md:text-sm";
-
-// Blues sampled from the hero screenshot's night-sky wallpaper (dominant hue
-// ~212°), so the page glow reads as an extension of the image behind it.
-
-
-
-
-
-
-function HeroBackground({  }: { isDesktop: boolean }) {
-  // Blurred blobs are pure compositor work — keep them still on phones, where
-  // the smaller viewport hides most of the movement anyway.
-
-  return (
-    <>
-
-      <div aria-hidden className="absolute inset-0 z-0 bg-linear-to-b from-black via-transparent to-primary-950" />
-      {/* {isDesktop && <HeroCodeTexture />} */}
-    </>
-  );
-}
-
-function HeroReleaseBadge({ post }: { post: Post }) {
-  return (
-    <motion.div {...FADE_IN_BLUR_DELAY(0.1)} className="relative z-10 mb-8">
-      <Link
-        href={post.url}
-        className="group flex items-center gap-1 rounded-full glass-outline  py-1.5 pr-1.5 pl-2 text-xs transition-colors hover:bg-primary-900/10 sm:gap-3 sm:text-sm"
-      >
-        <span className="rounded-full border bg-primary-50 border-gray-300/20 px-2 py-0.5 text-[10px] font-medium uppercase tracking-tight text-primary-950 ">
-          New
-        </span>
-        <span className="text-primary-50">
-          Mains {post.version} •
-        </span>
-        <span className=" sm:-ml-2 text-primary-50 ">
-          {"Appearance"}
-        </span>
-        <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary-50/5 text-primary-100 transition-transform group-hover:translate-x-0.5">
-          <ChevronRight className="size-3.5" />
-        </span>
-      </Link>
-    </motion.div>
-  );
-}
 
 function HeroHeadline() {
   return (
@@ -86,13 +49,12 @@ function HeroHeadline() {
           <ScrambleText
             words={[...HERO_SCRAMBLE_WORDS]}
             interval={3000}
-            className="text-gray-300"
+            className="text-primary-200"
           />
         </span>
       </h1>
-      <p className="mt-8 text-base leading-relaxed text-primary-100">
-        Run AI coding agents in secure workspaces. Inspect changes, collaborate with agents,
-        and ship with confidence.
+      <p className="mt-3 text-lg leading-snug text-primary-400 sm:text-xl md:text-xl">
+        Run AI agents. Make things happen.
       </p>
     </motion.div>
   );
@@ -119,7 +81,7 @@ function CompanionNote({ platform }: { platform: Platform }) {
   return (
     <motion.p
       {...FADE_IN_BLUR_DELAY(0.6)}
-      className="relative z-10 mt-5 text-xs text-primary-400 md:text-sm"
+      className="pointer-events-auto relative z-10 mt-5 text-xs text-primary-400 md:text-sm"
     >
       {text}{" "}
       {platform === "mac" && MAINS_APP_STORE_URL && (
@@ -143,7 +105,7 @@ function HeroActions({ platform }: { platform: Platform }) {
         {...FADE_IN_BLUR_DELAY(0.45)}
         // Above the note: the Intel dropdown opens across it, and z-20 inside
         // this row can't outrank a later sibling that shares its z-index.
-        className="relative z-20 mt-10 flex flex-wrap items-center justify-center gap-4"
+        className="pointer-events-auto relative z-20 mt-10 flex flex-wrap items-center justify-center gap-4"
       >
         {platform === "mac" ? (
           <MacDownloadButton
@@ -181,7 +143,7 @@ function HeroActions({ platform }: { platform: Platform }) {
           ariaLabel="View source on GitHub (shortcut C)"
           className={cn(
             PILL_CLASS_NAME,
-            "bg-primary-950 text-white hover:bg-primary-950",
+            "bg-primary-950 text-white ring-1 ring-primary-700/40 hover:bg-primary-900",
             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/30"
           )}
           shortcut="C"
@@ -198,46 +160,49 @@ function HeroActions({ platform }: { platform: Platform }) {
 }
 
 export function HeroSection({
-  latestPost,
   appWindow,
+  releaseCanvas,
 }: {
-  latestPost?: Post;
   /**
    * The desktop-window mockup, rendered on the server and handed down as a
    * node — importing it here would drag its markdown renderer into this
    * client component's bundle.
    */
   appWindow?: React.ReactNode;
+  /** Server-rendered images from recent releases, arranged around the demo. */
+  releaseCanvas?: React.ReactNode;
 }) {
   const { platform } = usePlatformDetection();
-  // `pointer: fine` keeps tablets out: an iPad is wide enough to pass a width
-  // query but rasterizes the blur/filter work on a phone-class GPU.
-  const isDesktop = useMediaQuery("(min-width: 64rem) and (pointer: fine)");
 
   return (
-    <div className="relative overflow-hidden">
-      <HeroBackground isDesktop={isDesktop} />
-      <div className="relative z-10">
-        <Header />
-        <section className="mx-auto max-w-7xl px-6 pt-10 pb-20">
-          <div className="relative flex flex-col items-center text-center">
-            {/* Center glow behind headline */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute top-[-8%] left-1/2 h-[min(420px,55vw)] w-[min(720px,92vw)] -translate-x-1/2 rounded-full bg-gray-400/10 blur-[90px]"
-            />
+    <div className="relative">
+      {/* From the very top of the page, behind the fixed header, down through
+          the hero — not just from where the hero's own section begins. */}
+      <div
+        aria-hidden
+        className="hero-canvas-grid pointer-events-none absolute inset-0 text-primary-700/30"
+      />
 
-            {latestPost && <HeroReleaseBadge post={latestPost} />}
+      {/* Outside the `isolate` wrapper: inside it, the header's z-index only
+          ranks it within the hero, and every later section paints over it. */}
+      <Header />
+      {/* Clips sideways only: the tile backdrop reaches up over the dots
+          above the hero, and must not be cut off at the wrapper's top. */}
+      <div className="relative isolate overflow-x-clip">
+        <section className="relative mx-auto mt-16 max-w-420 px-5 pt-8 pb-20 sm:px-8 lg:pt-64 2xl:pt-72">
+          <div className="pointer-events-none relative z-20 flex flex-col items-center text-center">
             <HeroHeadline />
             <HeroActions platform={platform} />
 
             <motion.div
               {...FADE_IN_BLUR_UP_DELAY(0.75)}
-              className="relative z-10 mt-14 w-full max-w-6xl sm:rounded-[10px] sm:overflow-hidden"
+              className="pointer-events-auto relative z-20 mt-14 w-full max-w-6xl overflow-hidden rounded-xl border border-primary-700/40 bg-primary-900 shadow-[0_32px_80px_-24px_var(--demo-shadow)]"
             >
               {appWindow}
             </motion.div>
           </div>
+
+          {releaseCanvas}
         </section>
       </div>
     </div>

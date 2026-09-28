@@ -4,7 +4,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import { LazyVideo } from '@/components/lazy-video';
 import { ProseImage } from '@/components/prose-image';
-import { codeTheme } from '@/lib/code-theme';
+import { codeTheme, codeThemeLight } from '@/lib/code-theme';
 
 type MDXContentProps = {
   source: string;
@@ -16,7 +16,7 @@ interface RehypeElement {
 }
 
 const rehypeOptions = {
-  theme: codeTheme,
+  theme: { dark: codeTheme, light: codeThemeLight },
   keepBackground: false,
   onVisitLine(node: RehypeElement) {
     if (node.children.length === 0) {

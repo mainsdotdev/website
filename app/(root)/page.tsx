@@ -7,7 +7,7 @@ import {
 } from "@/lib/constants";
 import { getAllPosts } from "@/lib/posts";
 import { AppWindow } from "@/components/demo/app-window";
-import { ReviewSection } from "@/components/sections/review-section";
+import { HeroReleaseCanvas } from "@/components/hero-release-canvas";
 import { HomeClient } from "./home-client";
 
 export const metadata: Metadata = {
@@ -73,7 +73,7 @@ export default function Home() {
       <HomeClient
         changelogPosts={changelogPosts}
         appWindow={<AppWindow />}
-        reviewSection={<ReviewSection />}
+        releaseCanvas={<HeroReleaseCanvas />}
       />
     </>
   );

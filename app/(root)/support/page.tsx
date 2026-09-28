@@ -4,7 +4,7 @@ import Header from "@/components/header";
 import { ArrowRightLine, Github, Mail, Question } from "@/components/icons";
 import { MDXContent } from "@/components/mdx-content";
 import { TableOfContents } from "@/components/table-of-contents";
-import { MAINS_GITHUB_REPO_URL } from "@/lib/constants";
+import { MAINS_DOCS_URL, MAINS_GITHUB_REPO_URL } from "@/lib/constants";
 import { getSupportDoc, SUPPORT_EMAIL } from "@/lib/support";
 import { extractToc } from "@/lib/toc";
 
@@ -44,7 +44,7 @@ const CHANNELS = [
     title: "Read the docs",
     body: "docs.mains.dev",
     note: "Setup guides for the Mac app, Relay and the iPhone app.",
-    href: "https://docs.mains.dev",
+    href: MAINS_DOCS_URL,
     external: true,
   },
 ] as const;

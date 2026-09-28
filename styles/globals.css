@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nabla&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Pochaevsk&display=swap');
 
 @import "tailwindcss";
 
@@ -11,6 +11,7 @@
 @source "../../content/**/*.mdx";
 
 @theme {
+  --color-primary: #fffcf0;
   --color-primary-DEFAULT: #fffcf0;
   --color-primary-50: #f2f0e5;
   --color-primary-100: #e6e4d9;
@@ -27,12 +28,92 @@
   --color-primary-950: #0c0c0c;
 
   --font-sans: var(--font-schibsted-grotesk), sans-serif;
-  --font-hero-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
   --font-mono: "Space Mono", monospace;
+  --font-serif: "Pochaevsk", system-ui;
   --font-handwriting: "Nabla", cursive;
+
+  /* Springs sampled into `linear()` so plain CSS transitions can settle like
+     one. `spring`: damping 0.9, response 0.45s — settles in ~600ms, for hover
+     lifts. `spring-critical`: damping 1, response 0.35s — no overshoot, settles
+     in ~520ms, for surfaces that open. */
+  --ease-spring: linear(0, 0.049, 0.161, 0.295, 0.43, 0.553, 0.658, 0.745, 0.814, 0.868, 0.908, 0.938, 0.959, 0.974, 0.985, 0.992, 0.996, 0.999, 1, 1.001, 1.001, 1.002, 1.001, 1.001, 1);
+  --ease-spring-critical: linear(0, 0.057, 0.18, 0.32, 0.455, 0.573, 0.671, 0.75, 0.812, 0.86, 0.896, 0.924, 0.944, 0.96, 0.971, 0.979, 0.985, 0.989, 0.992, 0.994, 0.996, 0.997, 0.998, 0.999, 1);
 
   --background-image-shadergradient: url("/shadergradient.webp");
   --background-image-footer-texture: url("/img/footer-texture.png");
+}
+
+/* The existing primary scale is ordered for dark surfaces. Reversing its
+   visual weight keeps the site's Tailwind classes useful in both appearances,
+   including the application previews built from those same classes. */
+:root {
+  color-scheme: dark;
+  --demo-chrome: #0d0d0d;
+  --demo-chrome-translucent: rgb(13 13 13 / 58%);
+  --demo-content: #0d0d0d;
+  --demo-shadow: rgb(0 0 0 / 45%);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-primary: #100f0f;
+  --color-primary-DEFAULT: #100f0f;
+  --color-primary-50: #100f0f;
+  --color-primary-100: #282726;
+  --color-primary-150: #403e3c;
+  --color-primary-200: #403e3c;
+  --color-primary-300: #575653;
+  --color-primary-400: #575653;
+  --color-primary-500: #6f6e69;
+  --color-primary-600: #a09d95;
+  --color-primary-700: #b7b5ac;
+  --color-primary-800: #dad8ce;
+  --color-primary-850: #e6e4d9;
+  --color-primary-900: #f2f0e5;
+  --color-primary-950: #fffcf0;
+  --color-white: #100f0f;
+  --color-black: #fffcf0;
+  --color-green-300: #166534;
+  --color-green-400: #15803d;
+  --color-green-900: #bbf7d0;
+  --color-emerald-400: #047857;
+  --color-red-300: #991b1b;
+  --color-red-400: #b91c1c;
+  --color-red-900: #fecaca;
+  --color-red-950: #fee2e2;
+  --color-yellow-300: #854d0e;
+  --color-yellow-400: #a16207;
+  --color-yellow-900: #fef08a;
+  --color-orange-300: #9a3412;
+  --color-orange-400: #c2410c;
+  --color-orange-900: #fed7aa;
+  --color-blue-300: #1d4ed8;
+  --color-blue-400: #2563eb;
+  --color-blue-900: #bfdbfe;
+  --color-indigo-400: #4338ca;
+  --color-indigo-900: #c7d2fe;
+  --color-purple-300: #6b21a8;
+  --color-purple-400: #7e22ce;
+  --color-purple-900: #e9d5ff;
+
+  --demo-chrome: #e6e4d9;
+  --demo-chrome-translucent: rgb(230 228 217 / 82%);
+  --demo-content: #fffcf0;
+  --demo-shadow: rgb(45 43 39 / 18%);
+
+  --glass-fill-surface: #f2f0e5;
+  --glass-fill-card: rgb(242 240 229 / 98%);
+  --glass-fill-input: #fffefa;
+  --glass-fill-toggle: #fffefa;
+  --glass-fill-button: rgb(230 228 217 / 78%);
+  --glass-fill-primary: rgb(230 228 217 / 78%);
+  --glass-fill-secondary: rgb(190 187 176 / 42%);
+  --glass-fill-command: rgb(230 228 217 / 82%);
+  --glass-hover-button: rgb(218 216 206 / 94%);
+  --glass-hover-primary: rgb(218 216 206 / 78%);
+  --glass-rim: rgb(49 47 43 / 16%);
+  --glass-rim-shadow: rgb(49 47 43 / 5%);
+  --glass-outline-rim: rgb(49 47 43 / 17%);
 }
 
 /* Nabla Font Palettes - Based on Official Examples */
@@ -143,6 +224,45 @@ body {
   scroll-behavior: smooth;
 }
 
+/* The photographic footer stays dark in both themes, so its wordmark can
+   keep the same pale ink instead of inheriting the light theme's dark text. */
+.site-footer {
+  --footer-surface: var(--color-primary-950);
+  --footer-ink: var(--color-primary-50);
+  --footer-muted: var(--color-primary-400);
+  background-color: var(--footer-surface);
+}
+
+:root[data-theme="light"] .site-footer {
+  --footer-surface: var(--color-primary-50);
+  --footer-ink: var(--color-primary-950);
+  --footer-muted: var(--color-primary-700);
+}
+
+.site-footer-wash {
+  background-color: color-mix(in srgb, var(--footer-surface) 55%, transparent);
+}
+
+.site-footer-top-fade {
+  background: linear-gradient(to bottom, var(--footer-surface), color-mix(in srgb, var(--footer-surface) 85%, transparent), transparent);
+}
+
+.site-footer-bottom-fade {
+  background: linear-gradient(to top, color-mix(in srgb, var(--footer-surface) 70%, transparent), transparent);
+}
+
+.site-footer-link {
+  color: var(--footer-muted);
+}
+
+.site-footer-link:hover {
+  color: var(--footer-ink);
+}
+
+.site-footer-wordmark {
+  background-image: linear-gradient(to bottom, color-mix(in srgb, var(--footer-ink) 70%, transparent), color-mix(in srgb, var(--footer-ink) 6%, transparent));
+}
+
 /* Safari font-palette fallback */
 @supports not (font-palette: --nabla-alttwo) {
   .font-handwriting {
@@ -158,6 +278,297 @@ canvas:hover {
 }
 
 @layer utilities {
+  .hero-canvas-grid {
+    background-image: radial-gradient(currentColor 1px, transparent 1px);
+    background-size: 32px 32px;
+    /* Dissolve into the page rather than stop at the hero's edge. */
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 14rem), transparent);
+  }
+
+  .hero-voice-signal {
+    transition: opacity 180ms ease-out, transform 240ms ease-out;
+    animation: hero-voice-breathe 1.7s ease-in-out infinite alternate;
+  }
+
+  @keyframes hero-voice-breathe {
+    from { opacity: 0.7; transform: scaleY(0.62); }
+    to { opacity: 1; transform: scaleY(1.08); }
+  }
+
+  .hero-voice-soon,
+  .hero-voice-letter,
+  .hero-voice-cursor {
+    opacity: 0;
+  }
+
+  .hero-voice-wave:hover .hero-voice-signal {
+    opacity: 0;
+    transform: scaleX(0.85);
+    animation: none;
+  }
+
+  .hero-voice-wave:hover .hero-voice-soon {
+    opacity: 1;
+  }
+
+  .hero-voice-wave:hover .hero-voice-letter {
+    animation: hero-voice-type 240ms steps(1, end) both;
+  }
+
+  .hero-voice-wave:hover .hero-voice-cursor {
+    animation: blink 900ms step-end 380ms infinite;
+  }
+
+  @keyframes hero-voice-type {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-voice-signal {
+      animation: none;
+      transition: none;
+    }
+
+    .hero-voice-wave:hover .hero-voice-letter,
+    .hero-voice-wave:hover .hero-voice-cursor {
+      animation: none;
+      opacity: 1;
+    }
+  }
+
+  .image-generation-dot {
+    opacity: var(--image-dot-opacity);
+    animation-name: image-generation-dot-pulse;
+    animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes image-generation-dot-pulse {
+    0%,
+    100% {
+      opacity: var(--image-dot-dim-opacity);
+      transform: translate3d(0, var(--image-dot-lift), 0) scale(0.76);
+    }
+    50% {
+      opacity: var(--image-dot-opacity);
+      transform: translate3d(0, calc(0px - var(--image-dot-lift)), 0) scale(var(--image-dot-peak-scale));
+    }
+  }
+
+  @keyframes image-generation-stage-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 3px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes image-generation-dot-breathe {
+    0%,
+    100% { opacity: var(--image-dot-dim-opacity); }
+    50% { opacity: var(--image-dot-opacity); }
+  }
+
+  @keyframes image-generation-stage-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .image-generation-stage {
+    animation: image-generation-stage-in 200ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .image-generation-dot {
+      animation-name: image-generation-dot-breathe;
+      animation-duration: 2.4s !important;
+      animation-delay: 0ms !important;
+    }
+
+    .image-generation-stage {
+      animation: image-generation-stage-fade 120ms ease-out both;
+    }
+  }
+
+  /* Transform composes with each tile's independent placement and hover
+     properties. Backwards fill hides tiles during the stagger, then releases
+     transform and filter completely once their one-shot reveal finishes. */
+  @keyframes hero-tile-reveal {
+    from { opacity: 0; filter: blur(4px); transform: translate3d(0, 24px, 0) scale(0.97); }
+    60% { opacity: 1; filter: blur(0); }
+    to { opacity: 1; filter: none; transform: none; }
+  }
+
+  .hero-release-canvas > ul > .hero-release-tile {
+    animation: hero-tile-reveal 760ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+
+  /* Count only tiles: opening a dialog adds another sibling to this list. */
+  .hero-release-canvas > ul > .hero-release-tile:nth-of-type(1) { animation-delay: 300ms; }
+  .hero-release-canvas > ul > .hero-release-tile:nth-of-type(2) { animation-delay: 180ms; }
+  .hero-release-canvas > ul > .hero-release-tile:nth-of-type(3) { animation-delay: 520ms; }
+  .hero-release-canvas > ul > .hero-release-tile:nth-of-type(4) { animation-delay: 410ms; }
+  .hero-release-canvas > ul > .hero-release-tile:nth-of-type(5) { animation-delay: 630ms; }
+
+  @media (min-width: 64rem) {
+    /* The canvas lifts above the headline at once, but only drops back once
+       the backdrop has faded — dropping it with the pointer would pop the
+       headline out from under a blur that is still on screen. */
+    .hero-release-canvas {
+      transition: z-index 0s linear 450ms;
+    }
+
+    .hero-release-canvas:has(.hero-release-tile:is(:hover, :focus-within)) {
+      z-index: 30;
+      transition-delay: 0s;
+    }
+
+    .hero-release-canvas:has(.hero-release-tile:is(:hover, :focus-within))
+      .hero-release-backdrop {
+      opacity: 1;
+    }
+
+    /* Tiles straighten and lift on a spring. A tile being let go steps its
+       z-index down over the same time instead of all at once, so it stays
+       above its neighbours while still enlarged, yet under the next tile
+       picked up, which takes the top spot immediately. */
+    .hero-release-tile {
+      transition-property: rotate, scale, z-index;
+      transition-duration: 600ms, 600ms, 600ms;
+      transition-timing-function: var(--ease-spring), var(--ease-spring), linear;
+    }
+
+    .hero-release-tile:is(:hover, :focus-within) {
+      transition-duration: 600ms, 600ms, 0s;
+    }
+
+    /* A tile's caption sits below it out of flow and fades in. Revealing it
+       in flow grew the tile mid-hover and shifted the point it scales from. */
+    .hero-tile-caption {
+      position: absolute;
+      inset-inline: 0;
+      top: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease-out;
+    }
+
+    .group:is(:hover, :focus-visible) .hero-tile-caption {
+      opacity: 1;
+      transition-delay: 100ms;
+    }
+
+    /* The note rests on the headline, where its line would sit on top of the
+       headline's text, so it waits until the note is picked up. Padding, not
+       margin, bridges the gap, so the pointer can travel down to the link it
+       becomes once the note is turned over. */
+    .hero-note-caption {
+      position: absolute;
+      inset-inline: 0;
+      top: 100%;
+      margin-top: 0;
+      padding-top: 0.75rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease-out;
+    }
+
+    .hero-release-tile:is(:hover, :focus-within) .hero-note-caption {
+      opacity: 1;
+      pointer-events: auto;
+      transition-delay: 100ms;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-release-canvas > ul > .hero-release-tile {
+      animation: none;
+    }
+
+    .hero-release-tile {
+      transition: none;
+    }
+
+    .hero-release-tile:is(:hover, :focus-within) {
+      scale: 1;
+    }
+  }
+
+  /* Hero card dialogs grow out of the card that opened them and shrink back
+     into it on close; the dialog sets its `transform-origin` to that card. */
+  .hero-dialog {
+    transition:
+      opacity 220ms ease-out,
+      scale 520ms var(--ease-spring-critical);
+  }
+
+  .hero-dialog::backdrop {
+    transition: opacity 320ms ease-out;
+  }
+
+  @starting-style {
+    .hero-dialog[open] {
+      opacity: 0;
+      scale: 0.9;
+    }
+
+    .hero-dialog[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  .hero-dialog[data-closing] {
+    opacity: 0;
+    scale: 0.92;
+    transition:
+      opacity 170ms ease-in 30ms,
+      scale 220ms cubic-bezier(0.4, 0, 1, 1);
+  }
+
+  .hero-dialog[data-closing]::backdrop {
+    opacity: 0;
+    transition-duration: 220ms;
+  }
+
+  /* A glass pane loses its blur while an ancestor is fading (the fading
+     element becomes its backdrop root), and the blur would pop in as the fade
+     ends. So a dialog built from glass panes fades the panes, not itself. */
+  .hero-dialog-glass,
+  .hero-dialog-glass[data-closing] {
+    opacity: 1;
+  }
+
+  .hero-dialog-glass .glass-command {
+    transition: opacity 220ms ease-out;
+  }
+
+  @starting-style {
+    .hero-dialog-glass[open] {
+      opacity: 1;
+    }
+
+    .hero-dialog-glass[open] .glass-command {
+      opacity: 0;
+    }
+  }
+
+  .hero-dialog-glass[data-closing] .glass-command {
+    opacity: 0;
+    transition: opacity 170ms ease-in 30ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-dialog,
+    .hero-dialog[data-closing] {
+      scale: none;
+      transition: opacity 150ms ease-out;
+    }
+  }
+
   .bg-dotted {
     background-image: radial-gradient(currentColor 1px, transparent 1px);
     background-size: 4px 4px;
@@ -217,20 +628,20 @@ canvas:hover {
 
   /* Blog post prose styles */
   .prose {
-    --tw-prose-body: theme("colors.primary.300");
-    --tw-prose-headings: theme("colors.white");
-    --tw-prose-links: theme("colors.primary.200");
-    --tw-prose-bold: theme("colors.white");
-    --tw-prose-code: theme("colors.primary.100");
-    --tw-prose-pre-bg: theme("colors.primary.900");
-    --tw-prose-quotes: theme("colors.primary.300");
+    --tw-prose-body: var(--color-primary-300);
+    --tw-prose-headings: var(--color-white);
+    --tw-prose-links: var(--color-primary-200);
+    --tw-prose-bold: var(--color-white);
+    --tw-prose-code: var(--color-primary-100);
+    --tw-prose-pre-bg: var(--color-primary-900);
+    --tw-prose-quotes: var(--color-primary-300);
   }
 
   .prose h1,
   .prose h2,
   .prose h3,
   .prose h4 {
-    color: theme("colors.white");
+    color: var(--color-white);
     font-weight: 700;
     margin-top: 2em;
     margin-bottom: 1em;
@@ -249,26 +660,26 @@ canvas:hover {
   }
 
   .prose p {
-    color: theme("colors.primary.300");
+    color: var(--color-primary-300);
     margin-bottom: 1.5em;
     line-height: 1.75;
   }
 
   .prose a {
-    color: theme("colors.primary.200");
+    color: var(--color-primary-200);
     text-decoration: underline;
-    text-decoration-color: theme("colors.primary.700");
+    text-decoration-color: var(--color-primary-700);
     transition: color 0.2s;
   }
 
   .prose a:hover {
-    color: theme("colors.white");
-    text-decoration-color: theme("colors.primary.500");
+    color: var(--color-white);
+    text-decoration-color: var(--color-primary-500);
   }
 
   .prose code {
-    color: theme("colors.primary.100");
-    background-color: theme("colors.primary.800");
+    color: var(--color-primary-100);
+    background-color: var(--color-primary-800);
     padding: 0.125rem 0.375rem;
     border-radius: 0.25rem;
     font-size: 0.875em;
@@ -284,8 +695,8 @@ canvas:hover {
   .prose pre {
     background-color: color-mix(
       in oklab,
-      theme("colors.primary.900") 55%,
-      theme("colors.primary.950")
+      var(--color-primary-900) 55%,
+      var(--color-primary-950)
     );
     border: 1px solid var(--glass-outline-rim);
     border-radius: 1rem;
@@ -305,13 +716,21 @@ canvas:hover {
     padding: 0;
     border-radius: 0;
     font-size: inherit;
-    color: theme("colors.primary.200");
+    color: var(--color-primary-200);
+  }
+
+  .prose [data-rehype-pretty-code-figure] span[style*="--shiki-dark"] {
+    color: var(--shiki-dark);
+  }
+
+  :root[data-theme="light"] .prose [data-rehype-pretty-code-figure] span[style*="--shiki-light"] {
+    color: var(--shiki-light);
   }
 
   /* Tailwind's preflight strips list markers, so prose puts them back. */
   .prose ul,
   .prose ol {
-    color: theme("colors.primary.300");
+    color: var(--color-primary-300);
     margin: 1.5em 0;
     padding-left: 1.5em;
     list-style-position: outside;
@@ -334,24 +753,24 @@ canvas:hover {
   }
 
   .prose li::marker {
-    color: theme("colors.primary.500");
+    color: var(--color-primary-500);
   }
 
   .prose blockquote {
-    border-left: 4px solid theme("colors.primary.700");
+    border-left: 4px solid var(--color-primary-700);
     padding-left: 1.5rem;
     font-style: italic;
-    color: theme("colors.primary.400");
+    color: var(--color-primary-400);
     margin: 2rem 0;
   }
 
   .prose hr {
-    border-color: theme("colors.primary.800");
+    border-color: var(--color-primary-800);
     margin: 3rem 0;
   }
 
   .prose strong {
-    color: theme("colors.white");
+    color: var(--color-white);
     font-weight: 600;
   }
 
@@ -540,6 +959,7 @@ canvas:hover {
   --glass-fill-button: rgba(36, 36, 36, 0.72);
   --glass-fill-primary: rgba(36, 36, 36, 0.72);
   --glass-fill-secondary: rgba(120, 120, 120, 0.42);
+  --glass-fill-command: rgb(12 12 12 / 80%);
   --glass-fill-submit: rgba(43, 127, 255, 0.9);
   --glass-fill-danger: rgba(255, 68, 54, 0.9);
 
@@ -668,9 +1088,13 @@ canvas:hover {
   animation-delay: var(--gsq-delay, 0ms);
 }
 
-/* The site is dark-only, so this is the app's `.dark .agent-glyph` value. */
+/* Keep the subagent marks legible on both demo surfaces. */
 .agent-glyph {
   color: oklch(0.78 0.16 var(--agent-hue, 0));
+}
+
+:root[data-theme="light"] .agent-glyph {
+  color: oklch(0.48 0.15 var(--agent-hue, 0));
 }
 
 /* Scroll areas inside the app mockups, matching the desktop app's utility. */

@@ -91,7 +91,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-9998 transition-opacity "
+        className="fixed inset-0 bg-[rgba(0,0,0,0.5)] backdrop-blur-sm z-9998 transition-opacity "
         onClick={onClose}
         aria-hidden="true"
       />
@@ -213,7 +213,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-white hover:bg-gray-200 text-black font-semibold py-2.5 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-primary-900 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-primary-50 hover:bg-primary-100 text-primary-950 font-semibold py-2.5 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-primary-900 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? "Joining..." : "Join Waitlist"}
               </button>

@@ -23,7 +23,7 @@ export function CtaSection() {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-white tracking-tight leading-snug font-sans">
             Mains for AI coding agents
           </h2>
-          <p className="text-sm md:text-base text-neutral-400 leading-relaxed max-w-xl">
+          <p className="text-sm md:text-base text-primary-400 leading-relaxed max-w-xl">
             Run autonomous agents in secure workspaces, connect your repositories, and move
             from task to reviewed pull request without leaving Mains.
           </p>
@@ -31,7 +31,7 @@ export function CtaSection() {
             {platform === "mac" ? (
               <MacDownloadButton
                 pillClassName={pill}
-                shortcutClassName="bg-neutral-300 text-neutral-900"
+                shortcutClassName="bg-primary-800 text-primary-50"
               />
             ) : platform === "ios" ? (
               MAINS_APP_STORE_URL ? (
@@ -66,7 +66,7 @@ export function CtaSection() {
               ariaLabel="View source on GitHub (shortcut C)"
               className={cn(
                 pill,
-                "text-white bg-black ",
+                "text-white bg-primary-900 ring-1 ring-primary-700/40",
                 "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/30"
               )}
               shortcut="C"
