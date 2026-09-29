@@ -1,170 +1,42 @@
 ---
-title: "Make yourself at home"
-date: 2026-09-27
-description: "A new navigation rail, an app icon you pick yourself, a sidebar that stays in the order you put it, and search that finds a line in any file. Plus Codex can reach for your Mac apps, and two agents can finally share a worktree without tripping over each other's undo."
+title: "Find things faster, keep them in place"
+date: 2026-09-29
+description: "A clearer way around Mains, a sidebar that remembers your order, file content search, and safer parallel runs."
 author: "Mains Team"
 tags: ["changelog", "release", "product"]
 published: true
 version: "0.13"
-image: "/changelog/0-13/cover.png"
+image: "/changelog/0-13/cover-impressionist.webp"
 ---
 
-You spend a lot of your day in Mains, with agents working beside you. So this release is less about what the agents can do, and more about the place you do it in: a calmer layout, an icon that's yours, a sidebar that stays the way you arranged it, and a search box that finds the line you had in mind.
+0.13 makes the places you use every day easier to navigate. Your work stays where you put it, and search can take you to the exact line you need.
 
-## A calmer way around
+### find your way around
 
-{/* TODO(visual): navigation-rail.webp — the full window on a Code space with the new rail on the left edge (Home, Search, Tasks, Plugins, Pulse, Connect, the space switcher at the bottom, Help, Settings), one tooltip open with its shortcut. Retina, ~1920×1238.
-<div className="media-frame glass-outline sm:w-3/4">
-  <Figure
-    src="/changelog/0-13/navigation-rail.webp"
-    alt="Mains with the new navigation rail along the left edge: Home, Search, Tasks, Plugins, Pulse and Connect at the top, spaces, Help and Settings at the bottom"
-    width="1920"
-    height="1238"
-    sizes="(max-width: 40rem) 100vw, 720px"
-  />
-</div>
-*/}
+Home, Search, Pulse, and Connect now live in a slim rail on the left. Code spaces also show Tasks and Plugins there. This gives your conversations more room, while screens such as Pulse and Tasks can use the full window.
 
-Everything that used to crowd the top of the sidebar now lives in a slim rail along the left edge: Home, Search, Pulse and Connect up top (plus Tasks and Plugins in Code spaces), your spaces at the bottom, and Help and Settings beneath them. Hover any of them to see what it is.
+- **Pin what matters:** Keep a workspace at the top of the sidebar until you're done with it.
+- **Choose the order:** Drag projects and workspaces where you want them. Mains remembers the arrangement when you come back.
 
-The list panel only shows up where there's a list to show — your conversations, and Settings. Pulse, Tasks, Plugins and Connect get the whole window to themselves.
+### search inside your files
 
-## An icon that's yours
+The file explorer can now search file contents as well as names. Switch to **Text**, type a phrase, and see highlighted matches grouped by file. Use the arrow keys to move through results and Enter to open a match at its line.
 
-{/* TODO(visual): app-icons.webp — Settings → Appearance → App icon: the solid colours on top, then the gradient grid with the Inside/Outside toggle. Pair it with a crop of the Dock wearing one of the gradients if there's time. Retina, ~1600×1200.
-<div className="media-frame glass-outline sm:w-3/4">
-  <Figure
-    src="/changelog/0-13/app-icons.webp"
-    alt="The App icon picker in Settings → Appearance: the classic, light, dark and five solid colour icons, and a grid of gradient icons with an Inside and Outside toggle"
-    width="1600"
-    height="1200"
-    sizes="(max-width: 40rem) 100vw, 720px"
-  />
-</div>
-*/}
+You can match case, whole words, or a regular expression. Search respects `.gitignore`, so dependencies and build output stay out of the results.
 
-Mains now lets you choose how it looks in your Dock. Open **Settings → Appearance → App icon** and pick from forty: the classic mark, light and dark, five solid colours, and sixteen gradients.
+### make Mains yours
 
-Eight of the gradients come from Japanese colour palettes — Fiery Dawn, Golden Mist, Deep Sea, Purple Sunrise and the rest — and eight more are new in this release, from Emerald Aurora to Copper Canyon. Each comes two ways: the colour inside the mark, or around it.
+Choose a new Dock icon in **Settings → Appearance → App icon**. There are 40 options, from simple colors to gradients, and the change appears as soon as you pick one.
 
-The Dock changes the moment you click, and your choice is back in place the next time Mains opens, before the window even appears.
+**Add Project** now brings cloning, creating, and opening an existing folder into one dialog. In Work and Chat, Project settings keeps the name, icon, and shared files together. Add a file there and chats in that project can use it from their next message, without changing the original.
 
-## Your sidebar, in your order
+### give Codex clearer context
 
-{/* TODO(visual): sidebar-order.mp4 — screen recording. Pin a workspace from its menu and watch it move into Pinned; drag a project group above another; drag a workspace within its project. ~1280×1100, sidebar-focused crop.
-<div className="media-frame glass-outline sm:w-1/2">
-  <Video
-    src="/changelog/0-13/sidebar-order.mp4"
-    poster="/changelog/0-13/sidebar-order-poster.webp"
-    width="1280"
-    height="1100"
-    aria-label="Pinning a workspace into the Pinned group, then dragging projects and workspaces into a new order in the sidebar"
-  />
-</div>
-*/}
+- **Point to a Mac app:** Type `@` in a Codex chat and choose an installed app alongside files and plugins. Codex then knows which app you mean.
+- **Work with richer results:** MCP Apps can expand to fill the window. File citations open in the editor, and generated images appear in the chat and deliverables even without a saved file.
 
-### Pin what you're working on
+You can also paste files and screenshots straight into the composer as attachments.
 
-Pin a workspace from its menu and it moves into a **Pinned** group at the top of the sidebar, where it stays until you unpin it.
+### work side by side more safely
 
-### Put things where they go
-
-In Code, workspaces now group under their project by default, and both projects and workspaces can be dragged into whatever order makes sense to you. In Work and Chat, projects reorder the same way — or with `⌥↑` and `⌥↓` when your hands are on the keyboard. Mains remembers the order you left.
-
-### One door for new projects
-
-**Add Project** brings cloning, creating and adding into one dialog. Paste a Git URL, start a fresh project, or pick a folder that's already on your computer.
-
-### Project settings
-
-In Work and Chat, a project's name, icon and files now live together in **Project settings**. Drop files in, and every chat in the project can use them — including chats already under way, from their next message. Agents only open a file when they need it, and they can't change the originals.
-
-## Find the line you had in mind
-
-{/* TODO(visual): text-search.mp4 — screen recording. The file explorer's search box switched to "Text": type a query, results fill in grouped by file with matches highlighted; toggle ".*"; arrow through a few hits and press Enter to open the file at that line. ~1920×1238.
-<div className="media-frame glass-outline sm:w-3/4">
-  <Video
-    src="/changelog/0-13/text-search.mp4"
-    poster="/changelog/0-13/text-search-poster.webp"
-    width="1920"
-    height="1238"
-    aria-label="Searching file contents from the file explorer: results grouped by file with matches highlighted, and a hit opening its file at the matching line"
-  />
-</div>
-*/}
-
-The file explorer's search box now looks inside your files, not just at their names. Switch it to **Text**, start typing, and matches from every file in the workspace appear, grouped by file, each one highlighted.
-
-The toggles beside the field match case, whole words, or a regular expression. Walk the results with the arrow keys and press Enter to land on that exact line. It runs on ripgrep, the same engine VS Code uses, and it respects your `.gitignore`, so `node_modules` and build output stay out of the way.
-
-**⌘F** inside an open file got smoother too: on big files it waits for a pause in your typing, instead of redrawing every match on every key.
-
-## Codex, hands on
-
-{/* TODO(visual): codex-mac-app.webp — a Codex composer with "@fig" typed: the menu listing installed Mac apps (Figma, Finder…) with the "Computer use" badge beside files and plugins. Retina, ~1400×900.
-<div className="media-frame glass-outline sm:w-2/3">
-  <Figure
-    src="/changelog/0-13/codex-mac-app.webp"
-    alt="The Codex composer's @ menu listing installed Mac apps, each marked Computer use, next to files and plugins"
-    width="1400"
-    height="900"
-    sizes="(max-width: 40rem) 100vw, 640px"
-  />
-</div>
-*/}
-
-### Hand Codex a Mac app
-
-In a Codex chat, type `@` and the start of an app's name. Your installed Mac apps show up alongside your files and plugins, marked **Computer use**. Pick one and Codex knows exactly which app you mean when it reaches for your computer.
-
-### Apps that fill the window
-
-An MCP App that's better big — a map, a board, a canvas — can now expand to fill the window, and **Return to chat** brings you back. Apps that ask to open full-screen do so from the start.
-
-### Citations you can click
-
-When Codex points to a file it used, you now get a chip with the file's name that opens it in the editor, instead of a line of markup in the middle of a sentence.
-
-### Every image it makes
-
-Images Codex generates now make it into the chat and your deliverables even when they come back without a file on disk, up to 32MB. And when Codex only *looks* at an image, you see a small thumbnail of what it checked rather than a full-size copy.
-
-## Two agents, one worktree
-
-{/* TODO(visual): turn-changes-shared.webp — optional. An "Edited N files" card reading "Shared with a parallel run", its Undo button disabled with the tooltip showing. Retina, ~1600×1000.
-<div className="media-frame glass-outline sm:w-3/4">
-  <Figure
-    src="/changelog/0-13/turn-changes-shared.webp"
-    alt="An Edited files card marked Shared with a parallel run, its Undo button disabled with a tooltip explaining why"
-    width="1600"
-    height="1000"
-    sizes="(max-width: 40rem) 100vw, 720px"
-  />
-</div>
-*/}
-
-Running two agents in the same worktree used to muddle the **Edited N files** card: each turn claimed every change made while it was open, the other agent's included. Now each turn keeps only the files it actually touched.
-
-If both agents changed the same file, the card says so — **Shared with a parallel run** — and Undo steps aside, so taking back one agent's turn never takes the other's work with it.
-
-## Also in this release
-
-- **Preview HTML files.** Click a link to a local `.html` file in a reply and it opens in the in-app browser as a preview, sealed off from the network.
-- **Paste files into the composer.** Copy files in Finder, or grab a screenshot, and paste. They arrive as attachments rather than a line of text.
-- **A roomier PR editor.** **Expand PR view** opens the pull request form in a larger window and keeps what you've typed when you close it.
-- **Activity, turn by turn.** A workspace's activity lists file changes for each turn and marks the ones you undid.
-- **Tables that scan.** Tables in replies get row lines, so long comparisons are easier to follow.
-- **Focus comes back.** Closing a dialog returns you to exactly where you were.
-- **Colours in Search.** Projects keep their icon colour in the `⌘⌥K` menu.
-- **Interactive deliverables** show their file's icon with an *Interactive* badge.
-- **Goodbye, Codex Personality.** The setting is gone; Codex answers in its own voice in every mode.
-- **Fixes.** Drafts keep their file chips when you switch spaces, switching workspaces shows its conversation right away, and the tab strip no longer flickers on the way into an empty space.
-- **Under the hood.** Claude Agent SDK 0.3.283 and Codex app-server protocol 0.157.
-
----
-
-Small things add up when you spend all day somewhere. We hope 0.13 makes Mains feel a little more like yours.
-
-Mains 0.13 is available for macOS (Apple Silicon and Intel), and open source under the MIT license at [github.com/mainsdotdev/mains](https://github.com/mainsdotdev/mains).
-
-*Questions or feedback? Reach out to [team@mains.dev](mailto:team@mains.dev)*
+When two agents share a worktree, each turn's change card now shows only the files that turn touched. If both agents changed the same file, Mains marks it as shared and disables **Undo** for that turn, so reversing one agent's work cannot remove the other's changes.

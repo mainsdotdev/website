@@ -20,6 +20,9 @@
 # production
 /build
 
+# Original media captures; optimized web assets live in public/changelog
+/media-sources/
+
 # misc
 .DS_Store
 *.pem

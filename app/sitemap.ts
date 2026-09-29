@@ -22,6 +22,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${SITE_URL}/blog`,
       lastModified: latestPostDate,
     },
+    {
+      url: `${SITE_URL}/changelog`,
+      lastModified: latestPostDate,
+    },
     ...posts.map((post) => ({
       url: `${SITE_URL}${post.url}`,
       lastModified: post.date,

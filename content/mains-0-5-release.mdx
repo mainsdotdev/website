@@ -1,7 +1,7 @@
 ---
-title: "Our First Stable Release"
+title: "Your coding agents, together"
 date: 2026-08-05
-description: "Mains 0.5 is the first stable release of our desktop app for running AI coding agents in managed, Git-backed workspaces."
+description: "Our first stable release brings your coding agents, tasks, and code reviews into one place."
 author: "Mains Team"
 tags: ["changelog", "announcement", "product"]
 published: true
@@ -10,54 +10,20 @@ image: "/changelog/0-5/cover.jpg"
 
 ---
 
-# Mains 0.5: Our First Stable Release
+Mains 0.5 is here — our first stable release. Give a coding agent a task, watch it work, and review what changed, all in one desktop app.
 
-Today marks a major milestone: **Mains 0.5 is our first stable release.**
+### your agents, together
 
-Mains is a desktop app for running AI coding agents in managed workspaces. It wraps the **GitHub Copilot**, **Claude Code**, and **Cursor** SDKs and the **OpenAI Codex** app server, tracks every run with full observability, and syncs issues from the tools you already use — all from one place.
+- **Pick the agent for the job:** Run GitHub Copilot, Claude Code, OpenAI Codex, or Cursor from the same place.
+- **Come back to a conversation:** Resume a session later, keep it going, or fork it to try a different approach.
+- **Connect your tools:** Add MCP servers so agents can work with the APIs and systems your team already uses.
 
-## What's in 0.5
-### Agents
+### a workspace for each task
 
-- **Multi-Agent** - Run GitHub Copilot, Claude Code, OpenAI Codex, and Cursor side by side
-- **Session Management** - Resume, continue, and fork agent sessions across runs
-- **Tool Approval** - Interactive approve/deny flow for agent tool calls with pre-approved tool lists
-- **MCP Support** - Extend agents with Model Context Protocol servers for APIs, databases, and internal systems
+- **Keep changes separate:** Each task gets a Git-backed workspace with its own diff, so you can see exactly what the agent changed.
+- **Start with the issue:** Bring in tasks from GitHub, GitLab, Linear, Jira, Asana, or Trello. Add files, diffs, or Sentry errors when the agent needs more context.
 
-### Workspaces & Projects
+### see the work before you ship
 
-- **Git-backed Workspaces** - Status tracking from backlog to done, worktree isolation, and per-run diffs
-- **Projects** - Group workspaces by remote origin with setup/run/archive scripts and shared commit/PR instructions
-- **Code Reviews** - Request structured reviews with severity-tagged findings, file locations, and suggestions
-- **Context Injection** - Attach files, diffs, selections, terminal output, linked issues, and Sentry errors as run context
-
-### Integrations
-
-- **Issue Sync** - Connect GitHub, GitLab, Linear, Jira, Asana, and Trello issues directly to a workspace
-- **Error Tracking** - Sentry issues synced as signals with stack traces, affected users, and regression info
-- **Dependency Guards** - Package security checks via Socket.dev before installs (npm, pip, cargo, go, gems)
-
-### Observability
-
-- **Stats Dashboard** - Daily runs, cost breakdown by model, tool usage analytics, and success rates per provider
-- **Run Artifacts** - Collected patches, files, logs, reports, and command results per session
-- **Cost Tracking** - Token usage and USD cost per run with cache metrics
-
-## Privacy First
-
-Mains runs agents inside isolated workspaces with full visibility into the exact actions they take. You stay in control of context, changes, and final commits.
-
-## Getting Started
-
-Mains 0.5 is available for macOS (Apple Silicon and Intel).
-
-1. Download Mains and configure a provider (Copilot, Claude, Codex, or Cursor)
-2. Link a repository and create a workspace
-3. Attach a task, run an agent, and review the diff before committing
-
-
-We cannot wait to see what you build with Mains.
-
----
-
-*Questions or feedback? Reach out to [team@mains.dev](mailto:team@mains.dev)*
+- **Stay in control:** Approve tool requests as they happen, or choose trusted tools ahead of time.
+- **Review the result:** Inspect the diff, request a code review, and look back at the files, logs, and cost of each run.

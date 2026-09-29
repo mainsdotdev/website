@@ -8,11 +8,36 @@ import { codeTheme, codeThemeLight } from '@/lib/code-theme';
 
 type MDXContentProps = {
   source: string;
+  headingIdPrefix?: string;
 };
 
 interface RehypeElement {
   children: { type: string; value: string }[];
   properties: { className: string[] };
+}
+
+type RehypeNode = {
+  tagName?: string;
+  properties?: Record<string, unknown>;
+  children?: RehypeNode[];
+};
+
+function prefixHeadingIds(prefix: string) {
+  return (tree: RehypeNode) => {
+    function visit(node: RehypeNode) {
+      if (/^h[1-6]$/.test(node.tagName ?? "") && typeof node.properties?.id === "string") {
+        node.properties.id = `${prefix}-${node.properties.id}`;
+      }
+
+      if (node.tagName === "a" && typeof node.properties?.href === "string" && node.properties.href.startsWith("#")) {
+        node.properties.href = `#${prefix}-${node.properties.href.slice(1)}`;
+      }
+
+      node.children?.forEach(visit);
+    }
+
+    visit(tree);
+  };
 }
 
 const rehypeOptions = {
@@ -46,7 +71,7 @@ const components = {
   Video: LazyVideo,
 };
 
-export function MDXContent({ source }: MDXContentProps) {
+export function MDXContent({ source, headingIdPrefix }: MDXContentProps) {
   return (
     <MDXRemote
       source={source}
@@ -55,6 +80,7 @@ export function MDXContent({ source }: MDXContentProps) {
         mdxOptions: {
           rehypePlugins: [
             rehypeSlug,
+            ...(headingIdPrefix ? [[prefixHeadingIds, headingIdPrefix] as [typeof prefixHeadingIds, string]] : []),
             [rehypePrettyCode, rehypeOptions],
             [
               rehypeAutolinkHeadings,

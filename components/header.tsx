@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
  * always one scroll away in the footer.
  */
 const NAV_LINKS = [
-  { label: "Changelog", href: "/blog" },
+  { label: "Changelog", href: "/changelog" },
   { label: "Docs", href: MAINS_DOCS_URL, external: true, className: "hidden sm:inline" },
   { label: "Privacy", href: "/privacy", className: "hidden md:inline" },
   { label: "Support", href: "/support", className: "hidden md:inline" },
