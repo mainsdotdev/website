@@ -41,46 +41,36 @@ const LETTERS = [
   {
     character: "m",
     images: [
-      { src: "/letter-art/m-01-glass.webp", width: 730, height: 768 },
-      { src: "/letter-art/m-02-embroidered.webp", width: 832, height: 768 },
-      { src: "/letter-art/m-03-mosaic.webp", width: 1152, height: 768 },
-      { src: "/letter-art/m-04-gummy.webp", width: 1152, height: 768 },
+      { src: "/letter-art/m-05-risograph.webp", width: 1354, height: 768 },
+      { src: "/letter-art/m-06-risograph.webp", width: 1271, height: 768 },
     ],
   },
   {
     character: "a",
     images: [
-      { src: "/letter-art/a-01-biscuit.webp", width: 734, height: 768 },
-      { src: "/letter-art/a-02-foil.webp", width: 739, height: 768 },
-      { src: "/letter-art/a-03-tufted.webp", width: 768, height: 768 },
-      { src: "/letter-art/a-04-jewels.webp", width: 722, height: 768 },
+      { src: "/letter-art/a-05-risograph.webp", width: 789, height: 768 },
+      { src: "/letter-art/a-06-risograph.webp", width: 741, height: 768 },
     ],
   },
   {
     character: "i",
     images: [
-      { src: "/letter-art/i-01-marquee.webp", width: 512, height: 768 },
-      { src: "/letter-art/i-02-botanical.webp", width: 512, height: 768 },
-      { src: "/letter-art/i-03-candle.webp", width: 512, height: 768 },
-      { src: "/letter-art/i-04-ice.webp", width: 512, height: 768 },
+      { src: "/letter-art/i-05-risograph.webp", width: 252, height: 768 },
+      { src: "/letter-art/i-06-risograph.webp", width: 241, height: 768 },
     ],
   },
   {
     character: "n",
     images: [
-      { src: "/letter-art/n-01-knit.webp", width: 746, height: 768 },
-      { src: "/letter-art/n-02-brass.webp", width: 759, height: 768 },
-      { src: "/letter-art/n-03-jade.webp", width: 758, height: 768 },
-      { src: "/letter-art/n-04-origami.webp", width: 794, height: 768 },
+      { src: "/letter-art/n-05-risograph.webp", width: 825, height: 768 },
+      { src: "/letter-art/n-06-risograph.webp", width: 811, height: 768 },
     ],
   },
   {
     character: "s",
     images: [
-      { src: "/letter-art/s-01-stamps.webp", width: 711, height: 768 },
-      { src: "/letter-art/s-02-neon.webp", width: 720, height: 768 },
-      { src: "/letter-art/s-03-ribbon.webp", width: 640, height: 768 },
-      { src: "/letter-art/s-04-beads.webp", width: 730, height: 768 },
+      { src: "/letter-art/s-05-risograph.webp", width: 683, height: 768 },
+      { src: "/letter-art/s-06-risograph.webp", width: 674, height: 768 },
     ],
   },
 ] as const;
@@ -135,7 +125,7 @@ export default function Footer() {
           letters={LETTERS}
           label="mains"
           as="h2"
-          className="mt-20 flex items-center justify-center whitespace-nowrap font-sans text-[clamp(3.5rem,18vw,18rem)] leading-none font-medium tracking-[-0.085em] select-none sm:mt-24"
+          className="mt-20 flex items-center justify-center whitespace-nowrap font-sans text-[clamp(3.5rem,18vw,14rem)] leading-none font-medium tracking-[-0.085em] select-none sm:mt-12"
         />
       </div>
     </footer>

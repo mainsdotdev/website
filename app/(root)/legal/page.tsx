@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { SITE_SOCIAL_IMAGE } from "@/lib/social-image";
 import Link from "next/link";
-import Header from "@/components/header";
+import HeaderSpacer from "@/components/header-spacer";
 import { formatUpdated } from "@/components/legal-page";
 import { getAllLegalDocs } from "@/lib/legal";
 
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/legal" },
-  openGraph: { title: `${title} | Mains`, description, url: "/legal", type: "website" },
+  openGraph: { title: `${title} | Mains`, description, url: "/legal", type: "website", images: [SITE_SOCIAL_IMAGE] },
 };
 
 /** The hub: three documents, each with what it is for, in one screen. */
@@ -19,7 +20,7 @@ export default function LegalIndexPage() {
   const docs = getAllLegalDocs();
   return (
     <div className="mx-auto min-h-screen max-w-7xl bg-primary-950">
-      <Header />
+      <HeaderSpacer />
       <section className="px-4 pb-24">
         <header className="mx-auto max-w-4xl pt-6 text-center">
           <h1 className="mt-6 text-4xl leading-[1.08] font-semibold tracking-tight text-white md:text-6xl">

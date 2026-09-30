@@ -6,6 +6,7 @@ import {
   MAINS_VERSION,
 } from "@/lib/constants";
 import { getAllPosts } from "@/lib/posts";
+import { SITE_SOCIAL_IMAGE } from "@/lib/social-image";
 import { AppWindow } from "@/components/demo/app-window";
 import { HeroReleaseCanvas } from "@/components/hero-release-canvas";
 import { HomeClient } from "./home-client";
@@ -53,7 +54,7 @@ export default function Home() {
         operatingSystem: "macOS",
         softwareVersion: MAINS_VERSION,
         downloadUrl: MAINS_DOWNLOAD_DMG_URL,
-        image: "https://mains.dev/og-image.jpg",
+        image: new URL(SITE_SOCIAL_IMAGE.url, "https://mains.dev").toString(),
         isAccessibleForFree: true,
         author: {
           "@id": "https://mains.dev/#organization",

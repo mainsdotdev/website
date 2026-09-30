@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Header from "@/components/header";
+import HeaderSpacer from "@/components/header-spacer";
 import { ChevronLeft } from "@/components/icons";
 import { MDXContent } from "@/components/mdx-content";
 import { TableOfContents } from "@/components/table-of-contents";
@@ -22,7 +22,7 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
   const toc = extractToc(doc.content);
   return (
     <div className="mx-auto min-h-screen max-w-7xl bg-primary-950">
-      <Header />
+      <HeaderSpacer />
       <article className="px-4">
         <header className="mx-auto max-w-4xl pt-6 text-center">
           <p className="text-sm text-primary-400">Last updated {formatUpdated(doc.updated)}</p>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SITE_SOCIAL_IMAGE } from "@/lib/social-image";
 import { LegalPage } from "@/components/legal-page";
 import { getLegalDoc } from "@/lib/legal";
 
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     description: doc.description,
     url: "/privacy",
     type: "article",
+    images: [SITE_SOCIAL_IMAGE],
   },
 };
 

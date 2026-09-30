@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { SITE_SOCIAL_IMAGE } from "@/lib/social-image";
 import Link from "next/link";
-import Header from "@/components/header";
+import HeaderSpacer from "@/components/header-spacer";
 import { ArrowRightLine, Github, Mail, Question } from "@/components/icons";
 import { MDXContent } from "@/components/mdx-content";
 import { TableOfContents } from "@/components/table-of-contents";
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
     description: doc.description,
     url: "/support",
     type: "website",
+    images: [SITE_SOCIAL_IMAGE],
   },
 };
 
@@ -57,7 +59,7 @@ export default function SupportPage() {
   const toc = extractToc(doc.content);
   return (
     <div className="mx-auto min-h-screen max-w-7xl bg-primary-950">
-      <Header />
+      <HeaderSpacer />
       <article className="px-4">
         <header className="mx-auto max-w-4xl pt-6 text-center">
           <h1 className="mt-6 text-4xl leading-[1.08] font-semibold tracking-tight text-white md:text-6xl">

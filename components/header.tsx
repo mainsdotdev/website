@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
+import { useAnimate, useReducedMotion } from "framer-motion";
 import { Apple, Mains } from "@/components/icons";
 import {
   MAINS_APP_STORE_URL,
@@ -45,14 +47,14 @@ export default function Header() {
     <>
       <header
         className={cn(
-          "pointer-events-none fixed inset-x-0 z-50 transition-[top] duration-500 ease-[var(--ease-spring-critical)] motion-reduce:transition-none",
+          "pointer-events-none fixed inset-x-0 z-50 transition-[top] duration-500 ease-spring-critical motion-reduce:transition-none",
           isDetached ? "top-5" : "top-0",
         )}
       >
         <nav
           aria-label="Primary navigation"
           className={cn(
-            "pointer-events-auto mx-auto flex h-16 w-fit max-w-[calc(100%-16px)] items-center justify-between gap-4 bg-primary-900/40 px-4 text-primary-50 shadow-primary-500/10 backdrop-blur-3xl transition-[border-radius] duration-500 ease-[var(--ease-spring-critical)] motion-reduce:transition-none sm:h-18 sm:gap-8 sm:px-6",
+            "pointer-events-auto mx-auto flex h-16 w-fit max-w-[calc(100%-16px)] items-center justify-between gap-4 bg-primary-900/40 px-4 text-primary-50 shadow-primary-500/10 backdrop-blur-3xl transition-[border-radius] duration-500 ease-spring-critical motion-reduce:transition-none sm:h-18 sm:gap-8 sm:px-6",
             isDetached
               ? "rounded-[28px] sm:rounded-4xl"
               : "rounded-b-[28px] sm:rounded-b-4xl",
@@ -63,7 +65,7 @@ export default function Header() {
             aria-label="Mains — home"
             className="flex h-9 shrink-0 items-center gap-2 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-50"
           >
-            <Mains aria-hidden className="h-5 w-auto" />
+            <HeaderIcon />
             <span className="text-lg font-semibold tracking-tight">
               Mains
             </span>
@@ -90,8 +92,87 @@ export default function Header() {
         </nav>
       </header>
 
-      <div aria-hidden className="h-24 sm:h-27" />
     </>
+  );
+}
+
+function HeaderIcon() {
+  const [scope, animate] = useAnimate<HTMLSpanElement>();
+  const imageRef = useRef<HTMLImageElement>(null);
+  const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (reducedMotion === null) return;
+
+    let cancelled = false;
+    let startTimer: ReturnType<typeof setTimeout> | undefined;
+
+    async function reveal() {
+      // Keep the original icon visible until the replacement can be painted.
+      try {
+        await imageRef.current?.decode();
+      } catch {
+        return;
+      }
+      if (cancelled) return;
+
+      startTimer = setTimeout(async () => {
+        if (cancelled || !scope.current) return;
+
+        const fade = { duration: reducedMotion ? 0.15 : 0.3 };
+        await Promise.all([
+          animate("[data-logo-original]", { opacity: 0 }, fade),
+          animate("[data-logo-risograph]", { opacity: 1 }, fade),
+          ...(reducedMotion ? [] : [
+            animate(scope.current, { scale: 1.5, rotate: -30 }, {
+              type: "spring", duration: 0.45, bounce: 0,
+            }),
+          ]),
+        ]);
+
+        if (!cancelled && !reducedMotion) {
+          await animate(scope.current, { scale: 1, rotate: 0 }, {
+            type: "spring", duration: 0.55, bounce: 0, delay: 0.15,
+          });
+        }
+      }, 400);
+    }
+
+    if (document.readyState === "complete") {
+      void reveal();
+    } else {
+      window.addEventListener("load", reveal, { once: true });
+    }
+
+    return () => {
+      cancelled = true;
+      clearTimeout(startTimer);
+      window.removeEventListener("load", reveal);
+    };
+  }, [animate, reducedMotion, scope]);
+
+  return (
+    <span
+      ref={scope}
+      aria-hidden="true"
+      className="pointer-events-none relative inline-block h-5 aspect-720/666 shrink-0"
+    >
+      <span data-logo-original className="absolute inset-0">
+        <Mains className="h-full w-full" />
+      </span>
+      <span data-logo-risograph className="absolute inset-0" style={{ opacity: 0 }}>
+        <Image
+          ref={imageRef}
+          src="/logo-art/mains-risograph-coral-blue-v1.png"
+          alt=""
+          fill
+          sizes="24px"
+          loading="eager"
+          draggable={false}
+          className="object-contain"
+        />
+      </span>
+    </span>
   );
 }
 

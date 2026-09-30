@@ -1,14 +1,12 @@
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
 import { getImageSize } from '@/lib/image-size';
+import { SITE_SOCIAL_IMAGE } from '@/lib/social-image';
 import { notFound } from 'next/navigation';
 import { MDXContent } from '@/components/mdx-content';
 import { StructuredData } from '@/components/structured-data';
 import { Metadata } from 'next';
-import Link from 'next/link';
-import Header from '@/components/header';
-import { ChevronLeft } from '@/components/icons';
-import { PostMeta } from '@/components/post-meta';
-import { ShareButton } from '@/components/share-button';
+import HeaderSpacer from "@/components/header-spacer";
+
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -37,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const canonicalUrl = `/blog/${post.slug}`;
-  const socialImage = post.image || '/og-image.jpg';
+  const socialImage = post.image || SITE_SOCIAL_IMAGE.url;
   const socialImageSize = getImageSize(socialImage);
 
   return {
@@ -81,7 +79,7 @@ export default async function BlogPost({ params }: Props) {
 
   const canonicalUrl = `https://mains.dev/blog/${post.slug}`;
   const imageUrl = new URL(
-    post.image || '/og-image.jpg',
+    post.image || SITE_SOCIAL_IMAGE.url,
     'https://mains.dev'
   ).toString();
   const structuredData = {
@@ -116,7 +114,7 @@ export default async function BlogPost({ params }: Props) {
     <>
       <StructuredData data={structuredData} />
       <div className="min-h-screen max-w-8xl mx-auto bg-primary-950 ">
-        <Header />
+        <HeaderSpacer />
 
         <article className="px-4">
           <header className="mx-auto max-w-4xl pt-6 text-center">

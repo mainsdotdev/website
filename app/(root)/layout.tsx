@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Schibsted_Grotesk } from "next/font/google";
 import "@/styles/globals.css";
 import Footer from "@/components/footer";
+import Header from "@/components/header";
+import Analytics from "@/components/analytics";
+import { SITE_SOCIAL_IMAGE } from "@/lib/social-image";
 
 const siteTitle = "Mains — Open-Source Desktop App for AI Coding Agents";
 const siteDescription =
@@ -31,20 +34,13 @@ export const metadata: Metadata = {
     url: "/",
     locale: "en_US",
     type: "website",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Mains desktop app for running AI coding agents",
-      },
-    ],
+    images: [SITE_SOCIAL_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: siteTitle,
     description: siteDescription,
-    images: ["/og-image.jpg"],
+    images: [SITE_SOCIAL_IMAGE],
   },
   robots: {
     index: true,
@@ -59,13 +55,14 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icons/favicon-96x96.png", sizes: "96x96", type: "image/png" },
-      { url: "/icons/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
-      { url: "/icons/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
+      { url: "/favicon.ico?v=382ccaebc65e", sizes: "16x16 32x32 48x48 64x64", type: "image/x-icon" },
+      { url: "/icons/favicon-96x96.png?v=382ccaebc65e", sizes: "96x96", type: "image/png" },
+      { url: "/icons/android-chrome-192x192.png?v=382ccaebc65e", sizes: "192x192", type: "image/png" },
+      { url: "/icons/android-chrome-512x512.png?v=382ccaebc65e", sizes: "512x512", type: "image/png" },
     ],
-    apple: "/icons/apple-touch-icon.png",
+    apple: "/icons/apple-touch-icon.png?v=382ccaebc65e",
   },
-  manifest: "/manifest.json",
+  manifest: "/manifest.json?v=382ccaebc65e",
 };
 
 export default function RootLayout({
@@ -81,8 +78,12 @@ export default function RootLayout({
       <body
         className={`mx-auto scroll-smooth bg-primary-950 antialiased ${schibstedGrotesk.variable} ${schibstedGrotesk.className}`}
       >
+        <Header />
         {children}
         <Footer />
+        {process.env.NODE_ENV === "production" && (
+          <Analytics ga_id={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        )}
       </body>
     </html>
   );

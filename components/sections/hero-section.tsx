@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Header from "@/components/header";
+import HeaderSpacer from "@/components/header-spacer";
 import { ScrambleText } from "@/components/scramble-text";
 import { Apple, Github, Windows } from "@/components/icons";
 import { MacDownloadButton } from "@/components/mac-download-button";
@@ -183,9 +183,7 @@ export function HeroSection({
         className="hero-canvas-grid pointer-events-none absolute inset-0 text-primary-700/30"
       />
 
-      {/* Outside the `isolate` wrapper: inside it, the header's z-index only
-          ranks it within the hero, and every later section paints over it. */}
-      <Header />
+      <HeaderSpacer />
       {/* Clips sideways only: the tile backdrop reaches up over the dots
           above the hero, and must not be cut off at the wrapper's top. */}
       <div className="relative isolate overflow-x-clip">

@@ -21,10 +21,10 @@ export function ChangelogSection({ posts }: ChangelogSectionProps) {
         <Link
           href="/changelog"
           aria-label={`View all release notes, including ${latestPost.title}`}
-          className="group grid items-center gap-10 rounded-[28px] focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-primary-500 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.85fr)] lg:gap-14 xl:gap-20"
+          className="group grid items-center gap-10 rounded-[28px] focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-primary-500 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.45fr)] lg:gap-14 xl:gap-16"
         >
           <div className="rounded-[25px] border border-primary-700/15 bg-primary-900/60 p-2.5 shadow-[0_2px_16px_rgba(0,0,0,0.08)] transition-shadow duration-300 group-hover:shadow-[0_10px_30px_rgba(0,0,0,0.12)] motion-reduce:transition-none">
-            <div className="relative aspect-[1.35] overflow-hidden rounded-[18px] bg-primary-850 sm:aspect-[1.55] lg:aspect-[1.42]">
+            <div className="relative aspect-[1.55] overflow-hidden rounded-[18px] bg-primary-850 sm:aspect-[1.55] lg:aspect-[1.6]">
               {latestPost.image ? (
                 <Image
                   src={latestPost.image}
@@ -47,7 +47,7 @@ export function ChangelogSection({ posts }: ChangelogSectionProps) {
             </p>
             <h2
               id="changelog-title"
-              className="mt-6 max-w-120 text-[clamp(2.4rem,3.2vw,3.75rem)] leading-[1.07] font-normal tracking-[-0.055em] text-primary-50"
+              className="mt-6 max-w-120 text-[clamp(2.4rem,3.2vw,3rem)] leading-[1.07] font-normal tracking-[-0.055em] text-primary-50"
             >
               {latestPost.title}
             </h2>

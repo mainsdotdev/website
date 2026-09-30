@@ -1,13 +1,13 @@
 "use client";
 
 import type { Post } from "@/lib/types";
-import Header from "@/components/header";
+import HeaderSpacer from "@/components/header-spacer";
 import { PostCard } from "@/components/post-card";
 
 export function BlogPageClient({ posts }: { posts: Post[] }) {
   return (
     <div className="min-h-screen bg-primary-950">
-      <Header />
+      <HeaderSpacer />
 
       <main className="mx-auto max-w-360 px-5 pb-32 pt-24 sm:px-8 lg:pt-32">
         <h1 className="mb-12 text-center text-4xl font-normal tracking-tight text-primary-50 sm:text-5xl lg:mb-16">

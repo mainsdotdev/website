@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { SITE_SOCIAL_IMAGE } from "@/lib/social-image";
 import { ChangelogWordmark } from "@/components/changelog-wordmark";
 import { MDXContent } from "@/components/mdx-content";
 import { getAllPosts } from "@/lib/posts";
-import Header from "@/components/header";
+import HeaderSpacer from "@/components/header-spacer";
 
 export const metadata: Metadata = {
   title: "Changelog",
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     description: "Every Mains release, from the latest improvements to the first stable build.",
     url: "/changelog",
     type: "website",
+    images: [SITE_SOCIAL_IMAGE],
   },
 };
 
@@ -42,10 +44,10 @@ export default function ChangelogPage() {
 
   return (
     <div className="min-h-screen bg-primary-950">
-            <Header />
+            <HeaderSpacer />
 
-      <main className="mx-auto max-w-7xl px-5 pb-28 pt-20 sm:px-8 sm:pt-28 lg:px-12">
-        <div className="pb-16 sm:pb-20">
+      <main className="mx-auto max-w-7xl px-5 pb-12 pt-8 sm:px-8 sm:pt-12 lg:px-12">
+        <div className="pb-16 sm:pb-12">
           <ChangelogWordmark />
 
         </div>

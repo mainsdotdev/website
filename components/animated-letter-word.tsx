@@ -69,7 +69,7 @@ function AnimatedLetter({
 
   const active = intro.active || hoverActive;
   const image = letter.images[hoverActive ? hoverVariant : intro.variant];
-  const imageWidth = `${image.displayWidth ?? 0.86 * (image.width / image.height)}em`;
+  const imageWidth = `${image.displayWidth ?? 0.70 * (image.width / image.height)}em`;
   const transition = reducedMotion
     ? { duration: 0.12 }
     : { duration: IMAGE_REVEAL_MS / 1000, ease: [0.22, 1, 0.36, 1] as const };
