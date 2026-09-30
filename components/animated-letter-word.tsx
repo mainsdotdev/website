@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { AnimatePresence, LayoutGroup, motion, useInView, useReducedMotion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { LayoutGroup, motion, useInView, useReducedMotion } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export type LetterImage = {
   src: string;
@@ -18,6 +18,9 @@ export type LetterArt = {
 };
 
 type IntroState = { active: boolean; variant: number };
+type FluidFontSize = readonly [minimumRem: number, preferredVw: number, maximumRem: number];
+
+const DEFAULT_FONT_SIZE: FluidFontSize = [3.5, 18, 14];
 
 const INTRO_START_MS = 120;
 const INTRO_STAGGER_MS = 155;
@@ -32,13 +35,20 @@ function AnimatedLetter({
   letter,
   intro,
   reducedMotion,
-  imageSizes,
+  fontSize,
+  loadImages,
+  eager,
+  onImageSettled,
 }: {
   letter: LetterArt;
   intro: IntroState;
   reducedMotion: boolean | null;
-  imageSizes: string;
+  fontSize: FluidFontSize;
+  loadImages: boolean;
+  eager: boolean;
+  onImageSettled: (src: string) => void;
 }) {
+  const [decodedImages, setDecodedImages] = useState<ReadonlySet<string>>(() => new Set());
   const [hoverActive, setHoverActive] = useState(false);
   const [hoverVariant, setHoverVariant] = useState(0);
   const hoverActiveRef = useRef(false);
@@ -67,8 +77,9 @@ function AnimatedLetter({
     }, delay);
   }
 
-  const active = intro.active || hoverActive;
   const image = letter.images[hoverActive ? hoverVariant : intro.variant];
+  // Keep the glyph visible, and its width unchanged, until the art can be painted.
+  const active = (intro.active || hoverActive) && decodedImages.has(image.src);
   const imageWidth = `${image.displayWidth ?? 0.70 * (image.width / image.height)}em`;
   const transition = reducedMotion
     ? { duration: 0.12 }
@@ -100,42 +111,59 @@ function AnimatedLetter({
       >
         {letter.character}
       </span>
-      <AnimatePresence initial={false} mode="wait">
-        {active ? (
+      {/* Mounted art stays decoded between the intro and later hover/touch reveals. */}
+      {letter.images.map((variant) => {
+        const visible = active && variant.src === image.src;
+        const width = variant.displayWidth ?? 0.70 * (variant.width / variant.height);
+
+        return (
           <motion.span
-            key={`image-${image.src}`}
+            key={variant.src}
             className="absolute inset-0 inline-flex items-center justify-center"
-            initial={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.78, y: "0.08em", rotate: -5 }}
-            animate={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
-            exit={{ opacity: 0, transition: { duration: 0 } }}
-            transition={transition}
+            initial={false}
+            animate={visible
+              ? { opacity: 1, scale: 1, y: 0, rotate: 0 }
+              : reducedMotion
+                ? { opacity: 0 }
+                : { opacity: 0, scale: 0.78, y: "0.08em", rotate: -5 }}
+            transition={visible ? transition : { duration: 0 }}
           >
             <span className="inline-flex h-[0.86em] w-full min-w-0 items-center justify-center">
-              <Image
-                src={image.src}
-                alt=""
-                width={image.width}
-                height={image.height}
-                sizes={imageSizes}
-                unoptimized
-                draggable={false}
-                className="pointer-events-none block h-full w-full min-w-0 object-contain select-none"
-              />
+              {loadImages && (
+                <Image
+                  src={variant.src}
+                  alt=""
+                  width={variant.width}
+                  height={variant.height}
+                  sizes={`clamp(${fontSize[0] * width}rem, ${fontSize[1] * width}vw, ${fontSize[2] * width}rem)`}
+                  loading="eager"
+                  fetchPriority={eager ? "high" : "auto"}
+                  onLoad={() => {
+                    // next/image calls onLoad after decoding, including cache hits.
+                    setDecodedImages((current) => current.has(variant.src)
+                      ? current
+                      : new Set(current).add(variant.src));
+                    onImageSettled(variant.src);
+                  }}
+                  onError={() => onImageSettled(variant.src)}
+                  draggable={false}
+                  className="pointer-events-none block h-full w-full min-w-0 object-contain select-none"
+                />
+              )}
             </span>
           </motion.span>
-        ) : (
-          <motion.span
-            key="character"
-            className="absolute inset-0 inline-flex items-center justify-center"
-            initial={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.84, y: "0.07em" }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, transition: { duration: 0 } }}
-            transition={transition}
-          >
-            {letter.character}
-          </motion.span>
-        )}
-      </AnimatePresence>
+        );
+      })}
+      <motion.span
+        className="absolute inset-0 inline-flex items-center justify-center"
+        initial={false}
+        animate={active
+          ? reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.84, y: "0.07em" }
+          : { opacity: 1, scale: 1, y: 0 }}
+        transition={active ? { duration: 0 } : transition}
+      >
+        {letter.character}
+      </motion.span>
     </motion.span>
   );
 }
@@ -145,25 +173,37 @@ export function AnimatedLetterWord({
   label,
   as: Heading = "h1",
   className,
-  imageSizes = "(max-width: 640px) 19vw, 18vw",
+  fontSize = DEFAULT_FONT_SIZE,
+  eager = false,
   fullRevealHoldMs,
 }: {
   letters: readonly LetterArt[];
   label: string;
   as?: "h1" | "h2";
   className: string;
-  imageSizes?: string;
+  /** Heading clamp values in rem / vw / rem; each variant scales its own sizes. */
+  fontSize?: FluidFontSize;
+  /** Above-the-fold wordmarks load in the initial HTML; others warm up near view. */
+  eager?: boolean;
   fullRevealHoldMs?: number;
 }) {
   const wordmarkRef = useRef<HTMLHeadingElement>(null);
   const inView = useInView(wordmarkRef, { once: true, amount: 0.35 });
+  const nearView = useInView(wordmarkRef, { once: true, margin: "600px 0px" });
   const reducedMotion = useReducedMotion();
+  const imageCount = new Set(letters.flatMap((letter) => letter.images.map((image) => image.src))).size;
+  const settledImages = useRef(new Set<string>());
+  const [imagesReady, setImagesReady] = useState(false);
+  const handleImageSettled = useCallback((src: string) => {
+    settledImages.current.add(src);
+    if (settledImages.current.size === imageCount) setImagesReady(true);
+  }, [imageCount]);
   const [intro, setIntro] = useState<IntroState[]>(() =>
     letters.map(() => ({ active: false, variant: 0 })),
   );
 
   useEffect(() => {
-    if (!inView || reducedMotion) return;
+    if (!inView || !imagesReady || reducedMotion !== false) return;
 
     const outroStartMs = fullRevealHoldMs === undefined
       ? 1330
@@ -189,7 +229,7 @@ export function AnimatedLetterWord({
     ]);
 
     return () => timers.forEach(clearTimeout);
-  }, [fullRevealHoldMs, inView, letters, reducedMotion]);
+  }, [fullRevealHoldMs, imagesReady, inView, letters, reducedMotion]);
 
   return (
     <LayoutGroup>
@@ -204,7 +244,10 @@ export function AnimatedLetterWord({
             letter={letter}
             intro={intro[index]}
             reducedMotion={reducedMotion}
-            imageSizes={imageSizes}
+            fontSize={fontSize}
+            loadImages={eager || nearView}
+            eager={eager}
+            onImageSettled={handleImageSettled}
           />
         ))}
       </Heading>

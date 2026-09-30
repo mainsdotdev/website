@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { SynthDemoModal } from "@/components/synth-demo-modal";
+import synthPreview from "@/public/demos/field-synth-preview.png";
 
 export function HeroVisualizeTile({
   position,
@@ -34,10 +35,12 @@ export function HeroVisualizeTile({
         >
           <span className="relative block aspect-16/10 overflow-hidden rounded-xl shadow-[0_12px_28px_-16px_var(--demo-shadow)]">
             <Image
-              src="/demos/field-synth-preview.png"
+              src={synthPreview}
               alt="FIELD/01 synthesizer preview"
               fill
-              sizes="(min-width: 1536px) 224px, (min-width: 1280px) 192px, 176px"
+              sizes="(min-width: 1280px) 224px, 176px"
+              loading="eager"
+              placeholder="blur"
               className="object-cover transition-transform duration-600 ease-spring group-hover:scale-105"
             />
           </span>

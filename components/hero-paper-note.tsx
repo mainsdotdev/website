@@ -4,13 +4,13 @@ import { useState, type PointerEvent } from "react";
 import { motion, useReducedMotion, useSpring } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Attach } from "@/components/icons";
+import { Attach } from "@/components/icons";
+import releaseArtwork from "@/public/paper-note.png";
 
 // Short excerpts from content/mains-0-13-release.mdx.
 const RELEASE_NOTE = {
   version: "0.13",
   title: "Make yourself at home",
-  image: "/paper-note.png",
   href: "/blog/mains-0-13-release",
   paragraphs: [
     "A calmer rail and your own app icon.",
@@ -96,10 +96,12 @@ export function HeroPaperNote({
               </span>
               <span className="relative mx-1 mt-4 block min-h-0 flex-1 overflow-hidden rounded-t-lg">
                 <Image
-                  src={RELEASE_NOTE.image}
+                  src={releaseArtwork}
                   alt="Mains 0.13 release artwork"
                   fill
-                  sizes="(min-width: 1536px) 240px, (min-width: 1280px) 224px, (min-width: 1024px) 192px, 176px"
+                  sizes="(min-width: 1536px) 296px, (min-width: 1280px) 232px, (min-width: 1024px) 168px, 216px"
+                  loading="eager"
+                  placeholder="blur"
                   className="object-cover object-top"
                 />
               </span>

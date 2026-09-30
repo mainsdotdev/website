@@ -3,8 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { HeroChatDialog } from "@/components/hero-chat-dialog";
-
-const FUJI_IMAGE = "/demos/fuji-stamp.png";
+import fujiImage from "@/public/demos/fuji-stamp.png";
 
 type FlightLeg = {
   depart: string;
@@ -243,10 +242,12 @@ export function HeroFlightsTile({ position, hoverClass }: { position: string; ho
         >
           <span className="relative block aspect-1175/1338 w-full overflow-hidden ">
             <Image
-              src={FUJI_IMAGE}
+              src={fujiImage}
               alt="Fuji National Park illustrated postage stamp"
               fill
-              sizes="(min-width: 1536px) 160px, (min-width: 1280px) 144px, 112px"
+              sizes="(min-width: 1536px) 208px, (min-width: 1280px) 192px, (min-width: 1024px) 160px, 144px"
+              loading="eager"
+              placeholder="blur"
               className="object-cover transition-transform duration-600 ease-spring group-hover:scale-105"
             />
           </span>

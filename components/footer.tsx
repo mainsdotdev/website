@@ -125,6 +125,7 @@ export default function Footer() {
           letters={LETTERS}
           label="mains"
           as="h2"
+          fontSize={[3.5, 18, 14]}
           className="mt-20 flex items-center justify-center whitespace-nowrap font-sans text-[clamp(3.5rem,18vw,14rem)] leading-none font-medium tracking-[-0.085em] select-none sm:mt-12"
         />
       </div>

@@ -5,8 +5,8 @@ import Image from "next/image";
 import { HeroChatDialog } from "@/components/hero-chat-dialog";
 import { ImageGenerationLoader } from "@/components/image-generation-loader";
 import { Gallery } from "./icons";
+import mosaicImage from "@/public/demos/earth-mosaic.png";
 
-const MOSAIC_IMAGE = "/demos/earth-mosaic.png";
 const IMAGE_REVEAL_DELAY_MS = 3_500;
 
 function GeneratedImage() {
@@ -26,7 +26,7 @@ function GeneratedImage() {
         className={`relative size-full overflow-hidden rounded-2xl bg-primary-900 transition-opacity duration-500 motion-reduce:transition-none ${ready ? "opacity-100" : "opacity-0"}`}
       >
         <Image
-          src={MOSAIC_IMAGE}
+          src={mosaicImage}
           alt="Generated ceramic mosaic of Earth from space with a spiral galaxy, stars, Saturn and the Moon"
           fill
           sizes="(max-width: 768px) 100vw, 720px"
@@ -74,10 +74,12 @@ export function HeroImageGenTile({
           <span className="block">
             <span className="relative block aspect-1672/941 w-full overflow-hidden rounded-xl ">
               <Image
-                src={MOSAIC_IMAGE}
+                src={mosaicImage}
                 alt="Ceramic mosaic of Earth viewed from space"
                 fill
-                sizes="(min-width: 1536px) 256px, (min-width: 1280px) 224px, 208px"
+                sizes="(min-width: 1536px) 240px, (min-width: 1280px) 208px, (min-width: 1024px) 176px, 208px"
+                loading="eager"
+                placeholder="blur"
                 className="object-cover transition-transform duration-600 ease-spring group-hover:scale-105"
               />
             </span>

@@ -20,7 +20,8 @@ export function ChangelogWordmark() {
       letters={LETTERS}
       label="changelog"
       className="flex items-center whitespace-nowrap font-sans text-[clamp(3.5rem,9vw,8rem)] leading-none font-medium tracking-[-0.075em] text-primary-50 select-none"
-      imageSizes="(max-width: 640px) 14vw, 9vw"
+      fontSize={[3.5, 9, 8]}
+      eager
       fullRevealHoldMs={2000}
     />
   );

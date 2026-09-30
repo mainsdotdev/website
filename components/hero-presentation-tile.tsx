@@ -3,8 +3,7 @@
 import { useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { HeroChatDialog } from "@/components/hero-chat-dialog";
-
-const COVER_IMAGE = "/demos/rails-architecture-cover.png";
+import coverImage from "@/public/demos/rails-architecture-cover.png";
 
 function ActivityLine({ children }: { children: ReactNode }) {
   return (
@@ -49,7 +48,7 @@ function PresentationConversation() {
       <div className="flex items-center gap-3 rounded-2xl border border-primary-700/25 bg-primary-900/65 p-3 sm:max-w-2xl sm:p-4">
         <span className="relative block size-12 shrink-0 overflow-hidden rounded-lg bg-primary-800 sm:size-14">
           <Image
-            src={COVER_IMAGE}
+            src={coverImage}
             alt=""
             fill
             sizes="56px"
@@ -74,7 +73,7 @@ function PresentationConversation() {
       {showPreview && (
         <figure className="max-w-3xl overflow-hidden rounded-xl border border-primary-700/30 bg-primary-900">
           <Image
-            src={COVER_IMAGE}
+            src={coverImage}
             alt="Inside Ruby on Rails presentation cover with a diagram of its architecture"
             width={1672}
             height={941}
@@ -118,10 +117,12 @@ export function HeroPresentationTile({
         >
           <span className="relative block aspect-1672/941 w-full overflow-hidden rounded-2xl bg-primary-900 shadow-[0_18px_40px_-15px_var(--demo-shadow)]">
             <Image
-              src={COVER_IMAGE}
+              src={coverImage}
               alt="Inside Ruby on Rails presentation cover"
               fill
               sizes="(min-width: 1536px) 256px, (min-width: 1280px) 224px, 208px"
+              loading="eager"
+              placeholder="blur"
               className="object-cover transition-transform duration-600 ease-spring group-hover:scale-105 motion-reduce:transition-none"
             />
           </span>

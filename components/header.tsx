@@ -12,6 +12,7 @@ import {
 } from "@/lib/constants";
 import { usePlatformDetection, type Platform } from "@/hooks/usePlatformDetection";
 import { cn } from "@/lib/utils";
+import headerArt from "@/public/logo-art/mains-risograph-header.webp";
 
 /**
  * Narrow screens can't fit the whole row beside the wordmark and download
@@ -135,19 +136,15 @@ function HeaderIcon() {
             type: "spring", duration: 0.55, bounce: 0, delay: 0.15,
           });
         }
-      }, 400);
+      }, 120);
     }
 
-    if (document.readyState === "complete") {
-      void reveal();
-    } else {
-      window.addEventListener("load", reveal, { once: true });
-    }
+    // Unrelated images and videos should not delay the already-decoded logo.
+    void reveal();
 
     return () => {
       cancelled = true;
       clearTimeout(startTimer);
-      window.removeEventListener("load", reveal);
     };
   }, [animate, reducedMotion, scope]);
 
@@ -163,11 +160,13 @@ function HeaderIcon() {
       <span data-logo-risograph className="absolute inset-0" style={{ opacity: 0 }}>
         <Image
           ref={imageRef}
-          src="/logo-art/mains-risograph-coral-blue-v1.png"
+          src={headerArt}
           alt=""
           fill
           sizes="24px"
           loading="eager"
+          fetchPriority="high"
+          unoptimized
           draggable={false}
           className="object-contain"
         />
