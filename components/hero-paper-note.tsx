@@ -5,16 +5,16 @@ import { motion, useReducedMotion, useSpring } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Attach } from "@/components/icons";
-import releaseArtwork from "@/public/paper-note.png";
+import releaseArtwork from "@/public/changelog/0-14/cover-risograph.webp";
 
-// Short excerpts from content/mains-0-13-release.mdx.
+// Short excerpts from content/mains-0-14-release.mdx.
 const RELEASE_NOTE = {
-  version: "0.13",
-  title: "Make yourself at home",
-  href: "/blog/mains-0-13-release",
+  version: "0.14",
+  title: "Browse full screen",
+  href: "/changelog",
   paragraphs: [
-    "A calmer rail and your own app icon.",
-    "MCP Apps can now fill the window. Improved computer use lets Codex work with the Mac app you name. File text search finds the line you had in mind.",
+    "Browse full screen with your chat floating over the page.",
+    "Use /add-dir to give a chat access to another folder.",
   ],
 };
 
@@ -89,7 +89,7 @@ export function HeroPaperNote({
               className="absolute inset-0 flex flex-col overflow-hidden rounded-lg border border-primary-700/50 bg-primary-900 p-2 pb-0 shadow-[0_24px_50px_-18px_var(--demo-shadow)]"
             >
               <span className="block text-[8px]   text-primary-400">
-                MAINS {RELEASE_NOTE.version} <span aria-hidden="true" className="mx-1 text-primary-500">·</span> NO. 013
+                MAINS {RELEASE_NOTE.version} <span aria-hidden="true" className="mx-1 text-primary-500">·</span> NO. 014
               </span>
               <span className="mt-3.5 block  text-lg leading-[1.02] font-medium text-primary-50 xl:text-xl">
                 {RELEASE_NOTE.title}
@@ -97,7 +97,7 @@ export function HeroPaperNote({
               <span className="relative mx-1 mt-4 block min-h-0 flex-1 overflow-hidden rounded-t-lg">
                 <Image
                   src={releaseArtwork}
-                  alt="Mains 0.13 release artwork"
+                  alt={`Mains ${RELEASE_NOTE.version} release artwork`}
                   fill
                   sizes="(min-width: 1536px) 296px, (min-width: 1280px) 232px, (min-width: 1024px) 168px, 216px"
                   loading="eager"
@@ -109,17 +109,17 @@ export function HeroPaperNote({
 
             <span
               style={{ ...backfaceStyle, transform: "rotateY(180deg)" }}
-              className="absolute inset-0 flex flex-col rounded-lg border border-primary-700/50 bg-primary-900 p-3 text-primary-50 shadow-[0_24px_50px_-18px_var(--demo-shadow)]"
+              className="absolute inset-0 flex flex-col rounded-lg border border-primary-700/50 bg-primary-900 p-3 text-primary-50 shadow-[0_24px_50px_-18px_var(--demo-shadow)] lg:p-2 xl:p-3"
             >
               <span className=" text-[9px]  text-primary-400 uppercase">
                 Mains {RELEASE_NOTE.version} / release letter
               </span>
-              <span className="mt-2 text-xl leading-none">
-                Make Mains yours.
+              <span className="mt-2 text-xl leading-none lg:text-base xl:text-xl">
+                Keep the chat close.
               </span>
-              <span className="mt-2 flex flex-col gap-2  pt-2">
+              <span className="mt-2 flex flex-col gap-2">
                 {RELEASE_NOTE.paragraphs.map((paragraph) => (
-                  <span key={paragraph} className="block text-[12px] italic leading-normal text-primary-200">
+                  <span key={paragraph} className="block text-[12px] italic leading-normal text-primary-200 lg:text-[10px] xl:text-[12px]">
                     {paragraph}
                   </span>
                 ))}
@@ -143,10 +143,10 @@ export function HeroPaperNote({
             href={RELEASE_NOTE.href}
             className="pointer-events-auto underline underline-offset-4 hover:text-primary-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-50"
           >
-            Read all 0.13 notes {">"}
+            Read all {RELEASE_NOTE.version} notes {">"}
           </Link>
         ) : (
-          <span>0.13 / turn over to read</span>
+          <span>{RELEASE_NOTE.version} / turn over to read</span>
         )}
       </div>
     </li>
