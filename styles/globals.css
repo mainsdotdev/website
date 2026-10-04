@@ -51,6 +51,14 @@
   --demo-chrome-translucent: rgb(13 13 13 / 58%);
   --demo-content: #0d0d0d;
   --demo-shadow: rgb(0 0 0 / 45%);
+  /* Code in the mockups: lib/code-theme.ts's Flexoki colours, per theme. */
+  --syn-keyword: #879a39;
+  --syn-string: #3aa99f;
+  --syn-tag: #4385be;
+  --syn-attr: #d0a215;
+  --syn-fn: #da702c;
+  --syn-comment: #6f6e69;
+  --syn-punct: #878580;
 }
 
 :root[data-theme="light"] {
@@ -99,6 +107,13 @@
   --demo-chrome-translucent: rgb(230 228 217 / 82%);
   --demo-content: #fffcf0;
   --demo-shadow: rgb(45 43 39 / 18%);
+  --syn-keyword: #556b00;
+  --syn-string: #1f766d;
+  --syn-tag: #245f9b;
+  --syn-attr: #896500;
+  --syn-fn: #a44b18;
+  --syn-comment: #6f6e69;
+  --syn-punct: #6f6e69;
 
   --glass-fill-surface: #f2f0e5;
   --glass-fill-card: rgb(242 240 229 / 98%);
@@ -245,56 +260,39 @@ canvas:hover {
     mask-image: linear-gradient(to bottom, #000 calc(100% - 14rem), transparent);
   }
 
-  .hero-voice-signal {
-    transition: opacity 180ms ease-out, transform 240ms ease-out;
-    animation: hero-voice-breathe 1.7s ease-in-out infinite alternate;
+  /* The desktop app's voice orb, Sphere style, on its Rose palette. The
+     static sphere is what shows with reduced motion, without WebGL, and
+     before the first frame; the shader canvas paints over it once running. */
+  .voice-orb {
+    --color-voice-orb-deep: #dc435c;
+    --color-voice-orb-soft: #f2acbb;
+    --color-voice-orb-light: #fff1f4;
+    --color-voice-orb-secondary: #f3b878;
+    --color-voice-orb-tertiary: #aaafe9;
+    background:
+      radial-gradient(ellipse at 88% 82%, color-mix(in srgb, var(--color-voice-orb-deep) 50%, #0c0c0c), transparent 72%),
+      radial-gradient(ellipse at 28% 18%, var(--color-voice-orb-light), transparent 46%),
+      radial-gradient(ellipse at 76% 66%, var(--color-voice-orb-secondary), transparent 65%),
+      radial-gradient(ellipse at 30% 82%, var(--color-voice-orb-tertiary), transparent 62%),
+      radial-gradient(ellipse at 66% 60%, var(--color-voice-orb-soft), transparent 65%),
+      var(--color-voice-orb-deep);
   }
 
-  @keyframes hero-voice-breathe {
-    from { opacity: 0.7; transform: scaleY(0.62); }
-    to { opacity: 1; transform: scaleY(1.08); }
+  /* A browser mockup's page screenshot, one per theme. The hidden one is a
+     lazy image that is never rendered, so it is never fetched either. */
+  :root[data-theme="light"] .browser-page-dark,
+  :root:not([data-theme="light"]) .browser-page-light {
+    display: none;
   }
 
-  .hero-voice-soon,
-  .hero-voice-letter,
-  .hero-voice-cursor {
-    opacity: 0;
-  }
-
-  .hero-voice-wave:hover .hero-voice-signal {
-    opacity: 0;
-    transform: scaleX(0.85);
-    animation: none;
-  }
-
-  .hero-voice-wave:hover .hero-voice-soon {
-    opacity: 1;
-  }
-
-  .hero-voice-wave:hover .hero-voice-letter {
-    animation: hero-voice-type 240ms steps(1, end) both;
-  }
-
-  .hero-voice-wave:hover .hero-voice-cursor {
-    animation: blink 900ms step-end 380ms infinite;
-  }
-
-  @keyframes hero-voice-type {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero-voice-signal {
-      animation: none;
-      transition: none;
-    }
-
-    .hero-voice-wave:hover .hero-voice-letter,
-    .hero-voice-wave:hover .hero-voice-cursor {
-      animation: none;
-      opacity: 1;
-    }
+  .voice-orb::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23g)'/%3E%3C/svg%3E") repeat;
+    opacity: 0.2;
+    mix-blend-mode: soft-light;
   }
 
   .image-generation-dot {

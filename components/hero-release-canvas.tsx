@@ -3,7 +3,7 @@ import { HeroVisualizeTile } from "@/components/hero-visualize-tile";
 import { HeroImageGenTile } from "@/components/hero-image-gen-tile";
 import { HeroFlightsTile } from "@/components/hero-flights-tile";
 import { HeroPresentationTile } from "@/components/hero-presentation-tile";
-import { HeroVoiceWave } from "@/components/hero-voice-wave";
+import { HeroVoiceOrb } from "@/components/hero-voice-orb";
 
 /** Hover targets only; the spring that carries a tile there is `.hero-release-tile` in globals.css. */
 const TILE_HOVER_CLASS =
@@ -19,10 +19,10 @@ export function HeroReleaseCanvas() {
           The hero clips the sides; the bottom stops at the hero's edge. */}
       <div
         aria-hidden
-        className="hero-release-backdrop pointer-events-none absolute -inset-x-40 -top-54 bottom-0 z-10 hidden bg-primary-950/40 opacity-0 backdrop-blur-[12px] transition-opacity duration-400 ease-out lg:block motion-reduce:transition-none"
+        className="hero-release-backdrop pointer-events-none absolute -inset-x-40 -top-54 bottom-0 z-10 hidden bg-primary-950/40 opacity-0 backdrop-blur-md transition-opacity duration-400 ease-out lg:block motion-reduce:transition-none"
       />
 
-      <HeroVoiceWave />
+      <HeroVoiceOrb />
 
       <ul
         aria-label="Mains feature demos"

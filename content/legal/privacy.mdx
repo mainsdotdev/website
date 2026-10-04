@@ -1,7 +1,7 @@
 ---
 title: "Privacy Policy"
 description: "How Mains handles your data: pairing, what stays on your phone and Mac, what reaches the AI provider you choose, and how to delete all of it."
-updated: "2026-09-30"
+updated: "2026-10-02"
 ---
 
 ## In short
@@ -28,7 +28,7 @@ No pairing code, token or address ever passes through Mains — there is nothing
 
 ## What the phone stores, and where
 
-**In the Keychain.** The pairing record: the Mac's name and addresses, this phone's device id, the device token, the pairing date, and the Mac's app and protocol version. It is stored with the "accessible after first unlock" protection class, so the app can reconnect once the phone has been unlocked after a restart. It never leaves the Keychain except to open the connection.
+**In the Keychain.** The pairing record: the name and addresses of the Mac, this phone's device id, the device token, the pairing date, and the app and protocol version running on the Mac. It is stored with the "accessible after first unlock" protection class, so the app can reconnect once the phone has been unlocked after a restart. It never leaves the Keychain except to open the connection.
 
 **In a local database.** A copy of what your Mac has shown the phone, kept in a SQLite database inside the app's sandbox: your spaces, projects and workspaces (names, branches, the size of the last diff), your runs and their transcripts — the prompts you wrote, the agent's messages, tool calls with their inputs and outputs, errors — pending approvals, provider settings and model lists, skills and commands, your model choice, and the AI data-sharing decisions you have made.
 
@@ -70,13 +70,13 @@ On the phone, the first time you send to a given provider from a given Mac, Main
 
 **On the phone.** Settings → **Forget this Mac** removes the Keychain record and the entire local database for that Mac — spaces, runs, transcripts, tool calls, approvals, settings and consents — in one step. Reconnecting requires a new pairing. Deleting the app removes everything, including the cache folder.
 
-**On the Mac.** Revoke a phone under Relay. Runs can be archived or deleted in the app; the Mac's own data lives in its Application Support folder and goes with the app. What you have already sent to an AI provider is held by that provider under its own policy.
+**On the Mac.** Revoke a phone under Relay. Runs can be archived or deleted in the app; the app's own data on the Mac lives in its Application Support folder and goes with the app. What you have already sent to an AI provider is held by that provider under its own policy.
 
 ## Analytics, tracking and advertising
 
 **The apps:** none. No analytics SDK, no crash reporter, no advertising identifier, no fingerprinting. The apps never contact Mains, because there is no Mains service to contact.
 
-**The website:** when enabled, we use Google Analytics 4 for cookie-less website measurement. Analytics and advertising storage are disabled before the Google tag is configured, so it does not read or write analytics or advertising cookies. Google still receives measurement requests, which can include the visited page, timestamp, referrer and browser information. Google signals and advertising personalization are disabled. See [Google's consent mode documentation](https://developers.google.com/tag-platform/security/concepts/consent-mode) and [Google's privacy policy](https://policies.google.com/privacy). Our hosting provider also keeps ordinary server logs (IP address, user agent, requested page) for security and operations.
+**The website:** we use [Cloudflare Web Analytics](https://www.cloudflare.com/web-analytics/) to count visits. It is cookieless: it does not set cookies, use browser storage or fingerprint you, and it does not track you across sites. Cloudflare receives the visited page (without query strings), timestamp, referrer, browser and device type, and page-load performance timings. See [Cloudflare's privacy policy](https://www.cloudflare.com/privacypolicy/). Our hosting provider also keeps ordinary server logs (IP address, user agent, requested page) for security and operations.
 
 **When you write to us** — at team@mains.dev or through a form on this site — we receive what you send, such as your email address, and use it only to reply.
 

@@ -41,6 +41,17 @@ export const FADE_IN_BLUR_UP_DELAY = (delay: number) =>
     transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1], delay },
   }) as const;
 
+/**
+ * Drops in from just above and settles with a little overshoot, once, when
+ * scrolled into view — an entrance with presence, for a single small element.
+ */
+export const DROP_IN_SPRING = {
+  initial: { opacity: 0, y: -28, scale: 0.6 },
+  whileInView: { opacity: 1, y: 0, scale: 1 },
+  viewport: { once: true, margin: "-80px 0px" },
+  transition: { type: "spring", stiffness: 260, damping: 18 },
+} as const;
+
 export const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   show: {

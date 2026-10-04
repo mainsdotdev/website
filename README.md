@@ -7,28 +7,21 @@ The site covers what Mains does, download links for the latest release, integrat
 - **App repository:** [mainsdotdev/mains](https://github.com/mainsdotdev/mains)
 - **Live site:** [mains.dev](https://mains.dev)
 
-## Google Analytics 4
+## Analytics
 
-Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_GA_MEASUREMENT_ID`
-to the GA4 web stream's `G-...` measurement ID. `.env.local` is ignored by Git;
-keep the actual measurement ID out of tracked files. Set the same variable in
-the production hosting environment **before building**, then rebuild and deploy.
-A missing, empty or invalid ID disables Analytics; the development server
+The site uses [Cloudflare Web Analytics](https://developers.cloudflare.com/web-analytics/),
+which is cookieless: the beacon sets no cookies and uses no browser storage.
+
+In the Cloudflare dashboard, go to **Analytics & Logs → Web Analytics → Add a site**,
+enter `mains.dev`, and copy the `token` value from the JS snippet's
+`data-cf-beacon` attribute. Copy `.env.example` to `.env.local` and set
+`NEXT_PUBLIC_CF_WEB_ANALYTICS_TOKEN` to that token. Set the same variable in the
+production hosting environment **before building**, then rebuild and deploy.
+A missing, empty or invalid token disables analytics; the development server
 never loads it.
 
-Find the ID in Google Analytics under **Admin → Data streams → your web stream**.
-Keep Enhanced Measurement's **Page views → Page changes based on browser history
-events** enabled to measure Next.js client navigation. The site uses Google's
-automatic page views; do not add a second page-view tag for the same stream.
-
-The Google tag uses cookie-less measurement with `analytics_storage`,
-`ad_storage`, `ad_user_data` and `ad_personalization` set to `denied` before
-configuration. Google still receives measurement requests. Google signals and
-advertising personalization are disabled. Reporting is more limited than
-consented tracking; modeled data depends on Google's eligibility thresholds.
-See [Consent mode](https://developers.google.com/tag-platform/security/concepts/consent-mode).
-
-After deployment, use [Tag Assistant](https://tagassistant.google.com/) to verify
-the measurement ID and denied consent settings, then navigate between pages and
-check requests to Google Analytics. Verify that no `_ga` cookies are created in
-a fresh browser session. Report availability can vary for cookie-less traffic.
+The beacon tracks Next.js client navigation on its own (SPA mode is on by
+default), so no extra page-view code is needed. After deployment, open the site
+with an ad blocker disabled and check for a request to
+`cloudflareinsights.com/cdn-cgi/rum`; visits appear in the dashboard within a
+few minutes.

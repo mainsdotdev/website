@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Apple, Github, Windows } from "@/components/icons";
 import { MacDownloadButton } from "@/components/mac-download-button";
 import { AppStoreButton } from "@/components/app-store-button";
+import { CtaVoiceOrb } from "@/components/cta-voice-orb";
 import { ShortcutPillButton } from "@/components/shortcut-pill-button";
 import { FADE_IN_UP } from "@/lib/animations";
 import { MAINS_APP_STORE_URL, MAINS_GITHUB_REPO_URL } from "@/lib/constants";
@@ -20,6 +21,7 @@ export function CtaSection() {
     <div className=" ">
       <section className="py-24 max-w-3xl mx-auto px-6 text-center ">
         <motion.div {...FADE_IN_UP} className="flex flex-col items-center gap-6">
+          <CtaVoiceOrb />
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-white tracking-tight leading-snug font-sans">
             Mains for what&apos;s next.
           </h2>

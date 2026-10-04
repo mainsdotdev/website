@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { AnimatedLetterWord } from "@/components/animated-letter-word";
 import {
+  MAINS_APP_STORE_URL,
   MAINS_DOCS_URL,
   MAINS_DOWNLOAD_DMG_URL,
   MAINS_GITHUB_REPO_URL,
@@ -128,6 +129,15 @@ export default function Footer() {
           fontSize={[3.5, 18, 14]}
           className="mt-20 flex items-center justify-center whitespace-nowrap font-sans text-[clamp(3.5rem,18vw,14rem)] leading-none font-medium tracking-[-0.085em] select-none sm:mt-12"
         />
+
+        {/* Apple's marketing guidelines require this credit wherever the App
+            Store badge appears, and the badge shows once there's a listing. */}
+        {MAINS_APP_STORE_URL && (
+          <p className="mt-8 text-center text-xs leading-relaxed text-primary-600">
+            Apple and the Apple logo are trademarks of Apple Inc., registered in the U.S. and
+            other countries and regions. App Store is a service mark of Apple Inc.
+          </p>
+        )}
       </div>
     </footer>
   );

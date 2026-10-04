@@ -2,46 +2,24 @@
 
 import { useEffect, useRef, useState } from "react";
 import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
+import { BrowserDemo } from "@/components/demo/browser-demo";
+import { McpAppDemo } from "@/components/demo/mcp-app-demo";
+import { ReviewDemo } from "@/components/demo/review-demo";
 
 type UseCase = { title: string; description: string };
 type UseCasesSectionProps = { useCases: readonly UseCase[] };
 
-// Each poster is its video's first frame, so nothing jumps when playback starts.
-const previewImages = [
-  {
-    src: "/use-case-01-poster.jpg",
-    alt: "Mains reviewing a branch with parallel subagents",
-  },
-  {
-    src: "/use-case-02-poster.jpg",
-    alt: "Mains fixing a bug and listing the files it changed",
-  },
-  {
-    src: "/use-case-03-poster.jpg",
-    alt: "Mains working on a website beside its built-in browser preview",
-  },
-] as const;
-const previewVideos = ["/use-case-01.mp4", "/use-case-02.mp4", "/use-case-03.mp4"] as const;
+// Each use case is drawn live, not filmed.
+const MOCKUPS = [BrowserDemo, ReviewDemo, McpAppDemo] as const;
 
 function PreviewFrame({ index }: { index: number }) {
-  const image = previewImages[index % previewImages.length];
-  const video = previewVideos[index];
+  const Mockup = MOCKUPS[index % MOCKUPS.length];
 
   return (
-    <div className="overflow-hidden rounded-xl border border-primary-700/40 bg-primary-900 p-0.75 sm:rounded-xl sm:p-1">
+    // The voice orb moves into each mockup once its frame is centred on screen.
+    <div data-orb-frame className="overflow-hidden rounded-xl border border-primary-700/40 bg-primary-900 p-0.75 sm:rounded-xl sm:p-1">
       <div className="relative aspect-video overflow-hidden rounded-xl border border-primary-700/20 bg-primary-950 sm:rounded-xl">
-          <video
-            src={video}
-            poster={image.src}
-            aria-label={image.alt}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            className="absolute inset-0 size-full object-cover"
-          />
-
+        <Mockup className="absolute inset-0" />
       </div>
     </div>
   );

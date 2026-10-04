@@ -82,7 +82,7 @@ export default function RootLayout({
         {children}
         <Footer />
         {process.env.NODE_ENV === "production" && (
-          <Analytics ga_id={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+          <Analytics token={process.env.NEXT_PUBLIC_CF_WEB_ANALYTICS_TOKEN} />
         )}
       </body>
     </html>

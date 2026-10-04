@@ -5,16 +5,16 @@ import { motion, useReducedMotion, useSpring } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Attach } from "@/components/icons";
-import releaseArtwork from "@/public/changelog/0-14/cover-risograph.webp";
+import releaseArtwork from "@/public/changelog/0-15/cover.webp";
 
-// Short excerpts from content/mains-0-14-release.mdx.
+// Homepage card for 0.15. The release note names Codex; the card stays generic.
 const RELEASE_NOTE = {
-  version: "0.14",
-  title: "Browse full screen",
-  href: "/changelog",
+  version: "0.15",
+  title: "Talk it through",
+  href: "/changelog#release-0-15",
   paragraphs: [
-    "Browse full screen with your chat floating over the page.",
-    "Use /add-dir to give a chat access to another folder.",
+    "Talk out loud and steer it while it works.",
+    "Open apps from the rail and review changes line by line.",
   ],
 };
 
@@ -89,7 +89,7 @@ export function HeroPaperNote({
               className="absolute inset-0 flex flex-col overflow-hidden rounded-lg border border-primary-700/50 bg-primary-900 p-2 pb-0 shadow-[0_24px_50px_-18px_var(--demo-shadow)]"
             >
               <span className="block text-[8px]   text-primary-400">
-                MAINS {RELEASE_NOTE.version} <span aria-hidden="true" className="mx-1 text-primary-500">·</span> NO. 014
+                MAINS {RELEASE_NOTE.version} <span aria-hidden="true" className="mx-1 text-primary-500">·</span> NO. 015
               </span>
               <span className="mt-3.5 block  text-lg leading-[1.02] font-medium text-primary-50 xl:text-xl">
                 {RELEASE_NOTE.title}
@@ -102,7 +102,7 @@ export function HeroPaperNote({
                   sizes="(min-width: 1536px) 296px, (min-width: 1280px) 232px, (min-width: 1024px) 168px, 216px"
                   loading="eager"
                   placeholder="blur"
-                  className="object-cover object-top"
+                  className="object-cover object-center"
                 />
               </span>
             </span>
@@ -115,7 +115,7 @@ export function HeroPaperNote({
                 Mains {RELEASE_NOTE.version} / release letter
               </span>
               <span className="mt-2 text-xl leading-none lg:text-base xl:text-xl">
-                Keep the chat close.
+                {RELEASE_NOTE.title}.
               </span>
               <span className="mt-2 flex flex-col gap-2">
                 {RELEASE_NOTE.paragraphs.map((paragraph) => (

@@ -1,5 +1,6 @@
 "use client";
 
+import { CHAT_TABS } from "@/components/demo/chat-tabs-data";
 import { useWindowState } from "@/components/demo/window-state";
 import { cn } from "@/lib/utils";
 
@@ -12,7 +13,7 @@ import { cn } from "@/lib/utils";
  * Same 150ms ease-out the app animates the inset with.
  */
 export function ContentColumn({ children }: { children: React.ReactNode }) {
-  const { laneOccupied } = useWindowState();
+  const { laneOccupied, activeChat } = useWindowState();
 
   return (
     <div
@@ -20,9 +21,10 @@ export function ContentColumn({ children }: { children: React.ReactNode }) {
         // Opaque: the content surface is what the vibrant sidebar and title
         // bar are translucent *against*. Like the app's `main-content`, it
         // floats a hair inside the frame so the chrome wraps its right and
-        // bottom edges, and rounds every corner but the top-left, which
-        // joins the active tab above it.
-        "mr-1 mb-1 flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl rounded-tl-none bg-(--demo-content) pl-11 transition-[padding] duration-300 ease-out",
+        // bottom edges, and rounds every corner — except the top-left while
+        // the first tab is active, since that tab joins it there.
+        "mr-1 mb-1 flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl bg-(--demo-content) pl-11 transition-[padding] duration-300 ease-out",
+        activeChat === CHAT_TABS[0].id && "rounded-tl-none",
         laneOccupied ? "pr-67" : "pr-11"
       )}
     >

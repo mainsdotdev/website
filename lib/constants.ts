@@ -13,19 +13,19 @@ export const INTEGRATIONS = [
 
 export const USE_CASES = [
   {
-    title: "Run agents in isolated workspaces",
+    title: "Preview, annotate, and iterate live",
     description:
-      "Spin up Git-backed workspaces linked to your repos. Run AI coding agents like Claude Code, Copilot or Codex in secure, sandboxed environments.",
+      "Open your app in the built-in browser and see changes as agents work. Annotate any element to show what needs attention, watch your feedback turn into updates.",
   },
   {
-    title: "Write commits and open PRs faster",
+    title: "Review changes and give feedback in context",
     description:
-      "Generate a commit message and a clear PR description from your changes, then commit and open the pull request without leaving Mains.",
+      "Inspect diffs, leave comments on specific lines, and ask agents to explain. Keep every question tied to the code, so you can review and iterate without leaving Mains.",
   },
   {
-    title: "Preview your site as you build",
+    title: "Work with interactive apps alongside your agents",
     description:
-      "Open your local website in Mains’ built-in browser to check layouts and interactions as you work. Spot issues quickly and keep building in one place.",
+      "Open MCP apps directly in Mains and interact with their interfaces alongside your chat. Let agents create a first draft, and keep working together in one place.",
   },
 ] as const;
 

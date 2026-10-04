@@ -1,0 +1,62 @@
+---
+title: "Talk it through"
+date: 2026-10-05
+description: "Talk out loud, open apps from the rail, and review changes before they ship. Plus steer Codex mid-turn, annotate pages in the browser, and more."
+author: "Mains Team"
+tags: ["changelog", "release", "product"]
+published: true
+version: "0.15"
+image: "/changelog/0-15/cover.webp"
+---
+
+0.15 brings three new ways to work with your agents: talk it through out loud, open your apps without waiting for an agent to call them, and review changes line by line before they ship.
+
+### talk to Codex (experimental)
+
+When the composer in a Codex chat is empty, the send button becomes **Start voice chat**. Talk it through out loud, the way you would with a teammate. For bigger tasks, Codex starts a separate chat to do the work, which you can open from the sidebar, and keeps talking with you in the meantime.
+
+- **Stay in control:** Mute your microphone or end the call at any time. When you're done, you can keep going in the same chat by typing.
+- **Make it yours:** Pick a voice, hear a preview, and choose how the voice orb looks (Cloud, Sphere, or Aurora) in **Settings → Codex → Voice**.
+
+### your apps, one click away
+
+Apps from your Codex plugins no longer have to wait for an agent to call them. Open one from **Apps** in the navigation rail, and pin up to five you use most.
+
+- **Beside your chat:** An app opens next to a conversation, so you can ask about what's on screen. Whatever it hands to the conversation shows up as chips you can remove before sending.
+- **Full window:** Expand an app to fill the window and the chat comes along on top.
+
+### review your changes
+
+Open **Review** in the Changes panel to see every uncommitted change as one scrolling list of collapsible diffs. Hover a line and click to leave a comment. Your comments collect in the composer and go to the agent with your next message, each pinned to its file and line.
+
+- **Find your way:** Jump to any changed file by name, and switch between split and unified diffs.
+- **Give it room:** Expand Review to fill the window. The chat floats alongside, so you can send feedback without leaving the diff.
+
+### steer Codex mid-turn
+
+In a Codex chat, you no longer have to wait for a turn to finish. Keep typing while Codex works, and your message waits above the composer until the current turn is done.
+
+- **Steer:** If it can't wait, click **Steer** to send a queued message into the turn that's already running.
+- **Rearrange:** Edit or remove queued messages, or drag them into a new order (`⌥↑` and `⌥↓` work too).
+- **Nothing sneaks out:** Stopping a run pauses the queue until you resume it.
+
+### point at what you mean
+
+Click **Annotate browser** in the in-app browser, then click the parts of the page you're talking about: a button, a heading, a whole card. Add a comment and choose **Add to chat**. The agent gets a highlighted screenshot along with exactly which elements you picked, so "make this bigger" no longer needs a description of what "this" is.
+
+You can add several annotations before sending, and edit or remove any of them from the composer.
+
+### ready on first launch
+
+Claude Code and GitHub Copilot now come with Mains, so there's nothing extra to install. Onboarding shows where each agent stands and lets you sign in right there.
+
+### smaller changes
+
+- **Chats remember their settings:** Model, effort, permissions, and other toggles stay with each chat. New chats start from your defaults.
+- **Pick where a new chat starts:** Choose the workspace or project right above the composer.
+- **Sidebar previews:** Hover a chat or workspace for a preview card with quick actions.
+- **Copilot streams its replies:** Answers appear as they're written, and Fast mode speeds up the Auto model.
+- **Every effort level:** Codex models offer every effort level they support, as soon as they support it.
+- **Steadier Cursor:** Each chat gets its own connection to Mains tools, and a connection error no longer looks like a finished reply.
+- **Clearer forms and approvals:** Forms from MCP servers check your answers before sending, and Copilot's approval requests now look like everyone else's.
+- **Refreshed icons and buttons** across the app.

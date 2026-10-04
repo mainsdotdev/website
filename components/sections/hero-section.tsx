@@ -91,7 +91,7 @@ function CompanionNote({ platform }: { platform: Platform }) {
           rel="noopener noreferrer"
           className="text-primary-200 underline underline-offset-4 transition-colors hover:text-white"
         >
-          Get it on the App Store
+          Available on the App Store
         </Link>
       )}
     </motion.p>
@@ -121,7 +121,7 @@ function HeroActions({ platform }: { platform: Platform }) {
               ariaLabel="iPhone app coming soon"
               className={cn(PILL_CLASS_NAME, "cursor-default bg-primary-900/50 text-primary-500")}
             >
-              <Apple width={16} height={16}  />
+              <Apple width={16} height={16} />
               <span>iPhone — Coming Soon</span>
             </ShortcutPillButton>
           )
@@ -194,6 +194,8 @@ export function HeroSection({
 
             <motion.div
               {...FADE_IN_BLUR_UP_DELAY(0.75)}
+              // The voice orb docks in this window once it is centred on screen.
+              data-orb-frame
               className="pointer-events-auto relative z-20 mt-14 w-full max-w-6xl overflow-hidden rounded-xl border border-primary-700/40 bg-primary-900 shadow-[0_32px_80px_-24px_var(--demo-shadow)]"
             >
               {appWindow}

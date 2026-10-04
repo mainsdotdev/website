@@ -1,7 +1,7 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { Apple } from "@/components/icons";
 import { MAINS_APP_STORE_URL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -10,12 +10,14 @@ type AppStoreButtonProps = {
 };
 
 /**
- * Apple's App Store badge, built in markup rather than shipped as artwork: it
- * stays crisp at any size, inherits the site's font, and costs no request.
+ * Apple's official "Download on the App Store" badge, used as supplied:
+ * Apple's marketing guidelines forbid recreating, recoloring or animating it,
+ * so no hover effect either. The preferred black badge — its gray rim keeps
+ * its edge on both themes. 44px tall to match the pills it sits beside, above
+ * Apple's 40px onscreen minimum; the rows' 12–16px gaps clear the required
+ * quarter-height of clear space.
  *
- * The white variant, so the lockup keeps its edge on the page's near-black
- * ground the way the .dmg pill does. Height matches the pills it sits beside,
- * and clears Apple's 40px minimum at both breakpoints.
+ * Source: https://developer.apple.com/app-store/marketing/guidelines/
  */
 export function AppStoreButton({ className }: AppStoreButtonProps) {
   // No listing yet — render nothing rather than a badge that leads nowhere.
@@ -26,23 +28,19 @@ export function AppStoreButton({ className }: AppStoreButtonProps) {
       href={MAINS_APP_STORE_URL}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Download Mains for iPhone on the App Store"
       className={cn(
-        "inline-flex h-11 shrink-0 items-center gap-2.5 rounded-full bg-white px-3.5 text-black",
-        "transition-colors hover:bg-primary-100",
-        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/30",
+        "inline-flex shrink-0 rounded-[9px]",
+        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500",
         className
       )}
     >
-      {/* Proportions taken off Apple's own badge: the mark is ~2/3 the badge
-          height, the two lines ~19% and ~40% of it. */}
-      <Apple fill="currentColor" className="h-6 w-auto" />
-      <span className="flex flex-col items-start">
-        <span className="text-[9px] leading-none font-normal">Download on the</span>
-        <span className="text-[15px] leading-tight font-medium tracking-tight">
-          App Store
-        </span>
-      </span>
+      <Image
+        src="/app-store-badge.svg"
+        alt="Download Mains on the App Store"
+        width={132}
+        height={44}
+        className="h-11 w-auto"
+      />
     </Link>
   );
 }
