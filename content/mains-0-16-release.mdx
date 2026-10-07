@@ -1,0 +1,52 @@
+---
+title: "Lighter on memory"
+date: 2026-10-06
+description: "Long chats open with up to 43% less memory, and browser tabs rest when you're not using them. Plus screenshots and videos in pull requests, live agent activity, and a new app icon."
+author: "Mains Team"
+tags: ["changelog", "release", "product"]
+published: true
+version: "0.16"
+image: "/changelog/0-16/cover.webp"
+---
+
+0.16 is a performance release. We rebuilt how Mains holds a conversation, so long chats take a fraction of the memory they used to, and browser tabs and apps now rest when you're not looking at them.
+
+### long chats, less memory
+
+Mains used to keep every message, tool call, and image of a conversation on screen at once, even the parts you'd scrolled far past. Now it loads a chat in pages and only draws what you can see. Long tool outputs wait until you open them, and images in the transcript load as small previews, with a larger version loading only when you open one.
+
+We measured the chat window on snapshots of two real conversations, taking the median of three runs:
+
+- **A long coding chat** (26 prompts, 566 tool calls) opens with **43% less memory**: 156 MiB instead of 275 MiB. The page holds 280 elements instead of almost 12,000. After scrolling through the whole chat, it still uses 21% less.
+- **A chat with images** (11 prompts, 280 tool calls, 5 images) opens with **30% less memory**: 160 MiB instead of 228 MiB. After scrolling through it, the gap grows to **49%**: 182 MiB instead of 361 MiB.
+
+None of this changes how a chat reads. Scroll up and earlier messages load in, and **Jump to latest** brings you back to the bottom.
+
+### tabs and apps that rest
+
+Only your three most recently used browser tabs stay live. Older ones go to sleep and wake up where you left them, with the same scroll position, back and forward history, and anything you typed into a form. The tab you're looking at never sleeps, and a page that asks you to keep unsaved changes stays awake too.
+
+In our test with six heavy pages open, the browser used **44% less memory**: 418 MiB instead of 749 MiB. How much you save depends on the pages you have open.
+
+Apps work the same way. An app that's been hidden for two minutes saves its state and steps aside, then reopens in the same conversation when you come back to it.
+
+*These figures cover the window that shows the chat and the in-app browser, not the agents themselves or Mains as a whole.*
+
+### also in 0.16
+
+- **Screenshots and videos in your PRs:** When you create a pull request, the description is now a Markdown editor with a formatting toolbar and a **Preview** tab. Paste, drop, or attach images (up to 10 MB) and videos (up to 100 MB), and they upload when you create the PR. Attaching media needs GitHub CLI 2.99 or newer.
+- **Better drafts:** Generated titles, descriptions, and commit messages now account for every commit on your branch and new files that aren't tracked yet.
+- **See what the agent is doing:** While a turn runs, the chat shows the actual step, like **Reading** `app.tsx` or **Searching the web**, instead of a stock word.
+- **Context compaction, visible:** When an agent compacts a long conversation, you'll see **Compacting context…** while it happens and a divider where it finished.
+- **Attachments that stick around:** Images and files you attach are saved with the chat. They carry over when you fork, open at full size, download as the original file, and show up on your iPhone too.
+- **Smoother streaming:** Replies fade in word by word. Math renders as it arrives, half-written links stay hidden until they're complete, and an interrupted report keeps what it had.
+- **A new app icon:** Redrawn in Icon Composer. Keep the default and, on macOS 26, it follows your dark, clear, and tinted icon settings.
+
+### smaller changes
+
+- **Clickable chips:** Click a skill in the composer to open its `SKILL.md` or its plugin page, and click a file to open the file.
+- **Front matter, tidied up:** Markdown files show their front matter as a metadata table instead of raw YAML.
+- **Settings that behave:** Opening an old chat no longer changes the defaults for new ones, and settings you change in the floating chat stick.
+- **Faster Review navigation:** Jumping to a file in Review lands instantly, even in large diffs.
+- **Steadier Cursor:** A finished reply is no longer marked as failed when a connection notice arrives after it.
+- **Two more icon colors:** Red and Blue join the palette for sidebar icons.

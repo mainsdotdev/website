@@ -5,16 +5,16 @@ import { motion, useReducedMotion, useSpring } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Attach } from "@/components/icons";
-import releaseArtwork from "@/public/changelog/0-15/cover.webp";
+import releaseArtwork from "@/public/changelog/0-16/cover.webp";
 
-// Homepage card for 0.15. The release note names Codex; the card stays generic.
+// Homepage card for the latest release.
 const RELEASE_NOTE = {
-  version: "0.15",
-  title: "Talk it through",
-  href: "/changelog#release-0-15",
+  version: "0.16",
+  title: "Lighter on memory",
+  href: "/changelog#release-0-16",
   paragraphs: [
-    "Talk out loud and steer it while it works.",
-    "Open apps from the rail and review changes line by line.",
+    "Long chats open with up to 43% less memory.",
+    "Tabs and apps rest when you're not using them.",
   ],
 };
 
@@ -89,7 +89,7 @@ export function HeroPaperNote({
               className="absolute inset-0 flex flex-col overflow-hidden rounded-lg border border-primary-700/50 bg-primary-900 p-2 pb-0 shadow-[0_24px_50px_-18px_var(--demo-shadow)]"
             >
               <span className="block text-[8px]   text-primary-400">
-                MAINS {RELEASE_NOTE.version} <span aria-hidden="true" className="mx-1 text-primary-500">·</span> NO. 015
+                MAINS {RELEASE_NOTE.version} <span aria-hidden="true" className="mx-1 text-primary-500">·</span> NO. 016
               </span>
               <span className="mt-3.5 block  text-lg leading-[1.02] font-medium text-primary-50 xl:text-xl">
                 {RELEASE_NOTE.title}
