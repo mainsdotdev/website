@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { ambientVoiceLevels, VoiceOrb } from "@/components/voice-orb";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
@@ -18,8 +18,9 @@ import { cn } from "@/lib/utils";
  * at a stop; script only supplies the in-between positions. One orb means one
  * WebGL context, and never two orbs on screen at once.
  *
- * Desktop widths only (the hero orb is hidden below `lg`), and never with
- * reduced motion: every stop then draws its own orb in place.
+ * Desktop widths only (the hero orb is hidden below `lg`), never with reduced
+ * motion, and never inside `NoOrbFlight`: every stop then draws its own orb in
+ * place.
  */
 
 /** The stops, in the order the orb visits them down the page. */
@@ -51,10 +52,21 @@ const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
 const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
+const OrbFlightContext = createContext(true);
+
+/**
+ * For stops on a page without the hero orb, like the developer page's use
+ * cases: there is nothing to fly from, so they draw the orb in place.
+ */
+export function NoOrbFlight({ children }: { children: React.ReactNode }) {
+  return <OrbFlightContext value={false}>{children}</OrbFlightContext>;
+}
+
 export function useOrbFlight() {
+  const enabled = useContext(OrbFlightContext);
   const wide = useMediaQuery("(min-width: 1024px)");
   const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
-  return wide && !reducedMotion;
+  return enabled && wide && !reducedMotion;
 }
 
 /** Hovering the hero end makes the agent "answer": the orb swirls faster. */

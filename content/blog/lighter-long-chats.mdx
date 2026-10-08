@@ -1,0 +1,29 @@
+---
+title: "How we made long chats lighter"
+date: 2026-10-08
+description: "A long coding chat used to keep thousands of elements on screen. Here is how Mains 0.16 pages the transcript and rests idle tabs, and what it saved."
+image: "/changelog/0-16/cover.webp"
+author: "Mains Team"
+tags: ["engineering", "performance"]
+# A placeholder to build the blog around; drafts only show while developing.
+published: false
+---
+
+A chat in Mains can run for hours. Every prompt, tool call, and image an agent produces lands in the transcript, and until 0.16 all of it stayed on screen at once, even the parts you had scrolled far past.
+
+## Drawing only what you can see
+
+Mains now loads a chat in pages and only draws what is in view. Scroll up and earlier messages load in; **Jump to latest** brings you back to the bottom. Long tool outputs wait until you open them, and images in the transcript load as small previews, with the full-size version loading only when you open one.
+
+## Letting tabs rest
+
+The in-app browser keeps only your three most recently used tabs live. Older ones go to sleep and wake up where you left them, with the same scroll position, history, and anything you typed into a form. The tab you are looking at never sleeps, and a page that asks to keep unsaved changes stays awake too.
+
+## What it saved
+
+We measured the chat window on snapshots of real conversations, taking the median of three runs:
+
+- **A long coding chat** (26 prompts, 566 tool calls) opens with **43% less memory**: 156 MiB instead of 275 MiB. The page holds 280 elements instead of almost 12,000.
+- **Six heavy pages** in the in-app browser use **44% less memory**: 418 MiB instead of 749 MiB.
+
+These figures cover the window that shows the chat and the in-app browser, not the agents themselves or Mains as a whole.

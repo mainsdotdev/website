@@ -33,6 +33,18 @@ const PAGE: BrowserPage = {
   height: 985,
 };
 
+/**
+ * The developer home page, captured in its dark theme only — the site's
+ * default. Its hero has no orb, so this page gets no orb stop.
+ */
+const DEV_PAGE: BrowserPage = {
+  light: "/demos/browser-mains-dev.webp",
+  dark: "/demos/browser-mains-dev.webp",
+  alt: "The mains.dev developer home page open in Mains' built-in browser",
+  width: 1600,
+  height: 985,
+};
+
 function TitleBar() {
   return (
     <div className="flex shrink-0 items-end">
@@ -145,7 +157,18 @@ function Transcript() {
 const DESIGN_WIDTH = 1152;
 const DESIGN_HEIGHT = 648;
 
-export function BrowserDemo({ className }: { className?: string }) {
+/**
+ * `page` picks the site the browser shows: the everyday page, whose hero orb
+ * is a stop on the flying orb's route, or the developer home page.
+ */
+export function BrowserDemo({
+  className,
+  page = "everyday",
+}: {
+  className?: string;
+  page?: "everyday" | "developer";
+}) {
+  const developer = page === "developer";
   return (
     <ScaleToFit
       designWidth={DESIGN_WIDTH}
@@ -163,15 +186,17 @@ export function BrowserDemo({ className }: { className?: string }) {
           <div className="flex min-h-0 flex-1">
             <ProjectSidebar />
 
-            <BrowserPanel url="https://localhost:3000/" page={PAGE} className="mr-1 mb-1 rounded-tl-none">
+            <BrowserPanel url="https://localhost:3000/" page={developer ? DEV_PAGE : PAGE} className="mr-1 mb-1 rounded-tl-none">
               {/* Where the hero orb sits in the page: the screenshot is taken
                   without it, so the flying orb stands in. Laid out on the
                   image's own box (it fills the page area by width, top first). */}
-              <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 aspect-[1440/886]">
-                <div className="absolute aspect-square" style={PAGE_ORB}>
-                  <OrbFlightSlot stop="case-browser" className="size-full" />
+              {!developer && (
+                <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 aspect-[1440/886]">
+                  <div className="absolute aspect-square" style={PAGE_ORB}>
+                    <OrbFlightSlot stop="case-browser" className="size-full" />
+                  </div>
                 </div>
-              </div>
+              )}
               <FloatingChat title="Optimize Homepage Media" composer={<FloatingChatComposer />}>
                 <Transcript />
               </FloatingChat>
@@ -181,4 +206,9 @@ export function BrowserDemo({ className }: { className?: string }) {
       </div>
     </ScaleToFit>
   );
+}
+
+/** The browser use case on the developer home page, previewing that page. */
+export function DevBrowserDemo({ className }: { className?: string }) {
+  return <BrowserDemo className={className} page="developer" />;
 }

@@ -1,4 +1,4 @@
-import { getAllPosts, getPostBySlug } from '@/lib/posts';
+import { getAllPosts, getPostBySlug, isPostVisible } from '@/lib/posts';
 import { getImageSize } from '@/lib/image-size';
 import { SITE_SOCIAL_IMAGE } from '@/lib/social-image';
 import { notFound } from 'next/navigation';
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = getPostBySlug(slug);
 
-  if (!post || !post.published) {
+  if (!post || !isPostVisible(post)) {
     return {
       title: 'Post Not Found',
       robots: {
@@ -73,7 +73,7 @@ export default async function BlogPost({ params }: Props) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
 
-  if (!post || !post.published) {
+  if (!post || !isPostVisible(post)) {
     notFound();
   }
 

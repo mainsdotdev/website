@@ -11,13 +11,13 @@
     "background_color": "#0c0c0c",
     "icons": [
       {
-        "src": "/icons/android-chrome-192x192.png?v=382ccaebc65e",
+        "src": "/icons/android-chrome-192x192.png?v=00e158b68b0c",
         "type": "image/png",
         "sizes": "192x192",
         "purpose": "any"
       },
       {
-        "src": "/icons/android-chrome-512x512.png?v=382ccaebc65e",
+        "src": "/icons/android-chrome-512x512.png?v=00e158b68b0c",
         "type": "image/png",
         "sizes": "512x512",
         "purpose": "any maskable"

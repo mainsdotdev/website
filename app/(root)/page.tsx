@@ -5,11 +5,26 @@ import {
   MAINS_GITHUB_REPO_URL,
   MAINS_VERSION,
 } from "@/lib/constants";
-import { getAllPosts } from "@/lib/posts";
+import { getBlogPosts } from "@/lib/posts";
 import { SITE_SOCIAL_IMAGE } from "@/lib/social-image";
-import { AppWindow } from "@/components/demo/app-window";
-import { HeroReleaseCanvas } from "@/components/hero-release-canvas";
-import { HomeClient } from "./home-client";
+import {
+  BlueprintBackdrop,
+  BlueprintColumn,
+  BlueprintGap,
+  BlueprintGridPanel,
+  BlueprintRule,
+} from "@/components/blueprint";
+import { DevAppWindow } from "@/components/demo/dev-app-window";
+import { PhoneChat } from "@/components/demo/phone-chat";
+import { GlobalDownloadGithubShortcuts } from "@/components/global-download-github-shortcuts";
+import { NoOrbFlight } from "@/components/orb-flight";
+import { CtaSection } from "@/components/sections/cta-section";
+import { DevBlogSection } from "@/components/sections/dev-blog-section";
+import { DevFeaturesSection } from "@/components/sections/dev-features-section";
+import { DevHeroSection } from "@/components/sections/dev-hero-section";
+import { DevThemesSection } from "@/components/sections/dev-themes-section";
+import { DevUseCasesSection } from "@/components/sections/dev-use-cases-section";
+import { LocalFirstSection } from "@/components/sections/local-first-section";
 
 export const metadata: Metadata = {
   alternates: {
@@ -18,10 +33,7 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  const changelogPosts = getAllPosts()
-    .filter((post) => post.published && post.tags?.includes('changelog'))
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 1);
+  const blogPosts = getBlogPosts();
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -71,11 +83,54 @@ export default function Home() {
   return (
     <>
       <StructuredData data={structuredData} />
-      <HomeClient
-        changelogPosts={changelogPosts}
-        appWindow={<AppWindow />}
-        releaseCanvas={<HeroReleaseCanvas />}
-      />
+      {/* `isolate` keeps the backdrop under the content but above the page
+          background; `overflow-x-clip` trims the page-wide blueprint rules. */}
+      <main className="relative isolate min-h-screen overflow-x-clip pb-24">
+        <GlobalDownloadGithubShortcuts />
+        <BlueprintBackdrop />
+        <BlueprintColumn>
+          <DevHeroSection
+            appWindow={<DevAppWindow />}
+            appWindowAside={
+              // Against the window's bottom-right corner, dropping a little below
+              // it. It overlaps only the gutter beside the chat column (~14% of the
+              // window) and grows into the page margin as the viewport allows.
+              // Below `lg` the window fills the width, so there is no edge to sit on.
+              <PhoneChat className="pointer-events-none absolute -right-[3%] -bottom-[6%] hidden w-[17%] lg:block xl:-right-[5%] xl:w-[19%] 2xl:-right-[10%] 2xl:w-[24%]" />
+            }
+          />
+
+          <BlueprintGap />
+          {/* There is no hero orb here to fly into the mockups, so each draws
+              its own. */}
+          <NoOrbFlight>
+            <DevUseCasesSection shipMockup={<DevAppWindow sessionPanel designHeight={648} />} />
+          </NoOrbFlight>
+
+          <BlueprintGap />
+          <DevFeaturesSection />
+
+          <BlueprintGap />
+          <DevThemesSection appWindow={<DevAppWindow />} />
+
+          <BlueprintGap />
+          <LocalFirstSection compact />
+
+          {/* Drafts only show while developing, so a build may have no posts. */}
+          {blogPosts.length > 0 && (
+            <>
+              <BlueprintGap />
+              <DevBlogSection posts={blogPosts} />
+            </>
+          )}
+
+          <BlueprintGap />
+          <BlueprintGridPanel>
+            <CtaSection orb={false} />
+          </BlueprintGridPanel>
+          <BlueprintRule />
+        </BlueprintColumn>
+      </main>
     </>
   );
 }

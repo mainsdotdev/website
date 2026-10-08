@@ -55,14 +55,14 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.ico?v=382ccaebc65e", sizes: "16x16 32x32 48x48 64x64", type: "image/x-icon" },
-      { url: "/icons/favicon-96x96.png?v=382ccaebc65e", sizes: "96x96", type: "image/png" },
-      { url: "/icons/android-chrome-192x192.png?v=382ccaebc65e", sizes: "192x192", type: "image/png" },
-      { url: "/icons/android-chrome-512x512.png?v=382ccaebc65e", sizes: "512x512", type: "image/png" },
+      { url: "/favicon.ico?v=00e158b68b0c", sizes: "16x16 32x32 48x48 64x64", type: "image/x-icon" },
+      { url: "/icons/favicon-96x96.png?v=00e158b68b0c", sizes: "96x96", type: "image/png" },
+      { url: "/icons/android-chrome-192x192.png?v=00e158b68b0c", sizes: "192x192", type: "image/png" },
+      { url: "/icons/android-chrome-512x512.png?v=00e158b68b0c", sizes: "512x512", type: "image/png" },
     ],
-    apple: "/icons/apple-touch-icon.png?v=382ccaebc65e",
+    apple: "/icons/apple-touch-icon.png?v=00e158b68b0c",
   },
-  manifest: "/manifest.json?v=382ccaebc65e",
+  manifest: "/manifest.json?v=00e158b68b0c",
 };
 
 export default function RootLayout({
@@ -71,9 +71,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light" className="overflow-x-hidden">
+    <html lang="en" data-theme="dark" className="overflow-x-hidden">
       <head>
-        <meta name="theme-color" content="#fffcf0" />
+        <meta name="theme-color" content="#0c0c0c" />
       </head>
       <body
         className={`mx-auto scroll-smooth bg-primary-950 antialiased ${schibstedGrotesk.variable} ${schibstedGrotesk.className}`}

@@ -18,12 +18,12 @@ Mains landing page — a Next.js 16 marketing site for an AI coding agent deskto
 **Next.js 16 App Router** with a `(root)` route group. All pages live under `app/(root)/`.
 
 **Server/Client split pattern:** Page entry points are server components that fetch data (e.g. `getAllPosts()`), then pass it to `"use client"` wrappers for interactivity. Examples:
-- `app/(root)/page.tsx` (server) → `home-client.tsx` (client)
+- `app/(root)/page.tsx` (server) → client section components, with server-rendered mockups passed in as props
 - `app/(root)/blog/page.tsx` (server) → `blog-page-client.tsx` (client)
 
 **Blog/Content system:** File-based MDX in `content/` directory. `lib/posts.ts` reads files with `gray-matter` for frontmatter and `next-mdx-remote/rsc` renders them server-side. Blog posts use `generateStaticParams` for static generation. The `Post` type is in `lib/types.ts` (separate from `lib/posts.ts` to avoid pulling `fs` into client bundles).
 
-**Sections architecture:** The home page is composed of section components in `components/sections/` (hero, use-cases, integrations, local-first, changelog, cta, status). Each section is self-contained with its own animations.
+**Sections architecture:** Pages are composed of section components in `components/sections/`. Each section is self-contained with its own animations. The home page (developer-focused) lays its `dev-*` sections out on the blueprint grid from `components/blueprint.tsx`; `/work` (everyday) uses the original hero, use-cases and related sections.
 
 **Demo components:** Interactive UI mockups in `components/demo/` (app-window, workspace-list, file-explorer, issues-list) used inside section components to showcase the product.
 

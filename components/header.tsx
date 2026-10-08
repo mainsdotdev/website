@@ -1,29 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useAnimate, useReducedMotion } from "framer-motion";
 import { Apple, Mains } from "@/components/icons";
-import {
-  MAINS_APP_STORE_URL,
-  MAINS_DOCS_URL,
-  MAINS_DOWNLOAD_DMG_URL,
-} from "@/lib/constants";
+import { MAINS_APP_STORE_URL, MAINS_DOWNLOAD_DMG_URL } from "@/lib/constants";
 import { usePlatformDetection, type Platform } from "@/hooks/usePlatformDetection";
 import { cn } from "@/lib/utils";
-import headerArt from "@/public/logo-art/mains-risograph-header.webp";
 
 /**
  * Narrow screens can't fit the whole row beside the wordmark and download
- * pill, so the later links join as the bar widens — Privacy and Support are
- * always one scroll away in the footer.
+ * pill, so the later links join as the bar widens — Privacy is always one
+ * scroll away in the footer.
  */
 const NAV_LINKS = [
-  { label: "Changelog", href: "/changelog" },
-  { label: "Docs", href: MAINS_DOCS_URL, external: true, className: "hidden sm:inline" },
+  { label: "Everyday", href: "/work" },
+  { label: "Atlas", href: "/atlas", className: "hidden sm:inline" },
+  { label: "Orbit", href: "/orbit", className: "hidden md:inline" },
+  { label: "Changelog", href: "/changelog", className: "hidden md:inline" },
   { label: "Privacy", href: "/privacy", className: "hidden md:inline" },
-  { label: "Support", href: "/support", className: "hidden md:inline" },
 ] as const satisfies readonly {
   label: string;
   href: string;
@@ -98,81 +92,7 @@ export default function Header() {
 }
 
 function HeaderIcon() {
-  const [scope, animate] = useAnimate<HTMLSpanElement>();
-  const imageRef = useRef<HTMLImageElement>(null);
-  const reducedMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (reducedMotion === null) return;
-
-    let cancelled = false;
-    let startTimer: ReturnType<typeof setTimeout> | undefined;
-
-    async function reveal() {
-      // Keep the original icon visible until the replacement can be painted.
-      try {
-        await imageRef.current?.decode();
-      } catch {
-        return;
-      }
-      if (cancelled) return;
-
-      startTimer = setTimeout(async () => {
-        if (cancelled || !scope.current) return;
-
-        const fade = { duration: reducedMotion ? 0.15 : 0.3 };
-        await Promise.all([
-          animate("[data-logo-original]", { opacity: 0 }, fade),
-          animate("[data-logo-risograph]", { opacity: 1 }, fade),
-          ...(reducedMotion ? [] : [
-            animate(scope.current, { scale: 1.5, rotate: -30 }, {
-              type: "spring", duration: 0.45, bounce: 0,
-            }),
-          ]),
-        ]);
-
-        if (!cancelled && !reducedMotion) {
-          await animate(scope.current, { scale: 1, rotate: 0 }, {
-            type: "spring", duration: 0.55, bounce: 0, delay: 0.15,
-          });
-        }
-      }, 120);
-    }
-
-    // Unrelated images and videos should not delay the already-decoded logo.
-    void reveal();
-
-    return () => {
-      cancelled = true;
-      clearTimeout(startTimer);
-    };
-  }, [animate, reducedMotion, scope]);
-
-  return (
-    <span
-      ref={scope}
-      aria-hidden="true"
-      className="pointer-events-none relative inline-block h-5 aspect-720/666 shrink-0"
-    >
-      <span data-logo-original className="absolute inset-0">
-        <Mains className="h-full w-full" />
-      </span>
-      <span data-logo-risograph className="absolute inset-0" style={{ opacity: 0 }}>
-        <Image
-          ref={imageRef}
-          src={headerArt}
-          alt=""
-          fill
-          sizes="24px"
-          loading="eager"
-          fetchPriority="high"
-          unoptimized
-          draggable={false}
-          className="object-contain"
-        />
-      </span>
-    </span>
-  );
+  return <Mains aria-hidden="true" className="h-4 w-auto shrink-0" />;
 }
 
 function DownloadPill({ platform }: { platform: Platform }) {

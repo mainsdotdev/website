@@ -6,6 +6,7 @@ import {
   Cursor,
   Ellipsis,
   Figma,
+  Globe,
   Home,
   Linear,
   Plugin,
@@ -38,6 +39,7 @@ type RailItem = {
 const RAIL_ITEMS: RailItem[] = [
   { label: "Home", icon: Home, active: true },
   { label: "Search Mains", icon: Search },
+  { label: "Atlas", icon: Globe },
   { label: "Plugins", icon: Plugin, iconClassName: "-rotate-45" },
   { label: "Tasks", icon: Task },
   { label: "Pulse", icon: Clock },

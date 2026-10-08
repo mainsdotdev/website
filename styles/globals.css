@@ -47,9 +47,12 @@
    including the application previews built from those same classes. */
 :root {
   color-scheme: dark;
-  --demo-chrome: #0d0d0d;
-  --demo-chrome-translucent: rgb(13 13 13 / 58%);
-  --demo-content: #0d0d0d;
+  /* The app's dark frame (`--glass-fill-surface`, primary-900) around its
+     content (primary-950). The frame is opaque unless the user turns on
+     translucency, so the mockups draw it opaque too. */
+  --demo-chrome: #141414;
+  --demo-chrome-translucent: #141414;
+  --demo-content: #0c0c0c;
   --demo-shadow: rgb(0 0 0 / 45%);
   /* Code in the mockups: lib/code-theme.ts's Flexoki colours, per theme. */
   --syn-keyword: #879a39;

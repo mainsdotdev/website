@@ -11,17 +11,76 @@ import { MAINS_APP_STORE_URL, MAINS_GITHUB_REPO_URL } from "@/lib/constants";
 import { usePlatformDetection } from "@/hooks/usePlatformDetection";
 import { cn } from "@/lib/utils";
 
-export function CtaSection() {
+/**
+ * The download button for the visitor's platform and View Source, with their
+ * D and C shortcuts — the closing sections' actions.
+ */
+export function CtaActions({ className }: { className?: string }) {
   const { platform } = usePlatformDetection();
 
   const pill =
     "inline-flex max-w-full min-w-0 items-center gap-2 rounded-full md:px-6 md:py-3 md:text-sm px-3 py-3 text-xs font-medium transition-colors";
 
   return (
+    <div className={cn("flex flex-wrap items-center justify-center gap-3", className)}>
+      {platform === "mac" ? (
+        <MacDownloadButton
+          pillClassName={pill}
+          shortcutClassName="bg-primary-800 text-primary-50"
+        />
+      ) : platform === "ios" ? (
+        MAINS_APP_STORE_URL ? (
+          <AppStoreButton />
+        ) : (
+          <ShortcutPillButton
+            ariaLabel="iPhone app coming soon"
+            className={cn(pill, "cursor-default text-primary-500 bg-primary-900/50")}
+          >
+            <Apple width={16} height={16} />
+            <span>iPhone — Coming Soon</span>
+          </ShortcutPillButton>
+        )
+      ) : (
+        <ShortcutPillButton
+          ariaLabel="Windows version coming soon"
+          className={cn(
+            pill,
+            "cursor-default text-primary-500 bg-primary-900/50"
+          )}
+        >
+          <Windows width={16} height={16} />
+          <span>Windows — Coming Soon</span>
+        </ShortcutPillButton>
+      )}
+
+      <ShortcutPillButton
+        href={MAINS_GITHUB_REPO_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        kbdShortcut="github"
+        ariaLabel="View source on GitHub (shortcut C)"
+        className={cn(
+          pill,
+          "text-white bg-primary-900 ring-1 ring-primary-700/40",
+          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/30"
+        )}
+        shortcut="C"
+        shortcutClassName="bg-primary-850 text-white"
+      >
+        <Github width={16} height={16} />
+        <span>View Source</span>
+      </ShortcutPillButton>
+    </div>
+  );
+}
+
+/** `orb: false` leaves out the voice orb, as the developer page does. */
+export function CtaSection({ orb = true }: { orb?: boolean } = {}) {
+  return (
     <div className=" ">
       <section className="py-24 max-w-3xl mx-auto px-6 text-center ">
         <motion.div {...FADE_IN_UP} className="flex flex-col items-center gap-6">
-          <CtaVoiceOrb />
+          {orb && <CtaVoiceOrb />}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-white tracking-tight leading-snug font-sans">
             Mains for what&apos;s next.
           </h2>
@@ -30,55 +89,7 @@ export function CtaSection() {
             forward. Mains brings your chats and tools together so you can go
             from idea to result.
           </p>
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-            {platform === "mac" ? (
-              <MacDownloadButton
-                pillClassName={pill}
-                shortcutClassName="bg-primary-800 text-primary-50"
-              />
-            ) : platform === "ios" ? (
-              MAINS_APP_STORE_URL ? (
-                <AppStoreButton />
-              ) : (
-                <ShortcutPillButton
-                  ariaLabel="iPhone app coming soon"
-                  className={cn(pill, "cursor-default text-primary-500 bg-primary-900/50")}
-                >
-                  <Apple width={16} height={16} />
-                  <span>iPhone — Coming Soon</span>
-                </ShortcutPillButton>
-              )
-            ) : (
-              <ShortcutPillButton
-                ariaLabel="Windows version coming soon"
-                className={cn(
-                  pill,
-                  "cursor-default text-primary-500 bg-primary-900/50"
-                )}
-              >
-                <Windows width={16} height={16} />
-                <span>Windows — Coming Soon</span>
-              </ShortcutPillButton>
-            )}
-
-            <ShortcutPillButton
-              href={MAINS_GITHUB_REPO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              kbdShortcut="github"
-              ariaLabel="View source on GitHub (shortcut C)"
-              className={cn(
-                pill,
-                "text-white bg-primary-900 ring-1 ring-primary-700/40",
-                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/30"
-              )}
-              shortcut="C"
-              shortcutClassName="bg-primary-850 text-white"
-            >
-              <Github width={16} height={16} />
-              <span>View Source</span>
-            </ShortcutPillButton>
-          </div>
+          <CtaActions className="mt-4" />
         </motion.div>
       </section>
     </div>

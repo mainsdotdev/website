@@ -5,11 +5,10 @@ import { MarkdownMessage } from "@/components/demo/markdown-message";
 import {
   ArrowUp,
   Attach,
-  BoltFill,
-  Branch,
   ChevronDown,
   Clipboard,
   Codex,
+  Fork,
   Github,
   Microphone,
   Shield,
@@ -30,7 +29,7 @@ import { OrbFlightSlot } from "@/components/orb-flight";
 
 const CODE = "rounded bg-primary-50/10 px-1 py-0.5 text-[0.9em] text-primary-100";
 
-function UserTurn({
+export function UserTurn({
   children,
   fromVoice = false,
 }: {
@@ -52,7 +51,7 @@ function UserTurn({
   );
 }
 
-function AgentTurn({ children }: { children: React.ReactNode }) {
+export function AgentTurn({ children }: { children: React.ReactNode }) {
   return <p className="text-[10px] leading-5 text-primary-200">{children}</p>;
 }
 
@@ -97,23 +96,48 @@ function DelegatedChat({ chat, status }: { chat: ChatTabId; status: string }) {
 }
 
 /** Duration and the copy/fork actions under a finished reply. */
-function TurnMeta({ duration }: { duration: string }) {
+export function TurnMeta({ duration }: { duration: string }) {
   return (
     <div className="flex items-center gap-2 text-[10px] text-primary-400">
       <span>{duration}</span>
       <span>·</span>
       <Clipboard className="size-3" />
-      <Branch className="size-3" />
+      <Fork className="size-3" />
     </div>
   );
 }
+
+/** The model and permission pickers of the voice chats' composer. */
+const VOICE_CHAT_CONTROLS = (
+  <>
+    <span className="flex items-center gap-1 text-[10px]">
+      <Codex className="size-3" />
+      <span className="text-primary-50">GPT 6.1 Sol</span>
+      <span className="text-primary-400">Medium</span>
+      <ChevronDown className="size-2.5 text-primary-400" fill="currentColor" />
+    </span>
+
+    <span className="flex items-center gap-1 text-[10px] text-amber-500">
+      <Shield className="size-3" />
+      <span>Full Access</span>
+      <ChevronDown className="size-2.5" fill="currentColor" />
+    </span>
+  </>
+);
 
 /**
  * The workspace composer, tracking the app's `RichInputForm` + `InputToolbar`.
  * While a call is live the primary button is Stop, with the microphone beside
  * it; in an idle Codex chat with nothing typed, it is Start voice chat.
+ * `controls` are the pickers after the attach button.
  */
-function Composer({ voice }: { voice: "live" | "idle" }) {
+export function Composer({
+  voice,
+  controls = VOICE_CHAT_CONTROLS,
+}: {
+  voice: "live" | "idle";
+  controls?: React.ReactNode;
+}) {
   return (
     <div className="mb-4 shrink-0 rounded-[18px] pb-1.5 glass-card bg-primary-900/20">
       <div className="relative pt-1 pr-16 pb-0.5 pl-3.5">
@@ -128,19 +152,7 @@ function Composer({ voice }: { voice: "live" | "idle" }) {
       <div className="flex items-center justify-between gap-2 px-2 pt-3">
         <div className="ml-1 flex min-w-0 items-center gap-2.5 pr-2 text-primary-200">
           <Attach className="size-3 shrink-0" />
-
-          <span className="flex items-center gap-1 text-[10px]">
-            <Codex className="size-3" />
-            <span className="text-primary-50">GPT 6.1 Sol</span>
-            <span className="text-primary-400">Medium</span>
-            <ChevronDown className="size-2.5 text-primary-400" fill="currentColor" />
-          </span>
-
-          <span className="flex items-center gap-1 text-[10px] text-amber-500">
-            <Shield className="size-3" />
-            <span>Full Access</span>
-            <ChevronDown className="size-2.5" fill="currentColor" />
-          </span>
+          {controls}
         </div>
 
         {voice === "live" ? (
@@ -166,7 +178,7 @@ function Composer({ voice }: { voice: "live" | "idle" }) {
   );
 }
 
-function ChatLayout({
+export function ChatLayout({
   children,
   overlay,
   footer,

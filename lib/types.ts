@@ -13,6 +13,11 @@ export type Post = {
   author?: string;
   tags?: string[];
   published: boolean;
+  /**
+   * `changelog` for release notes (`content/*.mdx`), `blog` for technical
+   * writing (`content/blog/*.mdx`). Both are served under `/blog/<slug>`.
+   */
+  category: "changelog" | "blog";
   version?: string;
   slug: string;
   url: string;
