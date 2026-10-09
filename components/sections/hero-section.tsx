@@ -77,11 +77,7 @@ export function HeroHeadline({
   );
 }
 
-/**
- * A line under the buttons rather than a third pill: the phone app only does
- * anything once a Mac is running Mains, so pairing it with the .dmg at equal
- * weight would promise a product the App Store alone can't deliver.
- */
+/** Explain that the iPhone app pairs with Mains running on a Mac. */
 function CompanionNote({ platform }: { platform: Platform }) {
   if (platform === "other") return null;
 
@@ -124,13 +120,12 @@ export function HeroActions({ platform }: { platform: Platform }) {
         // this row can't outrank a later sibling that shares its z-index.
         className="pointer-events-auto relative z-20 mt-10 flex flex-wrap items-center justify-center gap-4"
       >
-        {platform === "mac" ? (
-          <MacDownloadButton
-            pillClassName={PILL_CLASS_NAME}
-            shortcutClassName="bg-primary-200 text-primary-950"
-          />
-        ) : platform === "ios" ? (
-          // A .dmg is useless on a phone, so the App Store takes the primary slot.
+        <MacDownloadButton
+          pillClassName={PILL_CLASS_NAME}
+          shortcutClassName="bg-primary-200 text-primary-950"
+        />
+
+        {platform === "ios" ? (
           MAINS_APP_STORE_URL ? (
             <AppStoreButton />
           ) : (
@@ -142,7 +137,7 @@ export function HeroActions({ platform }: { platform: Platform }) {
               <span>iPhone — Coming Soon</span>
             </ShortcutPillButton>
           )
-        ) : (
+        ) : platform === "other" ? (
           <ShortcutPillButton
             ariaLabel="Windows version coming soon"
             className={cn(PILL_CLASS_NAME, "cursor-default bg-primary-900/50 text-primary-500")}
@@ -150,7 +145,7 @@ export function HeroActions({ platform }: { platform: Platform }) {
             <Windows width={16} height={16} />
             <span>Windows — Coming Soon</span>
           </ShortcutPillButton>
-        )}
+        ) : null}
 
         <ShortcutPillButton
           href={MAINS_GITHUB_REPO_URL}

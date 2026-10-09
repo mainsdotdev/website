@@ -12,8 +12,8 @@ import { usePlatformDetection } from "@/hooks/usePlatformDetection";
 import { cn } from "@/lib/utils";
 
 /**
- * The download button for the visitor's platform and View Source, with their
- * D and C shortcuts — the closing sections' actions.
+ * Always offer the macOS download and View Source, with their D and C shortcuts,
+ * alongside availability for the visitor's platform.
  */
 export function CtaActions({ className }: { className?: string }) {
   const { platform } = usePlatformDetection();
@@ -23,12 +23,12 @@ export function CtaActions({ className }: { className?: string }) {
 
   return (
     <div className={cn("flex flex-wrap items-center justify-center gap-3", className)}>
-      {platform === "mac" ? (
-        <MacDownloadButton
-          pillClassName={pill}
-          shortcutClassName="bg-primary-200 text-primary-950"
-          />
-      ) : platform === "ios" ? (
+      <MacDownloadButton
+        pillClassName={pill}
+        shortcutClassName="bg-primary-200 text-primary-950"
+      />
+
+      {platform === "ios" ? (
         MAINS_APP_STORE_URL ? (
           <AppStoreButton />
         ) : (
@@ -40,7 +40,7 @@ export function CtaActions({ className }: { className?: string }) {
             <span>iPhone — Coming Soon</span>
           </ShortcutPillButton>
         )
-      ) : (
+      ) : platform === "other" ? (
         <ShortcutPillButton
           ariaLabel="Windows version coming soon"
           className={cn(
@@ -51,7 +51,7 @@ export function CtaActions({ className }: { className?: string }) {
           <Windows width={16} height={16} />
           <span>Windows — Coming Soon</span>
         </ShortcutPillButton>
-      )}
+      ) : null}
 
       <ShortcutPillButton
         href={MAINS_GITHUB_REPO_URL}

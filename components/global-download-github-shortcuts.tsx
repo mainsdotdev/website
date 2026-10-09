@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { usePlatformDetection } from "@/hooks/usePlatformDetection";
 
 function visibleIntersectionArea(el: HTMLElement) {
   const r = el.getBoundingClientRect();
@@ -32,8 +31,6 @@ function pickBestAnchor(candidates: HTMLAnchorElement[]) {
 
 /** One listener for the homepage: D / C target the most visible matching link (hero vs CTA). */
 export function GlobalDownloadGithubShortcuts() {
-  const { isMac } = usePlatformDetection();
-
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.defaultPrevented) return;
@@ -44,7 +41,6 @@ export function GlobalDownloadGithubShortcuts() {
 
       const k = e.key.toLowerCase();
       if (k === "d") {
-        if (!isMac) return;
         const anchors = [
           ...document.querySelectorAll<HTMLAnchorElement>("a[data-kbd-shortcut='download']"),
         ];
@@ -73,7 +69,7 @@ export function GlobalDownloadGithubShortcuts() {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [isMac]);
+  }, []);
 
   return null;
 }
