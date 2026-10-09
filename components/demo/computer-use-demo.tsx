@@ -111,7 +111,7 @@ const VISIBLE_ROWS = 7;
 /** Apple Music's tile, for the mention chip and the now-playing card. */
 function MusicTile({ className }: { className?: string }) {
   return (
-    <span className={cn("inline-flex shrink-0 items-center justify-center rounded-[4px] bg-linear-to-b from-[#fd5c7a] to-[#f9314c]", className)}>
+    <span className={cn("inline-flex shrink-0 items-center justify-center rounded-sm bg-linear-to-b from-[#fd5c7a] to-[#f9314c]", className)}>
       <svg viewBox="0 0 12 12" aria-hidden className="size-[70%] text-white" fill="currentColor">
         <path d="M9.5 1.2v6.6a1.6 1.6 0 1 1-1-1.48V3.1L4.6 3.9v4.9a1.6 1.6 0 1 1-1-1.48V2.6Z" />
       </svg>
@@ -207,7 +207,7 @@ function NowPlaying({ playing }: { playing: boolean }) {
     <motion.div
       initial={{ opacity: 0, y: -6 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex items-center gap-1.5 rounded-full py-1 pr-2.5 pl-1 shadow-lg shadow-(--demo-shadow) glass-card"
+      className="flex items-center gap-1.5 rounded-full py-1 pr-2.5 pl-1 shadow-lg glass-card"
     >
       <MusicTile className="size-4 rounded-full" />
       <span className="text-[9.5px] text-primary-50">Let It Happen</span>
@@ -268,7 +268,7 @@ function Composer({ typed, phase }: { typed: number; phase: "typing" | "running"
         </span>
         <span className="ml-auto flex size-6 items-center justify-center rounded-full bg-primary-50 text-primary-950">
           {phase === "running" ? (
-            <span className="size-2 rounded-[2px] bg-primary-950" />
+            <span className="size-2 rounded-xs bg-primary-950" />
           ) : phase === "done" ? (
             <VoiceWave className="size-3.5" />
           ) : (
