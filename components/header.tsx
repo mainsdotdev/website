@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Apple, Mains } from "@/components/icons";
 import { MAINS_APP_STORE_URL, MAINS_DOWNLOAD_DMG_URL } from "@/lib/constants";
 import { usePlatformDetection, type Platform } from "@/hooks/usePlatformDetection";
@@ -15,7 +16,7 @@ import { cn } from "@/lib/utils";
 const NAV_LINKS = [
   { label: "Work", href: "/work" },
   { label: "Atlas", href: "/atlas", className: "hidden sm:inline" },
-  { label: "Orbit", href: "/orbit", className: "hidden md:inline" },
+  { label: "Bridge", href: "/bridge", className: "hidden md:inline" },
   { label: "Changelog", href: "/changelog", className: "hidden md:inline" },
   { label: "Privacy", href: "/privacy", className: "hidden md:inline" },
 ] as const satisfies readonly {
@@ -27,6 +28,7 @@ const NAV_LINKS = [
 
 /** A compact navigation bar shaped like the top edge of a MacBook display. */
 export default function Header() {
+  const pathname = usePathname();
   const { platform } = usePlatformDetection();
   const [isDetached, setIsDetached] = useState(false);
 
@@ -67,20 +69,27 @@ export default function Header() {
           </Link>
 
           <div className="flex items-center gap-4 sm:gap-6">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                target={"external" in link ? "_blank" : undefined}
-                rel={"external" in link ? "noopener noreferrer" : undefined}
-                className={cn(
-                  "text-[12px]  text-primary-200 transition-colors hover:text-primary-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-50 sm:text-sm",
-                  "className" in link && link.className,
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const isActive =
+                pathname === link.href || pathname.startsWith(`${link.href}/`);
+
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  aria-current={isActive ? "page" : undefined}
+                  target={"external" in link ? "_blank" : undefined}
+                  rel={"external" in link ? "noopener noreferrer" : undefined}
+                  className={cn(
+                    "text-[12px] transition-colors hover:text-primary-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-50 sm:text-sm",
+                    isActive ? "font-semibold text-primary-50" : "text-primary-200",
+                    "className" in link && link.className,
+                  )}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
 
           <DownloadPill platform={platform} />

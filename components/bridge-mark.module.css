@@ -1,0 +1,73 @@
+.mark {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  color: var(--color-primary-50);
+}
+
+.outline {
+  opacity: var(--bridge-outline-opacity, 0.3);
+}
+
+.lanes {
+  opacity: var(--bridge-lane-opacity, 0.09);
+  stroke-width: var(--bridge-lane-width, 0.6);
+}
+
+.packet {
+  --flow-direction: normal;
+}
+
+.packet[data-reverse] {
+  --flow-direction: reverse;
+}
+
+.packet use {
+  animation: bridge-flow var(--flow-duration) linear infinite;
+  animation-delay: var(--flow-delay);
+  animation-direction: var(--flow-direction);
+}
+
+.tail {
+  --packet-offset: 29;
+  opacity: 0.12;
+}
+
+.body {
+  --packet-offset: 9;
+  opacity: 0.4;
+}
+
+.head {
+  --packet-offset: 0;
+  opacity: var(--bridge-head-opacity, 0.9);
+}
+
+.packet[data-reverse] use {
+  --packet-offset: 0;
+}
+
+/* Normalized path lengths keep the packets in step at every viewport size. */
+@keyframes bridge-flow {
+  from {
+    stroke-dashoffset: var(--packet-offset);
+  }
+  to {
+    stroke-dashoffset: calc(var(--packet-offset) - 1000);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .packet {
+    display: none;
+  }
+
+  .packet use {
+    animation: none;
+  }
+
+  .lanes {
+    opacity: 0.16;
+  }
+}

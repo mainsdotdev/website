@@ -1,0 +1,55 @@
+.canvas {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.hero {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: max(36rem, calc(100svh - 6rem));
+  padding: 5rem 1.5rem 8rem;
+}
+
+.backdrop {
+  --bridge-outline-opacity: 0.22;
+  --bridge-lane-opacity: 0.16;
+  --bridge-lane-width: 0.3;
+  --bridge-head-opacity: 0.7;
+
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+}
+
+
+.flow {
+  position: absolute;
+  inset: 0;
+  /* Leave a quiet center for the headline; the traffic lives at the edges. */
+  mask-image: radial-gradient(
+    ellipse 32% 34% at 50% 46%,
+    rgb(0 0 0 / 6%) 0%,
+    rgb(0 0 0 / 22%) 48%,
+    #000 100%
+  );
+}
+
+.mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(64rem, 138vw);
+  transform: translate(-50%, -50%);
+}
+
+@media (min-width: 40rem) {
+  .hero {
+    min-height: clamp(42rem, calc(100svh - 6.75rem), 54rem);
+    padding-inline: 2rem;
+  }
+}

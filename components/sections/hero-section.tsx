@@ -127,7 +127,7 @@ export function HeroActions({ platform }: { platform: Platform }) {
         {platform === "mac" ? (
           <MacDownloadButton
             pillClassName={PILL_CLASS_NAME}
-            shortcutClassName="bg-primary-100 text-primary-950"
+            shortcutClassName="bg-primary-200 text-primary-950"
           />
         ) : platform === "ios" ? (
           // A .dmg is useless on a phone, so the App Store takes the primary slot.
@@ -160,11 +160,11 @@ export function HeroActions({ platform }: { platform: Platform }) {
           ariaLabel="View source on GitHub (shortcut C)"
           className={cn(
             PILL_CLASS_NAME,
-            "bg-primary-950 text-white ring-1 ring-primary-700/40 hover:bg-primary-900",
+            " text-white  glass-button",
             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/30"
           )}
           shortcut="C"
-          shortcutClassName="bg-primary-800/20 text-primary"
+          shortcutClassName="bg-primary-800/80 text-primary"
         >
           <Github width={16} height={16} />
           <span>View Source</span>

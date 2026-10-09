@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Schibsted_Grotesk } from "next/font/google";
 import "@/styles/globals.css";
-import Footer from "@/components/footer";
-import Header from "@/components/header";
+import SiteChrome from "@/components/site-chrome";
 import Analytics from "@/components/analytics";
 import { SITE_SOCIAL_IMAGE } from "@/lib/social-image";
 
@@ -78,9 +77,7 @@ export default function RootLayout({
       <body
         className={`mx-auto scroll-smooth bg-primary-950 antialiased ${schibstedGrotesk.variable} ${schibstedGrotesk.className}`}
       >
-        <Header />
-        {children}
-        <Footer />
+        <SiteChrome>{children}</SiteChrome>
         {process.env.NODE_ENV === "production" && (
           <Analytics token={process.env.NEXT_PUBLIC_CF_WEB_ANALYTICS_TOKEN} />
         )}

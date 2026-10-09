@@ -26,8 +26,8 @@ export function CtaActions({ className }: { className?: string }) {
       {platform === "mac" ? (
         <MacDownloadButton
           pillClassName={pill}
-          shortcutClassName="bg-primary-800 text-primary-50"
-        />
+          shortcutClassName="bg-primary-200 text-primary-950"
+          />
       ) : platform === "ios" ? (
         MAINS_APP_STORE_URL ? (
           <AppStoreButton />
@@ -61,11 +61,11 @@ export function CtaActions({ className }: { className?: string }) {
         ariaLabel="View source on GitHub (shortcut C)"
         className={cn(
           pill,
-          "text-white bg-primary-900 ring-1 ring-primary-700/40",
+          "text-white bg-primary-900 glass-button",
           "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/30"
         )}
         shortcut="C"
-        shortcutClassName="bg-primary-850 text-white"
+        shortcutClassName="bg-primary-800/80 text-primary"
       >
         <Github width={16} height={16} />
         <span>View Source</span>
