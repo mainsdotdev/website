@@ -7,7 +7,7 @@ export function AtlasImageCreationSection() {
     <section aria-label="Create images in Atlas" className="relative mx-auto max-w-304 px-5 pb-28 sm:px-8 lg:pb-36">
       <div className="glass-card grid gap-8 rounded-xl p-5 sm:p-6 lg:grid-cols-[1fr_2fr] lg:items-center lg:gap-8">
         <div className="py-4 lg:py-8">
-          <p className="mb-4 text-xs font-semibold tracking-[0.14em] text-violet-400">IMAGE CREATION</p>
+          <p className="mb-4 text-xs font-semibold tracking-[0.14em] text-primary-400">IMAGE CREATION</p>
           <SectionHeader
             layout="column"
             title="Start with an idea. Make it visual."

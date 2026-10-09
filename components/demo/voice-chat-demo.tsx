@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
 import { MockupSoundContext } from "@/components/demo/mockup-sound";
 import { MockupActiveContext } from "@/components/demo/pr-flow";
@@ -35,12 +42,30 @@ import { cn } from "@/lib/utils";
 type Turn = { speaker: "user" | "agent"; text: string };
 
 const TURNS: Turn[] = [
-  { speaker: "user", text: "Hey, I’m thinking about a long weekend in Lisbon next month." },
-  { speaker: "agent", text: "Nice choice. Want me to put a plan together? Flights, where to stay, a few things to do." },
-  { speaker: "user", text: "Yes. Fly out Friday evening, back Monday night. Somewhere I can walk everywhere." },
-  { speaker: "agent", text: "Got it. I’ll work that out in its own chat so it can take its time." },
-  { speaker: "user", text: "While you do that, what’s the weather like there in May?" },
-  { speaker: "agent", text: "Mild. Around twenty degrees in the afternoon, cooler by the river at night, so pack a light jacket." },
+  {
+    speaker: "user",
+    text: "Hey, I’m thinking about a long weekend in Lisbon next month.",
+  },
+  {
+    speaker: "agent",
+    text: "Nice choice. Want me to put a plan together? Flights, where to stay, a few things to do.",
+  },
+  {
+    speaker: "user",
+    text: "Yes. Fly out Friday evening, back Monday night. Somewhere I can walk everywhere.",
+  },
+  {
+    speaker: "agent",
+    text: "Got it. I’ll work that out in its own chat so it can take its time.",
+  },
+  {
+    speaker: "user",
+    text: "While you do that, what’s the weather like there in May?",
+  },
+  {
+    speaker: "agent",
+    text: "Mild. Around twenty degrees in the afternoon, cooler by the river at night, so pack a light jacket.",
+  },
   {
     speaker: "agent",
     text: "Your plan’s ready: a Friday evening flight, three nights in Príncipe Real, and a day trip to Sintra on Sunday. It’s in its chat whenever you want it.",
@@ -109,7 +134,12 @@ function SpokenTurn({ turn, shownWords }: { turn: Turn; shownWords: number }) {
   const text = (
     <>
       {words.slice(0, shownWords).map((word, index) => (
-        <motion.span key={index} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25 }}>
+        <motion.span
+          key={index}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.25 }}
+        >
           {word}{" "}
         </motion.span>
       ))}
@@ -135,7 +165,9 @@ function DelegatedChat({ ready }: { ready: boolean }) {
     >
       <Codex className="size-4 shrink-0 text-primary-100" />
       <div className="min-w-0 flex-1">
-        <div className="truncate text-[10px] font-medium text-primary-50">{PLAN_TITLE}</div>
+        <div className="truncate text-[10px] font-medium text-primary-50">
+          {PLAN_TITLE}
+        </div>
         {ready ? (
           <div className="text-[9px] text-primary-400">Reply ready</div>
         ) : (
@@ -145,7 +177,9 @@ function DelegatedChat({ ready }: { ready: boolean }) {
       <span
         className={cn(
           "shrink-0 rounded-full px-2.5 py-1 text-[9px] font-medium transition-colors duration-300",
-          ready ? "bg-primary-100 text-primary-950" : "bg-primary-800 text-primary-400"
+          ready
+            ? "bg-primary-100 text-primary-950"
+            : "bg-primary-800 text-primary-400",
         )}
       >
         Open chat
@@ -158,8 +192,12 @@ function Composer({ live, pressed }: { live: boolean; pressed: boolean }) {
   return (
     <div className="rounded-[18px] bg-primary-900/20 pb-2 glass-card">
       <div className="relative min-h-10 px-3.5 pt-2.5 pr-20 text-[11px] leading-relaxed text-primary-400">
-        {live ? "Ask a follow-up, use @ or / for commands, plugins, and skills" : "Describe a task, use @ or / for commands, plugins, and skills"}
-        <kbd className="absolute top-2.5 right-3 font-sans text-[8px] text-primary-400">⌘ ⇧ P to focus</kbd>
+        {live
+          ? "Ask a follow-up, use @ or / for commands, plugins, and skills"
+          : "Describe a task, use @ or / for commands, plugins, and skills"}
+        <kbd className="absolute top-2.5 right-3 font-sans text-[8px] text-primary-400">
+          ⌘ ⇧ P to focus
+        </kbd>
       </div>
       <div className="flex items-center gap-3 px-3.5 pt-2.5 text-[10px] text-primary-200">
         <Attach className="size-3" />
@@ -167,7 +205,10 @@ function Composer({ live, pressed }: { live: boolean; pressed: boolean }) {
           <Codex className="size-3" />
           <span className="text-primary-50">GPT 6.1 Sol</span>
           <span className="text-primary-400">Extra High</span>
-          <ChevronDown className="size-2.5 text-primary-400" fill="currentColor" />
+          <ChevronDown
+            className="size-2.5 text-primary-400"
+            fill="currentColor"
+          />
         </span>
         <span className="flex items-center gap-1 text-[#a78bfa]">
           <BoltFill className="size-3" />
@@ -178,7 +219,10 @@ function Composer({ live, pressed }: { live: boolean; pressed: boolean }) {
         {live ? (
           <span className="ml-auto flex items-center gap-2">
             <Microphone className="size-3.5 text-primary-300" />
-            <span aria-label="End voice chat" className="flex size-6 items-center justify-center rounded-full bg-primary-50">
+            <span
+              aria-label="End voice chat"
+              className="flex size-6 items-center justify-center rounded-full bg-primary-50"
+            >
               <span className="size-2 rounded-[2px] bg-primary-950" />
             </span>
           </span>
@@ -187,7 +231,7 @@ function Composer({ live, pressed }: { live: boolean; pressed: boolean }) {
             aria-label="Start voice chat"
             className={cn(
               "ml-auto flex size-6 items-center justify-center rounded-full bg-primary-50 text-primary-950 transition-transform duration-150",
-              pressed && "scale-90"
+              pressed && "scale-90",
             )}
           >
             <VoiceWave className="size-3.5" />
@@ -208,7 +252,15 @@ const COMPOSER_LIFT = 200;
 /** The orb's size, `size-24`, for keeping the chat clear of it. */
 const ORB_SIZE = 96;
 
-function Window({ t, orbStyle, getLevels }: { t: number; orbStyle: VoiceOrbStyle; getLevels: (timeMs: number) => VoiceOrbLevels }) {
+function Window({
+  t,
+  orbStyle,
+  getLevels,
+}: {
+  t: number;
+  orbStyle: VoiceOrbStyle;
+  getLevels: (timeMs: number) => VoiceOrbLevels;
+}) {
   const live = t >= START;
   const delegated = t >= DELEGATED;
   const ready = t >= READY;
@@ -230,15 +282,21 @@ function Window({ t, orbStyle, getLevels }: { t: number; orbStyle: VoiceOrbStyle
   }, [wordsOut, delegated]);
 
   return (
-    <WorkWindow tabTitle={live ? CALL_TITLE : "New chat"} recents={[...(delegated ? [PLAN_TITLE] : []), ...(live ? [CALL_TITLE] : [])]}>
+    <WorkWindow
+      tabTitle={live ? CALL_TITLE : "New chat"}
+      recents={[
+        ...(delegated ? [PLAN_TITLE] : []),
+        ...(live ? [CALL_TITLE] : []),
+      ]}
+    >
       {/* The empty chat: the mark over a centered composer. */}
       <div
         className={cn(
-          "pointer-events-none absolute inset-x-0 top-24 flex justify-center transition-opacity duration-300",
-          live ? "opacity-0" : "opacity-100"
+          "pointer-events-none absolute inset-x-0 top-32 flex justify-center transition-opacity duration-300",
+          live ? "opacity-0" : "opacity-100",
         )}
       >
-        <Mains className="h-12 w-auto text-primary-800" />
+        <Mains className="h-8 w-auto text-primary-800" />
       </div>
 
       {live && (
@@ -246,17 +304,24 @@ function Window({ t, orbStyle, getLevels }: { t: number; orbStyle: VoiceOrbStyle
           ref={scrollRef}
           className="noscrollbar min-h-0 flex-1 overflow-hidden scroll-smooth px-11 pt-6"
           // Earlier turns fade out at the top rather than being cut off.
-          style={{ maskImage: "linear-gradient(to bottom, transparent, black 48px)" }}
+          style={{
+            maskImage: "linear-gradient(to bottom, transparent, black 48px)",
+          }}
         >
           {/* Clear of the orb, which floats over the bottom of the chat. */}
-          <div className="mx-auto flex w-full max-w-160 flex-col gap-3.5" style={{ paddingBottom: ORB_SIZE + 32 }}>
+          <div
+            className="mx-auto flex w-full max-w-160 flex-col gap-3.5"
+            style={{ paddingBottom: ORB_SIZE + 32 }}
+          >
             {TURNS.map((turn, index) => {
               const shown = turns[index];
               return (
                 shown !== null && (
                   <div key={index} className="flex flex-col gap-3.5">
                     <SpokenTurn turn={turn} shownWords={shown} />
-                    {index === DELEGATED_AFTER && delegated && <DelegatedChat ready={ready} />}
+                    {index === DELEGATED_AFTER && delegated && (
+                      <DelegatedChat ready={ready} />
+                    )}
                   </div>
                 )
               );
@@ -269,17 +334,23 @@ function Window({ t, orbStyle, getLevels }: { t: number; orbStyle: VoiceOrbStyle
       <div
         className={cn(
           "pointer-events-none absolute inset-x-0 flex justify-center transition-[opacity,transform] duration-500 ease-out",
-          live ? "scale-100 opacity-100" : "scale-75 opacity-0"
+          live ? "scale-100 opacity-100" : "scale-75 opacity-0",
         )}
         style={{ bottom: 118 }}
       >
-        <VoiceOrb getLevels={getLevels} orbStyle={orbStyle} className="size-24 shrink-0" />
+        <VoiceOrb
+          getLevels={getLevels}
+          orbStyle={orbStyle}
+          className="size-24 shrink-0"
+        />
       </div>
 
       {/* Centered while the chat is empty, then down to its place. */}
       <div
         className="mx-auto mt-auto w-full max-w-160 shrink-0 px-11 pb-4 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
-        style={{ transform: live ? "translateY(0)" : `translateY(-${COMPOSER_LIFT}px)` }}
+        style={{
+          transform: live ? "translateY(0)" : `translateY(-${COMPOSER_LIFT}px)`,
+        }}
       >
         <Composer live={live} pressed={t >= PRESS && t < START} />
       </div>
@@ -325,12 +396,19 @@ function Call({
   }, [running]);
 
   // Stable, so the orb's renderer isn't restarted on every tick.
-  const getLevels = useCallback((timeMs: number) => levelsFor(speaking.current, timeMs), []);
+  const getLevels = useCallback(
+    (timeMs: number) => levelsFor(speaking.current, timeMs),
+    [],
+  );
 
   const at = reducedMotion ? END : t;
   return (
     <>
-      <ScaleToFit designWidth={DESIGN_WIDTH} designHeight={DESIGN_HEIGHT} className="pointer-events-none absolute inset-x-0 top-0">
+      <ScaleToFit
+        designWidth={DESIGN_WIDTH}
+        designHeight={DESIGN_HEIGHT}
+        className="pointer-events-none absolute inset-x-0 top-0"
+      >
         <div
           role="img"
           aria-label="Mains in Work mode: a Codex voice chat about a weekend in Lisbon, with the plan handed to a chat of its own"
@@ -339,7 +417,12 @@ function Call({
           <Window t={at} orbStyle={orbStyle} getLevels={getLevels} />
         </div>
       </ScaleToFit>
-      <OrbStyleSwitch value={orbStyle} onChange={onOrbStyle} shown={at >= START} reducedMotion={reducedMotion} />
+      <OrbStyleSwitch
+        value={orbStyle}
+        onChange={onOrbStyle}
+        shown={at >= START}
+        reducedMotion={reducedMotion}
+      />
     </>
   );
 }
@@ -373,7 +456,7 @@ function OrbStyleSwitch({
         inert={!shown}
         className={cn(
           "absolute top-[64%] left-[64%] hidden -translate-y-1/2 items-center gap-0.5 rounded-full p-1 shadow-lg shadow-(--demo-shadow) transition-opacity duration-500 glass-card md:flex",
-          shown ? "opacity-100" : "opacity-0"
+          shown ? "opacity-100" : "opacity-0",
         )}
       >
         {ORB_STYLES.map(({ value: style, label }) => {
@@ -392,10 +475,21 @@ function OrbStyleSwitch({
                   layoutId="pill"
                   aria-hidden
                   className="absolute inset-0 rounded-full bg-primary-50/10"
-                  transition={reducedMotion ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 36 }}
+                  transition={
+                    reducedMotion
+                      ? { duration: 0 }
+                      : { type: "spring", stiffness: 420, damping: 36 }
+                  }
                 />
               )}
-              <span className={cn("relative transition-colors", active ? "text-primary-50" : "text-primary-400 hover:text-primary-200")}>
+              <span
+                className={cn(
+                  "relative transition-colors",
+                  active
+                    ? "text-primary-50"
+                    : "text-primary-400 hover:text-primary-200",
+                )}
+              >
                 {label}
               </span>
             </button>
@@ -416,7 +510,13 @@ export function VoiceChatDemo({ className }: { className?: string }) {
 
   return (
     <div className={cn("relative", className)}>
-      <Call key={replay} shown={shown} reducedMotion={reducedMotion} orbStyle={orbStyle} onOrbStyle={setOrbStyle} />
+      <Call
+        key={replay}
+        shown={shown}
+        reducedMotion={reducedMotion}
+        orbStyle={orbStyle}
+        onOrbStyle={setOrbStyle}
+      />
     </div>
   );
 }

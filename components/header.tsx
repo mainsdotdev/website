@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
  * scroll away in the footer.
  */
 const NAV_LINKS = [
-  { label: "Everyday", href: "/work" },
+  { label: "Work", href: "/work" },
   { label: "Atlas", href: "/atlas", className: "hidden sm:inline" },
   { label: "Orbit", href: "/orbit", className: "hidden md:inline" },
   { label: "Changelog", href: "/changelog", className: "hidden md:inline" },

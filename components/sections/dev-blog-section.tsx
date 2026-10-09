@@ -45,13 +45,13 @@ function BlogCard({ post }: { post: Post }) {
 
       <div className="flex flex-1 flex-col px-4 pt-4 pb-3.5">
         <h3 className="truncate text-base tracking-tight text-primary-50">{post.title}</h3>
-        <p className="mt-1.5 line-clamp-2 font-mono text-[13px] leading-relaxed text-primary-400">
+        <p className="mt-1.5 line-clamp-2  text-[13px] leading-relaxed text-primary-400">
           {post.description}
         </p>
 
-        <div className="mt-auto flex items-center gap-2 pt-4 font-mono text-[11px] text-primary-400">
-          <span className="flex size-4.5 items-center justify-center rounded-full bg-primary-800">
-            <Mains aria-hidden className="h-2 w-auto text-primary-100" />
+        <div className="mt-auto flex items-center gap-2 pt-4  text-[11px] text-primary-400">
+          <span className="flex size-4.5 items-center justify-center ">
+            <Mains aria-hidden className="h-3 w-auto text-primary-100" />
           </span>
           <span className="truncate text-primary-300">{post.author ?? "Mains Team"}</span>
           <time dateTime={post.date} className="ml-auto shrink-0">

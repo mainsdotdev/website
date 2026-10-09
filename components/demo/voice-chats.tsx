@@ -84,7 +84,7 @@ function DelegatedChat({ chat, status }: { chat: ChatTabId; status: string }) {
   const title = CHAT_TABS.find((tab) => tab.id === chat)?.title;
 
   return (
-    <div className="flex items-center gap-2.5 rounded-2xl px-3 py-2.5 glass-outline">
+    <div className="flex items-center gap-2.5 rounded-2xl px-3 py-2.5 glass-card">
       <Codex className="size-4 shrink-0 text-primary-100" />
       <div className="min-w-0 flex-1">
         <div className="truncate text-[10px] font-medium text-primary-50">{title}</div>

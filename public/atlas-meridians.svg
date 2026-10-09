@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1024" viewBox="0 0 1600 1024" fill="none">
+  <defs>
+    <clipPath id="globe"><circle cx="990" cy="245" r="790"/></clipPath>
+  </defs>
+  <g transform="rotate(-21 990 245)" stroke="white" stroke-width="1" clip-path="url(#globe)">
+    <circle cx="990" cy="245" r="789" stroke-opacity=".8"/>
+    <ellipse cx="990" cy="245" rx="130" ry="790" stroke-opacity=".55"/>
+    <ellipse cx="990" cy="245" rx="290" ry="790" stroke-opacity=".55"/>
+    <ellipse cx="990" cy="245" rx="455" ry="790" stroke-opacity=".55"/>
+    <ellipse cx="990" cy="245" rx="610" ry="790" stroke-opacity=".55"/>
+    <ellipse cx="990" cy="245" rx="730" ry="790" stroke-opacity=".55"/>
+    <path d="M200 245H1780" stroke-opacity=".8"/>
+    <path d="M232 25Q990 340 1748 25M232 465Q990 150 1748 465M330-180Q990 105 1650-180M330 670Q990 385 1650 670M480-365Q990-140 1500-365M480 855Q990 630 1500 855" stroke-opacity=".55"/>
+    <path d="M990-545V1035" stroke-opacity=".8"/>
+  </g>
+  <g stroke="white" stroke-opacity=".75" stroke-width="1">
+    <path d="M129 140h14m-7-7v14M1473 345h14m-7-7v14M195 665h14m-7-7v14M1368 824h14m-7-7v14"/>
+    <circle cx="136" cy="140" r="16" stroke-opacity=".3"/>
+    <circle cx="1375" cy="824" r="16" stroke-opacity=".3"/>
+  </g>
+</svg>

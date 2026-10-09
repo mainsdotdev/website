@@ -100,7 +100,7 @@ export function OpenChatButton({ chat }: { chat: ChatTabId }) {
     <button
       type="button"
       onClick={() => openChat(chat)}
-      className="shrink-0 cursor-pointer rounded-full bg-primary-600 px-2.5 py-1 text-[9px] font-medium text-primary-950 transition-colors hover:bg-primary-500"
+      className="shrink-0 cursor-pointer rounded-full bg-primary-800 px-2.5 py-1 text-[9px] font-medium text-primary-200 transition-colors hover:bg-primary-500"
     >
       Open chat
     </button>

@@ -106,7 +106,7 @@ export function DevThemesSection({ appWindow }: { appWindow: React.ReactNode }) 
       {/* The theme's variables are scoped to this wrapper, so only the window
           under them repaints. */}
       <div style={scope} className="mx-auto mt-8 max-w-5xl">
-        <div className="overflow-hidden rounded-xl border border-primary-700/40 bg-primary-900 shadow-[0_32px_80px_-24px_var(--demo-shadow)]">
+        <div className="overflow-hidden rounded-xl border border-primary-700/40 bg-primary-900 ">
           {appWindow}
         </div>
       </div>

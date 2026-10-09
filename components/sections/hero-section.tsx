@@ -27,14 +27,19 @@ const HERO_SCRAMBLE_WORDS = [
 const PILL_CLASS_NAME =
   "inline-flex max-w-full min-w-0 items-center gap-2 rounded-full px-3 py-3 text-xs font-medium transition-colors md:px-6 md:py-3 md:text-sm";
 
-/** "Mains for …", cycling through `words`. */
+/** Shared hero typography and entrance, with an optional fixed headline. */
 export function HeroHeadline({
   words = HERO_SCRAMBLE_WORDS,
   tagline = "Run AI agents. Make things happen.",
+  title,
+  id,
 }: {
   words?: readonly string[];
   /** The line under the headline. */
   tagline?: string;
+  /** A fixed headline instead of the cycling "Mains for …" copy. */
+  title?: string;
+  id?: string;
 }) {
   // Sizes the headline to its longest word, so it never reflows mid-cycle.
   const longest = words.reduce((a, b) => (a.length >= b.length ? a : b));
@@ -44,22 +49,26 @@ export function HeroHeadline({
       {...FADE_IN_BLUR_DELAY(0.2)}
       className="relative z-10 w-full max-w-2xl text-center"
     >
-      <h1 className="font-sans relative mx-auto inline-block w-max max-w-full text-[2rem] leading-[1.15] font-normal tracking-tight text-primary-50/95 sm:text-4xl md:text-5xl lg:text-[3.25rem]">
-        <span
-          aria-hidden
-          className="invisible flex flex-nowrap items-baseline justify-start gap-x-1.5"
-        >
-          <span>Mains for</span>
-          <span>{longest}</span>
-        </span>
-        <span className="absolute inset-0 flex min-w-0 flex-nowrap items-baseline justify-start gap-x-1.5 overflow-hidden">
-          <span className="shrink-0">Mains for</span>
-          <ScrambleText
-            words={[...words]}
-            interval={3000}
-            className="text-primary-200"
-          />
-        </span>
+      <h1 id={id} className="font-sans relative mx-auto inline-block w-max max-w-full text-[2rem] leading-[1.15] font-normal tracking-tight text-primary-50/95 sm:text-4xl md:text-5xl lg:text-[3.25rem]">
+        {title ?? (
+          <>
+            <span
+              aria-hidden
+              className="invisible flex flex-nowrap items-baseline justify-start gap-x-1.5"
+            >
+              <span>Mains for</span>
+              <span>{longest}</span>
+            </span>
+            <span className="absolute inset-0 flex min-w-0 flex-nowrap items-baseline justify-start gap-x-1.5 overflow-hidden">
+              <span className="shrink-0">Mains for</span>
+              <ScrambleText
+                words={[...words]}
+                interval={3000}
+                className="text-primary-200"
+              />
+            </span>
+          </>
+        )}
       </h1>
       <p className="mt-3 text-lg leading-snug text-primary-400 sm:text-xl md:text-xl">
         {tagline}
@@ -189,7 +198,7 @@ export function HeroWindow({
       {/* The voice orb docks in this window once it is centred on screen. */}
       <div
         data-orb-frame
-        className="overflow-hidden rounded-xl border border-primary-700/40 bg-primary-900"
+        className="overflow-hidden rounded-xl bg-primary-900"
       >
         {appWindow}
       </div>

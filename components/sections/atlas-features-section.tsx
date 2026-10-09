@@ -27,7 +27,7 @@ const FEATURES = [
 export function AtlasFeaturesSection() {
   return (
     <section aria-label="Atlas features" className="relative mx-auto max-w-304 px-5 pb-28 sm:px-8 lg:pb-36">
-      <p className="mb-3 text-xs font-semibold tracking-[0.14em] text-violet-400">BUILT IN</p>
+      <p className="mb-3 text-xs font-semibold tracking-[0.14em] text-primary-400">BUILT IN</p>
       <SectionHeader
         layout="column"
         title="Keep your work within reach."
@@ -39,7 +39,7 @@ export function AtlasFeaturesSection() {
       <ul className="mt-10 grid gap-4 sm:mt-14 sm:grid-cols-2 sm:gap-5">
         {FEATURES.map(({ title, description, Icon }) => (
           <li key={title} className="glass-card rounded-xl p-6 sm:p-7 lg:p-8">
-            <span aria-hidden className="mb-5 block text-violet-400">
+            <span aria-hidden className="mb-5 block text-primary-400">
               <Icon className="size-7" />
             </span>
             <h3 className="text-xl font-semibold tracking-tight text-primary-50">{title}</h3>

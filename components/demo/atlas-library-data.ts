@@ -76,8 +76,7 @@ Note the distance, how the route felt, and a place you would like to return to.`
   },
   { id: "notes", title: "Research notes.md", kind: "doc", Icon: Document, markdown: ATLAS_TEMPLATES[1].markdown, project: "Rabbit Hole", origin: "upload", favorite: false, time: "41m ago" },
   { id: "context", title: "CONTEXT.md", kind: "doc", Icon: Document, project: "Work Stuff", origin: "generated", favorite: true, time: "54m ago", markdown: "## Project context\n\nA shared place for the decisions, research, and materials that shape the work.\n\n## Next steps\n\n- [ ] Review the project brief\n- [ ] Capture open questions\n- [ ] Agree on the next milestone" },
-  { id: "cover", title: "Generative UI cover.webp", kind: "image", Icon: Picture, markdown: "", image: "/demos/generative-ui-cover.webp", aspect: "aspect-square", project: "Rabbit Hole", origin: "generated", favorite: false, time: "1h ago" },
-  { id: "field", title: "Color studies.webp", kind: "image", Icon: Picture, markdown: "", image: "/backdrop.webp", aspect: "aspect-[1.4]", project: "Visual Works", origin: "upload", favorite: false, time: "1h ago" },
+  { id: "cover", title: "Generative UI cover.webp", kind: "image", Icon: Picture, markdown: "", image: "/demos/generative-ui.webp", aspect: "aspect-square", project: "Rabbit Hole", origin: "generated", favorite: false, time: "1h ago" },
 ];
 
 export const ATLAS_RECENTS = ["launch", "reading", "tokyo", "genui"] as const;

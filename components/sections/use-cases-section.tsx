@@ -17,7 +17,10 @@ function PreviewFrame({ index }: { index: number }) {
 
   return (
     // The voice orb moves into each mockup once its frame is centred on screen.
-    <div data-orb-frame className="overflow-hidden rounded-xl border border-primary-700/40 bg-primary-900 p-0.75 sm:rounded-xl sm:p-1">
+    <div
+      data-orb-frame
+      className="overflow-hidden rounded-xl  bg-primary-900 "
+    >
       <div className="relative aspect-video overflow-hidden rounded-xl border border-primary-700/20 bg-primary-950 sm:rounded-xl">
         <Mockup className="absolute inset-0" />
       </div>
@@ -43,14 +46,18 @@ export function UseCasesSection({ useCases }: UseCasesSectionProps) {
       frameRefs.current.slice(0, cases.length).forEach((element, index) => {
         if (!element) return;
         const bounds = element.getBoundingClientRect();
-        const distance = Math.abs(bounds.top + bounds.height / 2 - viewportCenter);
+        const distance = Math.abs(
+          bounds.top + bounds.height / 2 - viewportCenter,
+        );
         if (distance < nearestDistance) {
           nearestDistance = distance;
           nearestIndex = index;
         }
       });
 
-      setActiveIndex((current) => current === nearestIndex ? current : nearestIndex);
+      setActiveIndex((current) =>
+        current === nearestIndex ? current : nearestIndex,
+      );
     };
 
     const scheduleUpdate = () => {
@@ -83,13 +90,12 @@ export function UseCasesSection({ useCases }: UseCasesSectionProps) {
     >
       <div className="mx-auto max-w-360">
         <div className="mx-auto mb-10 max-w-3xl text-center lg:mb-20">
-
           <h2
             id="use-cases-title"
             className=" text-5xl leading-none tracking-tight text-primary-50 sm:text-6xl lg:text-6xl"
           >
-            Built for agent workflows.
-            </h2>
+            Built for the way you work.
+          </h2>
         </div>
 
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1.55fr)_minmax(300px,0.85fr)] lg:items-start lg:gap-16 xl:gap-24">
@@ -97,7 +103,9 @@ export function UseCasesSection({ useCases }: UseCasesSectionProps) {
             {cases.map((useCase, index) => (
               <article
                 key={useCase.title}
-                ref={(element) => { frameRefs.current[index] = element; }}
+                ref={(element) => {
+                  frameRefs.current[index] = element;
+                }}
                 className="flex scroll-mt-24 flex-col justify-center lg:min-h-[86vh]"
                 aria-label={useCase.title}
               >
@@ -116,7 +124,10 @@ export function UseCasesSection({ useCases }: UseCasesSectionProps) {
 
           <div className="hidden lg:sticky lg:top-[max(6rem,calc(50vh-14rem))] lg:block">
             <LayoutGroup id="use-case-indicator">
-              <nav aria-label="Use cases" className="relative border-l border-primary-700/40">
+              <nav
+                aria-label="Use cases"
+                className="relative border-l border-primary-700/40"
+              >
                 {cases.map((useCase, index) => {
                   const active = activeIndex === index;
                   return (
@@ -132,14 +143,22 @@ export function UseCasesSection({ useCases }: UseCasesSectionProps) {
                           layoutId="active-indicator"
                           aria-hidden="true"
                           className="absolute inset-y-0 -left-px w-0.5 rounded-full bg-primary-50"
-                          transition={prefersReducedMotion ? { duration: 0 } : { type: "spring", stiffness: 340, damping: 34 }}
+                          transition={
+                            prefersReducedMotion
+                              ? { duration: 0 }
+                              : { type: "spring", stiffness: 340, damping: 34 }
+                          }
                         />
                       )}
 
-                      <span className={`mt-2 block text-2xl leading-tight tracking-tight transition-colors duration-300 xl:text-[1.75rem] ${active ? "text-primary-50" : "text-primary-500"}`}>
+                      <span
+                        className={`mt-2 block text-2xl leading-tight tracking-tight transition-colors duration-300 xl:text-[1.75rem] ${active ? "text-primary-50" : "text-primary-500"}`}
+                      >
                         {useCase.title}
                       </span>
-                      <span className={`grid transition-[grid-template-rows,opacity] duration-300 ${active ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
+                      <span
+                        className={`grid transition-[grid-template-rows,opacity] duration-300 ${active ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+                      >
                         <span className="overflow-hidden">
                           <span className="mt-3 block max-w-sm text-sm leading-relaxed text-primary-400">
                             {useCase.description}

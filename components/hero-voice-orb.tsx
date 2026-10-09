@@ -30,7 +30,7 @@ export function HeroVoiceOrb() {
       onPointerEnter={() => setOrbHovered(true)}
       onPointerLeave={() => setOrbHovered(false)}
       className={cn(
-        "pointer-events-auto absolute top-23 left-[31%] z-0 hidden cursor-default select-none lg:block xl:top-18 xl:left-[33%] 2xl:left-[39%]",
+        "pointer-events-auto absolute top-23 left-[31%] z-0 hidden cursor-default select-none lg:block xl:top-18 xl:left-[43%] 2xl:left-[49%]",
         // The flying orb draws its own hover growth.
         !flying && "transition-transform duration-200 hover:scale-120"
       )}

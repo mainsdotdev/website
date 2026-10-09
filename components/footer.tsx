@@ -15,7 +15,8 @@ const FOOTER_COLUMNS = [
     links: [
       { label: "features", href: "/#use-cases" },
       { label: "changelog", href: "/changelog" },
-      { label: "download for mac", href: MAINS_DOWNLOAD_DMG_URL },
+      { label: "atlas", href: "/atlas" },
+      { label: "orbit", href: "/orbit" },
     ],
   },
   {

@@ -55,22 +55,50 @@ const PROMPT =
 const FIRST_TITLE = "Untitled page";
 const PAGE_TITLE = "Generative UI overview";
 
-type Tool = { Icon: React.FC<React.SVGProps<SVGSVGElement>>; verb: string; running: string };
+type Tool = {
+  Icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  verb: string;
+  running: string;
+};
 
-const READ_PAGE: Tool = { Icon: Globe, verb: "Read Atlas page", running: "Reading Atlas page" };
-const UPDATE_PAGE: Tool = { Icon: Globe, verb: "Updated Atlas page", running: "Updating Atlas page" };
+const READ_PAGE: Tool = {
+  Icon: Globe,
+  verb: "Read Atlas page",
+  running: "Reading Atlas page",
+};
+const UPDATE_PAGE: Tool = {
+  Icon: Globe,
+  verb: "Updated Atlas page",
+  running: "Updating Atlas page",
+};
 const READ: Tool = { Icon: Read, verb: "Read", running: "Reading" };
-const SEARCH: Tool = { Icon: Web, verb: "Searched the web", running: "Searching the web" };
-const COMPUTER: Tool = { Icon: BrowserCursor, verb: "Computer use", running: "Computer use" };
-const GENERATE_IMAGE: Tool = { Icon: Picture, verb: "Generated an image", running: "Generating an image" };
-const DRESS_PAGE: Tool = { Icon: Globe, verb: "Updated Atlas page", running: "Updating Atlas page" };
+const SEARCH: Tool = {
+  Icon: Web,
+  verb: "Searched the web",
+  running: "Searching the web",
+};
+const COMPUTER: Tool = {
+  Icon: BrowserCursor,
+  verb: "Computer use",
+  running: "Computer use",
+};
+const GENERATE_IMAGE: Tool = {
+  Icon: Picture,
+  verb: "Generated an image",
+  running: "Generating an image",
+};
+const DRESS_PAGE: Tool = {
+  Icon: Globe,
+  verb: "Updated Atlas page",
+  running: "Updating Atlas page",
+};
 
 type Entry =
   | { kind: "message"; text: string }
   | { kind: "tool"; tool: Tool; detail: string; note?: string };
 
 /** Codex's generated cover, used for the page and shown in the chat as it lands. */
-const COVER_SRC = "/demos/generative-ui-cover.webp";
+const COVER_SRC = "/demos/generative-ui.webp";
 
 /** The run's messages and tool calls, in the order they come. */
 const ENTRIES: Entry[] = [
@@ -83,10 +111,18 @@ const ENTRIES: Entry[] = [
   { kind: "tool", tool: READ, detail: "writing_quality.md" },
   { kind: "tool", tool: READ, detail: "edit-requests.md" },
   { kind: "tool", tool: READ, detail: "page-content.md" },
-  { kind: "tool", tool: SEARCH, detail: "ai-sdk.dev generative user interfaces" },
+  {
+    kind: "tool",
+    tool: SEARCH,
+    detail: "ai-sdk.dev generative user interfaces",
+  },
   { kind: "tool", tool: READ, detail: "page-content.md" },
   { kind: "tool", tool: READ, detail: "writing_quality.md" },
-  { kind: "tool", tool: SEARCH, detail: "ai-sdk.dev/docs/ai-sdk-ui/generative-user-interfaces" },
+  {
+    kind: "tool",
+    tool: SEARCH,
+    detail: "ai-sdk.dev/docs/ai-sdk-ui/generative-user-interfaces",
+  },
   {
     kind: "message",
     text: "Generative UI can range from selecting familiar controls to generating a whole interface. I’ll explain those approaches and use a trip-planning example to show how a request becomes something the user can interact with.",
@@ -96,13 +132,22 @@ const ENTRIES: Entry[] = [
   { kind: "tool", tool: READ_PAGE, detail: PAGE_TITLE, note: "v2" },
   { kind: "tool", tool: COMPUTER, detail: "Inspect the saved page" },
   { kind: "tool", tool: COMPUTER, detail: "Check page readability" },
-  { kind: "message", text: "The page is saved and checked. Next I’ll generate a cover that matches it and give it an icon." },
-  { kind: "tool", tool: GENERATE_IMAGE, detail: "Cover for Generative UI overview" },
+  {
+    kind: "message",
+    text: "The page is saved and checked. Next I’ll generate a cover that matches it and give it an icon.",
+  },
+  {
+    kind: "tool",
+    tool: GENERATE_IMAGE,
+    detail: "Cover for Generative UI overview",
+  },
   { kind: "tool", tool: DRESS_PAGE, detail: "Cover and icon", note: "v2 → v3" },
 ];
 
 /** The entry whose result is the saved page. */
-const SAVE_INDEX = ENTRIES.findIndex((entry) => entry.kind === "tool" && entry.tool === UPDATE_PAGE);
+const SAVE_INDEX = ENTRIES.findIndex(
+  (entry) => entry.kind === "tool" && entry.tool === UPDATE_PAGE,
+);
 const TOOL_COUNT = ENTRIES.filter((entry) => entry.kind === "tool").length;
 const MESSAGE_COUNT = ENTRIES.length - TOOL_COUNT;
 
@@ -128,10 +173,15 @@ const ENTRIES_AT = (() => {
     return start;
   });
 })();
-const IMAGE_INDEX = ENTRIES.findIndex((entry) => entry.kind === "tool" && entry.tool === GENERATE_IMAGE);
-const DRESS_INDEX = ENTRIES.findIndex((entry) => entry.kind === "tool" && entry.tool === DRESS_PAGE);
+const IMAGE_INDEX = ENTRIES.findIndex(
+  (entry) => entry.kind === "tool" && entry.tool === GENERATE_IMAGE,
+);
+const DRESS_INDEX = ENTRIES.findIndex(
+  (entry) => entry.kind === "tool" && entry.tool === DRESS_PAGE,
+);
 /** A step's result lands as it finishes; the page changes from there. */
-const finishedAt = (index: number) => ENTRIES_AT[index] + holdFor(ENTRIES[index]);
+const finishedAt = (index: number) =>
+  ENTRIES_AT[index] + holdFor(ENTRIES[index]);
 const SAVED = finishedAt(SAVE_INDEX);
 const IMAGE_READY = finishedAt(IMAGE_INDEX);
 /** The cover and icon reach the page. */
@@ -145,45 +195,93 @@ const RUN_TIME = "3m 06s";
 // ─── The page ────────────────────────────────────────────────────────────────
 
 function Link({ children }: { children: React.ReactNode }) {
-  return <span className="text-blue-400 underline decoration-blue-400/60 underline-offset-2">{children}</span>;
+  return (
+    <span className="text-blue-400 underline decoration-blue-400/60 underline-offset-2">
+      {children}
+    </span>
+  );
 }
 
 function Paragraph({ children }: { children: React.ReactNode }) {
-  return <p className="mb-1.5 text-[10px] leading-4.5 text-primary-100">{children}</p>;
+  return (
+    <p className="mb-1.5 text-[10px] leading-4.5 text-primary-100">
+      {children}
+    </p>
+  );
 }
 
 function Heading({ children }: { children: React.ReactNode }) {
-  return <h3 className="mt-3.5 mb-1.5 text-[12px] font-semibold tracking-tight text-primary-50">{children}</h3>;
+  return (
+    <h3 className="mt-3.5 mb-1.5 text-[12px] font-semibold tracking-tight text-primary-50">
+      {children}
+    </h3>
+  );
 }
 
 const STEPS = [
-  ["Understand the request.", "The model receives the person’s message and relevant context."],
-  ["Retrieve information.", "It can call a tool to obtain data from a service."],
-  ["Choose a presentation.", "The application maps the result to an appropriate component."],
-  ["Render the interface.", "The person sees useful controls alongside any explanation."],
-  ["Continue the interaction.", "Selections and edits can inform the next response."],
+  [
+    "Understand the request.",
+    "The model receives the person’s message and relevant context.",
+  ],
+  [
+    "Retrieve information.",
+    "It can call a tool to obtain data from a service.",
+  ],
+  [
+    "Choose a presentation.",
+    "The application maps the result to an appropriate component.",
+  ],
+  [
+    "Render the interface.",
+    "The person sees useful controls alongside any explanation.",
+  ],
+  [
+    "Continue the interaction.",
+    "Selections and edits can inform the next response.",
+  ],
 ];
 
 const APPROACHES = [
-  ["Component selection", "A tool request or result that the app displays with a predefined component.", "Predictable presentation, limited variety."],
-  ["Structured composition", "A description of components, layout, and data bindings that the app renders.", "More flexible arrangements, within a supported component catalog."],
-  ["Full interface generation", "A custom web page and supporting assets.", "Broad creative freedom, greater validation and maintenance demands."],
+  [
+    "Component selection",
+    "A tool request or result that the app displays with a predefined component.",
+    "Predictable presentation, limited variety.",
+  ],
+  [
+    "Structured composition",
+    "A description of components, layout, and data bindings that the app renders.",
+    "More flexible arrangements, within a supported component catalog.",
+  ],
+  [
+    "Full interface generation",
+    "A custom web page and supporting assets.",
+    "Broad creative freedom, greater validation and maintenance demands.",
+  ],
 ];
 
 /** The page as Codex saved it (revision 2), block by block, down to where the window cuts it off. */
 const BLOCKS: React.ReactNode[] = [
   <Paragraph key="intro">
-    Generative UI, or GenUI, uses AI to choose, assemble, or generate a user interface in response to a person’s
-    request and context. An answer can include interactive controls such as cards, forms, charts, and maps. These let
-    the person act on the response directly. <Link>AI SDK overview</Link>, <Link>A2UI introduction</Link>.
+    Generative UI, or GenUI, uses AI to choose, assemble, or generate a user
+    interface in response to a person’s request and context. An answer can
+    include interactive controls such as cards, forms, charts, and maps. These
+    let the person act on the response directly. <Link>AI SDK overview</Link>,{" "}
+    <Link>A2UI introduction</Link>.
   </Paragraph>,
   <Paragraph key="goal">
-    The goal is to make the next step easier: compare options, adjust a plan, explore information, or complete a task.
-    The central design challenge is balancing this flexibility with a consistent, understandable experience.
+    The goal is to make the next step easier: compare options, adjust a plan,
+    explore information, or complete a task. The central design challenge is
+    balancing this flexibility with a consistent, understandable experience.
   </Paragraph>,
   <Heading key="how">How generative UI works</Heading>,
-  <Paragraph key="common">A common approach connects AI decisions to components the product already supports:</Paragraph>,
-  <ol key="steps" className="mb-1.5 list-decimal pl-4 text-[10px] leading-4.5 text-primary-100 marker:text-primary-300">
+  <Paragraph key="common">
+    A common approach connects AI decisions to components the product already
+    supports:
+  </Paragraph>,
+  <ol
+    key="steps"
+    className="mb-1.5 list-decimal pl-4 text-[10px] leading-4.5 text-primary-100 marker:text-primary-300"
+  >
     {STEPS.map(([lead, rest]) => (
       <li key={lead} className="pl-1">
         <span className="font-semibold text-primary-50">{lead}</span> {rest}
@@ -191,37 +289,55 @@ const BLOCKS: React.ReactNode[] = [
     ))}
   </ol>,
   <Paragraph key="sdk">
-    The AI SDK documents this pattern using tool results and predefined interface components. <Link>AI SDK guide</Link>.
+    The AI SDK documents this pattern using tool results and predefined
+    interface components. <Link>AI SDK guide</Link>.
   </Paragraph>,
   <Heading key="trip">An example of trip planning</Heading>,
   <Paragraph key="imagine">
-    Imagine a person asks, “Help me plan a three day trip to Istanbul with museums and vegetarian food.”
+    Imagine a person asks, “Help me plan a three day trip to Istanbul with
+    museums and vegetarian food.”
   </Paragraph>,
   <Paragraph key="interface">
-    A generative interface could show an editable daily itinerary, a map of suggested stops, and filters for walking
-    distance and interests. If the person selects “Less walking,” the application could revise the route and preserve
-    activities they have pinned. Before booking anything, it would show a separate review step.
+    A generative interface could show an editable daily itinerary, a map of
+    suggested stops, and filters for walking distance and interests. If the
+    person selects “Less walking,” the application could revise the route and
+    preserve activities they have pinned. Before booking anything, it would show
+    a separate review step.
   </Paragraph>,
   <Paragraph key="illustrative">
-    This is an illustrative experience. Opening hours, availability, prices, and booking actions would need connections
-    to real services. Generating the interface does not make its information accurate or its actions functional.
+    This is an illustrative experience. Opening hours, availability, prices, and
+    booking actions would need connections to real services. Generating the
+    interface does not make its information accurate or its actions functional.
   </Paragraph>,
   <Heading key="choosing">Choosing an approach</Heading>,
   <Paragraph key="tradeoffs">
-    These approaches offer different degrees of freedom. The tradeoffs below are practical design considerations.
+    These approaches offer different degrees of freedom. The tradeoffs below are
+    practical design considerations.
   </Paragraph>,
-  <div key="table" className="mt-2 overflow-hidden rounded-md border border-primary-800 text-[9px] leading-3.5">
+  <div
+    key="table"
+    className="mt-2 overflow-hidden rounded-md border border-primary-800 text-[9px] leading-3.5"
+  >
     <div className="grid grid-cols-[0.8fr_1.4fr_1fr] bg-primary-900 font-semibold text-primary-50">
       {["Approach", "What the AI produces", "Main tradeoff"].map((cell) => (
-        <div key={cell} className="border-r border-primary-800 px-2 py-1.5 last:border-r-0">
+        <div
+          key={cell}
+          className="border-r border-primary-800 px-2 py-1.5 last:border-r-0"
+        >
           {cell}
         </div>
       ))}
     </div>
     {APPROACHES.map((row) => (
-      <div key={row[0]} className="grid grid-cols-[0.8fr_1.4fr_1fr] border-t border-primary-800 text-primary-100">
+      <div
+        key={row[0]}
+        className="grid grid-cols-[0.8fr_1.4fr_1fr] border-t border-primary-800 text-primary-100"
+      >
         {row.map((cell) => (
-          <div key={cell} className="border-r border-primary-800 px-2 py-1.5 last:border-r-0">
+          <div
+            key={cell}
+            className="border-r border-primary-800 px-2 py-1.5 last:border-r-0"
+          >
             {cell}
           </div>
         ))}
@@ -231,8 +347,18 @@ const BLOCKS: React.ReactNode[] = [
 ];
 
 /** The page's icon wherever the app shows it: the generic page until Codex gives it one. */
-function PageIcon({ dressed, className }: { dressed: boolean; className?: string }) {
-  return dressed ? <Cpu className={cn(className, "text-blue-400")} /> : <Page className={className} />;
+function PageIcon({
+  dressed,
+  className,
+}: {
+  dressed: boolean;
+  className?: string;
+}) {
+  return dressed ? (
+    <Cpu className={cn(className, "text-blue-400")} />
+  ) : (
+    <Page className={className} />
+  );
 }
 
 /** The app's cover height (`md:h-64`) at the window's scale. */
@@ -241,8 +367,12 @@ const COVER_HEIGHT = 164;
 function PageView({ t, reducedMotion }: { t: number; reducedMotion: boolean }) {
   const saved = t >= SAVED;
   const dressed = t >= DRESSED;
-  const shownBlocks = saved ? Math.min(BLOCKS.length, Math.floor((t - SAVED) / BLOCK_MS) + 1) : 0;
-  const ease = reducedMotion ? { duration: 0 } : { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const };
+  const shownBlocks = saved
+    ? Math.min(BLOCKS.length, Math.floor((t - SAVED) / BLOCK_MS) + 1)
+    : 0;
+  const ease = reducedMotion
+    ? { duration: 0 }
+    : { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const };
   return (
     <>
       {/* The page toolbar: breadcrumb, then favorite and the page menu. */}
@@ -250,8 +380,13 @@ function PageView({ t, reducedMotion }: { t: number; reducedMotion: boolean }) {
         <div className="flex min-w-0 items-center gap-1 text-[10px]">
           <span className="font-medium text-primary-100">Pages</span>
           <span className="text-primary-600">/</span>
-          <PageIcon dressed={dressed} className="size-3 shrink-0 text-primary-400" />
-          <span className="truncate text-primary-300">{saved ? PAGE_TITLE : FIRST_TITLE}</span>
+          <PageIcon
+            dressed={dressed}
+            className="size-3 shrink-0 text-primary-400"
+          />
+          <span className="truncate text-primary-300">
+            {saved ? PAGE_TITLE : FIRST_TITLE}
+          </span>
         </div>
         <div className="flex items-center gap-2.5 text-primary-300">
           <Star className="size-3" />
@@ -270,8 +405,14 @@ function PageView({ t, reducedMotion }: { t: number; reducedMotion: boolean }) {
           {/* Mounted from the start, so the image is loaded by the time it lands. */}
           <motion.div
             initial={false}
-            animate={dressed ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.04 }}
-            transition={reducedMotion ? { duration: 0 } : { duration: 0.9, ease: "easeOut" }}
+            animate={
+              dressed ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.04 }
+            }
+            transition={
+              reducedMotion
+                ? { duration: 0 }
+                : { duration: 0.9, ease: "easeOut" }
+            }
             className="absolute inset-x-0 top-0"
             style={{ height: COVER_HEIGHT }}
           >
@@ -290,12 +431,26 @@ function PageView({ t, reducedMotion }: { t: number; reducedMotion: boolean }) {
         <div className="px-10">
           {/* Without a cover, room for the app's hover row of "Add icon" and
               "Add cover"; with one, the icon rides up over the cover's edge. */}
-          <motion.div initial={false} animate={{ paddingTop: dressed ? 31 : 56 }} transition={ease} className="mx-auto max-w-122.5">
+          <motion.div
+            initial={false}
+            animate={{ paddingTop: dressed ? 31 : 56 }}
+            transition={ease}
+            className="mx-auto max-w-122.5"
+          >
             {dressed && (
               <motion.div
                 initial={reducedMotion ? false : { opacity: 0, scale: 0.6 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={reducedMotion ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 26, delay: 0.35 }}
+                transition={
+                  reducedMotion
+                    ? { duration: 0 }
+                    : {
+                        type: "spring",
+                        stiffness: 420,
+                        damping: 26,
+                        delay: 0.35,
+                      }
+                }
                 className="relative -mt-13.5 mb-3.5 flex size-12.75 items-center justify-center rounded-[15px] bg-primary-950 shadow-sm"
               >
                 <Cpu className="size-11 text-blue-400" />
@@ -330,7 +485,13 @@ function PageView({ t, reducedMotion }: { t: number; reducedMotion: boolean }) {
 // ─── The page's chat ─────────────────────────────────────────────────────────
 
 /** A reply fading in word by word, as the app streams them. */
-function Message({ children, text }: { children?: React.ReactNode; text: string }) {
+function Message({
+  children,
+  text,
+}: {
+  children?: React.ReactNode;
+  text: string;
+}) {
   return (
     <p className="text-[10px] leading-4.25 text-primary-100">
       {text.split(" ").map((word, index) => (
@@ -348,7 +509,17 @@ function Message({ children, text }: { children?: React.ReactNode; text: string 
   );
 }
 
-function ToolRow({ tool: { Icon, verb, running }, detail, note, active }: { tool: Tool; detail: string; note?: string; active: boolean }) {
+function ToolRow({
+  tool: { Icon, verb, running },
+  detail,
+  note,
+  active,
+}: {
+  tool: Tool;
+  detail: string;
+  note?: string;
+  active: boolean;
+}) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -357,11 +528,19 @@ function ToolRow({ tool: { Icon, verb, running }, detail, note, active }: { tool
       className="flex min-w-0 items-center gap-1.5 text-[10px]"
     >
       <span className="flex size-3 shrink-0 items-center justify-center text-primary-400">
-        {active ? <SquareSpinner className="size-2.5" /> : <Icon className="size-3" />}
+        {active ? (
+          <SquareSpinner className="size-2.5" />
+        ) : (
+          <Icon className="size-3" />
+        )}
       </span>
-      <span className="shrink-0 font-medium text-primary-200">{active ? running : verb}</span>
+      <span className="shrink-0 font-medium text-primary-200">
+        {active ? running : verb}
+      </span>
       <span className="truncate text-primary-500">{detail}</span>
-      {note && <span className="shrink-0 text-[9px] text-primary-500">{note}</span>}
+      {note && (
+        <span className="shrink-0 text-[9px] text-primary-500">{note}</span>
+      )}
       <ArrowUp className="size-2.5 shrink-0 rotate-90 text-primary-600" />
     </motion.div>
   );
@@ -373,7 +552,7 @@ function GeneratedImage({ ready }: { ready: boolean }) {
     <motion.div
       initial={{ opacity: 0, y: 4 }}
       animate={{ opacity: 1, y: 0 }}
-      className="relative ml-4.5 aspect-video w-52 overflow-hidden rounded-lg bg-primary-950 glass-outline"
+      className="relative ml-4.5 aspect-video w-52 overflow-hidden rounded-lg bg-primary-900 "
     >
       {ready ? (
         <motion.div
@@ -382,25 +561,40 @@ function GeneratedImage({ ready }: { ready: boolean }) {
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="absolute inset-0"
         >
-          <Image src={COVER_SRC} alt="" fill unoptimized loading="eager" className="object-cover" style={{ objectPosition: "50% 22%" }} />
+          <Image
+            src={COVER_SRC}
+            alt=""
+            fill
+            unoptimized
+            loading="eager"
+            className="object-cover"
+            style={{ objectPosition: "50% 22%" }}
+          />
         </motion.div>
       ) : (
         <>
           <div
             className="absolute inset-0 text-primary-500"
             style={{
-              backgroundImage: "radial-gradient(currentColor 0.8px, transparent 1.2px)",
+              backgroundImage:
+                "radial-gradient(currentColor 0.8px, transparent 1.2px)",
               backgroundSize: "7px 7px",
-              maskImage: "radial-gradient(ellipse 65% 70% at 50% 50%, #000 15%, transparent 75%)",
+              maskImage:
+                "radial-gradient(ellipse 65% 70% at 50% 50%, #000 15%, transparent 75%)",
             }}
           />
           <motion.div
             className="absolute inset-y-0 w-1/2"
-            style={{ background: "linear-gradient(90deg, transparent, rgb(255 255 255 / 0.14), transparent)" }}
+            style={{
+              background:
+                "linear-gradient(90deg, transparent, rgb(255 255 255 / 0.14), transparent)",
+            }}
             animate={{ x: ["-100%", "250%"] }}
             transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
           />
-          <Shine className="absolute bottom-2 left-2.5 text-[9px]">Creating image</Shine>
+          <Shine className="absolute bottom-2 left-2.5 text-[9px]">
+            Creating image
+          </Shine>
         </>
       )}
     </motion.div>
@@ -422,10 +616,14 @@ function Transcript({ t }: { t: number }) {
       ref={scrollRef}
       className="noscrollbar min-h-0 flex-1 overflow-hidden px-3.5 pt-3 pb-3"
       // Earlier steps fade out under the title bar rather than being cut off.
-      style={{ maskImage: "linear-gradient(to bottom, transparent, black 20px)" }}
+      style={{
+        maskImage: "linear-gradient(to bottom, transparent, black 20px)",
+      }}
     >
       <div className="flex flex-col gap-2.5">
-        <div className="ml-auto max-w-[85%] rounded-2xl bg-primary-800 px-3 py-1.5 text-[10px] leading-4 text-primary-50">{PROMPT}</div>
+        <div className="ml-auto max-w-[85%] rounded-2xl bg-primary-800 px-3 py-1.5 text-[10px] leading-4 text-primary-50">
+          {PROMPT}
+        </div>
 
         {done ? (
           // Once it's done, the steps fold into one line above the answer.
@@ -440,8 +638,13 @@ function Transcript({ t }: { t: number }) {
             </motion.div>
             <Message text="Created">
               <Link>{PAGE_TITLE}</Link>{" "}
-              <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
-                with an example, the main approaches and their tradeoffs, design principles, and source links.
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.1 }}
+              >
+                with an example, the main approaches and their tradeoffs, design
+                principles, and source links.
               </motion.span>
             </Message>
             <Message text="I generated a cover to match and gave it an icon. The content is saved and verified." />
@@ -467,7 +670,7 @@ function Transcript({ t }: { t: number }) {
               </div>
             ) : (
               <ToolRow key={index} {...entry} active={index === arrived - 1} />
-            )
+            ),
           )
         )}
       </div>
@@ -489,7 +692,10 @@ function Composer({ typed, running }: { typed: number; running: boolean }) {
         {typed > 0 ? (
           <span className="text-primary-50">
             {PROMPT.slice(0, typed)}
-            <span aria-hidden className="ml-px inline-block h-3 w-px translate-y-0.5 animate-blink bg-primary-100" />
+            <span
+              aria-hidden
+              className="ml-px inline-block h-3 w-px translate-y-0.5 animate-blink bg-primary-100"
+            />
           </span>
         ) : (
           <span className="text-primary-500">Work with this page…</span>
@@ -502,10 +708,18 @@ function Composer({ typed, running }: { typed: number; running: boolean }) {
       <span
         className={cn(
           "flex size-6 shrink-0 items-center justify-center rounded-full",
-          running ? "bg-primary-50" : typed > 0 ? "bg-primary-50 text-primary-950" : "bg-primary-700 text-primary-300"
+          running
+            ? "bg-primary-50"
+            : typed > 0
+              ? "bg-primary-50 text-primary-950"
+              : "bg-primary-700 text-primary-300",
         )}
       >
-        {running ? <span className="size-2 rounded-xs bg-primary-950" /> : <ArrowUp className="size-3" />}
+        {running ? (
+          <span className="size-2 rounded-xs bg-primary-950" />
+        ) : (
+          <ArrowUp className="size-3" />
+        )}
       </span>
     </div>
   );
@@ -518,10 +732,23 @@ const CHAT_WIDTH = 344;
 const CHAT_HEIGHT = 330;
 const BAR = 32;
 
-const VERTICAL = { type: "tween" as const, duration: 0.28, ease: "linear" as const };
+const VERTICAL = {
+  type: "tween" as const,
+  duration: 0.28,
+  ease: "linear" as const,
+};
 /** The composer growing a line as the message wraps. */
-const GROW = { type: "tween" as const, duration: 0.18, ease: [0.22, 1, 0.36, 1] as const };
-const SPRING = { type: "spring" as const, stiffness: 500, damping: 45, mass: 1 };
+const GROW = {
+  type: "tween" as const,
+  duration: 0.18,
+  ease: [0.22, 1, 0.36, 1] as const,
+};
+const SPRING = {
+  type: "spring" as const,
+  stiffness: 500,
+  damping: 45,
+  mass: 1,
+};
 
 function FloatingChat({
   t,
@@ -539,7 +766,16 @@ function FloatingChat({
   onShow: () => void;
   reducedMotion: boolean;
 }) {
-  const typed = t < SEND ? Math.max(0, Math.min(PROMPT.length, Math.floor((t - TYPE_START) / TYPE_MS_PER_CHAR))) : 0;
+  const typed =
+    t < SEND
+      ? Math.max(
+          0,
+          Math.min(
+            PROMPT.length,
+            Math.floor((t - TYPE_START) / TYPE_MS_PER_CHAR),
+          ),
+        )
+      : 0;
   const running = t >= SEND && t < DONE;
   const title = t >= SAVED ? PAGE_TITLE : FIRST_TITLE;
   const icon = mode === "icon";
@@ -553,7 +789,9 @@ function FloatingChat({
   useLayoutEffect(() => {
     const node = composerRef.current;
     if (!node) return;
-    const observer = new ResizeObserver(() => setComposerHeight(Math.max(BAR, node.offsetHeight)));
+    const observer = new ResizeObserver(() =>
+      setComposerHeight(Math.max(BAR, node.offsetHeight)),
+    );
     observer.observe(node);
     return () => observer.disconnect();
   }, []);
@@ -563,22 +801,40 @@ function FloatingChat({
       initial={false}
       animate={{
         width: icon ? BAR : CHAT_WIDTH,
-        height: icon ? BAR : details ? CHAT_HEIGHT + composerHeight - BAR : composerHeight,
+        height: icon
+          ? BAR
+          : details
+            ? CHAT_HEIGHT + composerHeight - BAR
+            : composerHeight,
         borderRadius: icon ? BAR / 2 : 18,
       }}
-      transition={reducedMotion ? instant : mode === "input" ? GROW : details && fromInput ? VERTICAL : SPRING}
+      transition={
+        reducedMotion
+          ? instant
+          : mode === "input"
+            ? GROW
+            : details && fromInput
+              ? VERTICAL
+              : SPRING
+      }
       onClick={icon ? onShow : undefined}
       className={cn(
         "absolute right-2.5 bottom-2.5 overflow-hidden glass-outline transition-colors duration-200",
-        mode === "input" ? "bg-transparent" : "bg-primary-900 shadow-lg shadow-(color:--demo-shadow)",
-        icon && "cursor-pointer"
+        mode === "input"
+          ? "bg-transparent"
+          : "bg-primary-900 shadow-lg shadow-(color:--demo-shadow)",
+        icon && "cursor-pointer",
       )}
     >
       {/* The card: its title bar, with minimize, over the transcript. */}
       <motion.div
         initial={false}
         animate={{ opacity: details ? 1 : 0 }}
-        transition={reducedMotion ? instant : { duration: 0.2, delay: details && !fromInput ? 0.12 : 0 }}
+        transition={
+          reducedMotion
+            ? instant
+            : { duration: 0.2, delay: details && !fromInput ? 0.12 : 0 }
+        }
         aria-hidden={!details}
         inert={!details}
         className="absolute inset-y-0 right-0 flex flex-col"
@@ -593,7 +849,9 @@ function FloatingChat({
           >
             <Minus className="size-3" />
           </button>
-          <span className="min-w-0 flex-1 truncate text-[10px] font-medium text-primary-50">{title}</span>
+          <span className="min-w-0 flex-1 truncate text-[10px] font-medium text-primary-50">
+            {title}
+          </span>
           <Ellipsis className="mr-1 size-3 shrink-0 text-primary-400" />
         </div>
         {t >= SEND && <Transcript t={t} />}
@@ -604,10 +862,15 @@ function FloatingChat({
         ref={composerRef}
         initial={false}
         animate={{ opacity: icon ? 0 : 1 }}
-        transition={reducedMotion ? instant : { duration: 0.15, delay: icon ? 0 : 0.12 }}
+        transition={
+          reducedMotion ? instant : { duration: 0.15, delay: icon ? 0 : 0.12 }
+        }
         aria-hidden={icon}
         inert={icon}
-        className={cn("absolute right-0 bottom-0 bg-primary-900", details && "border-t border-primary-800/70")}
+        className={cn(
+          "absolute right-0 bottom-0 bg-primary-900",
+          details && "border-t border-primary-800/70",
+        )}
         style={{ width: CHAT_WIDTH, borderRadius: 18 }}
       >
         <Composer typed={typed} running={running} />
@@ -618,7 +881,9 @@ function FloatingChat({
         type="button"
         initial={false}
         animate={{ opacity: icon ? 1 : 0 }}
-        transition={reducedMotion ? instant : { duration: 0.15, delay: icon ? 0.12 : 0 }}
+        transition={
+          reducedMotion ? instant : { duration: 0.15, delay: icon ? 0.12 : 0 }
+        }
         onClick={(event) => {
           event.stopPropagation();
           onShow();
@@ -628,10 +893,14 @@ function FloatingChat({
         aria-hidden={!icon}
         className={cn(
           "absolute right-0 bottom-0 flex size-8 cursor-pointer items-center justify-center rounded-full text-primary-100 hover:bg-primary-800 focus-visible:outline-1 focus-visible:outline-primary-500",
-          !icon && "pointer-events-none"
+          !icon && "pointer-events-none",
         )}
       >
-        {running ? <SquareSpinner className="size-3" /> : <Mains className="size-3.5" />}
+        {running ? (
+          <SquareSpinner className="size-3" />
+        ) : (
+          <Mains className="size-3.5" />
+        )}
       </motion.button>
     </motion.div>
   );
@@ -646,24 +915,35 @@ const ATLAS_TYPES = [
   { label: "Images", Icon: Picture },
 ];
 
-const ROW = "flex items-center gap-2 rounded-lg px-1.5 py-1 text-[10px] text-primary-100";
+const ROW =
+  "flex items-center gap-2 rounded-lg px-1.5 py-1 text-[10px] text-primary-100";
 
 function AtlasSidebar({ title, dressed }: { title: string; dressed: boolean }) {
   return (
     <div className="flex min-w-0 flex-1 flex-col pr-2 pb-2 pl-1">
-      <div className="px-1.5 pb-1 text-xs font-medium tracking-tight text-primary-50">Atlas</div>
+      <div className="px-1.5 pb-1 text-xs font-medium tracking-tight text-primary-50">
+        Atlas
+      </div>
       <div className={cn(ROW, "mt-1 mb-2")}>
         <Edit className="size-3 shrink-0" />
         New page
       </div>
       {ATLAS_TYPES.map(({ label, Icon }) => (
-        <div key={label} className={cn(ROW, label === "Pages" && "bg-primary-50/5 glass-outline")}>
+        <div
+          key={label}
+          className={cn(
+            ROW,
+            label === "Pages" && "bg-primary-50/5 glass-outline",
+          )}
+        >
           <Icon className="size-3 shrink-0" />
           {label}
         </div>
       ))}
 
-      <div className="mt-4 px-1.5 py-1 text-[10px] text-primary-400">Recents</div>
+      <div className="mt-4 px-1.5 py-1 text-[10px] text-primary-400">
+        Recents
+      </div>
       <div className={cn(ROW, "bg-primary-50/5 glass-outline")}>
         <PageIcon dressed={dressed} className="size-3 shrink-0" />
         <span className="truncate">{title}</span>
@@ -673,7 +953,9 @@ function AtlasSidebar({ title, dressed }: { title: string; dressed: boolean }) {
         <span className="truncate">okanbilal.com</span>
       </div>
 
-      <div className="mt-3 px-1.5 py-1 text-[10px] text-primary-400">Projects</div>
+      <div className="mt-3 px-1.5 py-1 text-[10px] text-primary-400">
+        Projects
+      </div>
       {WORK_PROJECTS.map(({ name, Icon, tint }) => (
         <div key={name} className={ROW}>
           <Icon className={cn("size-3 shrink-0", tint)} />
@@ -696,7 +978,13 @@ const DESIGN_HEIGHT = 648;
  * The run, played once: its clock advances only while the window is in view,
  * so it waits for the visitor and pauses when scrolled away.
  */
-function Run({ shown, reducedMotion }: { shown: boolean; reducedMotion: boolean }) {
+function Run({
+  shown,
+  reducedMotion,
+}: {
+  shown: boolean;
+  reducedMotion: boolean;
+}) {
   const [t, setT] = useState(0);
   const elapsed = useRef(0);
   // The visitor's choice, once they make one; until then the chat follows the run.
@@ -725,7 +1013,15 @@ function Run({ shown, reducedMotion }: { shown: boolean; reducedMotion: boolean 
       <WindowFrame
         tabs={
           <>
-            <WindowTab icon={<PageIcon dressed={dressed} className="size-3 shrink-0 text-primary-200" />} title={title} />
+            <WindowTab
+              icon={
+                <PageIcon
+                  dressed={dressed}
+                  className="size-3 shrink-0 text-primary-200"
+                />
+              }
+              title={title}
+            />
             <Plus className="mb-2 size-3.5 shrink-0 text-primary-300" />
           </>
         }

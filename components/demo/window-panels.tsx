@@ -241,7 +241,7 @@ export function FloatingPanels() {
       </div>
 
       {/* Panel and pill share the corner; whichever is hidden scales away. */}
-      <div
+      {/* <div
         className={cn(
           "absolute right-4 bottom-6 origin-bottom-right transition-all",
           PANEL_ANIM,
@@ -253,9 +253,9 @@ export function FloatingPanels() {
         aria-hidden={!subagentsOpen}
       >
         <SubagentsPanel onCollapse={() => setSubagentsOpen(false)} />
-      </div>
+      </div> */}
 
-      <div
+      {/* <div
         className={cn(
           "absolute right-4 bottom-6 origin-bottom-right transition-all",
           PANEL_ANIM,
@@ -267,7 +267,7 @@ export function FloatingPanels() {
         aria-hidden={subagentsOpen}
       >
         <SubagentsPill onOpen={() => setSubagentsOpen(true)} />
-      </div>
+      </div> */}
     </>
   );
 }

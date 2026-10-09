@@ -28,10 +28,10 @@ export function HeroReleaseCanvas() {
         aria-label="Mains feature demos"
         className="relative flex gap-4 overflow-x-auto px-5 pb-5 text-left [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:static lg:block lg:overflow-visible lg:px-0 lg:pb-0"
       >
-        <HeroPaperNote
+        {/* <HeroPaperNote
           position="lg:-top-10 lg:left-[55%] lg:w-48 lg:-translate-x-1/2 lg:-rotate-3 xl:left-[56%] xl:w-64 2xl:left-[62%] 2xl:w-80"
           hoverClass={TILE_HOVER_CLASS}
-        />
+        /> */}
 
         <HeroFlightsTile
           position="lg:top-6 lg:left-[4%] lg:w-40 lg:-rotate-7 xl:left-[7%] xl:w-48 2xl:left-[17%] 2xl:w-52"
@@ -39,17 +39,17 @@ export function HeroReleaseCanvas() {
         />
 
         <HeroImageGenTile
-          position="lg:top-[270px] lg:left-[2%] lg:w-44 lg:rotate-6 xl:top-[290px] xl:left-[3%] xl:w-52 2xl:left-[5%] 2xl:w-60"
+          position="lg:top-[270px] lg:left-[2%] lg:w-44 lg:rotate-6 xl:top-[290px] xl:left-[13%] xl:w-52 2xl:left-[15%] 2xl:w-60"
           hoverClass={TILE_HOVER_CLASS}
         />
 
         <HeroVisualizeTile
-          position="lg:right-[2%] lg:top-8 lg:w-44 lg:rotate-5 xl:right-[5%] xl:top-12 xl:w-56 2xl:right-[8%]"
+          position="lg:-top-2 lg:left-[55%] lg:w-48 lg:-translate-x-1/2 lg:-rotate-3 xl:left-[66%] xl:w-64 2xl:left-[72%] 2xl:w-80"
           hoverClass={TILE_HOVER_CLASS}
         />
 
         <HeroPresentationTile
-          position="lg:hidden lg:right-[1%] lg:top-[275px] lg:w-40 lg:-rotate-4 xl:block xl:right-[2%] xl:top-[240px] xl:w-56 2xl:right-[15%] 2xl:w-64"
+          position="lg:hidden lg:right-[1%] lg:top-[275px] lg:w-40 lg:-rotate-4 xl:block xl:right-[18%] xl:top-[240px] xl:w-56 2xl:right-[15%] 2xl:w-64"
           hoverClass={TILE_HOVER_CLASS}
         />
       </ul>

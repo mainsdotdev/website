@@ -315,7 +315,7 @@ function Window({ t }: { t: number }) {
                   sent ? "opacity-0" : "opacity-100"
                 )}
               >
-                <Mains className="h-12 w-auto text-primary-800" />
+                <Mains className="h-8 w-auto text-primary-800" />
               </div>
 
               {sent && (

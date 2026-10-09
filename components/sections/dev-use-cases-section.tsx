@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
 import { BrowserDemo, DevBrowserDemo } from "@/components/demo/browser-demo";
 import { ComputerUseDemo } from "@/components/demo/computer-use-demo";
@@ -9,12 +8,12 @@ import { VoiceChatDemo } from "@/components/demo/voice-chat-demo";
 import { MockupActiveContext } from "@/components/demo/pr-flow";
 import { ReviewDemo } from "@/components/demo/review-demo";
 import { BrowserCursor, Pr, Review, VoiceWave, Web } from "@/components/icons";
-import { MAINS_DOCS_URL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const PREVIEW = {
   title: "Preview and annotate live.",
-  description: "Watch changes land in the built-in browser and point at what to fix.",
+  description:
+    "Watch changes land in the built-in browser and point at what to fix.",
   Icon: Web,
   Mockup: BrowserDemo,
   docsPath: "browser",
@@ -25,7 +24,8 @@ const PREVIEW_DEV = { ...PREVIEW, Mockup: DevBrowserDemo } as const;
 
 const REVIEW = {
   title: "Review in context.",
-  description: "Comment on any line of the diff and send it straight to the agent.",
+  description:
+    "Comment on any line of the diff and send it straight to the agent.",
   Icon: Review,
   Mockup: ReviewDemo,
   docsPath: "reviews",
@@ -37,7 +37,8 @@ const REVIEW = {
  */
 const SHIP = {
   title: "Ship from the session panel.",
-  description: "Commit, push, and open a pull request with its title and description drafted for you.",
+  description:
+    "Commit, push, and open a pull request with its title and description drafted for you.",
   Icon: Pr,
   Mockup: null,
   docsPath: "git-actions",
@@ -49,7 +50,8 @@ export const DEV_USE_CASES = [PREVIEW_DEV, REVIEW, SHIP] as const;
 /** Codex driving the Mac's own apps, from a plain request. */
 const COMPUTER_USE = {
   title: "Let it use your Mac.",
-  description: "Ask in plain words. Codex opens your apps and clicks through them for you.",
+  description:
+    "Ask in plain words. Codex opens your apps and clicks through them for you.",
   Icon: BrowserCursor,
   Mockup: ComputerUseDemo,
   docsPath: "codex/computer-use",
@@ -62,7 +64,8 @@ const COMPUTER_USE = {
 /** A Codex voice chat, the orb in any of its three styles. */
 const VOICE = {
   title: "Talk it through.",
-  description: "Start a voice chat and think out loud. Codex hands the bigger jobs to a chat of their own.",
+  description:
+    "Start a voice chat and think out loud. Codex hands the bigger jobs to a chat of their own.",
   Icon: VoiceWave,
   Mockup: VoiceChatDemo,
   // Voice settings live under Settings › Codex; the docs have no voice page yet.
@@ -85,12 +88,19 @@ export const WORK_USE_CASES = [COMPUTER_USE, VOICE] as const;
  * mockups stay mounted and cross-fade, so moving between rows never resets a
  * demo someone was playing with.
  */
-export function DevUseCasesSection({ shipMockup }: { shipMockup: React.ReactNode }) {
+export function DevUseCasesSection({
+  shipMockup,
+}: {
+  shipMockup: React.ReactNode;
+}) {
   const [activeIndex, setActiveIndex] = useState(0);
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section aria-labelledby="dev-use-cases-title" className="px-5 py-24 sm:px-8 lg:py-32">
+    <section
+      aria-labelledby="dev-use-cases-title"
+      className="px-5 py-24 sm:px-8 lg:py-32"
+    >
       <div className="max-w-2xl">
         <h2
           id="dev-use-cases-title"
@@ -99,8 +109,8 @@ export function DevUseCasesSection({ shipMockup }: { shipMockup: React.ReactNode
           Built for agent workflows.
         </h2>
         <p className="mt-6 text-xl leading-snug text-primary-400">
-          Preview, review, and work beside your agents without leaving Mains.{" "}
-
+          Preview, review, and work beside your agents without leaving
+          Mains.{" "}
         </p>
       </div>
 
@@ -134,9 +144,14 @@ export function DevUseCasesSection({ shipMockup }: { shipMockup: React.ReactNode
                           }
                         />
                       )}
-                      <Icon aria-hidden className="relative mt-0.5 size-4.5 shrink-0 text-blue-400" />
+                      <Icon
+                        aria-hidden
+                        className="relative mt-0.5 size-4.5 shrink-0 text-blue-400"
+                      />
                       <span className="relative text-base leading-relaxed text-primary-400">
-                        <span className="font-medium text-primary-50">{title}</span>{" "}
+                        <span className="font-medium text-primary-50">
+                          {title}
+                        </span>{" "}
                         {description}
                       </span>
                     </button>
@@ -149,7 +164,7 @@ export function DevUseCasesSection({ shipMockup }: { shipMockup: React.ReactNode
 
         {/* The window frame the page's other mockups use; the selected
             mockup fills it exactly. */}
-        <div className="overflow-hidden rounded-xl border border-primary-700/40 bg-primary-900 p-1 shadow-[0_32px_80px_-24px_var(--demo-shadow)]">
+        <div className="overflow-hidden rounded-xl   ">
           <div className="relative aspect-video overflow-hidden rounded-lg border border-primary-700/20 bg-primary-950">
             {DEV_USE_CASES.map(({ title, Mockup }, index) => {
               const active = index === activeIndex;
@@ -160,12 +175,16 @@ export function DevUseCasesSection({ shipMockup }: { shipMockup: React.ReactNode
                   inert={!active}
                   className={cn(
                     "absolute inset-0 transition-opacity duration-300 ease-out",
-                    active ? "opacity-100" : "opacity-0"
+                    active ? "opacity-100" : "opacity-0",
                   )}
                 >
                   {/* The ship mockup plays its pull request flow only while shown. */}
                   <MockupActiveContext value={active}>
-                    {Mockup ? <Mockup className="absolute inset-0" /> : shipMockup}
+                    {Mockup ? (
+                      <Mockup className="absolute inset-0" />
+                    ) : (
+                      shipMockup
+                    )}
                   </MockupActiveContext>
                 </div>
               );

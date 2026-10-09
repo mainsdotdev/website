@@ -261,7 +261,7 @@ function Toast({ phase }: { phase: Phase }) {
   return (
     <div
       className={cn(
-        "absolute top-10 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-xl px-3.5 py-2 text-[11px] text-primary-50 shadow-2xl shadow-(--demo-shadow) transition-[opacity,transform] duration-200 ease-out glass-card motion-reduce:transition-none",
+        "absolute top-10 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-xl px-3.5 py-2 text-[11px] text-primary-50  transition-[opacity,transform] duration-200 ease-out glass-card motion-reduce:transition-none",
         shown ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0"
       )}
     >

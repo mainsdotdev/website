@@ -38,7 +38,7 @@ export default function WorkPage() {
         appWindow={<AppWindow />}
         releaseCanvas={<HeroReleaseCanvas />}
         words={WORK_SCRAMBLE_WORDS}
-        tagline="Plan, write, and create with the AI you already use."
+        tagline="Think, create, and get things done."
       />
 
       {/* The home page's use cases, full width as there. The hero orb flies

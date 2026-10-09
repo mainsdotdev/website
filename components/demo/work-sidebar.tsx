@@ -68,7 +68,7 @@ export function WorkSidebarContent({ activeChat, onOpenChat, featuredChat }: {
       <div className="mt-1 flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto noscrollbar">
         {PROJECTS.map(({ name, icon: Icon, tint, chats }) => (
           <div key={name}>
-            <div className={cn("flex items-center gap-1.5 px-1.5 py-1.5", tint)}>
+            <div className={cn("flex items-center gap-1.5 px-1.5 py-1", tint)}>
               <Icon className="size-3 shrink-0" />
               <span className="truncate text-[11px]">{name}</span>
             </div>
@@ -84,7 +84,7 @@ export function WorkSidebarContent({ activeChat, onOpenChat, featuredChat }: {
               const title = CHAT_TABS.find((tab) => tab.id === id)!.title;
               const active = activeChat === id;
               const className = cn(
-                "block w-full truncate rounded-lg py-1.5 pr-2 pl-7 text-left text-[11px] text-primary-50",
+                "block w-full truncate rounded-lg py-1 pr-2 pl-7 text-left text-[10px] text-primary-50",
                 active && "bg-primary-50/5 glass-outline",
                 onOpenChat && "cursor-pointer transition-colors hover:bg-primary-50/5 focus-visible:outline-1 focus-visible:outline-primary-400",
               );

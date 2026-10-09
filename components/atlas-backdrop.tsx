@@ -1,25 +1,20 @@
 import { cn } from "@/lib/utils";
-
-/**
- * The Atlas page's backdrop, after a survey map: topographic contour lines,
- * every fifth one heavier, as the developer page has its blueprint grid and
- * the Work page its dotted canvas.
- *
- * The lines are one static SVG (`public/atlas-topo.svg`, contours of a seeded
- * noise terrain) used as a mask over the text color, so they follow the
- * theme. A radial fade keeps them to the top of the page and off its edges.
- */
+/** Static meridian lines, following the theme and fading into the page. */
 export function AtlasBackdrop({ className }: { className?: string }) {
   return (
     <div
-      aria-hidden
-      className={cn("pointer-events-none absolute inset-x-0 top-0 h-[64rem]", className)}
-      style={{ maskImage: "radial-gradient(ellipse 75% 70% at 50% 30%, #000 25%, transparent 80%)" }}
+      aria-hidden="true"
+      className={cn("pointer-events-none absolute inset-x-0 top-0 h-[64rem] overflow-hidden", className)}
+      style={{ maskImage: "radial-gradient(ellipse 85% 80% at 50% 25%, #000 20%, transparent 85%)" }}
     >
       <div
-        className="size-full bg-primary-50/15"
+        className="absolute inset-0"
+        style={{ backgroundImage: "radial-gradient(ellipse 60% 65% at 65% 15%, rgb(151 139 104 / 9%), transparent 75%)" }}
+      />
+      <div
+        className="absolute inset-0 bg-primary-50/15"
         style={{
-          maskImage: "url(/atlas-topo.svg)",
+          maskImage: "url(/atlas-meridians.svg)",
           maskSize: "cover",
           maskPosition: "center top",
           maskRepeat: "no-repeat",

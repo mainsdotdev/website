@@ -169,7 +169,7 @@ export function UseCaseTabsSection() {
         id={PANEL_ID}
         role="tabpanel"
         aria-label={WORK_USE_CASES[activeIndex].title}
-        className="relative mt-10 aspect-16/7.5 overflow-hidden rounded-t-2xl border border-b-0 border-primary-700/40 bg-primary-900 p-1 pb-0"
+        className="relative mt-10 aspect-16/7.5 overflow-hidden rounded-t-2xl  pb-0"
         initial={false}
         animate={{ maskImage: "unfaded" in WORK_USE_CASES[activeIndex] ? UNFADED : FADED }}
         transition={{ duration: prefersReducedMotion ? 0 : 0.4, ease: "easeOut" }}

@@ -65,7 +65,7 @@ const DESCRIPTION = "mt-2 max-w-md font-mono text-[13px] leading-relaxed text-pr
 function DemoCell({ feature: { title, description, Demo } }: { feature: DemoFeature }) {
   return (
     <div className={CELL}>
-      <div className="rounded-lg border border-dashed border-primary-50/12 bg-primary-50/5 p-2">
+      <div className="rounded-lg  bg-primary-50/5 p-2">
         <div className="relative aspect-video overflow-hidden rounded-md bg-primary-950">
           <Demo className="absolute inset-0" />
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { CtaVoiceOrb } from "@/components/cta-voice-orb";
 import { CtaActions } from "@/components/sections/cta-section";
 import { FADE_IN_UP } from "@/lib/animations";
 
@@ -8,6 +9,9 @@ import { FADE_IN_UP } from "@/lib/animations";
 export function TryNowSection() {
   return (
     <section aria-labelledby="try-now-title" className="px-5 py-32 text-center sm:px-8 lg:py-44">
+      <div className="mb-8 flex justify-center">
+        <CtaVoiceOrb />
+      </div>
       <motion.div {...FADE_IN_UP} className="flex flex-col items-center">
         <h2
           id="try-now-title"

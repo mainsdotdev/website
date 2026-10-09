@@ -117,12 +117,12 @@ export default function Home() {
           <LocalFirstSection compact />
 
           {/* Drafts only show while developing, so a build may have no posts. */}
-          {blogPosts.length > 0 && (
+          {/* {blogPosts.length > 0 && (
             <>
               <BlueprintGap />
               <DevBlogSection posts={blogPosts} />
             </>
-          )}
+          )} */}
 
           <BlueprintGap />
           <BlueprintGridPanel>
