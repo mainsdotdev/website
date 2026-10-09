@@ -3,7 +3,7 @@ import { NavigationRail } from "@/components/demo/navigation-rail";
 import { ScaleToFit } from "@/components/demo/scale-to-fit";
 import { Composer, TurnMeta, UserTurn } from "@/components/demo/voice-chats";
 import { WorkSidebarContent } from "@/components/demo/work-sidebar";
-import { Apps, ArrowUp, Bolt, ChevronDown, Codex, Document, Ellipsis, Gallery, Goal, SidebarOpen, Web } from "@/components/icons";
+import { ArrowUp, Bolt, ChevronDown, Codex, Document, Ellipsis, Gallery, Goal, Menu, SidebarClose, Web } from "@/components/icons";
 import { OrbFlightSlot } from "@/components/orb-flight";
 import { cn } from "@/lib/utils";
 
@@ -18,16 +18,16 @@ function TitleBar() {
           <span className="size-2.5 rounded-full bg-[#febc2e]" />
           <span className="size-2.5 rounded-full bg-[#28c840]" />
         </div>
-        <SidebarOpen className="size-3.5 text-primary-400" />
+        <SidebarClose className="size-3.5 text-primary-400" />
       </div>
-      <div className="relative flex h-7 w-32 items-center gap-1.5 rounded-t-xl bg-(--demo-content) px-2 text-primary-200 shadow-[inset_0_1px_0_rgb(255_255_255/12%)]">
+      <div className="relative flex h-7 w-32 items-center gap-1 rounded-t-xl bg-(--demo-content) px-2 text-primary-200 shadow-[inset_0_1px_0_rgb(255_255_255/12%)]">
         <Codex className="size-3 shrink-0" />
-        <span className="text-[10px]">Learn To Play Go</span>
+        <span className="text-[9px]">Learn To Play Go</span>
         <Ellipsis className="ml-auto size-3 text-primary-500" />
         <span aria-hidden className="absolute -right-2 bottom-0 size-2" style={{ background: "radial-gradient(circle at top right, transparent 8px, var(--demo-content) 8px)" }} />
       </div>
       <div aria-hidden className="mb-2 ml-auto flex items-center gap-3 pr-3 text-primary-500">
-        <Apps className="size-3.5" /><Web className="size-3.5" />
+        <Menu className="size-3.5" /><Web className="size-3.5" />
       </div>
     </div>
   );

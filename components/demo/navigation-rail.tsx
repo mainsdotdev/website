@@ -91,11 +91,12 @@ function RailButton({
  * agent spaces, help and settings pinned to the foot. It sits on the content
  * color as its own rounded card, inset from the vibrant chrome around it.
  */
-export function NavigationRail({ voiceSlot, mode = "developer", activeLabel = "Home", showSpaces = mode !== "work" }: {
+export function NavigationRail({ voiceSlot, mode = "developer", activeLabel = "Home", showSpaces = mode !== "work", showPinnedApps = mode !== "work" }: {
   voiceSlot?: React.ReactNode;
   mode?: "developer" | "work";
   activeLabel?: string;
   showSpaces?: boolean;
+  showPinnedApps?: boolean;
 } = {}) {
   return (
     <div className="mx-1 mb-1 flex w-8 shrink-0 flex-col items-center rounded-xl bg-(--demo-content) p-1">
@@ -105,7 +106,7 @@ export function NavigationRail({ voiceSlot, mode = "developer", activeLabel = "H
         ))}
 
         <div className="w-6 border-b border-primary-800" />
-        {mode !== "work" && PINNED_APPS.map((item) => (
+        {showPinnedApps && PINNED_APPS.map((item) => (
           <RailButton key={item.label} item={item} />
         ))}
         <RailButton item={{ label: "App options", icon: Ellipsis }} />

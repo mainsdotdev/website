@@ -11,7 +11,6 @@ import {
   React as ReactFileIcon,
   Read,
   SidebarClose,
-  SidebarOpen,
   Web,
 } from "@/components/icons";
 import { cn } from "@/lib/utils";
@@ -54,7 +53,7 @@ function TitleBar() {
           <span className="size-2.5 rounded-full bg-[#febc2e]" />
           <span className="size-2.5 rounded-full bg-[#28c840]" />
         </div>
-        <SidebarOpen className="size-3.5 text-primary-200" />
+        <SidebarClose className="size-3.5 text-primary-200" />
       </div>
 
       <div className="flex min-w-0 flex-1 items-end gap-2 pr-3">

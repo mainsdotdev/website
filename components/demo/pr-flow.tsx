@@ -324,7 +324,7 @@ export function PrFlowDialog() {
       {open && (
         <div
           ref={boxRef}
-          className="absolute top-1/2 left-1/2 -mt-62.5 -ml-67.5 overflow-hidden rounded-3xl bg-(--glass-fill-surface) shadow-2xl shadow-(--demo-shadow) glass-outline"
+          className="absolute top-1/2 left-1/2 -mt-62.5 -ml-67.5 overflow-hidden rounded-3xl bg-primary-900  glass-outline"
           style={{ width: DIALOG.width, height: DIALOG.height }}
         >
           {/* Laid out at the dialog's full size, so the growing box reveals

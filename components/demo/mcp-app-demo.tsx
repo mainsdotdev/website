@@ -4,7 +4,7 @@ import { McpAppSurface, McpAppTabBar } from "@/components/demo/mcp-app-panel";
 import { ProjectSidebar, SIDEBAR_WIDTH } from "@/components/demo/project-sidebar";
 import { ScaleToFit } from "@/components/demo/scale-to-fit";
 import { OrbFlightSlot } from "@/components/orb-flight";
-import { Apps, ArrowUp, Branch, Clipboard, SidebarOpen } from "@/components/icons";
+import { Apps, ArrowUp, Branch, Clipboard, SidebarClose } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 /**
@@ -87,7 +87,7 @@ export function McpAppDemo({ className }: { className?: string }) {
                 <span className="size-2.5 rounded-full bg-[#febc2e]" />
                 <span className="size-2.5 rounded-full bg-[#28c840]" />
               </div>
-              <SidebarOpen className="size-3.5 text-primary-200" />
+              <SidebarClose className="size-3.5 text-primary-200" />
             </div>
             <McpAppTabBar appName="Canva" />
           </div>

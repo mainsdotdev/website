@@ -1,34 +1,58 @@
 import { cn } from "@/lib/utils";
 
 /**
- * An active title-bar tab, following the app's `BaseTab`: painted in the
- * content colour with only its top corners rounded, then flared back out
- * with an inverted corner so it reads as merging into the surface below.
+ * A title-bar tab following the app's `BaseTab`. Active tabs merge into the
+ * content surface; later tabs flare out on both sides. Passing onClick makes
+ * it an interactive button, so mockups can share the same tab treatment.
  */
 export function WindowTab({
   icon,
   title,
+  active = true,
+  showLeftFlare = false,
+  onClick,
   className,
 }: {
   icon: React.ReactNode;
   title: string;
+  active?: boolean;
+  showLeftFlare?: boolean;
+  onClick?: () => void;
   className?: string;
 }) {
+  const Tag = onClick ? "button" : "div";
+
   return (
-    <div
+    <Tag
+      type={onClick ? "button" : undefined}
+      onClick={onClick}
+      aria-pressed={onClick ? active : undefined}
       className={cn(
-        "relative flex w-40 min-w-0 items-center gap-1.5 rounded-t-xl bg-(--demo-content) py-1.5 pr-5 pl-2.5",
+        "relative flex w-40 min-w-0 items-center gap-1.5 rounded-t-xl py-1.5 pr-5 pl-2.5 text-left",
+        active
+          ? "bg-(--demo-content) text-primary-200"
+          : "text-primary-400 hover:text-primary-200",
+        onClick && "cursor-pointer transition-colors motion-reduce:transition-none",
         className
       )}
-      style={{ boxShadow: "inset 0 1px 0 color-mix(in srgb, var(--color-primary) 20%, transparent)" }}
+      style={active ? { boxShadow: "inset 0 1px 0 color-mix(in srgb, var(--color-primary) 20%, transparent)" } : undefined}
     >
       {icon}
-      <span className="truncate text-[10px] font-medium tracking-tight text-primary-200">{title}</span>
-      <span
-        aria-hidden
-        className="absolute -right-2 bottom-0 size-2"
-        style={{ background: "radial-gradient(circle at top right, transparent 8px, var(--demo-content) 8px)" }}
-      />
-    </div>
+      <span className="truncate text-[10px] font-medium tracking-tight">{title}</span>
+      {active && showLeftFlare && (
+        <span
+          aria-hidden
+          className="absolute -left-2 bottom-0 size-2"
+          style={{ background: "radial-gradient(circle at top left, transparent 8px, var(--demo-content) 8px)" }}
+        />
+      )}
+      {active && (
+        <span
+          aria-hidden
+          className="absolute -right-2 bottom-0 size-2"
+          style={{ background: "radial-gradient(circle at top right, transparent 8px, var(--demo-content) 8px)" }}
+        />
+      )}
+    </Tag>
   );
 }

@@ -6,7 +6,7 @@ import { NavigationRail } from "@/components/demo/navigation-rail";
 import { FloatingPanels, WindowToolbar } from "@/components/demo/window-panels";
 import { WindowStateProvider } from "@/components/demo/window-state";
 import { WorkSidebar } from "@/components/demo/work-sidebar";
-import { Plus, SidebarOpen } from "@/components/icons";
+import { Plus, SidebarClose } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 /**
@@ -34,7 +34,7 @@ function TitleBar() {
           <span className="size-2.5 rounded-full bg-[#28c840]" />
         </div>
 
-        <SidebarOpen className="size-3.5 text-primary-200" />
+        <SidebarClose className="size-3.5 text-primary-200" />
       </div>
 
       <div className="flex min-w-0 flex-1 items-end gap-2 pr-3">

@@ -17,7 +17,7 @@ import {
   Heart,
   Mitts,
   Plus,
-  SidebarOpen,
+  SidebarClose,
 } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
@@ -96,6 +96,7 @@ export function WindowFrame({
   titleBarEnd,
   rail = <NavigationRail />,
   sidebar,
+  contentClassName,
   children,
 }: {
   /** The title bar's tabs, the first of which meets the content column. */
@@ -104,6 +105,7 @@ export function WindowFrame({
   titleBarEnd?: React.ReactNode;
   rail?: React.ReactNode;
   sidebar: React.ReactNode;
+  contentClassName?: string;
   /** The content column's contents. */
   children: React.ReactNode;
 }) {
@@ -118,7 +120,7 @@ export function WindowFrame({
                 <span className="size-2.5 rounded-full bg-[#febc2e]" />
                 <span className="size-2.5 rounded-full bg-[#28c840]" />
               </div>
-              <SidebarOpen className="size-3.5 text-primary-200" />
+              <SidebarClose className="size-3.5 text-primary-200" />
             </div>
             <div className="flex min-w-0 flex-1 items-end gap-2 pr-3">
               {tabs}
@@ -134,7 +136,7 @@ export function WindowFrame({
 
             {/* The opaque content surface; its top-left corner meets the
                 active first tab, so it stays square there. */}
-            <div className="relative mr-1 mb-1 flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl rounded-tl-none bg-(--demo-content)">
+            <div className={cn("relative mr-1 mb-1 flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl rounded-tl-none bg-(--demo-content)", contentClassName)}>
               {children}
             </div>
           </div>

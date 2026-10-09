@@ -1,29 +1,144 @@
 ---
 title: "How we made long chats lighter"
 date: 2026-10-08
-description: "A long coding chat used to keep thousands of elements on screen. Here is how Mains 0.16 pages the transcript and rests idle tabs, and what it saved."
+description: "How Mains bounds transcript rendering, defers tool output, optimizes image previews with Sharp, and lets idle browser tabs rest."
 image: "/changelog/0-16/cover.webp"
 author: "Mains Team"
 tags: ["engineering", "performance"]
-# A placeholder to build the blog around; drafts only show while developing.
 published: false
 ---
 
-A chat in Mains can run for hours. Every prompt, tool call, and image an agent produces lands in the transcript, and until 0.16 all of it stayed on screen at once, even the parts you had scrolled far past.
+A chat in Mains can run for hours. A single session might contain hundreds of tool calls, long command outputs, generated images, and several browser tabs. Each of those has a different memory cost: text in JavaScript, mounted React components, decoded image pixels, or a separate Chromium renderer.
 
-## Drawing only what you can see
+Before [Mains 0.16](/blog/mains-0-16-release), opening a long conversation could keep almost 12,000 DOM nodes mounted, including messages far outside the viewport. We changed how history is loaded, how its rows are mounted, and how their contents are retained. The image pipeline now shares those limits across chat and Atlas, with native image processing on desktop and Sharp in the standalone server.
 
-Mains now loads a chat in pages and only draws what is in view. Scroll up and earlier messages load in; **Jump to latest** brings you back to the bottom. Long tool outputs wait until you open them, and images in the transcript load as small previews, with the full-size version loading only when you open one.
+## Start with a window of history
 
-## Letting tabs rest
+Rendering fewer messages helps, but loading the entire conversation into JavaScript would still leave its text and tool payloads in memory. We moved the first limit into the history query.
 
-The in-app browser keeps only your three most recently used tabs live. Older ones go to sleep and wake up where you left them, with the same scroll position, history, and anything you typed into a form. The tab you are looking at never sleeps, and a page that asks to keep unsaved changes stays awake too.
+Opening a conversation reads its latest **20 prompt blocks**. Older and newer requests move by 20 blocks and retain a window of at most **60**. A block includes a user prompt and the work that follows it, so paging preserves the structure of a turn. Outside the selected range, the backend examines chronological keys rather than loading message bodies.
 
-## What it saved
+The renderer replaces that window as you navigate. It retains event and turn data for only four recently viewed runs; reopening an evicted run fetches its latest page again. The complete history remains in the database, and the agent’s context is unchanged.
 
-We measured the chat window on snapshots of real conversations, taking the median of three runs:
+Paging also has to behave while an agent is working. When you scroll away from the latest message, the upper edge of the reading window freezes. Paging and refresh requests run in sequence, so a late refresh cannot overwrite the older page you just requested. A visible row’s identity and position anchor the scroll after replacement; **Jump to latest** explicitly returns to the live tail.
 
-- **A long coding chat** (26 prompts, 566 tool calls) opens with **43% less memory**: 156 MiB instead of 275 MiB. The page holds 280 elements instead of almost 12,000.
-- **Six heavy pages** in the in-app browser use **44% less memory**: 418 MiB instead of 749 MiB.
+## Keep React close to the viewport
 
-These figures cover the window that shows the chat and the in-app browser, not the agents themselves or Mains as a whole.
+Within the loaded page, `TranscriptWindow` mounts only nearby row bodies. Its buffer is the larger of 800 pixels or one viewport height, giving messages time to appear before you reach them.
+
+Rows outside that region keep a thin placeholder with a measured or estimated height. Their Markdown, tool details, and media components unmount. `ResizeObserver` updates the measurements as content changes; if a row above the viewport changes height, the scroll offset is adjusted to keep the reading position steady.
+
+Unmounting must not make an accordion forget that you opened it. A separate cache remembers scroll offsets, row heights, and small interaction values for four views, with limits of 128 heights and 512 interaction values per view. It holds no message bodies, DOM nodes, images, or React trees. Inactive transcript tabs unmount their bodies too.
+
+## Fetch tool output when it is opened
+
+A collapsed command can still contain megabytes of output. Hiding its component would do little if the complete result had already crossed IPC and entered renderer state.
+
+Desktop history requests defer completed Read, Bash, and Shell outputs longer than **16,384 characters**, excluding MCP app results. SQLite returns a **2,000-character prefix** and the original length. The full output stays out of backend JavaScript and the history response.
+
+Expanding the row requests the original output for that tool call and its owning run. Closing it or moving it outside the rendered region releases the detail component and its fetched payload. Formatting happens inside mounted detail bodies, and event mapping no longer keeps another formatted copy of the same input and output strings. Pending tools and provider context retain their complete payloads.
+
+## Give images a preview budget
+
+An image’s file size is only part of its cost. A 4,000 × 3,000 image needs roughly **46 MiB** for one decoded, four-byte-per-pixel bitmap, before additional rendering allocations. Showing it at 200 pixels wide does not make that original bitmap smaller.
+
+Chat attachments therefore load a derivative with a maximum edge of **256 pixels**. An intersection observer starts the request within 300 pixels of the viewport. Away from it, the attachment component keeps a layout placeholder and releases its image lease.
+
+Opening an attachment loads a larger preview, capped at **1,600 pixels**. That preview belongs to the open modal and is released when it closes. Downloading requests the original file separately. Preview generation never rewrites the original.
+
+Atlas uses the same backend pipeline: 256-pixel derivatives for list images, 768 for grids and page-card images, and 2,048 for page covers. Atlas’s full image viewer and editor embeds can still use the original. The appropriate size depends on the surface displaying it.
+
+## Resize with Sharp on the server
+
+Both hosts implement the same image-preview adapter. The Electron host uses `nativeImage`; the standalone Node server uses **Sharp**. Their shared backend handles authorization, request deduplication, the decode queue, and the disk cache.
+
+The core of the Sharp adapter looks like this:
+
+```ts
+sharp.cache({ memory: 8, files: 0, items: 16 });
+sharp.concurrency(1);
+
+const source = sharp(bytes, { animated: false });
+const hasAlpha = preserveAlpha && (await source.metadata()).hasAlpha;
+const resized = source.rotate().resize({
+  width: maxSide,
+  height: maxSide,
+  fit: "inside",
+  withoutEnlargement: true,
+});
+const encoded = hasAlpha
+  ? resized.png()
+  : resized.flatten({ background: "#ffffff" }).jpeg({ quality: 82 });
+const { data, info } = await encoded.toBuffer({ resolveWithObject: true });
+```
+
+The resize preserves aspect ratio, avoids cropping, and leaves smaller images at their existing size. Sharp applies the source orientation before resizing. When transparency preservation is requested and the source has alpha, the output is PNG; otherwise this adapter produces a JPEG at quality 82, flattening transparency onto white. Animated sources are read as a still preview.
+
+The backend serializes preview work, preventing a gallery from decoding many large originals simultaneously. Matching requests share an in-flight job. Sharp’s native cache is configured for 8 MB of memory, zero cached files, and 16 items, with concurrency set to one. These settings bound specific caches and processing work; they are not a total process-memory limit.
+
+## Bound the caches as well
+
+Derivatives live in `cache/image-previews`, with a **128 MiB disk-cache target**. Their keys include the source file’s identity, size, modification times, requested dimensions, and alpha policy. Changing the source invalidates the cached derivative. Reads touch the entry’s recency, and batched pruning removes the least recently used previews.
+
+The renderer separately caches only the small attachment thumbnails, targeting **16 MiB and 64 entries**. Images currently in use stay valid; unused entries are evicted and their Blob URLs revoked. Larger attachment previews bypass this retained cache. Switching backends clears image entries so another host’s pixels cannot remain attached to the current conversation.
+
+SVGs do not need raster resizing. Local formats that the host codec cannot preview can fall back to original-file serving within the existing file-size limit. The original stays the durable source; the derivative is disposable.
+
+## Let browser tabs rest
+
+The in-app browser has its own cost: each live page can hold a DOM, scripts, media, and application state in another Chromium renderer.
+
+Mains targets **three live browser views**, hibernating the least recently used inactive tabs. This is a soft limit. The visible active tab, pages playing audio or loading, and pages that veto `beforeunload` stay alive. The existing two-minute timer for a hidden browser panel uses the same guarded hibernation path.
+
+Before closing a view, Mains captures Chromium’s current-page state plus a bounded snapshot of ordinary form values, editable text, and scroll position. That state stays in an **8 MiB session cache**; disk persistence contains URLs and titles. Waking a tab restores its navigation history and attempts to restore its page state. Custom controls and arbitrary application JavaScript still depend on the page’s own persistence.
+
+## What we measured
+
+For the 0.16 transcript work, we rendered the production transcript components in an isolated Electron host using fixed snapshots of two real developer conversations. Offline IPC fixtures reproduced the production history ranges and deferred-output projection. Each comparison used fresh processes, a 1,100 × 800 window, a warm thumbnail cache, and three repetitions with alternating variant order.
+
+The table shows median **renderer resident memory (RSS)**. Transcript checkpoints were taken 800 milliseconds after two explicit garbage-collection calls. These are checkpoint measurements, rather than continuously measured peaks.
+
+<table>
+  <thead>
+    <tr>
+      <th>Conversation and checkpoint</th>
+      <th>Before</th>
+      <th>After</th>
+      <th>Reduction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>26 prompts, 566 tool calls — opening</td>
+      <td>274.6 MiB</td>
+      <td>156.3 MiB</td>
+      <td>43.1%</td>
+    </tr>
+    <tr>
+      <td>Same conversation — after browsing history</td>
+      <td>283.8 MiB</td>
+      <td>223.0 MiB</td>
+      <td>21.4%</td>
+    </tr>
+    <tr>
+      <td>11 prompts, 280 tool calls, 5 images — opening</td>
+      <td>227.5 MiB</td>
+      <td>160.2 MiB</td>
+      <td>29.6%</td>
+    </tr>
+    <tr>
+      <td>Same image conversation — after browsing history</td>
+      <td>360.5 MiB</td>
+      <td>182.4 MiB</td>
+      <td>49.4%</td>
+    </tr>
+  </tbody>
+</table>
+
+The long conversation’s initial DOM dropped from **11,941 nodes to 280**. The accompanying checks verified row-height changes, accordion state, scroll restoration, inactive-row unmounting, and deferred output loading. All five attachment thumbnails in the image fixture had a maximum edge of 256 pixels.
+
+We measured the actual browser service separately with six controlled pages, each containing 1,000 DOM cards and a touched 16 MiB buffer. Combined host and browser-tab renderer RSS fell from **749.1 MiB to 418.3 MiB**, a **44.2% reduction**, with three views live instead of six. This browser test used no forced garbage collection, and its savings depend on those page contents.
+
+These measurements cover the desktop transcript and browser tests. They do not measure total Mains memory, agent processes, real MCP app frames, or the standalone Sharp adapter independently.
+
+Paging trades lower retained memory for additional reads when you revisit history. Its turn limit is also not a byte limit: one turn can still contain a large message or many tool calls. Chromium may retain allocated memory after components unmount. We therefore look at memory after browsing and reopening content as well as at the first frame, while keeping the renderer’s loaded history, mounted rows, decoded previews, and caches bounded at their own seams.

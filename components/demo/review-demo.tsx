@@ -16,7 +16,7 @@ import {
   Refresh,
   Review,
   Search,
-  SidebarOpen,
+  SidebarClose,
   Trash,
 } from "@/components/icons";
 import { cn } from "@/lib/utils";
@@ -179,7 +179,7 @@ function TitleBar() {
         <span className="size-2.5 rounded-full bg-[#febc2e]" />
         <span className="size-2.5 rounded-full bg-[#28c840]" />
       </div>
-      <SidebarOpen className="size-3.5 text-primary-200" />
+      <SidebarClose className="size-3.5 text-primary-200" />
 
       <div className="ml-3 flex min-w-0 flex-1 items-center gap-1.5 text-primary-400">
         <Review className="size-3.5" />

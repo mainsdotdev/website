@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { ChatScroll } from "@/components/demo/chat-tabs";
 import { ScaleToFit } from "@/components/demo/scale-to-fit";
-import { ArrowUp, Branch, ChevronLeft, Clipboard, Ellipsis, Plus } from "@/components/icons";
+import { ArrowUp, Branch, ChevronLeft, ChevronUp, Clipboard, Ellipsis, Plus } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 /**
@@ -66,15 +66,15 @@ function Composer() {
   return (
     <div className={cn("rounded-[30px] px-4 pt-3.5 pb-2.5", GLASS)}>
       <div className="text-[17px] text-[#6e6e73]">Continue this run…</div>
-      <div className="mt-4 flex items-center gap-5 text-[16px] text-[#a1a1a6]">
+      <div className="mt-4 flex items-center gap-3 text-[16px] text-[#a1a1a6]">
         <Plus className="size-5" />
         <span>
           <span className="font-semibold">GPT 6.1 Sol</span>{" "}
-          <span className="text-[#8e8e93]">Medium</span>
+          <span className="text-[#8e8e93]">Max</span>
         </span>
         <span className="font-semibold">Write</span>
-        <span className={cn("ml-auto flex size-11 items-center justify-center rounded-full text-white", ACCENT)}>
-          <ArrowUp className="size-5" />
+        <span className={cn("ml-auto flex size-10 items-center justify-center rounded-full text-white", ACCENT)}>
+          <ChevronUp className="size-5.5" />
         </span>
       </div>
     </div>

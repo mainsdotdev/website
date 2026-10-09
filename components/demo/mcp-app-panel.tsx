@@ -1,5 +1,5 @@
 import { WindowTab } from "@/components/demo/window-tab";
-import { Apps, Chat, Close, MinimizeView, Refresh } from "@/components/icons";
+import { Apps, Close, MinimizeView, Refresh } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 /**
@@ -20,7 +20,6 @@ export function McpAppTabBar({ appName }: { appName: string }) {
 
       <div className="mb-2 ml-auto flex items-center gap-3 text-primary-500">
         <Refresh className="size-3.5 rotate-180" />
-        <Chat className="size-3.5 text-primary-100" />
         <MinimizeView className="size-3.5" />
         <Close className="size-3" />
       </div>

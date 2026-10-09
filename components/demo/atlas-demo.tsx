@@ -729,7 +729,7 @@ function Run({ shown, reducedMotion }: { shown: boolean; reducedMotion: boolean 
             <Plus className="mb-2 size-3.5 shrink-0 text-primary-300" />
           </>
         }
-        titleBarEnd={<Globe className="size-3.5" />}
+        titleBarEnd={<Web className="size-3.5" />}
         rail={<NavigationRail mode="work" activeLabel="Atlas" showSpaces />}
         sidebar={<AtlasSidebar title={title} dressed={dressed} />}
       >
