@@ -86,7 +86,7 @@ const MSG_2 = STEPS_1_AT.at(-1)! + STEP_1_MS + 300;
  * song reaches 5:05. The rest fire every 700ms, so all ten land before the
  * 10.2-second clip ends; the in-between steps come quicker.
  */
-const FIRST_CONFETTI = MUSIC_START + 3000;
+const FIRST_CONFETTI = MUSIC_START + 3600;
 const STEPS_2_AT = (() => {
   let at = FIRST_CONFETTI;
   return STEPS_2.map((step, index) => {

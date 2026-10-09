@@ -50,6 +50,7 @@ export { default as Codex } from "./codex";
 export { default as Edit } from "./edit";
 export { default as Layers } from "./layers";
 export { default as Menu } from "./menu";
+export { default as MenuToggle } from "./menu-toggle";
 export { default as Minimize } from "./minimize";
 export { default as Terminal } from "./terminal";
 export { default as Toggle } from "./toggle";

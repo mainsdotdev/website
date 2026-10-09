@@ -30,31 +30,37 @@
 }
 
 .tail {
-  --packet-offset: 29;
+  --packet-offset: 29px;
+  --packet-end: -971px;
   opacity: 0.12;
 }
 
 .body {
-  --packet-offset: 9;
+  --packet-offset: 9px;
+  --packet-end: -991px;
   opacity: 0.4;
 }
 
 .head {
-  --packet-offset: 0;
+  --packet-offset: 0px;
+  --packet-end: -1000px;
   opacity: var(--bridge-head-opacity, 0.9);
 }
 
 .packet[data-reverse] use {
-  --packet-offset: 0;
+  --packet-offset: 0px;
+  --packet-end: -1000px;
 }
 
 /* Normalized path lengths keep the packets in step at every viewport size. */
+/* Explicit lengths avoid Chromium's discrete interpolation of a number
+   start and a calc() end, which left every packet outside the mark. */
 @keyframes bridge-flow {
   from {
     stroke-dashoffset: var(--packet-offset);
   }
   to {
-    stroke-dashoffset: calc(var(--packet-offset) - 1000);
+    stroke-dashoffset: var(--packet-end);
   }
 }
 

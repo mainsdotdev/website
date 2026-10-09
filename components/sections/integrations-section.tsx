@@ -25,7 +25,7 @@ import { cn } from "@/lib/utils";
 /**
  * What agents can reach beyond the app, as a library after ChatGPT's plugin
  * directory: plugins, MCP servers and skills in tabs, each a two-column list
- * of icon, name and one line. The entries are the ones the docs name
+ * of icon, name and description. The entries are the ones the docs name
  * (docs/plugins, docs/mcp-servers, docs/skills). Brand marks are drawn
  * monochrome, the way the app's navigation rail draws plugin logos.
  */
@@ -87,13 +87,13 @@ export function IntegrationsSection() {
   const library = LIBRARIES.find(({ id }) => id === activeId) ?? LIBRARIES[0];
 
   return (
-    <section aria-labelledby="library-title" className="mx-auto max-w-7xl px-5 py-24 sm:px-8 lg:py-32">
-      <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-        <div className="max-w-xl">
-          <h2 id="library-title" className="text-5xl leading-none tracking-tight text-primary-50 sm:text-6xl">
+    <section aria-labelledby="library-title" className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-24 lg:py-32">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div className="min-w-0 max-w-xl">
+          <h2 id="library-title" className="text-4xl leading-none tracking-tight text-primary-50 sm:text-6xl">
             Plugins, MCP, and skills.
           </h2>
-          <p className="mt-6 text-xl leading-snug text-primary-400">
+          <p className="mt-4 text-base leading-snug text-primary-400 sm:mt-6 sm:text-xl">
             Give your agents the tools your team already uses: install a plugin, connect an MCP
             server, or write a skill once and use it everywhere.
           </p>
@@ -102,7 +102,7 @@ export function IntegrationsSection() {
           href={`${MAINS_DOCS_URL}/${library.docsPath}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex shrink-0 items-center gap-1 self-start rounded-full border border-primary-50/15 px-4 py-2 text-sm text-primary-50 transition-colors hover:bg-primary-50/5 sm:self-auto"
+          className="inline-flex shrink-0 items-center gap-1 self-start rounded-full border border-primary-50/15 px-4 py-2 text-sm text-primary-50 transition-colors hover:bg-primary-50/5 lg:self-auto"
         >
           {library.label} in the docs
           <ChevronRight aria-hidden className="size-3.5" />
@@ -110,7 +110,7 @@ export function IntegrationsSection() {
       </div>
 
       <LayoutGroup id="library-tabs">
-        <div role="tablist" aria-label="Library" className="mt-10 flex flex-wrap gap-1">
+        <div role="tablist" aria-label="Library" className="mt-8 flex flex-wrap gap-1 sm:mt-10">
           {LIBRARIES.map(({ id, label }) => {
             const active = id === activeId;
             return (
@@ -121,7 +121,7 @@ export function IntegrationsSection() {
                 aria-selected={active}
                 aria-controls={PANEL_ID}
                 onClick={() => setActiveId(id)}
-                className="relative cursor-pointer rounded-full px-5 py-2 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+                className="relative cursor-pointer rounded-full px-3 py-2 text-sm whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 sm:px-5 sm:text-base"
               >
                 {active && (
                   <motion.span
@@ -140,16 +140,16 @@ export function IntegrationsSection() {
         </div>
       </LayoutGroup>
 
-      <div id={PANEL_ID} role="tabpanel" aria-label={library.label} className="mt-10">
-        <ul className="grid gap-y-2 md:grid-cols-2 md:gap-x-16 lg:gap-x-28">
+      <div id={PANEL_ID} role="tabpanel" aria-label={library.label} className="mt-8 sm:mt-10">
+        <ul className="grid grid-cols-1 gap-y-2 md:grid-cols-2 md:gap-x-16 lg:gap-x-28">
           {library.entries.map(({ name, description, Icon, included }) => (
-            <li key={name} className="flex items-center gap-5 py-4">
-              <span className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-primary-50/10 bg-primary-900 text-primary-100">
-                <Icon aria-hidden className="size-6" />
+            <li key={name} className="flex min-w-0 items-center gap-3 py-3 sm:gap-5 sm:py-4">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-primary-50/10 bg-primary-900 text-primary-100 sm:size-12">
+                <Icon aria-hidden className="size-5 sm:size-6" />
               </span>
               <span className="min-w-0 flex-1">
-                <span className="block truncate text-lg text-primary-50">{name}</span>
-                <span className="mt-0.5 block truncate text-base text-primary-400">{description}</span>
+                <span className="block text-base leading-snug text-primary-50 sm:text-lg">{name}</span>
+                <span className="mt-0.5 block text-sm leading-snug text-primary-400 sm:text-base">{description}</span>
               </span>
               {included ? (
                 <span className="shrink-0 rounded-full border border-primary-50/10 px-2.5 py-0.5 text-xs text-primary-300">Included</span>
@@ -159,7 +159,7 @@ export function IntegrationsSection() {
             </li>
           ))}
         </ul>
-        <p className="mt-8 text-lg text-pretty text-primary-400">
+        <p className="mt-8 text-base text-pretty text-primary-400 sm:text-lg">
           <span className="text-primary-50">{library.more.lead}</span>
           {library.more.rest}
         </p>

@@ -49,7 +49,7 @@ function FooterWordmark({ variant }: { variant: FooterVariant }) {
   return (
     <h2
       className={cn(
-        "relative isolate mt-20 flex justify-center overflow-hidden border border-primary-50/5 rounded-3xl text-[clamp(3.5rem,18vw,14rem)] leading-none select-none sm:mt-12",
+        "relative isolate mt-20 flex justify-center overflow-hidden border border-primary-50/5 rounded-xl lg:rounded-2xl xl:rounded-3xl text-[clamp(3.5rem,18vw,14rem)] leading-none select-none sm:mt-12",
         dotted && "border-dotted",
       )}
     >

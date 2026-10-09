@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import {
   ATLAS_LIBRARY_ITEMS,
@@ -15,14 +15,12 @@ import { WindowFrame, WORK_PROJECTS } from "./work-window";
 import { WindowTab } from "./window-tab";
 import {
   ChevronDown,
-  ChevronLeft,
   Codex,
   Dna,
   Document,
   Edit,
   Ellipsis,
   Filter,
-  Globe,
   Grid,
   Library,
   Lightbulb,
@@ -36,6 +34,7 @@ import {
   Search,
   Star,
   Trash,
+  Web,
 } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
@@ -134,7 +133,6 @@ export function AtlasLibraryDemo({ className }: { className?: string }) {
   const [draft, setDraft] = useState<AtlasLibraryItem | null>(null);
   const [markdownMode, setMarkdownMode] = useState(false);
   const [saved, setSaved] = useState(false);
-  const nextId = useRef(0);
 
   const open = (item: AtlasLibraryItem) => {
     setDraft({ ...item });
@@ -170,27 +168,7 @@ export function AtlasLibraryDemo({ className }: { className?: string }) {
         item.id === id ? { ...item, favorite: !item.favorite } : item,
       ),
     );
-  const save = () => {
-    if (!draft) return;
-    nextId.current += 1;
-    const item = {
-      ...draft,
-      id: draft.id || `atlas-demo-${nextId.current}`,
-      title: draft.title.trim() || "Untitled page",
-      time: "Just now",
-    };
-    setItems((current) =>
-      current.some((entry) => entry.id === item.id)
-        ? current.map((entry) => (entry.id === item.id ? item : entry))
-        : [item, ...current],
-    );
-    setDraft(null);
-    setQuery("");
-    setKind("all");
-    setScope("All");
-    setProject(null);
-    setSaved(true);
-  };
+
   const visible = items
     .filter((item) => {
       const text = `${item.title} ${item.markdown}`.toLowerCase();
@@ -345,7 +323,7 @@ export function AtlasLibraryDemo({ className }: { className?: string }) {
               </button>
             </>
           }
-          titleBarEnd={<Globe className="size-3.5" />}
+          titleBarEnd={<Web className="size-3.5" />}
           rail={
             <NavigationRail
               activeLabel="Atlas"
