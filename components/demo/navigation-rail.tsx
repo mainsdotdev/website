@@ -91,16 +91,21 @@ function RailButton({
  * agent spaces, help and settings pinned to the foot. It sits on the content
  * color as its own rounded card, inset from the vibrant chrome around it.
  */
-export function NavigationRail({ voiceSlot }: { voiceSlot?: React.ReactNode } = {}) {
+export function NavigationRail({ voiceSlot, mode = "developer", activeLabel = "Home", showSpaces = mode !== "work" }: {
+  voiceSlot?: React.ReactNode;
+  mode?: "developer" | "work";
+  activeLabel?: string;
+  showSpaces?: boolean;
+} = {}) {
   return (
     <div className="mx-1 mb-1 flex w-8 shrink-0 flex-col items-center rounded-xl bg-(--demo-content) p-1">
       <div className="flex flex-col items-center gap-1.5">
-        {RAIL_ITEMS.map((item) => (
-          <RailButton key={item.label} item={item} />
+        {RAIL_ITEMS.filter((item) => mode !== "work" || item.label !== "Tasks").map((item) => (
+          <RailButton key={item.label} item={{ ...item, active: item.label === activeLabel }} />
         ))}
 
         <div className="w-6 border-b border-primary-800" />
-        {PINNED_APPS.map((item) => (
+        {mode !== "work" && PINNED_APPS.map((item) => (
           <RailButton key={item.label} item={item} />
         ))}
         <RailButton item={{ label: "App options", icon: Ellipsis }} />
@@ -111,7 +116,7 @@ export function NavigationRail({ voiceSlot }: { voiceSlot?: React.ReactNode } = 
             just above the spaces. */}
         {voiceSlot}
         <div className="flex flex-col items-center gap-1">
-          {SPACES.map(({ label, icon: Icon, active }) => (
+          {showSpaces && SPACES.map(({ label, icon: Icon, active }) => (
             <span
               key={label}
               className={cn(
@@ -130,4 +135,3 @@ export function NavigationRail({ voiceSlot }: { voiceSlot?: React.ReactNode } = 
     </div>
   );
 }
-

@@ -4,9 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
 import {
-  Apps,
+  BrowserCursor,
   ChevronRight,
-  Chat,
   Document,
   Figma,
   Gallery,
@@ -18,6 +17,7 @@ import {
   ProjectFolder,
   Pr,
   Review,
+  Slack,
 } from "@/components/icons";
 import { MAINS_DOCS_URL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -32,7 +32,9 @@ import { cn } from "@/lib/utils";
 
 type IconComponent = React.FC<React.SVGProps<SVGSVGElement>>;
 type Entry = { name: string; description: string; Icon: IconComponent; included?: boolean };
-type Library = { id: string; label: string; docsPath: string; entries: Entry[] };
+/** The line under a tab's list, saying the list is a sample: its lead is set brighter. */
+type More = { lead: string; rest: string };
+type Library = { id: string; label: string; docsPath: string; entries: Entry[]; more: More };
 
 const LIBRARIES: Library[] = [
   {
@@ -42,11 +44,12 @@ const LIBRARIES: Library[] = [
     entries: [
       { name: "GitHub", description: "Issues, pull requests, and repos", Icon: Github },
       { name: "Linear", description: "Issues and projects", Icon: Linear },
-      { name: "Slack", description: "Channels and messages", Icon: Chat },
+      { name: "Slack", description: "Channels and messages", Icon: Slack },
       { name: "Figma", description: "Bring designs into the chat", Icon: Figma },
-      { name: "Computer Use", description: "Let Codex drive a virtual computer", Icon: Apps },
+      { name: "Computer Use", description: "Let Codex drive a virtual computer", Icon: BrowserCursor },
       { name: "Image Generation", description: "Create and edit images in a run", Icon: Gallery },
     ],
+    more: { lead: "Hundreds more plugins", rest: " are a click away in the plugin directory." },
   },
   {
     id: "mcp",
@@ -56,10 +59,11 @@ const LIBRARIES: Library[] = [
       { name: "Mains tools", description: "Reviews, findings, and package checks", Icon: Mains, included: true },
       { name: "GitHub", description: "Issues, PRs, and repos", Icon: Github },
       { name: "Linear", description: "Issues and projects", Icon: Linear },
-      { name: "Slack", description: "Channels and messages", Icon: Chat },
+      { name: "Slack", description: "Channels and messages", Icon: Slack },
       { name: "Filesystem", description: "Local file access", Icon: ProjectFolder },
       { name: "Postgres", description: "Database queries", Icon: Layers },
     ],
+    more: { lead: "Hundreds more MCP servers", rest: " connect the same way. If it speaks MCP, it works." },
   },
   {
     id: "skills",
@@ -71,6 +75,7 @@ const LIBRARIES: Library[] = [
       { name: "Image Gen", description: "Generate and edit images, picked with $", Icon: Gallery },
       { name: "Your own skill", description: "A SKILL.md your whole team shares through git", Icon: Document },
     ],
+    more: { lead: "Hundreds more skills", rest: " from the community, ready to drop in alongside your own." },
   },
 ];
 
@@ -135,29 +140,30 @@ export function IntegrationsSection() {
         </div>
       </LayoutGroup>
 
-      <ul
-        id={PANEL_ID}
-        role="tabpanel"
-        aria-label={library.label}
-        className="mt-10 grid gap-y-2 md:grid-cols-2 md:gap-x-16 lg:gap-x-28"
-      >
-        {library.entries.map(({ name, description, Icon, included }) => (
-          <li key={name} className="flex items-center gap-5 py-4">
-            <span className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-primary-50/10 bg-primary-900 text-primary-100">
-              <Icon aria-hidden className="size-6" />
-            </span>
-            <span className="min-w-0 flex-1">
-              <span className="block truncate text-lg text-primary-50">{name}</span>
-              <span className="mt-0.5 block truncate text-base text-primary-400">{description}</span>
-            </span>
-            {included ? (
-              <span className="shrink-0 rounded-full border border-primary-50/10 px-2.5 py-0.5 text-xs text-primary-300">Included</span>
-            ) : (
-              <Plus aria-hidden className="size-5 shrink-0 text-primary-300" />
-            )}
-          </li>
-        ))}
-      </ul>
+      <div id={PANEL_ID} role="tabpanel" aria-label={library.label} className="mt-10">
+        <ul className="grid gap-y-2 md:grid-cols-2 md:gap-x-16 lg:gap-x-28">
+          {library.entries.map(({ name, description, Icon, included }) => (
+            <li key={name} className="flex items-center gap-5 py-4">
+              <span className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-primary-50/10 bg-primary-900 text-primary-100">
+                <Icon aria-hidden className="size-6" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-lg text-primary-50">{name}</span>
+                <span className="mt-0.5 block truncate text-base text-primary-400">{description}</span>
+              </span>
+              {included ? (
+                <span className="shrink-0 rounded-full border border-primary-50/10 px-2.5 py-0.5 text-xs text-primary-300">Included</span>
+              ) : (
+                <Plus aria-hidden className="size-5 shrink-0 text-primary-300" />
+              )}
+            </li>
+          ))}
+        </ul>
+        <p className="mt-8 text-lg text-pretty text-primary-400">
+          <span className="text-primary-50">{library.more.lead}</span>
+          {library.more.rest}
+        </p>
+      </div>
     </section>
   );
 }

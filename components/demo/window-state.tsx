@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useMemo, useState } from "react";
 import { CHAT_TABS, type ChatTabId } from "@/components/demo/chat-tabs-data";
 
 type WindowState = {
@@ -11,6 +11,8 @@ type WindowState = {
   /** True while either panel owns the right edge of the window. */
   laneOccupied: boolean;
   activeChat: ChatTabId;
+  openChats: ChatTabId[];
+  openChat: (id: ChatTabId) => void;
   setActiveChat: (id: ChatTabId) => void;
 };
 
@@ -30,6 +32,12 @@ export function WindowStateProvider({ children }: { children: React.ReactNode })
   const [changesOpen, setChangesOpen] = useState(false);
   const [subagentsOpen, setSubagentsOpen] = useState(false);
   const [activeChat, setActiveChat] = useState<ChatTabId>(CHAT_TABS[0].id);
+  const [openChats, setOpenChats] = useState<ChatTabId[]>([CHAT_TABS[0].id]);
+
+  const openChat = useCallback((id: ChatTabId) => {
+    setOpenChats((chats) => chats.includes(id) ? chats : [...chats, id]);
+    setActiveChat(id);
+  }, []);
 
   const value = useMemo<WindowState>(
     () => ({
@@ -39,9 +47,11 @@ export function WindowStateProvider({ children }: { children: React.ReactNode })
       setSubagentsOpen,
       laneOccupied: changesOpen || subagentsOpen,
       activeChat,
+      openChats,
+      openChat,
       setActiveChat,
     }),
-    [changesOpen, subagentsOpen, activeChat]
+    [changesOpen, subagentsOpen, activeChat, openChats, openChat]
   );
 
   return (

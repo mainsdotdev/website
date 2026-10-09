@@ -20,11 +20,11 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 const LINE = "border-primary-50/8";
 const CELL = "px-5 sm:px-8 lg:px-12";
 
-function BlogCard({ post, newest }: { post: Post; newest: boolean }) {
+function BlogCard({ post }: { post: Post }) {
   return (
     <Link
       href={post.url}
-      className="group flex flex-col overflow-hidden rounded-xl border border-primary-50/10 bg-primary-900/30 transition-colors hover:border-primary-50/20 hover:bg-primary-900/50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500"
+      className="group flex flex-col overflow-hidden rounded-xl glass-card transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500"
     >
       {/* The artwork in a dashed inner frame, as zed.dev frames its own. */}
       <div className="border-b border-primary-50/10 p-2">
@@ -57,12 +57,6 @@ function BlogCard({ post, newest }: { post: Post; newest: boolean }) {
           <time dateTime={post.date} className="ml-auto shrink-0">
             {dateFormatter.format(new Date(post.date))}
           </time>
-          {newest && (
-            <span className="shrink-0 rounded border border-blue-400/40 px-1.5 py-px text-blue-300">Newest</span>
-          )}
-          {!post.published && (
-            <span className="shrink-0 rounded border border-amber-400/40 px-1.5 py-px text-amber-300">Draft</span>
-          )}
         </div>
       </div>
     </Link>
@@ -84,7 +78,7 @@ export function DevBlogSection({ posts }: { posts: Post[] }) {
         </div>
         <Link
           href="/blog"
-          className="inline-flex shrink-0 items-center gap-1 self-start rounded-lg border border-primary-50/15 px-3 py-2 text-sm text-primary-50 transition-colors hover:bg-primary-50/5 lg:self-auto"
+          className="inline-flex shrink-0 items-center gap-1 self-start rounded-lg px-3 py-2 text-sm text-primary-50 transition-colors glass-button lg:self-auto"
         >
           View blog
           <ChevronRight aria-hidden className="size-3.5" />
@@ -92,8 +86,8 @@ export function DevBlogSection({ posts }: { posts: Post[] }) {
       </div>
 
       <div className={cn("grid gap-5 py-10 sm:grid-cols-2 lg:grid-cols-3", CELL)}>
-        {posts.slice(0, 3).map((post, index) => (
-          <BlogCard key={post.slug} post={post} newest={index === 0} />
+        {posts.slice(0, 3).map((post) => (
+          <BlogCard key={post.slug} post={post} />
         ))}
       </div>
     </section>

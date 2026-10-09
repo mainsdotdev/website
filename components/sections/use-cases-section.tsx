@@ -2,15 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
-import { BrowserDemo } from "@/components/demo/browser-demo";
+import { PulseDemo } from "@/components/demo/pulse-demo";
 import { McpAppDemo } from "@/components/demo/mcp-app-demo";
-import { ReviewDemo } from "@/components/demo/review-demo";
+import { VisualizeDemo } from "@/components/demo/visualize-demo";
 
 type UseCase = { title: string; description: string };
 type UseCasesSectionProps = { useCases: readonly UseCase[] };
 
 // Each use case is drawn live, not filmed.
-const MOCKUPS = [BrowserDemo, ReviewDemo, McpAppDemo] as const;
+const MOCKUPS = [PulseDemo, VisualizeDemo, McpAppDemo] as const;
 
 function PreviewFrame({ index }: { index: number }) {
   const Mockup = MOCKUPS[index % MOCKUPS.length];
@@ -26,7 +26,7 @@ function PreviewFrame({ index }: { index: number }) {
 }
 
 export function UseCasesSection({ useCases }: UseCasesSectionProps) {
-  const cases = useCases.slice(0, 3);
+  const cases = useCases.slice(0, MOCKUPS.length);
   const [activeIndex, setActiveIndex] = useState(0);
   const frameRefs = useRef<(HTMLElement | null)[]>([]);
   const prefersReducedMotion = useReducedMotion();

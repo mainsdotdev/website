@@ -4,10 +4,11 @@ import { useState } from "react";
 import Link from "next/link";
 import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
 import { BrowserDemo, DevBrowserDemo } from "@/components/demo/browser-demo";
-import { McpAppDemo } from "@/components/demo/mcp-app-demo";
+import { ComputerUseDemo } from "@/components/demo/computer-use-demo";
+import { VoiceChatDemo } from "@/components/demo/voice-chat-demo";
 import { MockupActiveContext } from "@/components/demo/pr-flow";
 import { ReviewDemo } from "@/components/demo/review-demo";
-import { Apps, Pr, Review, Web } from "@/components/icons";
+import { BrowserCursor, Pr, Review, VoiceWave, Web } from "@/components/icons";
 import { MAINS_DOCS_URL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -30,14 +31,6 @@ const REVIEW = {
   docsPath: "reviews",
 } as const;
 
-const APPS = {
-  title: "Apps beside your agents.",
-  description: "Open MCP apps next to the chat and shape the first draft together.",
-  Icon: Apps,
-  Mockup: McpAppDemo,
-  docsPath: "plugins",
-} as const;
-
 /**
  * Its window renders markdown, so the page draws it on the server and hands
  * it in as `shipMockup` rather than this client component importing it.
@@ -53,8 +46,34 @@ const SHIP = {
 /** The home page's use cases, each with its mockup, list icon and docs page. */
 export const DEV_USE_CASES = [PREVIEW_DEV, REVIEW, SHIP] as const;
 
-/** The Work page keeps the apps case: shipping a pull request is developer work. */
-export const WORK_USE_CASES = [PREVIEW, REVIEW, APPS] as const;
+/** Codex driving the Mac's own apps, from a plain request. */
+const COMPUTER_USE = {
+  title: "Let it use your Mac.",
+  description: "Ask in plain words. Codex opens your apps and clicks through them for you.",
+  Icon: BrowserCursor,
+  Mockup: ComputerUseDemo,
+  docsPath: "codex/computer-use",
+  /** The clip its run plays; the card offers a sound toggle for it. */
+  sound: "/let-it-happen.wav",
+  /** It plays a run once; the card offers Replay. */
+  replayable: true,
+} as const;
+
+/** A Codex voice chat, the orb in any of its three styles. */
+const VOICE = {
+  title: "Talk it through.",
+  description: "Start a voice chat and think out loud. Codex hands the bigger jobs to a chat of their own.",
+  Icon: VoiceWave,
+  Mockup: VoiceChatDemo,
+  // Voice settings live under Settings › Codex; the docs have no voice page yet.
+  docsPath: "codex/configuration",
+  replayable: true,
+  /** Its orb sits at the bottom of the window, so the panel shows it unfaded. */
+  unfaded: true,
+} as const;
+
+/** The Work page's use cases. */
+export const WORK_USE_CASES = [COMPUTER_USE, VOICE] as const;
 
 /**
  * The developer page's use cases, after obsidian.md's feature rows: a list on
@@ -81,14 +100,7 @@ export function DevUseCasesSection({ shipMockup }: { shipMockup: React.ReactNode
         </h2>
         <p className="mt-6 text-xl leading-snug text-primary-400">
           Preview, review, and work beside your agents without leaving Mains.{" "}
-          <Link
-            href={MAINS_DOCS_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-400 transition-colors hover:text-blue-300"
-          >
-            Learn more.
-          </Link>
+
         </p>
       </div>
 

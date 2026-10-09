@@ -6,11 +6,15 @@ import {
   createVoiceOrbRenderer,
   readVoiceOrbPalette,
   type VoiceOrbLevels,
+  type VoiceOrbStyle,
 } from "@/lib/voice-orb-renderer";
 import { cn } from "@/lib/utils";
 
-/** The app's Sphere flow speed (`ORB_FLOW_SPEED.sphere`). */
-const SPHERE_FLOW_SPEED = 2;
+/** How fast each style's surface flows, the app's `ORB_FLOW_SPEED`. */
+const ORB_FLOW_SPEED: Record<VoiceOrbStyle, number> = { cloud: 1, sphere: 2, aurora: 2.4 };
+
+const isOrbStyle = (value: string | undefined): value is VoiceOrbStyle =>
+  value === "cloud" || value === "sphere" || value === "aurora";
 
 /**
  * Stands in for a live call without asking for a microphone: short, uneven
@@ -24,18 +28,23 @@ export function ambientVoiceLevels(timeMs: number): VoiceOrbLevels {
 }
 
 /**
- * The desktop app's voice orb (`features/workspace/components/voice-orb.tsx`)
- * in its Sphere style. Colours come from the `--color-voice-orb-*` tokens on
- * `.voice-orb`; the static CSS sphere underneath shows through with reduced
- * motion, without WebGL, and before the first frame.
+ * The desktop app's voice orb (`features/workspace/components/voice-orb.tsx`),
+ * Sphere unless `orbStyle` says otherwise. Colours come from the
+ * `--color-voice-orb-*` tokens on `.voice-orb`; the static CSS sphere
+ * underneath shows through with reduced motion, without WebGL, and before the
+ * first frame.
  *
- * `getLevels` must be stable: a new function restarts the renderer.
+ * `getLevels` must be stable: a new function restarts the renderer. A new
+ * `orbStyle` doesn't: like the app, it only updates the shader's uniform, so
+ * the surface keeps flowing through the switch.
  */
 export function VoiceOrb({
   getLevels = ambientVoiceLevels,
+  orbStyle = "sphere",
   className,
 }: {
   getLevels?: (timeMs: number) => VoiceOrbLevels;
+  orbStyle?: VoiceOrbStyle;
   className?: string;
 }) {
   const orbRef = useRef<HTMLSpanElement>(null);
@@ -54,6 +63,11 @@ export function VoiceOrb({
     let visible = true;
     let lost = false;
     let disposed = false;
+    // Read from the element, so a style change reaches the running loop.
+    const currentStyle = (): VoiceOrbStyle => {
+      const value = orb!.dataset.orbStyle;
+      return isOrbStyle(value) ? value : "sphere";
+    };
 
     function pause() {
       if (frame !== undefined) cancelAnimationFrame(frame);
@@ -67,7 +81,7 @@ export function VoiceOrb({
       previousTime = time;
       const levels = getLevels(time);
       // Integrate speed so a change in level cannot jump the surface's position.
-      flow += elapsed * (0.4 + Math.max(levels.input, levels.output) * 4.2) * SPHERE_FLOW_SPEED;
+      flow += elapsed * (0.4 + Math.max(levels.input, levels.output) * 4.2) * ORB_FLOW_SPEED[currentStyle()];
       renderer.draw(flow, levels);
       canvas!.style.opacity = "1";
       frame = requestAnimationFrame(draw);
@@ -85,7 +99,7 @@ export function VoiceOrb({
     function initialize() {
       const palette = readVoiceOrbPalette(orb!);
       if (!palette) return;
-      renderer = createVoiceOrbRenderer(canvas!, palette);
+      renderer = createVoiceOrbRenderer(canvas!, palette, currentStyle());
       resize();
       resume();
     }
@@ -117,6 +131,8 @@ export function VoiceOrb({
       else pause();
     });
     intersectionObserver.observe(orb);
+    const styleObserver = new MutationObserver(() => renderer?.setStyle(currentStyle()));
+    styleObserver.observe(orb, { attributes: true, attributeFilter: ["data-orb-style"] });
     initialize();
 
     return () => {
@@ -124,6 +140,7 @@ export function VoiceOrb({
       pause();
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
+      styleObserver.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
       canvas.removeEventListener("webglcontextlost", onContextLost);
       canvas.removeEventListener("webglcontextrestored", onContextRestored);
@@ -136,6 +153,7 @@ export function VoiceOrb({
     <span
       ref={orbRef}
       aria-hidden="true"
+      data-orb-style={orbStyle}
       className={cn("voice-orb relative block size-24 shrink-0 overflow-hidden rounded-full", className)}
     >
       <canvas ref={canvasRef} className="relative block size-full" style={{ opacity: 0 }} />

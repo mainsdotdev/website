@@ -24,7 +24,7 @@ import { cn } from "@/lib/utils";
  */
 
 /** The stops, in the order the orb visits them down the page. */
-const STOPS = ["hero", "app-window", "case-browser", "case-review", "case-app"] as const;
+const STOPS = ["hero", "app-window", "case-browser", "case-visualize", "case-review", "case-app"] as const;
 export type OrbStop = (typeof STOPS)[number];
 
 const stops = new Map<OrbStop, HTMLElement>();

@@ -39,20 +39,22 @@ const DEMO_FEATURES: DemoFeature[] = [
 
 const DOCS_FEATURES: DocsFeature[] = [
   {
-    title: "Dependency guards",
+    title: "Fast text search",
     description:
-      "Package installs are checked before they run. A flagged package is blocked, and the agent is told to pick another.",
-    docsPath: "dependency-guards",
+      "Search file contents right in the file explorer, powered by @vscode/ripgrep. Find matching lines across your workspace with text or regex.",
+    docsPath: "file-explorer",
   },
   {
-    title: "Stats and costs",
-    description: "Runs, cost, tool usage and success rates across every workspace, for all agents or one at a time.",
-    docsPath: "stats",
+    title: "Turn steer",
+    description:
+      "Send new instructions into a running turn without waiting for it to finish. Correct course as it works. Codex only for now. Claude coming soon.",
+    docsPath: "runs",
   },
   {
-    title: "MCP servers",
-    description: "Connect agents to the APIs and systems your team already uses, in every space.",
-    docsPath: "mcp-servers",
+    title: "Remote control",
+    description:
+      "Control Mains from your phone, a browser, or another computer. Follow runs and send instructions while agents keep working on your machine.",
+    docsPath: "relay/overview",
   },
 ];
 
@@ -63,7 +65,7 @@ const DESCRIPTION = "mt-2 max-w-md font-mono text-[13px] leading-relaxed text-pr
 function DemoCell({ feature: { title, description, Demo } }: { feature: DemoFeature }) {
   return (
     <div className={CELL}>
-      <div className="rounded-lg border border-dashed border-primary-50/12 p-2">
+      <div className="rounded-lg border border-dashed border-primary-50/12 bg-primary-50/5 p-2">
         <div className="relative aspect-video overflow-hidden rounded-md bg-primary-950">
           <Demo className="absolute inset-0" />
         </div>
@@ -112,16 +114,9 @@ export function DevFeaturesSection() {
             href={MAINS_DOCS_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm text-primary-200 transition-colors hover:text-primary-50"
+            className="inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm text-primary-50 transition-colors glass-button"
           >
             Read the docs
-            <ChevronRight aria-hidden className="size-3.5" />
-          </Link>
-          <Link
-            href="/changelog"
-            className="inline-flex items-center gap-1 rounded-lg border border-primary-50/15 px-3 py-2 text-sm text-primary-50 transition-colors hover:bg-primary-50/5"
-          >
-            View changelog
             <ChevronRight aria-hidden className="size-3.5" />
           </Link>
         </div>

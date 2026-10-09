@@ -13,14 +13,14 @@ export const INTEGRATIONS = [
 
 export const USE_CASES = [
   {
-    title: "Preview, annotate, and iterate live",
+    title: "Keep everyday work moving with Pulse",
     description:
-      "Open your app in the built-in browser and see changes as agents work. Annotate any element to show what needs attention, watch your feedback turn into updates.",
+      "Schedule document digests, weekly reports, and plans with Pulse. Start with a template, choose when it runs, and let your agents take care of the recurring work.",
   },
   {
-    title: "Review changes and give feedback in context",
+    title: "Learn by doing with Visualize",
     description:
-      "Inspect diffs, leave comments on specific lines, and ask agents to explain. Keep every question tied to the code, so you can review and iterate without leaving Mains.",
+      "Turn a question into something you can explore. Visualize brings interactive lessons, diagrams, and tools into your chat, so you can try an idea, see what changes, and learn as you go.",
   },
   {
     title: "Work with interactive apps alongside your agents",

@@ -7,12 +7,12 @@ import {
   Attach,
   ChevronDown,
   Clipboard,
+  Clock,
   Codex,
+  Document,
   Fork,
-  Github,
   Microphone,
   Shield,
-  Terminal,
   VoiceWave,
 } from "@/components/icons";
 import { OrbFlightSlot } from "@/components/orb-flight";
@@ -209,76 +209,74 @@ export function ChatLayout({
   );
 }
 
-export function VoiceChat() {
+export function DailyPlanChat() {
   return (
     <ChatLayout overlay={<OrbFlightSlot stop="app-window" className="size-20" />} footer={<Composer voice="live" />}>
-      <UserTurn>Hey, got a minute before the release cut?</UserTurn>
-      <AgentTurn>Sure. What&apos;s first?</AgentTurn>
+      <UserTurn>Morning. Help me get today in order.</UserTurn>
+      <AgentTurn>Of course. Let&apos;s start with your calendar.</AgentTurn>
 
-      <UserTurn>Is CI green on the sidebar refactor PR?</UserTurn>
-      <ToolRow icon={<Github className="size-3" />} label="GitHub listed check runs" />
+      <UserTurn>What&apos;s on today, and when can I get groceries?</UserTurn>
+      <ToolRow icon={<Clock className="size-3" />} label="Read today&apos;s calendar" />
       <AgentTurn>
-        Almost. 11 of 12 checks passed; <code className={CODE}>e2e-macos</code> timed out
-        in <code className={CODE}>sidebar-order.spec.ts</code>. It passed on the previous
-        commit, so it looks flaky.
+        Dentist at 10, then a team call at 2. You&apos;re free from 11 to 1,
+        so there&apos;s time to pick up groceries and have lunch before the call.
       </AgentTurn>
 
-      <UserTurn>Find out why it flakes. Don&apos;t push anything.</UserTurn>
-      <AgentTurn>On it. I&apos;ll dig in from its own chat so it can take its time.</AgentTurn>
-      <DelegatedChat chat="flaky" status="Reply ready" />
+      <UserTurn>Plan three vegetarian dinners for two. Under 30 minutes, with a grocery list.</UserTurn>
+      <AgentTurn>I&apos;ll put the meal plan and shopping list in their own chat.</AgentTurn>
+      <DelegatedChat chat="dinner" status="Plan ready" />
 
-      <UserTurn>Then make the OG image for the 0.15 post, Earth from the Moon.</UserTurn>
-      <AgentTurn>Starting the image now.</AgentTurn>
-      <DelegatedChat chat="image" status="Reply ready" />
+      <UserTurn>And make me a new desktop wallpaper. Earth from the Moon, no text.</UserTurn>
+      <AgentTurn>Starting your wallpaper now.</AgentTurn>
+      <DelegatedChat chat="image" status="Image ready" />
 
       <AgentTurn>
-        Both are back. The flake is a race in the test: on macOS it drags before the
-        sidebar settles, about one run in seventeen. The fix is in its chat, waiting for
-        your OK.
+        All set. Three quick dinners, one grocery list, and your new wallpaper.
+        The list uses the rice and olive oil you already have, so there&apos;s less to buy.
       </AgentTurn>
     </ChatLayout>
   );
 }
 
-const FLAKE_REPORT = `**It's a race in the test, not a bug in the sidebar.** I ran the spec 50 times per platform with \`--repeat-each=50\`.
+const DINNER_PLAN = `**Three easy dinners for two**, all under 30 minutes.
 
-| Platform | Runs | Failures | p95 duration |
-| --- | --- | --- | --- |
-| macOS 15 (arm64) | 50 | **3** | 8.4 s |
-| Ubuntu 24.04 | 50 | 0 | 6.1 s |
-| Windows 11 | 50 | 0 | 7.2 s |
+| Day | Dinner | Time |
+| --- | --- | --- |
+| Day 1 | Chickpea bowls with cucumber, lemon, and yogurt | 20 min |
+| Day 2 | Tomato and spinach pasta | 25 min |
+| Day 3 | Vegetable fried rice with eggs | 20 min |
 
-**Root cause:** \`dragProject()\` starts the pointer drag right after \`page.goto()\`. On the macOS runner the sidebar's enter transition takes about 320 ms, so dnd-kit measures the rows mid-animation and the drop resolves to the original index.
+**Grocery list**
 
-- **Fix:** wait until \`document.getAnimations()\` is empty before dragging. With that in place, 200 macOS runs passed.
-- **Scope:** the patch is local, in \`e2e/sidebar-order.spec.ts\` (+4 −1). Nothing was pushed and CI config is unchanged.
+- **Produce:** 1 cucumber, 2 lemons, 1 bag of spinach, 2 carrots, 1 bunch of spring onions.
+- **Pantry:** 2 cans of chickpeas, 1 can of tomatoes, 250 g of pasta, soy sauce.
+- **Fridge:** plain yogurt and 4 eggs.
+
+You already have **rice and olive oil**. The spinach goes into both the pasta and the fried rice, and the lemons work for the chickpea bowls and the pasta.
 `;
 
-export function FlakyTestChat() {
+export function DinnerPlanChat() {
   return (
     <ChatLayout footer={<Composer voice="idle" />}>
       <UserTurn fromVoice>
-        Investigate the flaky <code className={CODE}>e2e-macos</code> failure in{" "}
-        <code className={CODE}>sidebar-order.spec.ts</code> on the sidebar refactor PR.
-        Pull the CI logs and trace, reproduce it locally with repeated runs, and find the
-        root cause. Don&apos;t push or change CI config; a local patch is fine if you
-        explain it. Use the current workspace instead of a new worktree.
+        Plan three vegetarian dinners for two people, each under 30 minutes.
+        Make one grocery list, reuse ingredients where it makes sense, and check
+        my pantry note before adding anything to the list.
       </UserTurn>
-      <WorkSummary label="1 message · 6 tool calls" />
+      <WorkSummary label="1 message · 2 tool calls" />
       <AgentTurn>
-        CI timed out after 30 s waiting for the second project row to move. The trace
-        shows the drag starting while the list was still animating in, so the drop landed
-        on the old slot. Reproducing it locally now.
+        Your pantry note lists rice and olive oil. I&apos;ll build around those
+        and share a few ingredients across the meals to keep the shopping simple.
       </AgentTurn>
-      <ToolRow icon={<Terminal className="size-3" />} label="Ran commands" />
+      <ToolRow icon={<Document className="size-3" />} label="Read pantry note" />
 
       <UserTurn fromVoice>
-        Also check how often it fails, and whether it only happens on macOS.
+        Keep it simple. I&apos;d rather do one grocery trip and use everything up.
       </UserTurn>
-      <WorkSummary label="2 messages · 11 tool calls" />
+      <WorkSummary label="2 messages · 3 tool calls" />
       <div className="flex flex-col gap-2.5">
-        <MarkdownMessage source={FLAKE_REPORT} />
-        <TurnMeta duration="6m 41s" />
+        <MarkdownMessage source={DINNER_PLAN} />
+        <TurnMeta duration="38s" />
       </div>
     </ChatLayout>
   );
@@ -288,11 +286,10 @@ export function ImageChat() {
   return (
     <ChatLayout footer={<Composer voice="idle" />}>
       <UserTurn fromVoice>
-        Generate the Open Graph image for the 0.15 release post: a photorealistic view
+        Make a desktop wallpaper: a photorealistic view
         of Earth above the lunar horizon, grey regolith and craters in the foreground,
         hard sunlight, black sky. 16:9, no text or logos. Save it as{" "}
-        <code className={CODE}>public/changelog/0-15/og.webp</code>, show it here, and
-        don&apos;t touch any other files.
+        <code className={CODE}>Downloads/earth-from-moon.webp</code> and show it here.
       </UserTurn>
       <WorkSummary label="1 message · 2 tool calls" />
       <Image
@@ -305,7 +302,7 @@ export function ImageChat() {
       />
       <AgentTurn>
         Earth over the lunar horizon, saved to{" "}
-        <code className={CODE}>public/changelog/0-15/og.webp</code> (1672 × 941). This
+        <code className={CODE}>Downloads/earth-from-moon.webp</code> (1672 × 941). This
         image is AI-generated.
       </AgentTurn>
       <TurnMeta duration="49s" />

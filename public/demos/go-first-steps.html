@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Go: first steps</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --background: #0c0c0c;
+      --foreground: #cecdc3;
+      --muted-foreground: #878580;
+      --border: #34343a;
+      --viz-series-1: #3b82f6;
+      --button: #161619;
+      --button-hover: #232326;
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --background: #fffcf0;
+      --foreground: #26241f;
+      --muted-foreground: #77746b;
+      --border: #d5d2c6;
+      --button: #f2f0e5;
+      --button-hover: #e8e5d9;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: transparent; }
+    body { font-family: system-ui, sans-serif; font-size: 16px; line-height: 1.5; color: var(--foreground); }
+    h3 { margin: 0; font-size: 16px; font-weight: 600; line-height: 24px; }
+    .text-small { font-size: 14px; line-height: 21px; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+    .viz-controls, .viz-row { display: flex; align-items: center; gap: 12px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      font: inherit; font-weight: 600; color: var(--foreground);
+      border: 1px solid var(--border); border-radius: 10px;
+      background: var(--button); padding: 8px 14px; cursor: pointer; touch-action: manipulation;
+    }
+    .btn:hover:not(:disabled) { background: var(--button-hover); }
+    .btn:focus-visible { outline: 2px solid var(--viz-series-1); outline-offset: 3px; }
+    .btn:disabled { color: var(--muted-foreground); cursor: default; }
+    .btn-ghost { background: transparent; border-color: transparent; }
+    .viz-tile { width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; }
+  </style>
+  <script>
+    window.addEventListener('message', event => {
+      if (event.source !== window.parent || event.data?.type !== 'mains-demo-theme') return;
+      if (event.data.theme === 'dark' || event.data.theme === 'light') {
+        document.documentElement.dataset.theme = event.data.theme;
+      }
+    });
+  </script>
+</head>
+<body>
+<!-- Original lesson from the Mains repository's go-first-steps.html, unchanged below. -->
+<div id="go-first-steps">
+  <h3 id="go-heading">Place stones</h3>
+  <div class="viz-controls go-navigation" aria-label="Lesson navigation">
+    <button type="button" class="btn btn-ghost" id="go-back" disabled>Back</button>
+    <span class="tabular-nums text-small" id="go-step">1 / 6</span>
+    <button type="button" class="btn" id="go-next">Next</button>
+  </div>
+  <div class="go-scene" role="group" aria-label="Interactive five by five Go board">
+    <div></div>
+    <div class="go-columns text-small" aria-hidden="true"><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span></div>
+    <div class="go-rows text-small" aria-hidden="true"><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span></div>
+    <div class="go-board">
+      <svg id="go-lines" aria-hidden="true"></svg>
+      <div id="go-points"></div>
+    </div>
+  </div>
+  <div class="viz-row go-legend text-small" aria-label="Board legend">
+    <span>● Black · B</span><span>○ White · W</span><span class="go-liberty-key">◇ Liberty</span>
+  </div>
+  <div id="go-status" class="go-status" role="status" aria-live="polite">Black to play</div>
+</div>
+<style>
+  #go-first-steps { color: var(--foreground); }
+  #go-first-steps #go-heading { max-width: calc(100% - 100px); margin-bottom: 12px; }
+  #go-first-steps .go-navigation { margin-bottom: 12px; }
+  #go-first-steps .go-scene { display: grid; grid-template-columns: 18px minmax(0, 360px); gap: 4px; justify-content: center; }
+  #go-first-steps .go-columns { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); text-align: center; color: var(--muted-foreground); }
+  #go-first-steps .go-rows { display: grid; grid-template-rows: repeat(5,minmax(0,1fr)); align-items: center; text-align: center; color: var(--muted-foreground); }
+  #go-first-steps .go-board { position: relative; aspect-ratio: 1; }
+  #go-first-steps #go-lines { position: absolute; width: 100%; height: 100%; pointer-events: none; }
+  #go-first-steps #go-points { position: relative; display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); grid-template-rows: repeat(5,minmax(0,1fr)); height: 100%; }
+  #go-first-steps .go-point-slot { display: flex; align-items: center; justify-content: center; min-width: 0; }
+  #go-first-steps .go-point-mark { display: block; width: 32px; height: 44px; flex-shrink: 0; overflow: visible; }
+  #go-first-steps .go-point-mark text { font-weight: 500; text-anchor: middle; dominant-baseline: central; }
+  #go-first-steps .go-stone-black { fill: light-dark(var(--foreground),var(--background)); stroke: var(--muted-foreground); }
+  #go-first-steps .go-stone-white { fill: light-dark(var(--background),var(--foreground)); stroke: var(--muted-foreground); }
+  #go-first-steps .go-label-black { fill: light-dark(var(--background),var(--foreground)); }
+  #go-first-steps .go-label-white { fill: light-dark(var(--foreground),var(--background)); }
+  #go-first-steps .go-liberty { fill: var(--viz-series-1); }
+  #go-first-steps .go-group-ring { fill: none; stroke: var(--viz-series-1); stroke-width: 2; }
+  #go-first-steps .go-legend { justify-content: center; gap: 16px; margin-top: 12px; }
+  #go-first-steps .go-liberty-key { color: var(--foreground); }
+  #go-first-steps .go-status { margin-top: 12px; min-height: 2em; text-align: center; }
+  #go-first-steps .go-territory { stroke: var(--foreground); stroke-width: 1; }
+  #go-first-steps .go-territory-black { fill: light-dark(var(--foreground),var(--background)); }
+  #go-first-steps .go-territory-white { fill: light-dark(var(--background),var(--foreground)); }
+</style>
+<script>
+(() => {
+  const root = document.getElementById('go-first-steps');
+  const q = id => root.querySelector('#' + id);
+  const names = ['Place stones', 'Count liberties', 'Capture White', 'Save White', 'Two eyes', 'Count territory'];
+  const colorName = c => c === 1 ? 'Black' : 'White';
+  const coord = i => 'ABCDE'[i % 5] + (5 - Math.floor(i / 5));
+  const index = s => (5 - Number(s[1])) * 5 + 'ABCDE'.indexOf(s[0]);
+  const blank = () => Array(25).fill(0);
+  const position = (black, white) => {
+    const board = blank();
+    black.forEach(s => board[index(s)] = 1);
+    white.forEach(s => board[index(s)] = 2);
+    return board;
+  };
+  const neighbors = i => {
+    const x = i % 5, y = Math.floor(i / 5), out = [];
+    if (x > 0) out.push(i - 1);
+    if (x < 4) out.push(i + 1);
+    if (y > 0) out.push(i - 5);
+    if (y < 4) out.push(i + 5);
+    return out;
+  };
+  function group(board, start) {
+    if (!board[start]) return { stones: [], liberties: [] };
+    const color = board[start], stones = new Set([start]), liberties = new Set(), stack = [start];
+    while (stack.length) {
+      const i = stack.pop();
+      neighbors(i).forEach(n => {
+        if (!board[n]) liberties.add(n);
+        else if (board[n] === color && !stones.has(n)) { stones.add(n); stack.push(n); }
+      });
+    }
+    return { stones: [...stones], liberties: [...liberties] };
+  }
+  function play(board, at, color, previous) {
+    if (board[at]) return { error: coord(at) + ' is occupied' };
+    const next = [...board];
+    next[at] = color;
+    const captured = new Set();
+    neighbors(at).forEach(n => {
+      if (next[n] === 3 - color) {
+        const g = group(next, n);
+        if (!g.liberties.length) g.stones.forEach(s => captured.add(s));
+      }
+    });
+    captured.forEach(s => next[s] = 0);
+    if (!group(next, at).liberties.length) return { error: 'Illegal move · no liberties after captures' };
+    if (previous && next.join('') === previous) return { error: 'Ko · immediate repetition is forbidden' };
+    return { board: next, captured: [...captured] };
+  }
+  function territory(board) {
+    const seen = new Set(), owner = Array(25).fill(0), counts = [0, 0, 0];
+    for (let i = 0; i < 25; i++) {
+      if (board[i] || seen.has(i)) continue;
+      const region = [i], stack = [i], colors = new Set();
+      seen.add(i);
+      while (stack.length) {
+        const at = stack.pop();
+        neighbors(at).forEach(n => {
+          if (board[n]) colors.add(board[n]);
+          else if (!seen.has(n)) { seen.add(n); region.push(n); stack.push(n); }
+        });
+      }
+      const c = colors.size === 1 ? [...colors][0] : 0;
+      region.forEach(n => owner[n] = c);
+      counts[c] += region.length;
+    }
+    return { owner, counts };
+  }
+  function fresh() {
+    return [
+      { board: blank(), turn: 1, selected: null, previous: null, done: false, note: 'Black to play' },
+      { board: position(['B3','C3','D2'],[]), turn: 1, selected: index('B3'), done: false, note: '' },
+      { board: position(['B3','C4','D3'],['C3']), turn: 1, selected: index('C3'), done: false, note: 'Black to play · White has 1 liberty' },
+      { board: position(['B3','C4','D3'],['C3']), turn: 2, selected: index('C3'), done: false, note: 'White to play · White has 1 liberty' },
+      { board: position(['A5','B5','C5','D5','E5','A4','C4','E4','A3','B3','C3','D3','E3'], ['A2','B2','C2','D2','E2']), turn: 2, selected: index('C4'), done: false, note: 'Black group · 2 eyes: B4 and D4' },
+      { board: position(['A5','B5','C5','A4','C4','A3','B3','C3'], ['D3','E3','D2','D1','E1']), turn: 1, selected: null, done: false, note: '' }
+    ];
+  }
+  let lesson = 0, states = fresh();
+  const buttons = [];
+  for (let i = 0; i < 25; i++) {
+    const slot = document.createElement('div');
+    slot.className = 'go-point-slot';
+    const button = document.createElement('button');
+    button.className = 'btn btn-ghost viz-tile';
+    button.type = 'button';
+    button.dataset.point = coord(i);
+    button.addEventListener('click', () => interact(i));
+    slot.append(button);
+    q('go-points').append(slot);
+    buttons.push(button);
+  }
+  function describeGroup(s) {
+    if (s.selected == null || !s.board[s.selected]) return s.note;
+    const g = group(s.board, s.selected), c = s.board[s.selected];
+    return colorName(c) + ' group · ' + g.stones.length + (g.stones.length === 1 ? ' stone' : ' stones') + ' · ' + g.liberties.length + (g.liberties.length === 1 ? ' liberty · atari' : ' liberties');
+  }
+  function draw() {
+    const s = states[lesson];
+    q('go-heading').textContent = names[lesson];
+    q('go-step').textContent = (lesson + 1) + ' / ' + names.length;
+    q('go-back').disabled = lesson === 0;
+    q('go-next').disabled = lesson === names.length - 1;
+    const g = s.selected == null ? { stones: [], liberties: [] } : group(s.board, s.selected);
+    const libs = new Set(g.liberties), stones = new Set(g.stones);
+    const t = lesson === 5 ? territory(s.board) : null;
+    buttons.forEach((button, i) => {
+      const c = s.board[i];
+      let mark = '';
+      if (c) {
+        mark = '<circle cx="16" cy="22" r="14" class="go-stone-' + (c === 1 ? 'black' : 'white') + '" stroke-width="1"/>';
+        mark += '<text x="16" y="22" class="text-small go-label-' + (c === 1 ? 'black' : 'white') + '">' + (c === 1 ? 'B' : 'W') + '</text>';
+        if (stones.has(i)) mark += '<circle cx="16" cy="22" r="18" class="go-group-ring"/>';
+      } else if (t && t.owner[i]) {
+        const side = t.owner[i] === 1 ? 'black' : 'white';
+        mark = '<rect x="9" y="15" width="14" height="14" class="go-territory go-territory-' + side + '"/>';
+      } else if (libs.has(i)) {
+        mark = '<path d="M16 15 L23 22 L16 29 L9 22 Z" class="go-liberty"/>';
+      }
+      button.innerHTML = '<svg viewBox="0 0 32 44" class="go-point-mark" aria-hidden="true">' + mark + '</svg>';
+      button.setAttribute('aria-label', coord(i) + ': ' + (c ? colorName(c) + ' stone' : 'empty') + (libs.has(i) ? ', liberty of selected group' : '') + (t && t.owner[i] ? ', ' + colorName(t.owner[i]) + ' territory' : ''));
+    });
+    let note = s.note;
+    if (lesson === 1) note = describeGroup(s);
+    if (lesson === 5) note = s.note || 'Enclosed: Black ' + t.counts[1] + ' · White ' + t.counts[2] + ' · Neutral ' + t.counts[0];
+    q('go-status').textContent = note;
+  }
+  function interact(i) {
+    const s = states[lesson];
+    if (lesson === 1) {
+      if (s.board[i]) { s.selected = i; s.note = ''; }
+      else { s.note = coord(i) + ' · empty point'; s.selected = null; }
+    } else if (lesson === 5) {
+      const t = territory(s.board);
+      s.note = coord(i) + ' · ' + (s.board[i] ? colorName(s.board[i]) + ' stone' : t.owner[i] ? colorName(t.owner[i]) + ' territory' : 'neutral point');
+    } else if (lesson === 4) {
+      if (s.board[i]) { s.selected = i; s.note = describeGroup(s); }
+      else if (i === index('B4') || i === index('D4')) {
+        const result = play(s.board, i, 2, null);
+        s.note = result.error ? 'White at ' + coord(i) + ' is illegal · the other eye keeps Black alive' : 'White at ' + coord(i);
+      } else s.note = 'Black group · 2 eyes: B4 and D4';
+    } else if (s.done) {
+      if (s.board[i]) s.selected = i;
+    } else {
+      const result = play(s.board, i, s.turn, s.previous);
+      if (result.error) s.note = result.error;
+      else if (lesson === 2 && !result.captured.includes(index('C3'))) {
+        s.note = coord(i) + ' · White still has 1 liberty';
+      } else if (lesson === 3 && i !== index('C2')) {
+        s.note = coord(i) + ' · White is still in atari';
+      } else {
+        s.previous = s.board.join('');
+        s.board = result.board;
+        s.selected = i;
+        if (lesson === 0) {
+          s.turn = 3 - s.turn;
+          s.note = colorName(s.turn) + ' to play' + (result.captured.length ? ' · ' + result.captured.length + ' captured' : '');
+        } else if (lesson === 2) { s.done = true; s.note = 'Captured · the white stone had no liberties left'; }
+        else if (lesson === 3) { s.done = true; s.note = 'Saved · the connected white group now has ' + group(s.board, i).liberties.length + ' liberties'; }
+      }
+    }
+    draw(); save();
+  }
+  function moveLesson(delta) {
+    lesson = Math.max(0, Math.min(5, lesson + delta));
+    draw(); save();
+  }
+  q('go-back').addEventListener('click', () => moveLesson(-1));
+  q('go-next').addEventListener('click', () => moveLesson(1));
+  function save() {
+    if (!window.openai || typeof window.openai.setWidgetState !== 'function') return;
+    const s = states[lesson];
+    window.openai.setWidgetState({
+      modelContent: { lesson: names[lesson], board: s.board.map((c,i) => c ? coord(i) + ':' + (c === 1 ? 'B' : 'W') : null).filter(Boolean), result: q('go-status').textContent, captureSolved: states[2].done, escapeSolved: states[3].done },
+      privateContent: { version: 1, lesson, states }
+    }).catch(() => {});
+  }
+  function restore(value) {
+    const saved = value && value.privateContent;
+    if (!saved || saved.version !== 1 || !Array.isArray(saved.states) || saved.states.length !== 6) return;
+    if (!Number.isInteger(saved.lesson) || saved.lesson < 0 || saved.lesson > 5) return;
+    if (saved.states.some(s => !s || !Array.isArray(s.board) || s.board.length !== 25 || s.board.some(c => ![0,1,2].includes(c)) || ![1,2].includes(s.turn) || (s.selected !== null && (!Number.isInteger(s.selected) || s.selected < 0 || s.selected > 24)) || typeof s.note !== 'string')) return;
+    lesson = saved.lesson;
+    states = saved.states;
+  }
+  restore(window.openai && window.openai.widgetState);
+  window.addEventListener('openai:set_globals', event => {
+    if (event.detail && event.detail.globals && Object.prototype.hasOwnProperty.call(event.detail.globals, 'widgetState')) {
+      restore(event.detail.globals.widgetState); draw();
+    }
+  });
+  function lines() {
+    const board = root.querySelector('.go-board');
+    const w = board.clientWidth, h = board.clientHeight;
+    if (!w || !h) return;
+    const svg = q('go-lines');
+    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+    let markup = '';
+    for (let i = 0; i < 5; i++) {
+      const x = (i + 0.5) * w / 5, y = (i + 0.5) * h / 5;
+      markup += '<line x1="' + w/10 + '" y1="' + y + '" x2="' + w*0.9 + '" y2="' + y + '" stroke="var(--border)" stroke-width="1"/>';
+      markup += '<line x1="' + x + '" y1="' + h/10 + '" x2="' + x + '" y2="' + h*0.9 + '" stroke="var(--border)" stroke-width="1"/>';
+    }
+    svg.innerHTML = markup;
+  }
+  draw(); lines();
+  new ResizeObserver(lines).observe(root.querySelector('.go-board'));
+})();
+</script>
+
+</body>
+</html>

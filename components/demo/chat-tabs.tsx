@@ -30,17 +30,20 @@ function TabFlare({ side }: { side: "left" | "right" }) {
  * tab beside an open sidebar — and the content column squares that corner.
  */
 export function ChatTabStrip() {
-  const { activeChat, setActiveChat } = useWindowState();
+  const { activeChat, openChats, setActiveChat } = useWindowState();
 
   return (
     <div role="tablist" aria-label="Chats" className="flex min-w-0 items-end gap-1">
-      {CHAT_TABS.map(({ id, title }, index) => {
+      {openChats.map((id, index) => {
+        const { title } = CHAT_TABS.find((tab) => tab.id === id)!;
         const active = id === activeChat;
         return (
           <button
             key={id}
             type="button"
             role="tab"
+            id={`work-chat-tab-${id}`}
+            aria-controls={`work-chat-panel-${id}`}
             aria-selected={active}
             onClick={() => setActiveChat(id)}
             className={cn(
@@ -77,17 +80,26 @@ export function ChatTabStrip() {
  */
 export function ChatPanels({ panels }: { panels: Record<ChatTabId, React.ReactNode> }) {
   const { activeChat } = useWindowState();
-  return <>{panels[activeChat]}</>;
+  return (
+    <div
+      role="tabpanel"
+      id={`work-chat-panel-${activeChat}`}
+      aria-labelledby={`work-chat-tab-${activeChat}`}
+      className="flex min-h-0 flex-1 flex-col"
+    >
+      {panels[activeChat]}
+    </div>
+  );
 }
 
 /** The delegated-chat card's button: opens that chat in its tab. */
 export function OpenChatButton({ chat }: { chat: ChatTabId }) {
-  const { setActiveChat } = useWindowState();
+  const { openChat } = useWindowState();
 
   return (
     <button
       type="button"
-      onClick={() => setActiveChat(chat)}
+      onClick={() => openChat(chat)}
       className="shrink-0 cursor-pointer rounded-full bg-primary-600 px-2.5 py-1 text-[9px] font-medium text-primary-950 transition-colors hover:bg-primary-500"
     >
       Open chat

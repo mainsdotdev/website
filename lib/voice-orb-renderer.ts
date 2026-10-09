@@ -1,11 +1,14 @@
 /**
- * The desktop app's voice orb, Sphere style only.
+ * The desktop app's voice orb, in all three of its styles.
  *
  * Ported from the app's `features/workspace/lib/voice-orb-renderer.ts`: the
- * same fragment shader with the Cloud and Aurora branches removed, so the
- * site draws exactly what a Mains voice chat draws. One small shader, no
- * textures, simulation buffers or dependencies.
+ * same fragment shader, so the site draws exactly what a Mains voice chat
+ * draws. One small shader, no textures, simulation buffers or dependencies;
+ * the style is a uniform, so switching it never replaces the shader.
  */
+
+/** The orb's looks, as Settings › Codex › Voice offers them. */
+export type VoiceOrbStyle = "cloud" | "sphere" | "aurora";
 
 export interface VoiceOrbLevels {
   readonly input: number;
@@ -33,6 +36,7 @@ const FRAGMENT_SHADER = `
   varying vec2 v_position;
   uniform float u_flow;
   uniform float u_edge;
+  uniform float u_style;
   uniform vec2 u_voice;
   uniform vec3 u_deep;
   uniform vec3 u_soft;
@@ -44,6 +48,48 @@ const FRAGMENT_SHADER = `
     p = fract(p * vec2(123.34, 456.21));
     p += dot(p, p + 45.32);
     return fract(p.x * p.y);
+  }
+
+  float noise(vec2 p) {
+    vec2 cell = floor(p);
+    vec2 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f);
+    return mix(mix(hash(cell), hash(cell + vec2(1.0, 0.0)), f.x),
+               mix(hash(cell + vec2(0.0, 1.0)), hash(cell + vec2(1.0)), f.x), f.y);
+  }
+
+  float cloud(vec2 p) {
+    float value = 0.0;
+    float weight = 0.55;
+    mat2 bend = mat2(0.8, -0.6, 0.6, 0.8);
+    for (int i = 0; i < 4; i++) {
+      value += weight * noise(p);
+      p = bend * p * 1.92 + 7.3;
+      weight *= 0.45;
+    }
+    return value;
+  }
+
+  vec3 cloudColor(vec2 p, float energy) {
+    vec2 drift = vec2(u_flow * 0.24, -u_flow * 0.18);
+    vec2 breeze = vec2(sin(u_flow * 0.42), cos(u_flow * 0.31)) * 0.3;
+    vec2 wind = vec2(cloud(p * 1.25 + drift),
+                     cloud(p * 1.25 - drift * 0.7 + 9.2)) - 0.48;
+    vec2 curl = p + breeze + wind * (1.5 + energy * 0.7);
+    curl += (vec2(cloud(curl * 1.5 + drift + 3.7),
+                  cloud(curl * 1.5 - drift + 12.4)) - 0.48) * 0.75;
+
+    float mist = cloud(curl * 1.65 + drift * 0.5);
+    float billow = cloud(curl * 1.1 - drift * 0.65 + 5.6);
+    float ribbon = curl.x * 0.46 + curl.y * 0.2 + (mist - 0.48) * 2.15 + (billow - 0.48) * 0.65;
+    float warmth = smoothstep(-0.55, 0.72, ribbon);
+    vec3 color = mix(u_deep, u_soft, warmth);
+    float light = smoothstep(0.04, 0.72, ribbon + billow * 0.25);
+    color = mix(color, u_light, light);
+
+    // Shading stays gentle; only the interior flows, never the circular edge.
+    float shade = 0.96 + 0.04 * smoothstep(-1.0, 1.0, p.y - p.x * 0.3);
+    return color * shade;
   }
 
   float volumeNoise(vec3 p) {
@@ -101,15 +147,57 @@ const FRAGMENT_SHADER = `
     return clamp(color + grain, 0.0, 1.0);
   }
 
+  vec3 auroraColor(vec2 p, float energy) {
+    float depth = sqrt(max(0.0, 1.0 - dot(p, p)));
+    vec3 normal = vec3(p, depth);
+    vec3 medium = normal;
+    // Laminar folds curl through the volume, leaving the glass silhouette still.
+    float turn = u_flow * 0.12 + depth * 1.25;
+    medium.xy = mat2(cos(turn), -sin(turn), sin(turn), cos(turn)) * medium.xy;
+    medium.yz = mat2(0.94, -0.342, 0.342, 0.94) * medium.yz;
+    vec3 drift = vec3(u_flow * 0.12, -u_flow * 0.09, u_flow * 0.07);
+    float bank = volumeCloud(medium * 1.45 + drift);
+    float veil = volumeCloud(medium.zxy * 1.6 - drift * 0.7 + 9.4);
+    float fold = medium.y * 2.15 + medium.x * 0.3
+      + sin(medium.x * 2.8 + medium.z * 1.6 + u_flow * 0.16) * (0.55 + energy * 0.08)
+      + (bank - 0.5) * 1.25 + (veil - 0.5) * 0.45;
+    float phase = fold * 3.8 - u_flow * 0.22;
+    float ribbon = 0.5 + 0.5 * sin(phase);
+    float pearl = smoothstep(0.24, 0.94, ribbon);
+    float hue = smoothstep(-0.65, 0.8, medium.x + (veil - 0.5) * 1.6);
+    vec3 silk = mix(u_tertiary, u_secondary, hue);
+    vec3 color = mix(u_deep * 0.56, u_soft, 0.16 + bank * 0.24);
+    color = mix(color, silk, pearl * 0.88);
+    color = mix(color, u_light, pow(ribbon, 5.0) * (0.52 + u_voice.y * 0.1));
+
+    // A narrow luminous hem gives each broad ribbon depth at compact sizes.
+    float hem = pow(0.5 + 0.5 * cos(phase - 0.72), 56.0);
+    float underside = pow(0.5 + 0.5 * cos(phase - 1.12), 18.0);
+    color *= 1.0 - underside * 0.2;
+    color = mix(color, u_light, hem * (0.58 + u_voice.x * 0.1));
+    float diffuse = max(0.0, dot(normal, normalize(vec3(-0.5, 0.65, 0.9))));
+    color *= 0.65 + diffuse * 0.36;
+    float fresnel = pow(1.0 - depth, 2.7);
+    color = mix(color, mix(u_soft, u_light, 0.65), fresnel * (0.28 + diffuse * 0.3));
+    float glint = pow(max(0.0, dot(normal, normalize(vec3(-0.38, 0.48, 0.8)))), 80.0);
+    float reflection = pow(max(0.0, dot(normal, normalize(vec3(0.6, -0.5, 0.55)))), 28.0);
+    color = mix(color, u_light, glint * 0.72 + reflection * 0.16);
+    return clamp(color, 0.0, 1.0);
+  }
+
   void main() {
     vec2 p = v_position;
-    vec3 color = sphereColor(p, max(u_voice.x, u_voice.y));
+    float energy = max(u_voice.x, u_voice.y);
+    vec3 color;
+    if (u_style > 1.5) color = auroraColor(p, energy);
+    else if (u_style > 0.5) color = sphereColor(p, energy);
+    else color = cloudColor(p, energy);
     float alpha = 1.0 - smoothstep(1.0 - u_edge, 1.0, length(p));
     gl_FragColor = vec4(color, alpha);
   }
 `;
 
-/** Resolve the orb's CSS colour tokens to RGB, including color-mix values. */
+/** Resolve CSS colours in the browser, including color-mix and custom themes. */
 export function readVoiceOrbPalette(element: HTMLElement): VoiceOrbPalette | undefined {
   const canvas = element.ownerDocument.createElement("canvas");
   canvas.width = canvas.height = 1;
@@ -122,16 +210,13 @@ export function readVoiceOrbPalette(element: HTMLElement): VoiceOrbPalette | und
     const pixel = context!.getImageData(0, 0, 1, 1).data;
     return [pixel[0] / 255, pixel[1] / 255, pixel[2] / 255];
   }
-  return [
-    color("--color-voice-orb-deep"),
-    color("--color-voice-orb-soft"),
-    color("--color-voice-orb-light"),
-    color("--color-voice-orb-secondary"),
-    color("--color-voice-orb-tertiary"),
-  ];
+  return [color("--color-voice-orb-deep"), color("--color-voice-orb-soft"), color("--color-voice-orb-light"),
+    color("--color-voice-orb-secondary"), color("--color-voice-orb-tertiary")];
 }
 
-export function createVoiceOrbRenderer(canvas: HTMLCanvasElement, palette: VoiceOrbPalette) {
+/** One small fragment shader, with no textures, simulation buffers or dependencies. */
+/** The site's orbs are Sphere unless told otherwise. */
+export function createVoiceOrbRenderer(canvas: HTMLCanvasElement, palette: VoiceOrbPalette, style: VoiceOrbStyle = "sphere") {
   const gl = canvas.getContext("webgl", {
     alpha: true, antialias: false, depth: false, stencil: false,
     premultipliedAlpha: false, powerPreference: "low-power",
@@ -177,10 +262,9 @@ export function createVoiceOrbRenderer(canvas: HTMLCanvasElement, palette: Voice
   gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
   const flow = gl.getUniformLocation(program, "u_flow");
   const edge = gl.getUniformLocation(program, "u_edge");
+  const orbStyle = gl.getUniformLocation(program, "u_style");
   const voice = gl.getUniformLocation(program, "u_voice");
-  const colors = ["u_deep", "u_soft", "u_light", "u_secondary", "u_tertiary"].map((name) =>
-    gl.getUniformLocation(program, name),
-  );
+  const colors = ["u_deep", "u_soft", "u_light", "u_secondary", "u_tertiary"].map((name) => gl.getUniformLocation(program, name));
   let disposed = false;
 
   function setPalette(next: VoiceOrbPalette) {
@@ -188,10 +272,17 @@ export function createVoiceOrbRenderer(canvas: HTMLCanvasElement, palette: Voice
     gl!.useProgram(program);
     next.forEach((color, index) => gl!.uniform3f(colors[index], ...color));
   }
+  function setStyle(next: VoiceOrbStyle) {
+    if (disposed) return;
+    gl!.useProgram(program);
+    gl!.uniform1f(orbStyle, next === "aurora" ? 2 : next === "sphere" ? 1 : 0);
+  }
   setPalette(palette);
+  setStyle(style);
 
   return {
     setPalette,
+    setStyle,
     draw(time: number, levels: VoiceOrbLevels) {
       if (disposed || gl.isContextLost()) return;
       gl.viewport(0, 0, canvas.width, canvas.height);

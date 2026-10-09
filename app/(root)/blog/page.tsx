@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { getAllPosts } from "@/lib/posts";
+import { getBlogPosts } from "@/lib/posts";
 import { SITE_SOCIAL_IMAGE } from "@/lib/social-image";
 import { BlogPageClient } from "./blog-page-client";
 
-const title = "AI Coding Agent Workflows & Product Updates";
+const title = "The Mains Blog";
 const description =
-  "Practical guides for running AI coding agents, reviewing their work, and managing isolated Git workspaces—plus the latest Mains product updates.";
+  "How Mains works under the hood: engineering notes, agent workflows, and the decisions behind the app.";
 
 export const metadata: Metadata = {
   title,
@@ -29,9 +29,5 @@ export const metadata: Metadata = {
 };
 
 export default function BlogPage() {
-  const publishedPosts = getAllPosts()
-    .filter((post) => post.published)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
-  return <BlogPageClient posts={publishedPosts} />;
+  return <BlogPageClient posts={getBlogPosts()} />;
 }
