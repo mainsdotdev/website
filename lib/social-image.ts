@@ -4,5 +4,5 @@ export const SITE_SOCIAL_IMAGE = {
   width: 1200,
   height: 630,
   type: "image/png",
-  alt: "Mains — the home footer’s outlined logo and geometric wordmark on a dark hatched blueprint panel.",
+  alt: "Mains — a dark geometric wordmark with mixed hatching, dots, horizontal lines, meridians and flowing curves.",
 };

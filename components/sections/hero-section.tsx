@@ -30,7 +30,7 @@ const PILL_CLASS_NAME =
 /** Shared hero typography and entrance, with an optional fixed headline. */
 export function HeroHeadline({
   words = HERO_SCRAMBLE_WORDS,
-  tagline = "Run AI agents. Make things happen.",
+  tagline = "Run coding agents. Review diffs. Manage runs.",
   title,
   id,
 }: {

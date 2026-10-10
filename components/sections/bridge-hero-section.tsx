@@ -24,14 +24,12 @@ export function BridgeHeroSection() {
             id="bridge-title"
             className="font-sans text-[2rem] leading-[1.15] font-normal tracking-tight text-primary-50/95 sm:text-4xl md:text-5xl lg:text-[3.25rem]"
           >
-            Your work,
+            Your workspaces,
             <br />
-            across your devices.
+            kept in sync.
           </h1>
           <p className="mt-6 max-w-md text-lg leading-relaxed text-primary-400 sm:mt-7 sm:text-xl">
-            Keep your Mains workspaces in sync.
-            <br className="hidden sm:block" />
-            {" "}Pick up right where you left off.
+            Sync your Mains workspaces across devices. Keep your work up to date.
           </p>
           <p className="mt-9 inline-flex items-center gap-2.5 rounded-full bg-primary-50 px-6 py-3 text-sm font-medium text-primary-950 sm:mt-10">
             

@@ -61,11 +61,11 @@ export function DevThemesSection({ appWindow }: { appWindow: React.ReactNode }) 
     <section aria-labelledby="dev-themes-title" className="px-5 py-20 sm:px-8 lg:py-24">
       <div className="mx-auto max-w-2xl text-center">
         <h2 id="dev-themes-title" className="text-5xl leading-none tracking-tight text-primary-50 sm:text-6xl">
-          Make it yours.
+          Workspace themes.
         </h2>
         <p className="mt-6 text-xl leading-snug text-primary-400">
-          Light, dark, or following your Mac, in one of {APP_THEME_PRESETS.length} color themes. Use
-          one for every agent, or give each its own.
+          Choose from {APP_THEME_PRESETS.length} color themes with light, dark, or
+          system appearance. Apply a shared theme or configure each agent separately.
         </p>
       </div>
 

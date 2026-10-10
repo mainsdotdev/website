@@ -85,9 +85,7 @@ export function CtaSection({ orb = true }: { orb?: boolean } = {}) {
             Mains for what&apos;s next.
           </h2>
           <p className="text-sm md:text-base text-primary-400 leading-relaxed max-w-xl">
-            Ask a question, plan a trip, create something new, or move a project
-            forward. Mains brings your chats and tools together so you can go
-            from idea to result.
+            Build, debug, and review code with AI agents in your local repositories.
           </p>
           <CtaActions className="mt-4" />
         </motion.div>
