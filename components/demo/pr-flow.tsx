@@ -39,13 +39,13 @@ type Phase =
 
 /** When each step begins, in ms from the mockup coming on show. */
 const TIMELINE: ReadonlyArray<readonly [Phase, number]> = [
-  ["expanding", 900],
-  ["modal", 1200],
-  ["generating", 2300],
-  ["generated", 4800],
-  ["creating", 7000],
-  ["created", 8300],
-  ["done", 11300],
+  ["expanding", 100],
+  ["modal", 250],
+  ["generating", 1350],
+  ["generated", 3850],
+  ["creating", 6050],
+  ["created", 7350],
+  ["done", 10350],
 ];
 
 const PhaseContext = createContext<Phase>("panel");

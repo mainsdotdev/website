@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
 import { BrowserDemo, DevBrowserDemo } from "@/components/demo/browser-demo";
 import { ComputerUseDemo } from "@/components/demo/computer-use-demo";
@@ -8,7 +8,10 @@ import { VoiceChatDemo } from "@/components/demo/voice-chat-demo";
 import { MockupActiveContext } from "@/components/demo/pr-flow";
 import { ReviewDemo } from "@/components/demo/review-demo";
 import { BrowserCursor, Pr, Review, VoiceWave, Web } from "@/components/icons";
+import { useInView } from "@/hooks/useInView";
 import { cn } from "@/lib/utils";
+
+const AUTO_ADVANCE_MS = 2500;
 
 const PREVIEW = {
   title: "Preview and annotate live.",
@@ -83,9 +86,9 @@ export const WORK_USE_CASES = [COMPUTER_USE, VOICE] as const;
  * the left whose hovered row picks the mockup shown on the right, in the same
  * window frame as the rest of the page.
  *
- * Hover (or focus, or a tap) decides what is shown — not the scroll position —
- * and the row highlight slides to the new row rather than jumping. The three
- * mockups stay mounted and cross-fade, so moving between rows never resets a
+ * While on screen, the use cases advance every three seconds until a hover,
+ * focus or tap gives the user control. The row highlight slides to the new row.
+ * The three mockups stay mounted and cross-fade, so moving between rows never resets a
  * demo someone was playing with.
  */
 export function DevUseCasesSection({
@@ -94,7 +97,24 @@ export function DevUseCasesSection({
   shipMockup: React.ReactNode;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+  const { ref: panelRef, visible: panelInView } = useInView(0.35, "0px", false);
+
+  useEffect(() => {
+    if (!panelInView || hasInteracted || prefersReducedMotion) return;
+
+    const timer = setInterval(() => {
+      setActiveIndex((current) => (current + 1) % DEV_USE_CASES.length);
+    }, AUTO_ADVANCE_MS);
+
+    return () => clearInterval(timer);
+  }, [panelInView, hasInteracted, prefersReducedMotion]);
+
+  const selectUseCase = (index: number) => {
+    setHasInteracted(true);
+    setActiveIndex(index);
+  };
 
   return (
     <section
@@ -116,7 +136,10 @@ export function DevUseCasesSection({
 
       {/* The list and the screen share a row and center on each other, so
           the heading above doesn't push the list below the screen. */}
-      <div className="mt-12 grid items-center gap-10 lg:mt-16 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-14">
+      <div
+        ref={panelRef}
+        className="mt-12 grid items-center gap-10 lg:mt-16 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-14"
+      >
         <div>
           <LayoutGroup id="dev-use-case-highlight">
             <ul className="flex flex-col gap-1">
@@ -126,9 +149,9 @@ export function DevUseCasesSection({
                   <li key={title}>
                     <button
                       type="button"
-                      onMouseEnter={() => setActiveIndex(index)}
-                      onFocus={() => setActiveIndex(index)}
-                      onClick={() => setActiveIndex(index)}
+                      onMouseEnter={() => selectUseCase(index)}
+                      onFocus={() => selectUseCase(index)}
+                      onClick={() => selectUseCase(index)}
                       aria-pressed={active}
                       className="relative flex w-full cursor-pointer gap-3.5 rounded-2xl px-4 py-3.5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
                     >
@@ -174,12 +197,12 @@ export function DevUseCasesSection({
                   aria-hidden={!active}
                   inert={!active}
                   className={cn(
-                    "absolute inset-0 transition-opacity duration-300 ease-out",
+                    "absolute inset-0 transition-opacity duration-300 ease-out motion-reduce:transition-none",
                     active ? "opacity-100" : "opacity-0",
                   )}
                 >
                   {/* The ship mockup plays its pull request flow only while shown. */}
-                  <MockupActiveContext value={active}>
+                  <MockupActiveContext value={active && panelInView}>
                     {Mockup ? (
                       <Mockup className="absolute inset-0" />
                     ) : (
