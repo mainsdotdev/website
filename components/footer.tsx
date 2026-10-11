@@ -15,10 +15,11 @@ const FOOTER_COLUMNS = [
   {
     title: "product",
     links: [
-      { label: "changelog", href: "/changelog" },
       { label: "work", href: "/work" },
       { label: "atlas", href: "/atlas" },
       { label: "bridge", href: "/bridge" },
+      { label: "changelog", href: "/changelog" },
+
     ],
   },
   {

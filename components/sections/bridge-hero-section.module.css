@@ -16,7 +16,7 @@
   --bridge-outline-opacity: 0.22;
   --bridge-lane-opacity: 0.16;
   --bridge-lane-width: 0.3;
-  --bridge-head-opacity: 0.7;
+  --bridge-packet-opacity: 0.7;
 
   position: absolute;
   inset: 0;

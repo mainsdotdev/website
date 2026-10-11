@@ -17,39 +17,15 @@
 
 .packet {
   --flow-direction: normal;
-}
 
-.packet[data-reverse] {
-  --flow-direction: reverse;
-}
-
-.packet use {
+  opacity: var(--bridge-packet-opacity, 0.9);
   animation: bridge-flow var(--flow-duration) linear infinite;
   animation-delay: var(--flow-delay);
   animation-direction: var(--flow-direction);
 }
 
-.tail {
-  --packet-offset: 29px;
-  --packet-end: -971px;
-  opacity: 0.12;
-}
-
-.body {
-  --packet-offset: 9px;
-  --packet-end: -991px;
-  opacity: 0.4;
-}
-
-.head {
-  --packet-offset: 0px;
-  --packet-end: -1000px;
-  opacity: var(--bridge-head-opacity, 0.9);
-}
-
-.packet[data-reverse] use {
-  --packet-offset: 0px;
-  --packet-end: -1000px;
+.packet[data-reverse] {
+  --flow-direction: reverse;
 }
 
 /* Normalized path lengths keep the packets in step at every viewport size. */
@@ -57,19 +33,16 @@
    start and a calc() end, which left every packet outside the mark. */
 @keyframes bridge-flow {
   from {
-    stroke-dashoffset: var(--packet-offset);
+    stroke-dashoffset: 0px;
   }
   to {
-    stroke-dashoffset: var(--packet-end);
+    stroke-dashoffset: -1000px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .packet {
     display: none;
-  }
-
-  .packet use {
     animation: none;
   }
 

@@ -60,7 +60,7 @@ const DOCS_FEATURES: DocsFeature[] = [
 
 const LINE = "border-primary-50/8";
 const CELL = "px-5 py-10 sm:px-8 lg:px-12";
-const DESCRIPTION = "mt-2 max-w-md font-mono text-[13px] leading-relaxed text-primary-400";
+const DESCRIPTION = "mt-2 max-w-md text-[14px] leading-relaxed text-primary-400";
 
 function DemoCell({ feature: { title, description, Demo } }: { feature: DemoFeature }) {
   return (
@@ -86,7 +86,7 @@ function DocsCell({ feature }: { feature: DocsFeature }) {
         href={`${MAINS_DOCS_URL}/${feature.docsPath}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-4 inline-flex items-center gap-1.5 font-mono text-xs text-primary-300 transition-colors hover:text-primary-50"
+        className="mt-4 inline-flex items-center gap-1.5 text-[14px] text-primary-300 transition-colors hover:text-primary-50"
       >
         docs.mains.dev/{feature.docsPath}
         <ArrowRight aria-hidden className="size-3" />

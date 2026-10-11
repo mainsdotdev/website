@@ -50,8 +50,9 @@ export function BridgeMark() {
         </g>
 
         {BRIDGE_LANES.map((lane, index) => (
-          <g
+          <use
             key={index}
+            href={`#bridge-lane-${index}`}
             className={styles.packet}
             data-reverse={lane.reverse || undefined}
             style={
@@ -61,27 +62,11 @@ export function BridgeMark() {
               } as CSSProperties
             }
             stroke="currentColor"
-            strokeLinecap="round"
-          >
-            <use
-              href={`#bridge-lane-${index}`}
-              className={styles.tail}
-              strokeWidth={1.2}
-              strokeDasharray="32 968"
-            />
-            <use
-              href={`#bridge-lane-${index}`}
-              className={styles.body}
-              strokeWidth={1.2}
-              strokeDasharray="12 988"
-            />
-            <use
-              href={`#bridge-lane-${index}`}
-              className={styles.head}
-              strokeWidth={1.6}
-              strokeDasharray="3 997"
-            />
-          </g>
+            strokeWidth={1}
+            strokeLinecap="butt"
+            strokeDasharray="28 972"
+            vectorEffect="non-scaling-stroke"
+          />
         ))}
       </g>
 

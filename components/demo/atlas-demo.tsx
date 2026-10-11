@@ -151,8 +151,9 @@ const SAVE_INDEX = ENTRIES.findIndex(
 const TOOL_COUNT = ENTRIES.filter((entry) => entry.kind === "tool").length;
 const MESSAGE_COUNT = ENTRIES.length - TOOL_COUNT;
 
-// ─── Timeline, in ms from the window coming into view ────────────────────────
+// ─── Demo timeline, in ms at normal playback speed ───────────────────────────
 
+const PLAYBACK_RATE = 1.25;
 const TYPE_START = 700;
 const TYPE_MS_PER_CHAR = 22;
 const SEND = TYPE_START + PROMPT.length * TYPE_MS_PER_CHAR + 450;
@@ -499,7 +500,10 @@ function Message({
           key={index}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.2, delay: index * 0.022 }}
+          transition={{
+            duration: 0.2 / PLAYBACK_RATE,
+            delay: (index * 0.022) / PLAYBACK_RATE,
+          }}
         >
           {word}{" "}
         </motion.span>
@@ -950,7 +954,7 @@ function AtlasSidebar({ title, dressed }: { title: string; dressed: boolean }) {
       </div>
       <div className={ROW}>
         <Cat className="size-3 shrink-0 text-blue-400" />
-        <span className="truncate">okanbilal.com</span>
+        <span className="truncate">mains.dev</span>
       </div>
 
       <div className="mt-3 px-1.5 py-1 text-[10px] text-primary-400">
@@ -996,7 +1000,7 @@ function Run({
     const base = elapsed.current;
     const start = performance.now();
     const clock = setInterval(() => {
-      elapsed.current = base + performance.now() - start;
+      elapsed.current = base + (performance.now() - start) * PLAYBACK_RATE;
       setT(elapsed.current);
       if (elapsed.current > END) clearInterval(clock);
     }, 40);
