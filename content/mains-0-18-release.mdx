@@ -1,0 +1,60 @@
+---
+title: "See where your tokens go"
+date: 2026-10-13
+description: "A rebuilt dashboard shows the tokens and estimated cost of your Claude Code and Codex use, even outside Mains. Plus terminals that keep running, steering for Claude, and files you can mark as reviewed."
+author: "Mains Team"
+tags: ["changelog", "release", "product"]
+published: true
+version: "0.18"
+# image: "/changelog/0-18/cover.webp"
+---
+
+0.18 helps you keep track: how many tokens your agents use and what that would cost, which terminals and servers are still running, and which files you've already reviewed.
+
+### see where your tokens go
+
+The dashboard in **Settings → Dashboard** has been rebuilt around consumption. Its **CLI** tab reads the Claude Code and Codex history on your computer, so it covers sessions you ran in the terminal as well as in Mains. Pick a week, a month, or a year, and narrow it to one provider.
+
+- **Tokens and cost over time:** A trend chart switches between tokens and estimated cost.
+- **Model by model:** A table breaks usage down by provider and model, with uncached input, output, cache reads and writes, and the API cost.
+- **Cache savings:** See how much reading from cache saved compared with paying the full input price.
+
+Costs are API-equivalent estimates based on LiteLLM's model prices, not your subscription bill. **Sources & pricing** shows which history folders were read and how prices were applied. Only token counts go into the report. Your prompts and replies stay out of it.
+
+The **Mains** tab covers work done inside Mains: a daily token calendar, the tools your agents use most, the hours you're busiest, and how many sessions ended successfully.
+
+**Settings → Claude** now also shows how much of each usage limit you have left and when it resets, refreshed every minute.
+
+### terminals that keep running
+
+Each workspace can now have several terminals, each in its own tab. They keep running when you switch tabs or workspaces, so the dev server you started is still there when you come back.
+
+- **See what's running:** When a terminal is serving on a port, **Running servers** in the session panel lists it with its process, port, and workspace. Click a row to jump to its terminal, or stop it right there.
+- **Hide without losing work:** **Hide terminal** tucks the panel away and closes idle shells, while anything still running, like a server, a build, or a background job, keeps going.
+
+### steer Claude mid-turn
+
+Queueing and steering, which came to Codex in 0.15, now work with Claude too. Keep typing while Claude works and your message waits until the turn is done, or click **Steer** to send it into the turn that's already running. If Claude can't confirm it received a message, the message stays in the queue instead of getting lost or sent twice.
+
+### mark files as reviewed
+
+In Review, check **Reviewed** on a file to collapse it and move on. Your checkmarks, and which files you left open or closed, are remembered across chats and restarts. If a file changes after you reviewed it, it opens again unchecked.
+
+### also in 0.18
+
+- **Pick Codex's speed:** Codex chats offer Standard, Fast, and Ultrafast, depending on what the selected model supports.
+- **A better document viewer:** Open documents sit in tabs, with a toolbar for zoom and **Save a copy**. Markdown previews render embedded HTML safely, show images with relative paths, and follow footnote links.
+- **Approvals that stay explicit:** When Claude marks a tool request as needing your answer, Mains asks even in bypass mode or for tools you've allowed before. The dialog starts on decline, can't be approved from a notification, and hides "always allow" when Claude rules it out.
+- **On your iPhone:** Each chat's model, effort, permissions, speed, Plan, and Goal now stay in sync between your phone and your Mac. Long messages and tool outputs load on demand, and the app has a new icon with light, dark, and tinted looks.
+
+### smaller changes
+
+- **Clickable skills in sent messages:** Skill chips in messages you've already sent open the skill, just like in the composer.
+- **Outputs that match the answer:** A turn's output files now come from the agent's final reply, so files it only mentioned along the way don't show up.
+- **Subagents remember their setup:** Subagents show the model and effort they started with, and a background task that stops without finishing reads **Idle** instead of looking done.
+- **Steered web searches finish properly:** When you steer Claude during a web search or fetch, the call completes with its real result instead of looking finished early.
+- **Large MCP results:** When part of an MCP tool's result is left out for size, the chat says so and keeps the readable text.
+- **No duplicate images in Atlas:** The same image from several chats or uploads shows up once, and browser annotation screenshots stay with their chat.
+- **Steadier Atlas Trash:** A page you move to Trash isn't saved again by a pending autosave, and unsaved edits are kept if you open it later.
+- **Context stays attached:** Context you add in the floating chat while a message is sending stays attached for the next one.
+- **One header row:** Chat, browser, document, and Atlas tabs now share the same header.
