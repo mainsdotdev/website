@@ -1,12 +1,7 @@
-"use client";
-
 import HeaderSpacer from "@/components/header-spacer";
 import { HeroActions, HeroHeadline, HeroWindow } from "@/components/sections/hero-section";
-import { usePlatformDetection } from "@/hooks/usePlatformDetection";
 
 export function AtlasHeroSection({ appWindow }: { appWindow: React.ReactNode }) {
-  const { platform } = usePlatformDetection();
-
   return (
     <>
       <HeaderSpacer />
@@ -21,7 +16,7 @@ export function AtlasHeroSection({ appWindow }: { appWindow: React.ReactNode }) 
             title="Try Atlas on Mains"
             tagline="Create with your agents. Keep it all in Atlas."
           />
-          <HeroActions platform={platform} />
+          <HeroActions />
           <HeroWindow appWindow={appWindow} className="mt-14" />
         </div>
       </section>

@@ -62,7 +62,7 @@ export function HeroHeadline({
             <span className="absolute inset-0 flex min-w-0 flex-nowrap items-baseline justify-start gap-x-1.5 overflow-hidden">
               <span className="shrink-0">Mains for</span>
               <ScrambleText
-                words={[...words]}
+                words={words}
                 interval={3000}
                 className="text-primary-200"
               />
@@ -111,7 +111,36 @@ function CompanionNote({ platform }: { platform: Platform }) {
   );
 }
 
-export function HeroActions({ platform }: { platform: Platform }) {
+/** A greyed-out pill for a platform Mains doesn't ship on yet. */
+function ComingSoonPill({ icon, label }: { icon: React.ReactNode; label: string }) {
+  return (
+    <ShortcutPillButton
+      ariaLabel={`${label} coming soon`}
+      className={cn(PILL_CLASS_NAME, "cursor-default bg-primary-900/50 text-primary-500")}
+    >
+      {icon}
+      <span>{label} — Coming Soon</span>
+    </ShortcutPillButton>
+  );
+}
+
+/** The button beside the Mac download, for visitors who can't run the .dmg. */
+function PlatformButton({ platform }: { platform: Platform }) {
+  if (platform === "mac") return null;
+  if (platform === "ios") {
+    return MAINS_APP_STORE_URL ? (
+      <AppStoreButton />
+    ) : (
+      <ComingSoonPill icon={<Apple width={16} height={16} />} label="iPhone" />
+    );
+  }
+  return <ComingSoonPill icon={<Windows width={16} height={16} />} label="Windows" />;
+}
+
+/** Download, platform and GitHub buttons, with the iPhone companion note. */
+export function HeroActions() {
+  const { platform } = usePlatformDetection();
+
   return (
     <>
       <motion.div
@@ -125,27 +154,7 @@ export function HeroActions({ platform }: { platform: Platform }) {
           shortcutClassName="bg-primary-200 text-primary-950"
         />
 
-        {platform === "ios" ? (
-          MAINS_APP_STORE_URL ? (
-            <AppStoreButton />
-          ) : (
-            <ShortcutPillButton
-              ariaLabel="iPhone app coming soon"
-              className={cn(PILL_CLASS_NAME, "cursor-default bg-primary-900/50 text-primary-500")}
-            >
-              <Apple width={16} height={16} />
-              <span>iPhone — Coming Soon</span>
-            </ShortcutPillButton>
-          )
-        ) : platform === "other" ? (
-          <ShortcutPillButton
-            ariaLabel="Windows version coming soon"
-            className={cn(PILL_CLASS_NAME, "cursor-default bg-primary-900/50 text-primary-500")}
-          >
-            <Windows width={16} height={16} />
-            <span>Windows — Coming Soon</span>
-          </ShortcutPillButton>
-        ) : null}
+        <PlatformButton platform={platform} />
 
         <ShortcutPillButton
           href={MAINS_GITHUB_REPO_URL}
@@ -155,7 +164,7 @@ export function HeroActions({ platform }: { platform: Platform }) {
           ariaLabel="View source on GitHub (shortcut C)"
           className={cn(
             PILL_CLASS_NAME,
-            " text-white  glass-button",
+            "glass-button text-white",
             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/30"
           )}
           shortcut="C"
@@ -180,7 +189,7 @@ export function HeroWindow({
   appWindow?: React.ReactNode;
   /**
    * Positioned against the window from outside its clipped frame, so it can
-   * overlap the window's edge — the developer page's phone.
+   * overlap the window's edge — the home page's phone.
    */
   aside?: React.ReactNode;
   className?: string;
@@ -216,13 +225,11 @@ export function HeroSection({
   appWindow?: React.ReactNode;
   /** Server-rendered images from recent releases, arranged around the demo. */
   releaseCanvas?: React.ReactNode;
-  /** What "Mains for …" cycles through; the home page's words when unset. */
+  /** What "Mains for …" cycles through; `HERO_SCRAMBLE_WORDS` when unset. */
   words?: readonly string[];
-  /** The line under the headline; the home page's when unset. */
+  /** The line under the headline; `HeroHeadline`'s default when unset. */
   tagline?: string;
 }) {
-  const { platform } = usePlatformDetection();
-
   return (
     <div className="relative">
       {/* From the very top of the page, behind the fixed header, down through
@@ -239,7 +246,7 @@ export function HeroSection({
         <section className="relative mx-auto mt-16 max-w-420 px-5 pt-8 pb-20 sm:px-8 lg:pt-64 2xl:pt-72">
           <div className="pointer-events-none relative z-20 flex flex-col items-center text-center">
             <HeroHeadline words={words} tagline={tagline} />
-            <HeroActions platform={platform} />
+            <HeroActions />
 
             <HeroWindow appWindow={appWindow} className="mt-14" />
           </div>
