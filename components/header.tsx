@@ -75,8 +75,10 @@ export default function Header() {
                   aria-current={isActive ? "page" : undefined}
                   target={"external" in link ? "_blank" : undefined}
                   rel={"external" in link ? "noopener noreferrer" : undefined}
+                  data-label={link.label}
                   className={cn(
-                    "text-[12px] transition-colors hover:text-primary-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-50 sm:text-sm",
+                    // The hidden semibold copy reserves the active width so neighbours don't shift.
+                    "flex flex-col items-center text-[12px] transition-colors after:invisible after:h-0 after:overflow-hidden after:font-semibold after:content-[attr(data-label)] hover:text-primary-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-50 sm:text-sm",
                     isActive ? "font-semibold text-primary-50" : "text-primary-200",
                   )}
                 >
