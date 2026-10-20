@@ -114,7 +114,7 @@ export default function Home() {
           <BlueprintGap />
           <LocalFirstSection compact />
 
-          <BlueprintGap />
+          {/* <BlueprintGap /> */}
           {/* <DevBridgeSection /> */}
 
           {/* Drafts only show while developing, so a build may have no posts. */}
