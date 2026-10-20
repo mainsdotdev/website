@@ -131,7 +131,7 @@ export function NavigationRail({ voiceSlot, mode = "developer", activeLabel = "H
         </div>
         <div className="my-1 w-6 border-b border-primary-800" />
         <RailButton item={{ label: "Help & Resources", icon: Question }} />
-        <RailButton item={{ label: "Settings", icon: Settings }} />
+        <RailButton item={{ label: "Settings", icon: Settings, active: activeLabel === "Settings" }} />
       </div>
     </div>
   );

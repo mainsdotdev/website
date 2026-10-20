@@ -31,10 +31,13 @@ export function BridgeHeroSection() {
           <p className="mt-6 max-w-md text-lg leading-relaxed text-primary-400 sm:mt-7 sm:text-xl">
             Sync your Mains workspaces across devices. Keep your work up to date.
           </p>
-          <p className="mt-9 inline-flex items-center gap-2.5 rounded-full bg-primary-50 px-6 py-3 text-sm font-medium text-primary-950 sm:mt-10">
-            
-            Coming soon
-          </p>
+          <a
+            href="#join"
+            className="mt-9 inline-flex items-center gap-2.5 rounded-full bg-primary-50 px-6 py-3 text-sm font-medium text-primary-950 transition-opacity hover:opacity-90 sm:mt-10"
+          >
+            Join the beta
+          </a>
+          <p className="mt-4 text-sm text-primary-500">Request access by signing in from the Mains app.</p>
         </div>
       </section>
     </div>

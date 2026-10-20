@@ -166,6 +166,67 @@
   animation: blink 1s step-end infinite;
 }
 
+/* Iridescent foil for the Bridge beta mark: the icon's blue, violet, pink, and peach. */
+@keyframes beta-holo-shift {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes beta-holo-sheen {
+  0%,
+  42% {
+    transform: translateX(-160%) skewX(-18deg);
+  }
+  72%,
+  100% {
+    transform: translateX(320%) skewX(-18deg);
+  }
+}
+
+.beta-badge {
+  background-image: linear-gradient(
+    105deg,
+    #5568ec 0%,
+    #8f61e7 16%,
+    #f069bd 34%,
+    #fff6fb 46%,
+    #efa793 58%,
+    #c75fea 78%,
+    #5568ec 100%
+  );
+  background-size: 220% 100%;
+  animation: beta-holo-shift 5.5s linear infinite;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.75),
+    0 0 10px rgb(199 95 234 / 0.4);
+}
+
+.beta-badge-sheen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 45%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 0.85),
+    transparent
+  );
+  animation: beta-holo-sheen 3.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beta-badge,
+  .beta-badge-sheen {
+    animation: none;
+  }
+}
+
 @keyframes blob-float-1 {
   0%,
   100% {

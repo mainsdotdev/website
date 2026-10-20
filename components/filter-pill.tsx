@@ -10,6 +10,8 @@ type FilterPillProps = {
 export function FilterPill({ label, isActive, onClick, className }: FilterPillProps) {
   return (
     <button
+      type="button"
+      aria-pressed={isActive}
       onClick={onClick}
       className={cn(
         "px-3 py-1.5 rounded-2xl text-sm font-medium transition-all glass-outline",

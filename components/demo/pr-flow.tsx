@@ -204,7 +204,7 @@ function Dialog({ phase }: { phase: Phase }) {
                 <Link className="size-3" />
                 <span>1.</span>
                 <span>•</span>
-                <span className="size-2.5 rounded-[2px] border border-primary-400" />
+                <span className="size-2.5 rounded-xs border border-primary-400" />
               </span>
             </div>
             <div className="min-h-0 flex-1 overflow-hidden px-3 py-2.5 leading-relaxed">
@@ -237,7 +237,7 @@ function Dialog({ phase }: { phase: Phase }) {
 
       <div className="flex items-center justify-between px-5 pt-1 pb-4">
         <span className="flex items-center gap-2 text-primary-300">
-          <span className="size-3 rounded-[4px] bg-primary-800" />
+          <span className="size-3 rounded-sm bg-primary-800" />
           Create as draft
         </span>
         <span
@@ -324,7 +324,7 @@ export function PrFlowDialog() {
       {open && (
         <div
           ref={boxRef}
-          className="absolute top-1/2 left-1/2 -mt-62.5 -ml-67.5 overflow-hidden rounded-3xl bg-primary-900  glass-outline"
+          className="absolute top-1/2 left-1/2 -mt-62.5 -ml-67.5 overflow-hidden rounded-3xl bg-primary-900  glass-card"
           style={{ width: DIALOG.width, height: DIALOG.height }}
         >
           {/* Laid out at the dialog's full size, so the growing box reveals

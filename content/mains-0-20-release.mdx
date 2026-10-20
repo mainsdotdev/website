@@ -1,0 +1,50 @@
+---
+title: "Bridge across your devices"
+date: 2026-10-19
+description: "Bridge syncs your Atlas pages and chats across your devices, encrypted before they leave. Read a conversation from another device, and clone a repository that's only there."
+author: "Mains Team"
+tags: ["changelog", "release", "product"]
+published: true
+version: "0.20"
+# image: "/changelog/0-20/cover.webp"
+---
+
+0.20 introduces Bridge, a beta that keeps your Atlas pages and chats in step.
+
+### sign in to Bridge
+
+Open **Settings → Bridge** and sign in with GitHub or your email. Name the device, and choose whether to include the chats and Atlas pages already on it. Bridge encrypts your pages, chats, and files on your device before they leave. Only your devices hold the key.
+
+Bridge is in beta. After you sign in, choose **Activate beta** if your account has access. That starts 30 days of access, and Settings shows when it ends. Sync begins once this device is approved.
+
+A new device shows a code and waits.
+
+- **Approve the device:** On a device that's already signed in, open **Settings → Bridge**, enter the code from the new one, and choose **Approve device**. Decline it if the codes differ.
+- **Check the account fingerprint:** On the new device, enter the fingerprint shown under **Settings → Bridge** on one that's already in, then choose **Verify and start sync**. Sync stays paused until the keys match.
+- **No other device nearby:** Enter your recovery code instead. The first time, choose **Show setup code** and save it in a password manager. **New recovery code** replaces it, and the old one stops working. If you lose every device and the code, nobody can unlock your data, including us.
+
+**Devices** lists every one on the account. Revoke one and it loses sync immediately. Anything saved on it stays there.
+
+### pick up an Atlas page
+
+Start a page on one device and keep writing it on another. Images, documents, and attachments up to 50 MB come along and download when you open them. Larger files stay on the device that made them. In Atlas, a file from another device is labeled with that device's name.
+
+If two devices change the same page at the same time, Mains keeps both. The page says **Edited on two devices at the same time.** Choose **View the other version**, then **Keep current version** or **Use the other version**. The one you leave behind stays in the page's history.
+
+### read a chat from another device
+
+Chats from your other devices show up in the sidebar, with the device's name and whether it's online. **Filter chats** has a **Sources** menu, so you can show **Local**, **Bridge**, or both. Workspaces from another device appear in the same project, marked with Bridge.
+
+Opening one of those chats is read-only. The composer says **Read-only · runs on** that device. When the agent is still working and that device is online, you can watch the turn and how long it has been running. **Continue with remote control** connects you to that device, so you can take the conversation from there. If Bridge is offline, you still have the copy that already arrived.
+
+A repository that exists only on another device can be brought here. Choose **Clone to this device**. The address is filled in, and the clone runs in the background.
+
+### you decide what leaves
+
+**Include existing history and Atlas** is on when you sign in. Turn it off to leave what's already here on this device. **Sync existing history** adds it later. Projects you keep local stay local either way.
+
+**Project sync** lists each project, with its workspaces and chats. Turn a project off and its new chats and changes stay on this device. Copies that already synced remain on your other devices.
+
+Mains keeps working without a connection. Changes wait here, and **Settings → Bridge** tells you how many are waiting, when they last synced, and when you're offline. They catch up on their own once you're back.
+
+Bridge includes 1 GB of storage. When storage is full, or beta access has ended, you can still read, download, and delete what already synced. New changes wait on this device until there's room, or until access is active again. Agent sign-ins stay on the device where you set them up.

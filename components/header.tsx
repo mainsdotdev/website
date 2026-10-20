@@ -5,7 +5,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Apple, Mains, MenuToggle } from "@/components/icons";
 import { MAINS_APP_STORE_URL, MAINS_DOWNLOAD_DMG_URL } from "@/lib/constants";
-import { usePlatformDetection, type Platform } from "@/hooks/usePlatformDetection";
+import {
+  usePlatformDetection,
+  type Platform,
+} from "@/hooks/usePlatformDetection";
 import { cn } from "@/lib/utils";
 
 /** Mobile navigation shares the same links as the desktop row. */
@@ -58,9 +61,7 @@ export default function Header() {
             className="flex h-9 shrink-0 items-center gap-2 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-50"
           >
             <HeaderIcon />
-            <span className="text-lg font-semibold tracking-tight">
-              Mains
-            </span>
+            <span className="text-lg font-semibold tracking-tight">Mains</span>
           </Link>
 
           <div className="hidden items-center gap-6 md:flex">
@@ -78,11 +79,14 @@ export default function Header() {
                   data-label={link.label}
                   className={cn(
                     // The hidden semibold copy reserves the active width so neighbours don't shift.
-                    "flex flex-col items-center text-[12px] transition-colors after:invisible after:h-0 after:overflow-hidden after:font-semibold after:content-[attr(data-label)] hover:text-primary-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-50 sm:text-sm",
-                    isActive ? "font-semibold text-primary-50" : "text-primary-200",
+                    "relative flex flex-col items-center text-[12px] transition-colors after:invisible after:h-0 after:overflow-hidden after:font-semibold after:content-[attr(data-label)] hover:text-primary-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-50 sm:text-sm",
+                    isActive
+                      ? "font-semibold text-primary-50"
+                      : "text-primary-200",
                   )}
                 >
                   {link.label}
+                  {link.label === "Bridge" ? <BetaBadge /> : null}
                 </Link>
               );
             })}
@@ -94,7 +98,6 @@ export default function Header() {
           </div>
         </nav>
       </header>
-
     </>
   );
 }
@@ -190,11 +193,26 @@ function MobileMenu({ pathname }: { pathname: string }) {
               )}
             >
               {link.label}
+              {link.label === "Bridge" ? <BetaBadge inline /> : null}
             </Link>
           );
         })}
       </div>
     </div>
+  );
+}
+
+function BetaBadge({ inline = false }: { inline?: boolean }) {
+  return (
+    <span
+      className={cn(
+        "beta-badge pointer-events-none inline-flex items-center overflow-hidden rounded-full px-1.5 py-0.5 text-[9px] leading-none font-semibold tracking-[0.14em] text-[#1c1030]",
+        inline ? "relative ml-auto" : "absolute -top-2 -right-2.5 rotate-12",
+      )}
+    >
+      <span aria-hidden="true" className="beta-badge-sheen" />
+      <span className="relative">BETA</span>
+    </span>
   );
 }
 
@@ -219,7 +237,11 @@ function DownloadPill({ platform }: { platform: Platform }) {
       href={platform === "ios" ? MAINS_APP_STORE_URL! : MAINS_DOWNLOAD_DMG_URL}
       target={platform === "ios" ? "_blank" : undefined}
       rel={platform === "ios" ? "noopener noreferrer" : undefined}
-      aria-label={platform === "ios" ? "Download Mains for iPhone on the App Store" : "Download Mains for macOS"}
+      aria-label={
+        platform === "ios"
+          ? "Download Mains for iPhone on the App Store"
+          : "Download Mains for macOS"
+      }
       className="flex h-9 shrink-0 items-center gap-2 rounded-full bg-primary-50 px-4 text-xs font-medium text-primary-950 transition-colors hover:bg-primary-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-50 sm:text-sm"
     >
       <Apple width={14} height={14} />

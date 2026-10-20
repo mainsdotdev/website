@@ -51,3 +51,22 @@ export const MAINS_GITHUB_REPO_URL = "https://github.com/mainsdotdev/mains";
 
 /** The docs are their own site, not a route on this one. */
 export const MAINS_DOCS_URL = "https://docs.mains.dev";
+
+export type BridgeBillingInterval = "monthly" | "yearly";
+
+/**
+ * The Bridge plan as the hub defines it (`apps/bridge/src/plans.ts`): one tier,
+ * billed monthly or yearly with the same limits.
+ *
+ * `prices` are USD per month for each billing interval. While a price is
+ * `null` the pricing section says pricing is announced at launch, and while
+ * `checkoutUrl` is `null` its button reads "Coming soon". Point `checkoutUrl`
+ * at the account page once purchasing is live.
+ */
+export const BRIDGE_PLAN = {
+  name: "Bridge",
+  storage: "1 GB",
+  maxFileSize: "50 MB",
+  prices: { monthly: null, yearly: null } as Record<BridgeBillingInterval, number | null>,
+  checkoutUrl: null as string | null,
+};
