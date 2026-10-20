@@ -28,7 +28,7 @@ function BlogCard({ post }: { post: Post }) {
     >
       {/* The artwork in a dashed inner frame, as zed.dev frames its own. */}
       <div className="border-b border-primary-50/10 p-2">
-        <div className="relative aspect-16/9 overflow-hidden rounded-md border border-dashed border-primary-50/12 bg-primary-950">
+        <div className="relative aspect-video overflow-hidden rounded-md border border-dashed border-primary-50/12 bg-primary-950">
           {post.image ? (
             <Image
               src={post.image}

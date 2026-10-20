@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 export default function BridgePage() {
   return (
-    <main className="min-h-screen overflow-hidden">
+    <main className="min-h-screen overflow-x-clip">
       <BridgeHeroSection />
       <BridgeFeaturesSection />
       <BridgeSyncControlSection />

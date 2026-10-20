@@ -5,7 +5,6 @@ import {
   MAINS_GITHUB_REPO_URL,
   MAINS_VERSION,
 } from "@/lib/constants";
-import { getBlogPosts } from "@/lib/posts";
 import { SITE_SOCIAL_IMAGE } from "@/lib/social-image";
 import {
   BlueprintBackdrop,
@@ -19,7 +18,7 @@ import { PhoneChat } from "@/components/demo/phone-chat";
 import { GlobalDownloadGithubShortcuts } from "@/components/global-download-github-shortcuts";
 import { NoOrbFlight } from "@/components/orb-flight";
 import { CtaSection } from "@/components/sections/cta-section";
-import { DevBlogSection } from "@/components/sections/dev-blog-section";
+// import { DevBridgeSection } from "@/components/sections/dev-bridge-section";
 import { DevFeaturesSection } from "@/components/sections/dev-features-section";
 import { DevHeroSection } from "@/components/sections/dev-hero-section";
 import { DevThemesSection } from "@/components/sections/dev-themes-section";
@@ -33,7 +32,6 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  const blogPosts = getBlogPosts();
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -115,6 +113,9 @@ export default function Home() {
 
           <BlueprintGap />
           <LocalFirstSection compact />
+
+          <BlueprintGap />
+          {/* <DevBridgeSection /> */}
 
           {/* Drafts only show while developing, so a build may have no posts. */}
           {/* {blogPosts.length > 0 && (

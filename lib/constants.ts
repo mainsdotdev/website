@@ -30,7 +30,7 @@ export const USE_CASES = [
 ] as const;
 
 /** Latest macOS .dmg builds from GitHub releases (update both when shipping a new version). */
-export const MAINS_VERSION = "0.19.0";
+export const MAINS_VERSION = "0.20.0";
 
 export const MAINS_DOWNLOAD_DMG_URL =
   `https://github.com/mainsdotdev/mains/releases/download/v${MAINS_VERSION}/Mains-${MAINS_VERSION}-arm64.dmg`;
@@ -51,6 +51,24 @@ export const MAINS_GITHUB_REPO_URL = "https://github.com/mainsdotdev/mains";
 
 /** The docs are their own site, not a route on this one. */
 export const MAINS_DOCS_URL = "https://docs.mains.dev";
+
+/**
+ * The pill above the home page headline that points at what's new.
+ *
+ * `shortText` replaces `text` on narrow screens. Set the whole value to `null`
+ * to hide the pill; point it at the next feature when there is one.
+ */
+export const HERO_ANNOUNCEMENT: {
+  label: string;
+  text: string;
+  shortText: string;
+  href: string;
+} | null = {
+  label: "New",
+  text: "Bridge is in beta: sync across devices",
+  shortText: "Bridge is in beta",
+  href: "/bridge",
+};
 
 export type BridgeBillingInterval = "monthly" | "yearly";
 

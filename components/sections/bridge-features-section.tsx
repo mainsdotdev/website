@@ -14,7 +14,7 @@ const FEATURES = [
   },
   {
     title: "Your chats, everywhere",
-    description: "Read any conversation from any of your devices. Each chat stays with the computer that ran it, along with its agent, terminal, and files.",
+    description: "Every conversation shows up on all your devices, so you can look back at what an agent did from whichever computer you’re on. Picking a chat up on another computer is coming next.",
     Icon: Chat,
   },
   {

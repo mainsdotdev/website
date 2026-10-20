@@ -2,6 +2,7 @@
 
 import HeaderSpacer from "@/components/header-spacer";
 import { BlueprintRule } from "@/components/blueprint";
+import { HeroAnnouncement } from "@/components/hero-announcement";
 import { HeroActions, HeroHeadline, HeroWindow } from "@/components/sections/hero-section";
 import { usePlatformDetection } from "@/hooks/usePlatformDetection";
 
@@ -38,6 +39,7 @@ export function DevHeroSection({
     <>
       <HeaderSpacer />
       <section className="flex flex-col items-center px-5 pt-20 pb-20 text-center sm:px-8 lg:pt-28 lg:pb-24">
+        <HeroAnnouncement className="mb-8 max-w-full sm:mb-10" />
         <HeroHeadline words={DEV_SCRAMBLE_WORDS} />
         <HeroActions platform={platform} />
       </section>

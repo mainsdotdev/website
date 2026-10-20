@@ -1,0 +1,23 @@
+/* Answers slide open instead of snapping. Browsers without `::details-content`
+   or `interpolate-size` simply open them instantly. */
+.item {
+  interpolate-size: allow-keywords;
+}
+
+.item::details-content {
+  block-size: 0;
+  overflow-y: clip;
+  transition:
+    block-size 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    content-visibility 280ms allow-discrete;
+}
+
+.item[open]::details-content {
+  block-size: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item::details-content {
+    transition: none;
+  }
+}

@@ -160,7 +160,7 @@ function Toggle({ enabled, label, onChange }: { enabled: boolean; label: string;
         aria-hidden
         className={cn(
           "inline-block h-3 w-4.5 rounded-full bg-primary-100 shadow-sm transition-transform motion-reduce:transition-none",
-          enabled ? "translate-x-[15px]" : "translate-x-px",
+          enabled ? "translate-x-3.75" : "translate-x-px",
         )}
       />
     </button>
@@ -172,7 +172,7 @@ function BridgeSettingsPage({ projects, onToggle }: { projects: typeof INITIAL_P
   const filled = Math.max(1, Math.round((USED_PERCENT / 100) * TICK_COUNT));
 
   return (
-    <div className="mx-auto h-full max-w-[690px] overflow-y-auto px-1.5 pt-11 pb-12 noscrollbar">
+    <div className="mx-auto h-full max-w-172.5 overflow-y-auto px-1.5 pt-11 pb-12 noscrollbar">
       <h3 className="mb-3 text-[14px] text-primary-100">Bridge</h3>
 
       <SettingsSection title="Account">
@@ -201,7 +201,7 @@ function BridgeSettingsPage({ projects, onToggle }: { projects: typeof INITIAL_P
                 <span
                   key={index}
                   className={cn(
-                    "h-2.5 w-[2px] rounded-full",
+                    "h-2.5 w-0.5 rounded-full",
                     index < filled ? "bg-(--color-accent,#2563eb)" : "bg-primary-600/50",
                   )}
                 />
