@@ -50,9 +50,9 @@ const SHIP = {
 /** The home page's use cases, each with its mockup, list icon and docs page. */
 export const DEV_USE_CASES = [PREVIEW_DEV, REVIEW, SHIP] as const;
 
-/** Codex driving the Mac's own apps, from a plain request. */
+/** Codex driving the desktop's own apps, from a plain request. */
 const COMPUTER_USE = {
-  title: "Let it use your Mac.",
+  title: "Let it use your desktop.",
   description:
     "Ask in plain words. Codex opens your apps and clicks through them for you.",
   Icon: BrowserCursor,

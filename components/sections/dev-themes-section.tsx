@@ -164,7 +164,7 @@ export function DevThemesSection({ appWindow }: { appWindow: React.ReactNode }) 
         </fieldset>
 
         <p className="mt-6 text-center text-sm text-primary-500">
-          {mode === "auto" ? "Auto follows your Mac’s appearance." : "A look that feels like you."}
+          {mode === "auto" ? "Auto follows your system’s appearance." : "A look that feels like you."}
         </p>
       </div>
     </section>

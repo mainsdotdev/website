@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 /**
  * The app's loading affordances for the mockups, after its `ascii-spinner`
- * family and `.shine-text`. The app animates them from index.css keyframes;
- * these use framer-motion, so they need nothing from the site's stylesheet.
+ * family and `.shine-text`. `SquareSpinner` runs on the app's own keyframes,
+ * lifted into globals.css; `Shine` and `GenerateSpinner` use framer-motion.
  */
 
 /** The app's "Generating…" text: muted, with a highlight sweeping across. */
@@ -49,32 +49,48 @@ export function GenerateSpinner({ className = "size-2.5" }: { className?: string
   );
 }
 
+/** Cycle length and keyframe peak — must match `toolSquarePulse` in globals.css. */
+const SQUARE_DUR_MS = 2000;
+const SQUARE_PEAK = 0.28;
+/** Fraction of a half-cycle that each diagonal sweep spans. */
+const SQUARE_SWEEP = 0.25;
+
 /**
- * The app's square spinner, for a run at work: a 3×3 grid whose lit cells
- * sweep diagonally — top-left to bottom-right, then bottom-left to top-right —
- * once each per two-second cycle. Takes its color from the text.
+ * Per-cell pulse delays, ported from the app's `square-spinner.tsx`. `d1` drives
+ * the top-left → bottom-right pass over the first half of the cycle, `d2` the
+ * bottom-left → top-right pass over the second. Negative delays put every cell
+ * mid-cycle on first paint.
  */
 const SQUARE_CELLS = Array.from({ length: 9 }, (_, index) => {
   const row = Math.floor(index / 3);
   const col = index % 3;
-  // Each cell peaks once per sweep, at its place along that sweep's diagonal.
-  const first = 0.1 + ((row + col) / 4) * 0.25;
-  const second = 0.6 + ((2 - row + col) / 4) * 0.25;
+  const phase = (target: number) => Math.round((target - SQUARE_PEAK) * SQUARE_DUR_MS);
   return {
-    times: [0, first - 0.08, first, first + 0.08, second - 0.08, second, second + 0.08, 1],
-    opacity: [0.25, 0.25, 1, 0.25, 0.25, 1, 0.25, 0.25],
+    d1: phase(((row + col) / 4) * SQUARE_SWEEP),
+    d2: phase(0.5 + ((2 - row + col) / 4) * SQUARE_SWEEP),
   };
 });
 
-export function SquareSpinner({ className = "size-2.5" }: { className?: string }) {
+const SQUARE_TEMPLATE = "repeat(3, minmax(0, 1fr))";
+
+/**
+ * The app's square spinner, for a run at work: a 3×3 grid whose lit cells
+ * sweep diagonally — top-left to bottom-right, then bottom-left to top-right —
+ * once each per two-second cycle. Takes its color from the text. Cell styling
+ * and keyframes live in globals.css (`.tool-square`), lifted from the app.
+ */
+export function SquareSpinner({ className = "size-2.75" }: { className?: string }) {
   return (
-    <span aria-hidden className={cn("grid shrink-0 grid-cols-3 grid-rows-3 gap-px", className)}>
-      {SQUARE_CELLS.map(({ times, opacity }, index) => (
-        <motion.span
+    <span
+      aria-hidden
+      className={cn("grid shrink-0 gap-px", className)}
+      style={{ gridTemplateColumns: SQUARE_TEMPLATE, gridTemplateRows: SQUARE_TEMPLATE }}
+    >
+      {SQUARE_CELLS.map(({ d1, d2 }, index) => (
+        <span
           key={index}
-          className="rounded-[1px] bg-current"
-          animate={{ opacity }}
-          transition={{ duration: 2, times, repeat: Infinity, ease: "linear" }}
+          className="tool-square"
+          style={{ "--tsq-d1": `${d1}ms`, "--tsq-d2": `${d2}ms` } as CSSProperties}
         />
       ))}
     </span>

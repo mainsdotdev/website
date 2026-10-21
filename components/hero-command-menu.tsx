@@ -66,7 +66,7 @@ const IDLE_RELEASE_COUNT = 4;
 
 const PAGES: MenuItem[] = [
   { id: "changelog", title: "Changelog", subtitle: "Every release, newest first", href: "/changelog", icon: Clock, keywords: "blog releases news updates" },
-  { id: "docs", title: "Docs", subtitle: "Guides for the Mac app, Relay and iPhone", meta: "docs.mains.dev", href: MAINS_DOCS_URL, external: true, icon: Document, keywords: "documentation help setup guide" },
+  { id: "docs", title: "Docs", subtitle: "Guides for the desktop app, Relay and iPhone", meta: "docs.mains.dev", href: MAINS_DOCS_URL, external: true, icon: Document, keywords: "documentation help setup guide" },
   { id: "support", title: "Support", subtitle: "Questions, bugs and feedback", href: "/support", icon: Question, keywords: "help contact faq email" },
   { id: "privacy", title: "Privacy Policy", href: "/privacy", icon: Shield, keywords: "data legal" },
   { id: "terms", title: "Terms of Service", href: "/terms", icon: Description, keywords: "legal" },

@@ -45,7 +45,7 @@ const CHANNELS = [
     icon: Question,
     title: "Read the docs",
     body: "docs.mains.dev",
-    note: "Setup guides for the Mac app, Relay and the iPhone app.",
+    note: "Setup guides for the desktop app, Relay and the iPhone app.",
     href: MAINS_DOCS_URL,
     external: true,
   },

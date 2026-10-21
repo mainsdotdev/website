@@ -23,7 +23,7 @@ export function DevBridgeSection() {
             Keep your computers in sync.
           </h2>
           <p className="mt-5 max-w-lg text-base leading-relaxed text-primary-300 lg:text-lg">
-            Your work stays on your Mac by default. When you want it on your other computers too, Bridge carries your
+            Your work stays on your computer by default. When you want it on your other computers too, Bridge carries your
             Atlas pages and chats there, encrypted before they leave.
           </p>
           <Link

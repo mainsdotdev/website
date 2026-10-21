@@ -241,7 +241,7 @@ export default function Footer({
               mains
             </p>
             <p className="mt-5 max-w-64 text-[15px] leading-relaxed text-primary-500">
-              Your workspaces and run history stay on your Mac by default. You
+              Your workspaces and run history stay on your computer by default. You
               choose the AI providers and tools for each task.
             </p>
           </div>

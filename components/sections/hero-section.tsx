@@ -77,7 +77,7 @@ export function HeroHeadline({
   );
 }
 
-/** Explain that the iPhone app pairs with Mains running on a Mac. */
+/** Explain that the iPhone app pairs with Mains running on a desktop. */
 function CompanionNote({ platform }: { platform: Platform }) {
   if (platform === "other") return null;
 
@@ -85,8 +85,8 @@ function CompanionNote({ platform }: { platform: Platform }) {
   const text =
     platform === "ios"
       ? released
-        ? "Mains runs on your Mac — the iPhone app pairs with it over your network."
-        : "Mains runs on your Mac — an iPhone app to pair with it is coming soon."
+        ? "Mains runs on your desktop — the iPhone app pairs with it over your network."
+        : "Mains runs on your desktop — an iPhone app to pair with it is coming soon."
       : released
         ? "Also on iPhone: drive your runs from the couch."
         : "Coming soon to iPhone: drive your runs from the couch.";

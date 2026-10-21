@@ -1135,6 +1135,51 @@ canvas:hover {
   animation-delay: var(--gsq-delay, 0ms);
 }
 
+/*
+ * Square spinner — lifted from the desktop app (index.css `.tool-square`). Each
+ * cell carries two pulses (::before / ::after) that peak once per 2s cycle; the
+ * per-cell delays set in spinners.tsx make the lit cells sweep top-left →
+ * bottom-right, then bottom-left → top-right.
+ */
+@keyframes toolSquarePulse {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.02);
+  }
+  24% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  48% {
+    opacity: 0;
+    transform: scale(0.02);
+  }
+}
+
+.tool-square {
+  position: relative;
+}
+
+.tool-square::before,
+.tool-square::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 1px;
+  background: currentColor;
+  opacity: 0;
+  animation: toolSquarePulse 2s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+.tool-square::before {
+  animation-delay: var(--tsq-d1, 0ms);
+}
+
+.tool-square::after {
+  animation-delay: var(--tsq-d2, 0ms);
+}
+
 /* Keep the subagent marks legible on both demo surfaces. */
 .agent-glyph {
   color: oklch(0.78 0.16 var(--agent-hue, 0));

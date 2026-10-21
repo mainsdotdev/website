@@ -38,7 +38,7 @@ export function LocalFirstSection({ compact = false }: { compact?: boolean } = {
               : "mt-8 text-[2.7rem] sm:mt-8 sm:text-[4rem] lg:text-[5rem]"
           )}
         >
-          Your Mac is home base.
+          Your desktop is home base.
         </p>
 
         <div
@@ -50,13 +50,13 @@ export function LocalFirstSection({ compact = false }: { compact?: boolean } = {
           )}
         >
           <p>
-            Your workspaces and run history stay on your Mac by default. Agents
+            Your workspaces and run history stay on your computer by default. Agents
             work in the repositories you choose, and you can inspect their
             changes before committing.
           </p>
           <p>
             Getting started doesn&apos;t require a Mains account or hosted workspace.
-            Your Mac connects to the AI provider and tools you choose for each task.
+            Mains connects to the AI provider and tools you choose for each task.
           </p>
         </div>
 
