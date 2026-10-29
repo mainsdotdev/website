@@ -1,0 +1,54 @@
+---
+title: "Mains comes to Android"
+date: 2026-10-29
+description: "Mains for Android enters beta testing. On your phone, steer a running turn, answer Codex's questions, and pick up follow-up suggestions. On the desktop, preview Word documents."
+author: "Mains Team"
+tags: ["changelog", "release", "product"]
+published: true
+version: "0.21"
+# image: "/changelog/0-21/cover.webp"
+---
+
+0.21 brings Mains to Android in beta testing, and gives your phone more of what the desktop already does: steer a running turn, answer Codex's questions, and pick up the agent's suggested follow-ups.
+
+### Mains for Android, in beta
+
+Android joins the iPhone app as a second way to follow your agents. It works the same way: your computer keeps running the agents and holds your repositories, and your phone follows along and answers when an agent needs you.
+
+{/* TODO: add how to join the Android beta (Play testing link or sign-up address). */}
+
+To pair, open **Settings → Mains Connect → Devices** on your computer, choose **Show pairing code**, and scan the QR code from the Android app. Your computer needs to be reachable with secure access, such as Tailscale HTTPS. You can see paired phones in Settings and revoke any of them.
+
+A few things look and behave the Android way:
+
+- **Documents:** PDFs and Office files open in a viewer you already have installed. Images, Markdown, text, and diffs stay in the app.
+- **Sharing:** Files go out through the Android share sheet.
+- **Photos:** Mains asks only for photos and the camera, for pairing codes and attachments. It never asks for the microphone or for video.
+
+It's a beta, so expect rough edges. Tell us what you find at [team@mains.dev](mailto:team@mains.dev).
+
+### steer and answer from your phone
+
+The phone does more of what the desktop does, on iPhone and Android. Steering and answering questions need Mains 0.21 on your computer.
+
+- **Steer a running turn:** While Codex or Claude is working, the composer stays open. Send a message and it goes into the turn that's already running, instead of waiting for it to finish. With nothing typed, the button stops the run, as before. If the turn ends before you send, your draft stays put to send as a follow-up.
+- **Answer Codex's questions:** When Codex asks questions at the end of a turn, a card under the chat walks you through them. Pick an option or write your own, move with **Back** and **Next**, then send, or **Dismiss** them. If Mains can't confirm your answer arrived, it offers **Check delivery** rather than sending it twice.
+- **Follow-up suggestions:** The suggestions Claude and Codex offer after a turn now appear as chips on the phone. Tapping one fills the composer instead of sending, so a stray tap never starts work.
+
+### a clearer phone
+
+- **Other computers' chats are read-only:** A chat that reached your computer from another device through Bridge now shows on your phone as read-only, instead of offering a composer and a stop button that wouldn't work.
+- **Links that open:** File cards and links appear only for files the phone can actually open, so you no longer tap into "This output is no longer available".
+- **Deleted chats clear their files:** When you delete a conversation on your computer, the files you'd downloaded from it leave your phone too.
+- **Calmer Outputs:** The Outputs sheet no longer reloads again and again while an agent is streaming.
+
+### preview Word documents
+
+The document viewer now opens DOCX files. Pages keep their paper size and columns, and the widest page fits the panel at 100% zoom.
+
+### smaller changes
+
+- **Approvals come back:** Requests that are still waiting reappear when you reopen a page or Mains reconnects, instead of vanishing when you navigate away.
+- **Mentions that open:** In a message you've already sent, a mention opens what it points to, just like in the composer. Clicking a code selection chip opens its source file without changing the selection or sending the message.
+- **A tidier Atlas library:** For Code chats, the library lists the files the agent delivered, not every repository file it happened to cite. Chats synced from another device follow the same rule.
+- **Fresher models and tools:** The lists of models, commands, skills, and plugins refresh after you change an account or a setting, without interrupting sessions that are running.

@@ -1,30 +1,30 @@
 ---
 title: "Privacy Policy"
 description: "How Mains handles your data: pairing, what stays on your phone and Mac, what reaches the AI provider you choose, and how to delete all of it."
-updated: "2026-10-02"
+updated: "2026-10-28"
 ---
 
 ## In short
 
-- Mains has no accounts and no servers in the path of your data. The iPhone app talks to **your own Mac**, and your Mac talks to the **AI provider you choose**, under your own account with that provider.
+- Direct mobile pairing requires no Mains account. The mobile app talks to **your own computer**, and that computer talks to the **AI provider you choose**, under your own account with that provider. Optional desktop Bridge sync is described below.
 - Pairing puts exactly one credential on your phone — a device token for that Mac — and it lives in the iOS Keychain.
-- Everything the phone shows is a local copy of what your Mac holds. **Settings → Forget this Mac** deletes all of it.
+- The phone stores local copies of conversations and files you download. **Settings → Forget this computer** removes that computer's pairing record, synchronized data and downloaded document copies from the app.
 - Your prompts, the skills you attach and the files an agent works on go to the selected AI provider from your Mac, and on the phone only after you tap **Allow & Send** the first time.
 - Neither app contains analytics, crash-reporting or advertising SDKs. This website sets no analytics cookies.
 
 ## Who this covers
 
-Mains is built by the Mains team ("we", "us"). This policy covers the website at mains.dev, **Mains for Mac** (the desktop app) and **Mains for iPhone** (the companion app on the App Store). It does not cover the AI providers, code hosts and other services you connect to Mains — they process what you send them under their own policies, linked below.
+Mains is built by the Mains team ("we", "us"). This policy covers the website at mains.dev, the **Mains desktop app**, the **Mains mobile companion**, and optional **Mains Bridge** sync. It does not cover the AI providers, code hosts and other services you connect to Mains — they process what you send them under their own policies, linked below.
 
 ## Pairing your phone with your Mac
 
-The iPhone app is a native companion for Mains running on your Mac app, and the Mac is the only thing it ever connects to.
+The mobile app is a native companion for Mains running on your computer. Direct pairing connects the app to the addresses supplied by that computer; it does not require a Mains account or a Mains-hosted relay.
 
 1. On the Mac you turn on network access — on your local network, or over Tailscale with HTTPS. The Mac shows a **pairing code** as a QR code. The code is single-use and expires.
 2. The phone scans the code and presents it to the Mac directly. The Mac answers with a **device token** made for that phone alone, together with its own name and the addresses it can be reached at.
 3. From then on the phone opens a connection to the Mac with that token. The Mac keeps a list of paired devices and can **revoke** any of them; a revoked phone is refused at its next connection and shows "Refused" in Settings.
 
-No pairing code, token or address ever passes through Mains — there is nothing at Mains to pass it through.
+Direct pairing sends the pairing code and device token to your computer, without routing them through a Mains-hosted service.
 
 ## What the phone stores, and where
 
@@ -34,18 +34,30 @@ No pairing code, token or address ever passes through Mains — there is nothing
 
 **In memory and in the cache folder.** Images an agent produced are fetched from the Mac on demand, scaled down there, and held in memory for the session. Sharing an image writes a copy to the app's cache folder, which iOS may clear at any time.
 
-Nothing is stored anywhere else. There is no iCloud sync and no Mains cloud.
+**Downloaded documents and attachments.** When you open a supported output or a document attached to a message, the app downloads it from your paired computer into its private cache folder. This can include PDFs, Office documents, text, Markdown and images. The app stores file metadata and cache references in its local database. The document cache is limited to 200 MiB; older files can be evicted to make room, and iOS may clear cached files. A downloaded copy can be opened offline while it remains cached. Sharing or saving a file creates a copy in the destination you choose, outside Mains' cache.
+
+**Photos, camera and selected files.** Camera access is requested for scanning a pairing QR code or taking a photo you choose to attach. Opening the Photos attachment panel requests access to your photo library and displays only the photos allowed by your permission choice. Only photos you add are attached to a message; browsing the grid does not send those photos to an AI provider. Selected photos may be copied into the app's cache before sending, and a photo stored only in iCloud may need to be downloaded by the system. The Files picker reads the documents you select. You can change photo and camera permissions in the device's Settings.
+
+The mobile app does not use iCloud to synchronize conversations. Its direct connection is separate from optional Bridge sync on your computer.
 
 ## Between your phone and your Mac
 
 The phone and the Mac talk over a direct WebSocket connection; the device token is presented in the handshake. What travels:
 
-- **Mac → phone:** runs, transcripts, tool calls, approval requests, workspaces, projects, spaces, provider settings and model lists, skills and commands, and — on request — scaled-down copies of images the agent produced.
-- **Phone → Mac:** the prompts you write and the skills you attach, your answers to approval requests, model and run-setting changes, requests to stop or fork a run, and requests for images.
+- **Mac → phone:** runs, transcripts, tool calls, approval requests, workspaces, projects, spaces, provider settings and model lists, skills and commands, and — on request — stored text diffs, images, supported output files and message attachments.
+- **Phone → Mac:** the prompts you write, photos, documents and skills you attach, your answers to approval requests, model and run-setting changes, requests to stop or fork a run, and requests for images and files.
 
 On your local network the connection is a plain WebSocket: it is only as private as your Wi‑Fi. Over Tailscale the traffic is end-to-end encrypted between your devices, and Tailscale HTTPS adds TLS on top; we recommend it for anything beyond your home network.
 
-The "Relay" screen in the Mac app connects to **your own machines** — another Mac over a direct URL or an SSH tunnel — not to a service run by Mains. Mains operates no relay, proxy or cloud in the path of this data.
+Direct remote control connects to **your own machines**, rather than routing the mobile connection through Mains Bridge.
+
+## Optional Bridge sync on your computer
+
+Bridge is a separate, optional service for synchronizing desktop chats, Atlas pages and files across your devices. It requires an account. If you enable it on the paired computer, content arriving from your phone may be included in that computer's sync according to your Bridge settings.
+
+Bridge encrypts content on your computer before uploading it. The service carries and stores encrypted content; account keys and recovery codes are not sent to it in plaintext. The service can see account and delivery metadata, including your account email, device names, online activity, storage usage, routing identifiers, sizes and update times. Bridge uses Cloudflare infrastructure. See the [Bridge overview](/bridge) and [Cloudflare's privacy policy](https://www.cloudflare.com/privacypolicy/).
+
+Direct mobile pairing does not require Bridge. Revoking a Bridge device stops its access to sync; it does not erase copies already saved on that device.
 
 ## What reaches the AI provider
 
@@ -68,13 +80,13 @@ On the phone, the first time you send to a given provider from a given Mac, Main
 
 ## Deleting your data
 
-**On the phone.** Settings → **Forget this Mac** removes the Keychain record and the entire local database for that Mac — spaces, runs, transcripts, tool calls, approvals, settings and consents — in one step. Reconnecting requires a new pairing. Deleting the app removes everything, including the cache folder.
+**On the phone.** Settings → **Forget this computer** removes its Keychain pairing record, synchronized local database rows and downloaded document and attachment copies. Reconnecting requires a new pairing. When the app learns that a conversation was deleted on the computer, it also removes that conversation's local rows and downloaded file copies. Archiving a conversation, or its leaving the recent-conversation list, does not by itself delete those copies. Deleting the app removes its local database and cache folder. Copies you shared or saved outside Mains must be removed from those destinations separately.
 
-**On the Mac.** Revoke a phone under Relay. Runs can be archived or deleted in the app; the app's own data on the Mac lives in its Application Support folder and goes with the app. What you have already sent to an AI provider is held by that provider under its own policy.
+**On the Mac.** Revoke a paired phone in the remote-access settings. Runs can be archived or deleted in the app; the app's own data lives in its Application Support folder. Removing the application alone does not necessarily remove that data. What you have already sent to an AI provider is held by that provider under its own policy.
 
 ## Analytics, tracking and advertising
 
-**The apps:** none. No analytics SDK, no crash reporter, no advertising identifier, no fingerprinting. The apps never contact Mains, because there is no Mains service to contact.
+**The apps:** no analytics SDK, no crash reporter, no advertising identifier and no fingerprinting. Direct mobile pairing communicates with your own computer. Optional Bridge account and sync requests communicate with the Bridge service as described above.
 
 **The website:** we use [Cloudflare Web Analytics](https://www.cloudflare.com/web-analytics/) to count visits. It is cookieless: it does not set cookies, use browser storage or fingerprint you, and it does not track you across sites. Cloudflare receives the visited page (without query strings), timestamp, referrer, browser and device type, and page-load performance timings. See [Cloudflare's privacy policy](https://www.cloudflare.com/privacypolicy/). Our hosting provider also keeps ordinary server logs (IP address, user agent, requested page) for security and operations.
 
