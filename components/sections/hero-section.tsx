@@ -26,6 +26,10 @@ const HERO_SCRAMBLE_WORDS = [
 ] as const;
 const PILL_CLASS_NAME =
   "inline-flex max-w-full min-w-0 items-center gap-2 rounded-full px-3 py-3 text-xs font-medium transition-colors md:px-6 md:py-3 md:text-sm";
+const COMING_SOON_CLASS_NAME = cn(
+  PILL_CLASS_NAME,
+  "cursor-default bg-primary-900/50 text-primary-500"
+);
 
 /** Shared hero typography and entrance, with an optional fixed headline. */
 export function HeroHeadline({
@@ -111,6 +115,30 @@ function CompanionNote({ platform }: { platform: Platform }) {
   );
 }
 
+function PlatformAction({ platform }: { platform: Platform }) {
+  if (platform === "ios") {
+    if (MAINS_APP_STORE_URL) return <AppStoreButton />;
+
+    return (
+      <ShortcutPillButton ariaLabel="iPhone app coming soon" className={COMING_SOON_CLASS_NAME}>
+        <Apple width={16} height={16} />
+        <span>iPhone — Coming Soon</span>
+      </ShortcutPillButton>
+    );
+  }
+
+  if (platform === "other") {
+    return (
+      <ShortcutPillButton ariaLabel="Windows version coming soon" className={COMING_SOON_CLASS_NAME}>
+        <Windows width={16} height={16} />
+        <span>Windows — Coming Soon</span>
+      </ShortcutPillButton>
+    );
+  }
+
+  return null;
+}
+
 export function HeroActions({ platform }: { platform: Platform }) {
   return (
     <>
@@ -125,27 +153,7 @@ export function HeroActions({ platform }: { platform: Platform }) {
           shortcutClassName="bg-primary-200 text-primary-950"
         />
 
-        {platform === "ios" ? (
-          MAINS_APP_STORE_URL ? (
-            <AppStoreButton />
-          ) : (
-            <ShortcutPillButton
-              ariaLabel="iPhone app coming soon"
-              className={cn(PILL_CLASS_NAME, "cursor-default bg-primary-900/50 text-primary-500")}
-            >
-              <Apple width={16} height={16} />
-              <span>iPhone — Coming Soon</span>
-            </ShortcutPillButton>
-          )
-        ) : platform === "other" ? (
-          <ShortcutPillButton
-            ariaLabel="Windows version coming soon"
-            className={cn(PILL_CLASS_NAME, "cursor-default bg-primary-900/50 text-primary-500")}
-          >
-            <Windows width={16} height={16} />
-            <span>Windows — Coming Soon</span>
-          </ShortcutPillButton>
-        ) : null}
+        <PlatformAction platform={platform} />
 
         <ShortcutPillButton
           href={MAINS_GITHUB_REPO_URL}
@@ -155,7 +163,7 @@ export function HeroActions({ platform }: { platform: Platform }) {
           ariaLabel="View source on GitHub (shortcut C)"
           className={cn(
             PILL_CLASS_NAME,
-            " text-white  glass-button",
+            "text-white glass-button",
             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/30"
           )}
           shortcut="C"
