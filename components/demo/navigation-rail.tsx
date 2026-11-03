@@ -3,6 +3,7 @@ import {
   Clock,
   Codex,
   Copilot,
+  OpenCode,
   Cursor,
   Ellipsis,
   Figma,
@@ -12,7 +13,6 @@ import {
   Plugin,
   Question,
   Relay,
-  Search,
   Settings,
   Task,
 } from "@/components/icons";
@@ -38,7 +38,6 @@ type RailItem = {
  */
 const RAIL_ITEMS: RailItem[] = [
   { label: "Home", icon: Home, active: true },
-  { label: "Search Mains", icon: Search },
   { label: "Atlas", icon: Globe },
   { label: "Plugins", icon: Plugin, iconClassName: "-rotate-45" },
   { label: "Tasks", icon: Task },
@@ -61,6 +60,7 @@ const SPACES: RailItem[] = [
   { label: "Codex", icon: Codex, active: true },
   { label: "Copilot", icon: Copilot },
   { label: "Cursor", icon: Cursor },
+  { label: "OpenCode", icon: OpenCode },
 ];
 
 function RailButton({

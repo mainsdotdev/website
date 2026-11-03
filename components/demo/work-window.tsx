@@ -1,5 +1,7 @@
 "use client";
 
+import { SidebarModePicker } from "@/components/demo/sidebar-mode-picker";
+
 import { motion } from "framer-motion";
 import { NavigationRail } from "@/components/demo/navigation-rail";
 import { WindowTab } from "@/components/demo/window-tab";
@@ -8,12 +10,10 @@ import {
   Armchair,
   Bag,
   BlackHole,
-  ChevronDown,
   Codex,
   Earth,
   Edit,
   Gallery,
-  Globe,
   Heart,
   Mitts,
   Plus,
@@ -42,11 +42,7 @@ export const WORK_PROJECTS = [
 function WorkSidebar({ recents, current }: { recents: string[]; current?: string }) {
   return (
     <div className="flex min-w-0 flex-1 flex-col pr-2 pb-2 pl-1">
-      <div className="flex items-center gap-1 px-1.5 pb-1 text-xs tracking-tight text-primary-200">
-        <span className="font-semibold">Mains</span>
-        <span>Work</span>
-        <ChevronDown className="size-2.5 text-primary-400" fill="currentColor" />
-      </div>
+      <SidebarModePicker mode="work" />
       <div className="flex items-center gap-2 rounded-lg px-1.5 py-1 text-[10px] text-primary-100">
         <Edit className="size-3" />
         <span>New chat</span>
@@ -164,7 +160,7 @@ export function WorkWindow({
       titleBarEnd={
         <>
           <Apps className="size-3.5" />
-          <Globe className="size-3.5" />
+          <Plus className="size-3.5" />
         </>
       }
       sidebar={<WorkSidebar recents={recents} current={tabTitle} />}

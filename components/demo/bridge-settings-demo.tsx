@@ -12,6 +12,7 @@ import {
   Codex,
   Connect,
   Copilot,
+  OpenCode,
   Cursor,
   DeviceDesktop,
   DeviceLaptop,
@@ -52,6 +53,7 @@ const PROVIDER_NAV: NavItem[] = [
   { label: "Codex", icon: Codex },
   { label: "Copilot", icon: Copilot },
   { label: "Cursor", icon: Cursor },
+  { label: "OpenCode", icon: OpenCode },
 ];
 
 const DEVICES = [

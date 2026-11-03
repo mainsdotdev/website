@@ -155,3 +155,6 @@ export { default as FolderGit } from "./folder-git";
 export { default as Bridge } from "./bridge";
 export { default as DeviceDesktop } from "./device-desktop";
 export { default as DeviceLaptop } from "./device-laptop";
+
+export { default as OpenCode } from "./opencode";
+export { default as Code } from "./code";

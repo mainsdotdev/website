@@ -1,11 +1,12 @@
 "use client";
 
+import { SidebarModePicker } from "@/components/demo/sidebar-mode-picker";
+
 import { CHAT_TABS, type ChatTabId } from "@/components/demo/chat-tabs-data";
 import type { IconComponent } from "@/components/demo/navigation-rail";
 import { useWindowState } from "@/components/demo/window-state";
 import {
   Armchair,
-  ArrowUp,
   BlackHole,
   Earth,
   Edit,
@@ -48,11 +49,7 @@ export function WorkSidebarContent({ activeChat, onOpenChat, featuredChat }: {
 
   return (
     <div className="flex min-w-0 flex-1 flex-col pr-2 pb-2 pl-1">
-      <div className="flex items-center gap-1 px-1.5 pb-2 text-xs tracking-tight text-primary-200">
-        <span className="font-semibold">Mains</span>
-        <span>Work</span>
-        <ArrowUp className="size-3 rotate-180 text-primary-400" />
-      </div>
+      <SidebarModePicker mode="work" />
 
       <div className="flex items-center gap-2 rounded-lg px-1.5 py-1.5 text-[10px] text-primary-100">
         <Edit className="size-3" />

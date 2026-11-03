@@ -1,6 +1,7 @@
+import { SidebarModePicker } from "@/components/demo/sidebar-mode-picker";
 import { DiffStat } from "@/components/demo/diff-stat";
 import { NavigationRail } from "@/components/demo/navigation-rail";
-import { ArrowUp, Layers, Project, ProjectFolder } from "@/components/icons";
+import { Layers, Project, ProjectFolder } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 /**
@@ -23,11 +24,7 @@ const PROJECTS: { name: string; workspaces?: Workspace[] }[] = [
 function SidebarPanel() {
   return (
     <div className="flex min-w-0 flex-1 flex-col pr-2 pb-2 pl-1">
-      <div className="flex items-center gap-1 px-1.5 pb-1 text-xs tracking-tight text-primary-200">
-        <span className="font-semibold">Mains</span>
-        <span>Code</span>
-        <ArrowUp className="size-3 rotate-180 text-primary-400" />
-      </div>
+      <SidebarModePicker mode="code" />
 
       <div className="flex items-center gap-2 rounded-lg px-1.5 py-1 text-[10px] text-primary-100">
         <Project className="size-3 text-primary-100" />

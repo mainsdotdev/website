@@ -1,3 +1,4 @@
+import { SidebarModePicker } from "@/components/demo/sidebar-mode-picker";
 import { DiffStat } from "@/components/demo/diff-stat";
 import { FullAccessChat } from "@/components/demo/full-access-chat";
 import { NavigationRail, type IconComponent } from "@/components/demo/navigation-rail";
@@ -6,7 +7,6 @@ import { PrFlowColumn, PrFlowDialog, PrFlowProvider, SessionPanelToggle } from "
 import { SessionPanel } from "@/components/demo/session-panel";
 import { WindowTab } from "@/components/demo/window-tab";
 import {
-  ArrowUp,
   Codex,
   Document,
   Home,
@@ -17,7 +17,7 @@ import {
   Project,
   SidebarClose,
   TerminalPanel,
-  Web,
+
   World,
 } from "@/components/icons";
 import { cn } from "@/lib/utils";
@@ -83,13 +83,13 @@ function TitleBar({ sessionPanel }: { sessionPanel: boolean }) {
         </div>
         <Plus className="mb-2 size-3.5 shrink-0 text-primary-500" />
 
-        {/* The app's title-bar controls: session panel, terminal, browser and
+        {/* The app's title-bar controls: session panel, terminal, add panel and
             the right panel, drawn mirrored as the app does. */}
         <div className="mb-2 ml-auto flex items-center gap-3 text-primary-500">
           {/* Filled while the session panel is open, as in the app. */}
           {sessionPanel ? <SessionPanelToggle /> : <Menu className="size-3.5" />}
           <TerminalPanel className="size-3.5" />
-          <Web className="size-3.5" />
+          <Plus className="size-3.5" />
           <SidebarClose className="size-3.5 rotate-180" />
         </div>
       </div>
@@ -101,11 +101,7 @@ function SidebarPanel() {
   return (
     <div className="flex min-w-0 flex-1 flex-col pr-2 pb-2 pl-1">
       {/* The space mode picker, in its sidebar appearance. */}
-      <div className="flex items-center gap-1 px-1.5 pb-1 text-xs tracking-tight text-primary-200">
-        <span className="font-semibold">Mains</span>
-        <span>Code</span>
-        <ArrowUp className="size-3 rotate-180 text-primary-400" />
-      </div>
+      <SidebarModePicker mode="code" />
 
       <div className="flex items-center gap-2 rounded-lg px-1.5 py-1 text-[10px] text-primary-100">
         <Project className="size-3 text-primary-100" />

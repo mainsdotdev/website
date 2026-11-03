@@ -14,7 +14,7 @@ import {
   React as ReactFileIcon,
   SidebarClose,
   TerminalPanel,
-  Web,
+  Plus,
 } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
@@ -185,7 +185,7 @@ function SubagentsPill({ onOpen }: { onOpen: () => void }) {
 /**
  * The window toolbar. Lives in the title bar; drives the panels below. Same
  * controls, order and icons as the app's title bar: session panel, terminal,
- * browser, and the right panel toggle (drawn mirrored, as the app does).
+ * new panel, and the right panel toggle (drawn mirrored, as the app does).
  */
 export function WindowToolbar() {
   const { changesOpen, toggleChanges } = useWindowState();
@@ -205,7 +205,7 @@ export function WindowToolbar() {
         <Menu className="size-3.5" fill={changesOpen ? "currentColor" : "none"} />
       </button>
       <TerminalPanel className="size-3.5" />
-      <Web className="size-3.5" />
+      <Plus className="size-3.5" />
       <SidebarClose className="size-3.5 rotate-180" />
     </div>
   );
