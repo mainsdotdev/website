@@ -1,0 +1,50 @@
+---
+title: "Save, annotate, and review"
+date: 2026-11-11
+description: "Save bookmarks in Atlas, request edits directly on documents, and review pull requests without leaving Mains. Our new native iPhone app is in TestFlight, with a public release coming soon."
+author: "Mains Team"
+tags: ["changelog", "release", "product"]
+published: true
+version: "0.23"
+# image: "/changelog/0-23/cover.webp"
+---
+
+0.23 gives more of your work a place in Mains: links in Atlas, feedback on the document itself, and pull requests beside the conversation that created them. Our new native iPhone app is also in TestFlight, with a public release coming soon.
+
+### save links in Atlas
+
+Atlas now saves bookmarks alongside your pages and files. Choose **Add bookmark**, paste a URL, and optionally assign it to a project. Atlas fetches a preview and can organize it with your chosen model. Open **Edit bookmark** to change the title and description, add tags, or leave a note about why you saved it. **Refresh details and tags** updates the bookmark later.
+
+Tags now work across the library. Add them to pages, files, and bookmarks, then click a tag to filter your collection. **Manage tags** lets you rename a tag everywhere it's used or remove it without deleting the items. Refreshed grid and list views keep the different kinds of saved work together.
+
+The Atlas library and bookmarks are also available whichever agent you have selected. Page editing and image creation still depend on the agent's capabilities.
+
+### point to the change
+
+You can now request edits directly from PDF, Word, and PowerPoint previews. Choose **Request edits**, select text or an area on the page or slide, and describe what you want changed.
+
+Your selection goes into the chat draft with the document reference, page or slide number, and a screenshot. Add more context before sending, or send it with your instructions so the agent can see exactly what you're pointing at.
+
+### keep pull requests beside the work
+
+GitHub pull requests now open in a dedicated view inside Mains. Switch between **Summary** and **Changes** to read the description, checks, comments, and review threads, then inspect the file diffs. You can leave a comment, mark a draft ready for review, or merge an eligible pull request from the same view.
+
+The view works from Tasks and from supported pull request links in chat. When an agent creates a pull request with `gh pr create`, Mains opens it in that conversation's preview. If you're working in another chat, it waits in the original conversation without moving you away.
+
+### a native iPhone client, now in TestFlight
+
+Our new iPhone app, built with SwiftUI, is currently in TestFlight testing and will be released publicly soon. Pair it with your computer by scanning a QR code or pasting a pairing link, then browse your workspaces, search conversations, and follow live replies and tool activity. Your computer continues to run the agents and hold your repositories.
+
+Choose models, thinking effort, and permissions from the phone. Attach photos, files, or a camera shot, and open images, PDFs, and other outputs in native previews.
+
+The native client requires iOS 26 or later. The existing mobile app remains separate; the new client needs its own pairing.
+
+### smaller changes
+
+- **Usage at a glance:** Hover over an agent's icon in the sidebar to see its available usage limits and reset times, where the provider supplies them.
+- **Project shortcuts:** Open project settings or create a new worktree directly from a Code project's sidebar menu.
+- **Codex permissions:** Choose available named permission profiles across clients. Managed policies limit the choices, and requests that require human approval stay with you.
+- **Claude background tasks:** MCP tools can now report background task progress and completion.
+- **Safer Undo:** Mains protects changes shared with parallel turns. Older changes without verified ownership remain available to review, with automatic Undo disabled.
+- **Clearer activity:** Thinking summaries are visible, with fewer duplicate tool activity rows.
+- **More reliable sessions:** Fixes across reconnects, queued messages, approvals, Bridge sync, document previews, and browser tabs keep delayed work from interfering with the session you're using.
