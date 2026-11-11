@@ -3,38 +3,22 @@
 import { SidebarModePicker } from "@/components/demo/sidebar-mode-picker";
 
 import { CHAT_TABS, type ChatTabId } from "@/components/demo/chat-tabs-data";
-import type { IconComponent } from "@/components/demo/navigation-rail";
+import { WORK_PROJECTS } from "@/components/demo/work-window";
 import { useWindowState } from "@/components/demo/window-state";
 import {
-  Armchair,
-  BlackHole,
-  Earth,
   Edit,
-  Gallery,
-  Heart,
-  Mitts,
   Plus,
-  Suitcase,
 } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
-type WorkProject = {
-  name: string;
-  icon: IconComponent;
-  tint: string;
-  /** Empty projects are expanded; omitted chats means the group is collapsed. */
-  chats?: ChatTabId[];
+// Empty projects are expanded; absent entries are collapsed.
+const PROJECT_CHATS: Record<string, ChatTabId[]> = {
+  "Trips & Things": [],
+  "Rabbit Hole": [],
+  "Kitchen Notes": ["dinner"],
+  "Visual Works": ["image"],
+  "Living Room": ["voice"],
 };
-
-const PROJECTS: WorkProject[] = [
-  { name: "Trips & Things", icon: Earth, tint: "text-sky-500", chats: [] },
-  { name: "Rabbit Hole", icon: BlackHole, tint: "text-violet-400", chats: [] },
-  { name: "Work Stuff", icon: Suitcase, tint: "text-amber-500" },
-  { name: "Kitchen Notes", icon: Mitts, tint: "text-green-500", chats: ["dinner"] },
-  { name: "Longevity", icon: Heart, tint: "text-red-400" },
-  { name: "Visual Works", icon: Gallery, tint: "text-primary-300", chats: ["image"] },
-  { name: "Living Room", icon: Armchair, tint: "text-blue-400", chats: ["voice"] },
-];
 
 export function WorkSidebar() {
   const { activeChat, openChat } = useWindowState();
@@ -63,11 +47,13 @@ export function WorkSidebarContent({ activeChat, onOpenChat, featuredChat }: {
       </div>
 
       <div className="mt-1 flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto noscrollbar">
-        {PROJECTS.map(({ name, icon: Icon, tint, chats }) => (
+        {WORK_PROJECTS.map(({ name, Icon, tint }) => {
+          const chats = PROJECT_CHATS[name];
+          return (
           <div key={name}>
-            <div className={cn("flex items-center gap-1.5 px-1.5 py-1", tint)}>
-              <Icon className="size-3 shrink-0" />
-              <span className="truncate text-[11px]">{name}</span>
+            <div className="flex items-center gap-1.5 px-1.5 py-1">
+              <Icon className={cn("size-3 shrink-0", tint)} />
+              <span className="truncate text-[11px] text-primary-100">{name}</span>
             </div>
             {featuredChat?.project === name && (
               <div aria-current="page" className="glass-outline rounded-lg bg-primary-50/5 py-1.5 pr-2 pl-7 text-[11px] text-primary-50">
@@ -101,7 +87,8 @@ export function WorkSidebarContent({ activeChat, onOpenChat, featuredChat }: {
               );
             })}
           </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

@@ -56,7 +56,7 @@ function WorkSidebar({ recents, current }: { recents: string[]; current?: string
       {WORK_PROJECTS.map(({ name, Icon, tint }) => (
         <div key={name} className="flex items-center gap-1.5 px-1.5 py-1">
           <Icon className={cn("size-3 shrink-0", tint)} />
-          <span className={cn("truncate text-[10px]", tint)}>{name}</span>
+          <span className="truncate text-[10px] text-primary-100">{name}</span>
         </div>
       ))}
 

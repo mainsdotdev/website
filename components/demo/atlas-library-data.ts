@@ -1,14 +1,16 @@
-import { Cpu, Document, Page, Picture, Rocket } from "@/components/icons";
+import { Bookmark, Cpu, Document, Page, Picture, Rocket } from "@/components/icons";
 import type { IconComponent } from "./navigation-rail";
 import { ATLAS_TEMPLATES } from "./atlas-templates-data";
 
 export type AtlasLibraryItem = {
   id: string;
   title: string;
-  kind: "page" | "doc" | "image";
+  kind: "page" | "doc" | "image" | "bookmark";
   Icon: IconComponent;
   markdown: string;
   image?: string;
+  url?: string;
+  description?: string;
   aspect?: string;
   project: string;
   origin: "upload" | "generated" | "saved";
@@ -17,6 +19,8 @@ export type AtlasLibraryItem = {
 };
 
 export const ATLAS_LIBRARY_ITEMS: AtlasLibraryItem[] = [
+  { id: "design-link", title: "Designing for the web", kind: "bookmark", Icon: Bookmark, markdown: "", url: "https://developer.mozilla.org/en-US/docs/Learn_web_development", description: "A reference for building thoughtful, accessible experiences on the web.", project: "Work Stuff", origin: "saved", favorite: true, time: "2m ago" },
+  { id: "space-link", title: "A closer look at our universe", kind: "bookmark", Icon: Bookmark, markdown: "", url: "https://science.nasa.gov/universe/", description: "Explore the stories, discoveries, and questions that shape our understanding of the universe.", project: "Rabbit Hole", origin: "saved", favorite: false, time: "4m ago" },
   { id: "evening", title: "Evening light.jpg", kind: "image", Icon: Picture, markdown: "", image: "/hero.jpg", aspect: "aspect-[1.7]", project: "Visual Works", origin: "upload", favorite: true, time: "6m ago" },
   { id: "launch", title: "Launch checklist", kind: "page", Icon: Rocket, markdown: ATLAS_TEMPLATES[3].markdown, project: "Work Stuff", origin: "saved", favorite: true, time: "7m ago" },
   {

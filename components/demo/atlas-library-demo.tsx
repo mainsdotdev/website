@@ -14,6 +14,7 @@ import { ScaleToFit } from "./scale-to-fit";
 import { WindowFrame, WORK_PROJECTS } from "./work-window";
 import { WindowTab } from "./window-tab";
 import {
+  Bookmark,
   ChevronDown,
   Codex,
   Dna,
@@ -43,6 +44,7 @@ const TYPES = [
   { label: "Pages", value: "page", Icon: Page },
   { label: "Docs", value: "doc", Icon: Passport },
   { label: "Images", value: "image", Icon: Picture },
+  { label: "Bookmarks", value: "bookmark", Icon: Bookmark },
 ] as const;
 const SCOPES = [
   "All",
@@ -65,6 +67,31 @@ const ROW =
   "flex w-full items-center gap-2 rounded-lg px-1.5 py-1.5 text-left text-[10px] text-primary-200";
 const BUTTON =
   "cursor-pointer focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-400";
+
+function bookmarkDomain(url: string) {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return "Saved link";
+  }
+}
+
+function ItemOpener({ item, onOpen, className, children }: {
+  item: AtlasLibraryItem;
+  onOpen: (item: AtlasLibraryItem) => void;
+  className: string;
+  children: React.ReactNode;
+}) {
+  return item.kind === "bookmark" ? (
+    <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={`Open ${item.title} (opens in a new tab)`} className={className}>
+      {children}
+    </a>
+  ) : (
+    <button type="button" onClick={() => onOpen(item)} className={className}>
+      {children}
+    </button>
+  );
+}
 
 function minutesAgo(time: string) {
   return time === "Just now"
@@ -132,12 +159,9 @@ export function AtlasLibraryDemo({ className }: { className?: string }) {
   const [oldestFirst, setOldestFirst] = useState(false);
   const [draft, setDraft] = useState<AtlasLibraryItem | null>(null);
   const [markdownMode, setMarkdownMode] = useState(false);
-  const [saved, setSaved] = useState(false);
-
   const open = (item: AtlasLibraryItem) => {
     setDraft({ ...item });
     setMarkdownMode(false);
-    setSaved(false);
   };
   const create = (
     title = "Untitled page",
@@ -171,7 +195,7 @@ export function AtlasLibraryDemo({ className }: { className?: string }) {
 
   const visible = items
     .filter((item) => {
-      const text = `${item.title} ${item.markdown}`.toLowerCase();
+      const text = `${item.title} ${item.markdown} ${item.url ?? ""} ${item.description ?? ""}`.toLowerCase();
       return (
         (kind === "all" || item.kind === kind) &&
         (!project || item.project === project) &&
@@ -195,7 +219,6 @@ export function AtlasLibraryDemo({ className }: { className?: string }) {
   );
   const tabItems = [...recents].reverse();
   const title = project ?? TYPES.find((type) => type.value === kind)!.label;
-
   const favoriteButton = (item: AtlasLibraryItem) => (
     <button
       type="button"
@@ -293,7 +316,7 @@ export function AtlasLibraryDemo({ className }: { className?: string }) {
   return (
     <div
       role="group"
-      aria-label="Atlas library with list and grid views"
+      aria-label="Atlas library with pages, files, and bookmarks"
       className={className}
     >
       <ScaleToFit designWidth={1152} designHeight={648}>
@@ -336,7 +359,11 @@ export function AtlasLibraryDemo({ className }: { className?: string }) {
         >
           {draft ? (
             <div className="flex min-h-0 flex-1 flex-col">
-
+              <div className="flex items-center gap-3 border-b border-primary-800/20 px-6 py-3 text-[10px]">
+                <button type="button" onClick={() => setDraft(null)} className={cn(BUTTON, "rounded text-primary-400 hover:text-primary-100")}>
+                  ← Back to library
+                </button>
+              </div>
               <div className="min-h-0 flex-1 overflow-y-auto px-16 py-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {draft.image ? (
                   <div className="relative h-full">
@@ -392,14 +419,6 @@ export function AtlasLibraryDemo({ className }: { className?: string }) {
                 <h3 className="mr-auto text-[14px] font-medium text-primary-100">
                   {title}
                 </h3>
-                {saved && (
-                  <span
-                    role="status"
-                    className="mr-2 text-[9px] text-green-500"
-                  >
-                    Saved to Atlas
-                  </span>
-                )}
                 <div className="flex gap-0.5" aria-label="Library view">
                   {[
                     { value: "grid", Icon: Grid },
@@ -550,9 +569,9 @@ export function AtlasLibraryDemo({ className }: { className?: string }) {
                       >
                         <td className="pl-2">
                           <div className="flex items-center gap-1">
-                            <button
-                              type="button"
-                              onClick={() => open(item)}
+                            <ItemOpener
+                              item={item}
+                              onOpen={open}
                               className={cn(
                                 "flex min-w-0 items-center gap-2 rounded text-primary-300 hover:text-primary-100",
                                 BUTTON,
@@ -561,13 +580,13 @@ export function AtlasLibraryDemo({ className }: { className?: string }) {
                               <span className="flex size-5 shrink-0 items-center justify-center rounded-md text-primary-300">
                                 <ItemMark item={item} thumbnail />
                               </span>
-                              <span className="truncate">{item.title}</span>
-                            </button>
+                              <span className="min-w-0 truncate">{item.title}</span>
+                            </ItemOpener>
                             {favoriteButton(item)}
                           </div>
                         </td>
-                        <td className="text-primary-500">
-                          {item.origin === "generated" ? "Conversation" : "—"}
+                        <td className="truncate pr-3 text-primary-500">
+                          {item.url ? bookmarkDomain(item.url) : item.origin === "generated" ? "Conversation" : "—"}
                         </td>
                         <td className="text-primary-500">{item.time}</td>
                         <td>
@@ -586,7 +605,23 @@ export function AtlasLibraryDemo({ className }: { className?: string }) {
                   className="mt-8 columns-4 gap-3 space-y-3"
                 >
                   {visible.map((item) =>
-                    item.image ? (
+                    item.kind === "bookmark" ? (
+                      <div key={item.id} className="glass-card break-inside-avoid overflow-hidden rounded-2xl">
+                        <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={`Open ${item.title} (opens in a new tab)`}
+                          className={cn(BUTTON, "block w-full p-3 text-left hover:bg-primary-50/3")}
+                        >
+                          <div className="mb-4 flex items-center gap-2 text-[8px] text-primary-400">
+                            <span className="flex size-6 shrink-0 items-center justify-center rounded-lg bg-blue-400/10 text-blue-400"><Bookmark className="size-3" /></span>
+                            <span className="truncate">{bookmarkDomain(item.url ?? "")}</span>
+                          </div>
+                          <h4 className="text-[11px] leading-relaxed font-medium text-primary-100">{item.title}</h4>
+                          <p className="mt-2 line-clamp-3 text-[9px] leading-relaxed text-primary-400">{item.description}</p>
+                        </a>
+                        <div className="flex items-center justify-between border-t border-primary-800/20 px-3 py-1 text-[8px] text-primary-500">
+                          <span>{item.time}</span>{favoriteButton(item)}
+                        </div>
+                      </div>
+                    ) : item.image ? (
                       <button
                         key={item.id}
                         type="button"

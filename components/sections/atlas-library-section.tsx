@@ -4,7 +4,7 @@ import { SectionHeader } from "@/components/section-header";
 const FEATURES = [
   { title: "Edit with Markdown", description: "Write and refine your pages with familiar Markdown. Keep notes, checklists, and longer documents easy to read and easy to change." },
   { title: "Use a template", description: "Start with a project brief, research notes, or a launch checklist. Give your ideas a little structure, then make the page your own." },
-  { title: "Save forever", description: "Keep the pages, documents, and images you want to come back to. Your work stays in Atlas, ready for the next conversation." },
+  { title: "Save a link", description: "Keep useful links alongside your pages and files. Add tags, choose a project, and leave a note about why you saved it." },
 ];
 
 export function AtlasLibrarySection() {
@@ -12,13 +12,13 @@ export function AtlasLibrarySection() {
     <section aria-label="Your Atlas library" className="relative mx-auto max-w-304 px-5 pt-20 pb-28 sm:px-8 lg:pt-32 lg:pb-36">
       <SectionHeader
         layout="column"
-        title="Everything you make, in one place."
-        description="Collect your pages, documents, and images in Atlas. Create with your agents, organize your ideas, and keep the work worth coming back to."
+        title="Everything you make and save, in one place."
+        description="Collect your pages, documents, images, and bookmarks in Atlas. Create with your agents, organize your ideas, and keep the work worth coming back to."
         titleClassName="max-w-4xl text-primary-50 leading-tight"
         descriptionClassName="mt-1 max-w-2xl text-lg leading-relaxed sm:text-xl"
       />
 
-      <div className="mt-12 overflow-hidden rounded-xl sm:mt-16" style={{ maskImage: "linear-gradient(to bottom, black 0%, black 78%, transparent 100%)" }}>
+      <div className="mt-12 overflow-hidden rounded-xl sm:mt-16">
         <AtlasLibraryDemo />
       </div>
 

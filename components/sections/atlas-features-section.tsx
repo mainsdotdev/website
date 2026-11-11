@@ -4,12 +4,12 @@ import { SectionHeader } from "@/components/section-header";
 const FEATURES = [
   {
     title: "Find it again",
-    description: "Search your library and narrow it down to pages, documents, or images. Keep favorites close so the things you use most are easy to return to.",
+    description: "Search pages, documents, images, and bookmarks. Filter by a tag or keep favorites close so the things you use most are easy to return to.",
     Icon: Search,
   },
   {
     title: "Organize by project",
-    description: "Keep your research, plans, and creative work with the project they belong to. Switch between projects or see everything together in one library.",
+    description: "Keep your research, saved links, and creative work with the project they belong to. Use tags across your library, or see everything together.",
     Icon: ProjectFolder,
   },
   {

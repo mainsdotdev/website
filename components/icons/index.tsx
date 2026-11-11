@@ -158,3 +158,5 @@ export { default as DeviceLaptop } from "./device-laptop";
 
 export { default as OpenCode } from "./opencode";
 export { default as Code } from "./code";
+
+export { default as Bookmark } from "./bookmark";

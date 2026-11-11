@@ -12,6 +12,7 @@ import {
   ArrowUp,
   Attach,
   Bolt,
+  Bookmark,
   Brain,
   BrowserCursor,
   Cat,
@@ -917,6 +918,7 @@ const ATLAS_TYPES = [
   { label: "Pages", Icon: Page },
   { label: "Docs", Icon: Passport },
   { label: "Images", Icon: Picture },
+  { label: "Bookmarks", Icon: Bookmark },
 ];
 
 const ROW =
