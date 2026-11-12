@@ -1,15 +1,15 @@
 ---
 title: "Privacy Policy"
-description: "How Mains handles your data: pairing, what stays on your phone and Mac, what reaches the AI provider you choose, and how to delete all of it."
-updated: "2026-10-28"
+description: "How Mains handles your data: pairing, what stays on your devices, what reaches the AI provider you choose, and how to delete all of it."
+updated: "2026-11-12"
 ---
 
 ## In short
 
 - Direct mobile pairing requires no Mains account. The mobile app talks to **your own computer**, and that computer talks to the **AI provider you choose**, under your own account with that provider. Optional desktop Bridge sync is described below.
 - Pairing puts exactly one credential on your phone — a device token for that Mac — and it lives in the iOS Keychain.
-- The phone stores local copies of conversations and files you download. **Settings → Forget this computer** removes that computer's pairing record, synchronized data and downloaded document copies from the app.
-- Your prompts, the skills you attach and the files an agent works on go to the selected AI provider from your Mac, and on the phone only after you tap **Allow & Send** the first time.
+- The phone keeps a limited local copy of recent conversations, unsent text drafts and your preferences. Documents are downloaded temporarily for previews. **Settings → Forget this computer** removes the saved pairing, conversation snapshot and unsent drafts for that computer.
+- Messages, selected photos and documents, chat context and tool results can be sent to the **AI provider you choose** through your computer. The phone asks for permission for each computer and provider before sending your first request. Those services may retain content under your account according to their own policies.
 - Neither app contains analytics, crash-reporting or advertising SDKs. This website sets no analytics cookies.
 
 ## Who this covers
@@ -18,11 +18,11 @@ Mains is built by the Mains team ("we", "us"). This policy covers the website at
 
 ## Pairing your phone with your Mac
 
-The mobile app is a native companion for Mains running on your computer. Direct pairing connects the app to the addresses supplied by that computer; it does not require a Mains account or a Mains-hosted relay.
+The mobile app is a companion for Mains running on your computer. Direct pairing connects the app to the addresses supplied by that computer; it does not require a Mains account or a Mains-hosted relay.
 
-1. On the Mac you turn on network access — on your local network, or over Tailscale with HTTPS. The Mac shows a **pairing code** as a QR code. The code is single-use and expires.
+1. On the computer you enable a reachable HTTPS endpoint, for example through Tailscale HTTPS. The Mac shows a **pairing code** as a QR code. The code is single-use and expires.
 2. The phone scans the code and presents it to the Mac directly. The Mac answers with a **device token** made for that phone alone, together with its own name and the addresses it can be reached at.
-3. From then on the phone opens a connection to the Mac with that token. The Mac keeps a list of paired devices and can **revoke** any of them; a revoked phone is refused at its next connection and shows "Refused" in Settings.
+3. From then on the phone opens a connection to the Mac with that token. The Mac keeps a list of paired devices and can **revoke** any of them; a revoked phone is refused at its next connection and must pair again before it can reconnect.
 
 Direct pairing sends the pairing code and device token to your computer, without routing them through a Mains-hosted service.
 
@@ -30,13 +30,13 @@ Direct pairing sends the pairing code and device token to your computer, without
 
 **In the Keychain.** The pairing record: the name and addresses of the Mac, this phone's device id, the device token, the pairing date, and the app and protocol version running on the Mac. It is stored with the "accessible after first unlock" protection class, so the app can reconnect once the phone has been unlocked after a restart. It never leaves the Keychain except to open the connection.
 
-**In a local database.** A copy of what your Mac has shown the phone, kept in a SQLite database inside the app's sandbox: your spaces, projects and workspaces (names, branches, the size of the last diff), your runs and their transcripts — the prompts you wrote, the agent's messages, tool calls with their inputs and outputs, errors — pending approvals, provider settings and model lists, skills and commands, your model choice, and the AI data-sharing decisions you have made.
+**Recent conversations and preferences.** The app saves a limited local snapshot of recent conversations and the spaces, projects and workspaces it displays. This may include messages, tool-call history, file references, connection timestamps and selected conversation settings. Display preferences and your AI data-sharing choices are also stored on the device. Temporary live activity, pending decisions, provider catalogues and queued messages are held in memory rather than saved as a permanent history of their own.
 
-**In memory and in the cache folder.** Images an agent produced are fetched from the Mac on demand, scaled down there, and held in memory for the session. Sharing an image writes a copy to the app's cache folder, which iOS may clear at any time.
+**Unsent drafts.** The app saves unsent message text in protected local storage, scoped to the paired computer and conversation or new-chat draft. Sending or clearing a draft removes its saved text. Draft attachments and queued message content are not saved as part of that text draft. These saved draft files are excluded from device backups.
 
-**Downloaded documents and attachments.** When you open a supported output or a document attached to a message, the app downloads it from your paired computer into its private cache folder. This can include PDFs, Office documents, text, Markdown and images. The app stores file metadata and cache references in its local database. The document cache is limited to 200 MiB; older files can be evicted to make room, and iOS may clear cached files. A downloaded copy can be opened offline while it remains cached. Sharing or saving a file creates a copy in the destination you choose, outside Mains' cache.
+**Images, downloaded documents and attachments.** Images and supported documents are fetched from the paired computer when needed. Document previews use temporary files that the app removes when the preview closes or is replaced; this is not a persistent offline document library. Temporary files may also be cleared by the operating system. To keep a file, use the share action to save it to Files or another destination. Copies saved or shared outside Mains remain under the control of that destination and are not removed by forgetting a computer in Mains.
 
-**Photos, camera and selected files.** Camera access is requested for scanning a pairing QR code or taking a photo you choose to attach. Opening the Photos attachment panel requests access to your photo library and displays only the photos allowed by your permission choice. Only photos you add are attached to a message; browsing the grid does not send those photos to an AI provider. Selected photos may be copied into the app's cache before sending, and a photo stored only in iCloud may need to be downloaded by the system. The Files picker reads the documents you select. You can change photo and camera permissions in the device's Settings.
+**Photos, camera and selected files.** Camera access is requested for scanning a pairing QR code or taking a photo you choose to attach. Opening the Photos attachment panel requests access to your photo library and displays only the photos allowed by your permission choice. Only photos you add are attached to a message; browsing the grid does not send those photos to an AI provider. The selected attachment is prepared for the message, and a photo stored only in iCloud may need to be downloaded by the system. The Files picker reads the documents you select. You can change photo and camera permissions in the device's Settings.
 
 The mobile app does not use iCloud to synchronize conversations. Its direct connection is separate from optional Bridge sync on your computer.
 
@@ -47,7 +47,7 @@ The phone and the Mac talk over a direct WebSocket connection; the device token 
 - **Mac → phone:** runs, transcripts, tool calls, approval requests, workspaces, projects, spaces, provider settings and model lists, skills and commands, and — on request — stored text diffs, images, supported output files and message attachments.
 - **Phone → Mac:** the prompts you write, photos, documents and skills you attach, your answers to approval requests, model and run-setting changes, requests to stop or fork a run, and requests for images and files.
 
-On your local network the connection is a plain WebSocket: it is only as private as your Wi‑Fi. Over Tailscale the traffic is end-to-end encrypted between your devices, and Tailscale HTTPS adds TLS on top; we recommend it for anything beyond your home network.
+Use an HTTPS/WSS endpoint for encrypted pairing and conversation traffic. Tailscale can provide an encrypted connection between your devices, with Tailscale HTTPS adding TLS. Connection protection depends on the endpoint and network you configure; plain HTTP/WS endpoints, where available in other Mains configurations, do not provide TLS encryption. Direct pairing is not a Mains-operated content relay.
 
 Direct remote control connects to **your own machines**, rather than routing the mobile connection through Mains Bridge.
 
@@ -61,16 +61,23 @@ Direct mobile pairing does not require Bridge. Revoking a Bridge device stops it
 
 ## What reaches the AI provider
 
-Runs are executed on your Mac by the provider's own tooling, under your own account with that provider: **Claude Code** (Anthropic), **Codex** (OpenAI), **GitHub Copilot** (GitHub / Microsoft) or **Cursor** (Anysphere). To complete a request, your Mac sends the provider:
+Runs are executed on your Mac by the provider's own tooling, under your own account with that provider: **Claude Code** (Anthropic), **Codex** (OpenAI), **GitHub Copilot** (GitHub / Microsoft) or **Cursor** (Anysphere), or **OpenCode** with the model provider you configure there. Some tooling can route a request to another model provider. The recipient depends on the tooling and account settings you choose on the computer. To complete a request, your computer can send:
 
 - your message and the chat history of the run;
+- photos and documents you attach;
 - the skills and instructions you attach;
 - the files, workspace context and tool results the agent reads or produces while it works;
 - Mains' own instructions for the mode the run is in, and a short request to generate a title for the run.
 
-What a provider keeps, for how long, and whether it trains on it is governed by that provider's policy: [Anthropic](https://www.anthropic.com/legal/privacy), [OpenAI](https://openai.com/policies/privacy-policy/), [GitHub](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement), [Cursor](https://cursor.com/privacy).
+External AI services process content under your account with them. They may retain prompts, attachments, responses and associated account information for longer than the request itself. Retention, deletion and any use for training depend on the provider, product and account settings, and are not controlled by Mains. See the policies for [Anthropic](https://www.anthropic.com/legal/privacy), [OpenAI](https://openai.com/policies/privacy-policy/), [GitHub](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement), [Cursor](https://cursor.com/privacy). For OpenCode, also review the policy of the model provider you configured. We do not sell your prompts or attachments or use them for advertising.
 
-On the phone, the first time you send to a given provider from a given Mac, Mains shows an **AI data sharing** sheet listing exactly this. Nothing is sent until you tap **Allow & Send**. Your decision is stored on the phone, per Mac and provider, and can be reviewed or withdrawn in the app.
+On the phone, the first time you send to a given provider from a given Mac, Mains shows an **AI data sharing** sheet listing exactly this. Your first task request is not sent to that provider from the phone until you tap **Allow & Send**. Your decision is stored on the phone, per computer and provider, and can be reviewed or withdrawn in **Settings → AI Data Sharing**. Withdrawing it prevents new requests until you consent again; it does not delete data already received by an AI provider. Use that provider’s controls for its retained data.
+
+## Other connections from your phone
+
+Skill and plugin artwork may be loaded from HTTPS image addresses supplied by your computer’s catalogue. Those image hosts receive ordinary network request information, such as your IP address, but the app does not send them your chat history or pairing token. Links to privacy policies, support or other websites open at your request; those sites apply their own privacy and server-log practices.
+
+**Demo Mode** uses bundled sample conversations and simulated activity on the phone. It does not contact a computer or AI service, does not request a microphone and does not grant real provider consent. Opening an external link or choosing to share a sample file uses the destination you select.
 
 ## Other connections your Mac makes
 
@@ -80,7 +87,7 @@ On the phone, the first time you send to a given provider from a given Mac, Main
 
 ## Deleting your data
 
-**On the phone.** Settings → **Forget this computer** removes its Keychain pairing record, synchronized local database rows and downloaded document and attachment copies. Reconnecting requires a new pairing. When the app learns that a conversation was deleted on the computer, it also removes that conversation's local rows and downloaded file copies. Archiving a conversation, or its leaving the recent-conversation list, does not by itself delete those copies. Deleting the app removes its local database and cache folder. Copies you shared or saved outside Mains must be removed from those destinations separately.
+**On the phone.** Settings → **Forget this computer** removes that computer’s saved pairing record and AI-sharing choices, clears its synchronized local conversation snapshot and in-memory session state, and removes its saved unsent text drafts. It closes any open file preview and removes the associated temporary preview file. Reconnecting requires a new pairing. Removing a cached conversation or forgetting a computer on the phone does not delete the original conversation on your computer, any exported copies, or content already sent to an AI provider. Deleting the app removes its local app-container data; to explicitly remove pairing credentials, use **Forget this computer** before uninstalling. Files you exported must be deleted from their destinations separately.
 
 **On the Mac.** Revoke a paired phone in the remote-access settings. Runs can be archived or deleted in the app; the app's own data lives in its Application Support folder. Removing the application alone does not necessarily remove that data. What you have already sent to an AI provider is held by that provider under its own policy.
 
@@ -94,7 +101,7 @@ On the phone, the first time you send to a given provider from a given Mac, Main
 
 ## Security
 
-Every phone gets its own token; tokens live in the Keychain; the Mac can revoke any device at any time; pairing codes are single-use and expire; the Mac refuses to accept connections from outside the machine without a token. For access beyond your home network, use Tailscale HTTPS. If you find a vulnerability, write to team@mains.dev and we will respond as quickly as we can.
+Every phone gets its own token; tokens live in the Keychain; the Mac can revoke any device at any time; pairing codes are single-use and expire; the computer validates a device token for authenticated mobile requests. For access beyond your home network, use Tailscale HTTPS. If you find a vulnerability, write to team@mains.dev and we will respond as quickly as we can.
 
 ## Children
 
